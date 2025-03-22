@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccddb59df0d769b45b18a860ff324f8c, type: 3}
+  m_Name: ViewConstConfig
+  m_EditorClassIdentifier: 
+  VX_LX_RATE: 0.2
+  VZ_LY_RATE: 0.2
+  DEFAULT_Y: 0
+  CAMERA_MOVE_SPEED: 12
+  CAMERA_STOP_LENGTH: 1
+  CameraSizes:
+  - 25
+  - 50
+  - 75
+  - 100

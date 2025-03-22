@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - Background
+  - World
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - PostProcess
+  m_SortingLayers:
+  - name: AlwaysBottom
+    uniqueID: 1117265303
+    locked: 0
+  - name: Background
+    uniqueID: 1999488515
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: m_Layer20
+    uniqueID: 3720332965
+    locked: 0
+  - name: m_Layer19
+    uniqueID: 3324209067
+    locked: 0
+  - name: m_Layer18
+    uniqueID: 2808142525
+    locked: 0
+  - name: m_Layer17
+    uniqueID: 4247865383
+    locked: 0
+  - name: m_Layer16
+    uniqueID: 2779393457
+    locked: 0
+  - name: m_Layer15
+    uniqueID: 295838261
+    locked: 0
+  - name: m_Layer14
+    uniqueID: 1636736731
+    locked: 0
+  - name: m_Layer13
+    uniqueID: 3285293371
+    locked: 0
+  - name: m_Layer12
+    uniqueID: 2425279441
+    locked: 0
+  - name: m_Layer11
+    uniqueID: 2118068651
+    locked: 0
+  - name: m_Layer10
+    uniqueID: 543630673
+    locked: 0
+  - name: m_Layer9
+    uniqueID: 2454941895
+    locked: 0
+  - name: m_Layer8
+    uniqueID: 2221797897
+    locked: 0
+  - name: m_Layer7
+    uniqueID: 2071288179
+    locked: 0
+  - name: m_Layer6
+    uniqueID: 3553305481
+    locked: 0
+  - name: m_Layer5
+    uniqueID: 2537004931
+    locked: 0
+  - name: m_Layer4
+    uniqueID: 3984057285
+    locked: 0
+  - name: m_Layer3
+    uniqueID: 35507829
+    locked: 0
+  - name: m_Layer2
+    uniqueID: 904209221
+    locked: 0
+  - name: m_Layer1
+    uniqueID: 257519675
+    locked: 0
+  - name: m_Layer0
+    uniqueID: 2129935379
+    locked: 0
+  - name: AlwaysTop
+    uniqueID: 2412906623
+    locked: 0

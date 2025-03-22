@@ -1,0 +1,18 @@
+{
+    "name": "NSFrame.AudioSystem.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:464512cff768eed4e8a7937fca98a14e"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

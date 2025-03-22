@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3494782e8f6b7e4d956e4f2161b58f5, type: 3}
+  m_Name: SceneConfig
+  m_EditorClassIdentifier: 
+  TransitionImage: {fileID: 5058401272541925401, guid: 3807d6db79e2f914bb160dec355a041c, type: 3}

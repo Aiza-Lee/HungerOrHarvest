@@ -1,0 +1,17 @@
+:root {
+	--ns-colors-grid-light-grey-1:rgb(40, 40, 40);
+	--ns-colors-grid-light-grey-2:rgba(193, 196, 192, 0.1);
+	--ns-colors-grid-light-grey-3:rgba(193, 196, 192, 0.1);
+
+	--ns-colors-window-dark-grey-1: #1D1D1E;
+	--ns-colors-window-dark-grey-2: #2B2D2F;
+	--ns-colors-window-dark-grey-3: #212325;
+	--ns-colors-window-dark-grey-4: #232527;
+	--ns-colors-window-dark-grey-5: #252729;
+	--ns-colors-window-dark-grey-6: #27292C;
+	
+	--ns-oclors-window-yellow: #FDD057;
+
+
+	--ns-metrics-grid-20: 20;
+}

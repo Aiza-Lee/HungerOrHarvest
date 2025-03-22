@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ceca0b985aec64f98d04b93bcbc5cb, type: 3}
+  m_Name: LogicFctryConfig
+  m_EditorClassIdentifier: 
+  DefaultStaMachine:
+    ID: 0
+    CurStaType: 2
+    CurStaSave:
+      rid: -2
+    AttachedVillID: 0
+  DefaultSpareSta:
+    StaType: 2
+    AttachedSMID: 0
+    Target:
+      X: 0
+      Y: 0
+    IsArrived: 1
+    Route: []
+  DefaultSleepSta:
+    StaType: 1
+    AttachedSMID: 0
+  DefaultWorkSta:
+    StaType: 0
+    AttachedSMID: 0
+  DefaultNormalVill:
+    ID: 0
+    VillType: 0
+    FirstName: "\u9ED8\u8BA4\u540D\u79F0"
+    LastName: "\u9ED8\u8BA4\u59D3\u6C0F"
+    JobLevel:
+      List: []
+      Full: 0
+    JobExps:
+      List: []
+      Full: 0
+    ConsBuffs:
+      List: []
+      Full: 0
+    ProdBuffs:
+      List: []
+      Full: 0
+    Coord:
+      X: 0
+      Y: 0
+  DefaultCottage:
+    ArchType: 0
+    ID: 0
+    OL:
+      ODR: 0
+      LYR: 0
+    Level: 0
+    ProdBuffs:
+      List: []
+      Full: 0
+    ConsBuffs:
+      List: []
+      Full: 0
+    InVillIDs: 
+  DefaultGrassLayerSave:
+    ID: 0
+    LayerType: 0
+    LYR: 0
+  DefaultSnowLayerSave:
+    ID: 0
+    LayerType: 1
+    LYR: 0
+  DefaultSeaEndLayerSave:
+    ID: 0
+    LayerType: 4
+    LYR: 0
+  DefaultSnowMountainEndLayerSave:
+    ID: 0
+    LayerType: 5
+    LYR: 0
+  DefaultWasteLandLayerSave:
+    ID: 0
+    LayerType: 2
+    LYR: 0
+  DefaultBeachLayerSave:
+    ID: 0
+    LayerType: 3
+    LYR: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

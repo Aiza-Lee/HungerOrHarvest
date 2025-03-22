@@ -1,0 +1,105 @@
+/* CONTAINERS */
+.nsframe-nodeview__extension-container {
+	background-color: var(--ns-colors-window-dark-grey-1);
+	padding: 8px;
+}
+.nsframe-nodeview__custom-data-container {
+	background-color: var(--ns-colors-window-dark-grey-3);
+	border-radius: 4px;
+	padding: 8px;
+}
+,nsframe-nodeview__main-container {
+	background-color: var(--ns-colors-window-dark-grey-1);
+}
+
+/* INPUTS */
+.nsframe-nodeview__textfield > .unity-text-field__input {
+	background-color: var(--ns-colors-window-dark-grey-1);
+	border-color: var(--ns-colors-window-dark-grey-6);
+	border-radius: 4px;
+	max-width: 240px;
+	/* min-width: 160px; */
+	padding: 8px;
+}
+
+.nsframe-nodeview__textfield__hidden > .unity-text-field__input {
+	background-color: transparent;
+	border-color: transparent;
+}
+.nsframe-nodeview__textfield__hidden:focus > .unity-text-field__input {
+	background-color: var(--ns-colors-window-dark-grey-1);
+	border-color: var(--ns-colors-window-dark-grey-6);
+}
+
+.nsframe-nodeview__filename-textfield > .unity-text-field__input {
+	max-width: 1000px;
+}
+.nsframe-nodeview__filename-textfield:focus > .unity-text-field__input {
+	/* margin: 4px; */
+	/* padding: 4px; */
+}
+
+.nsframe-nodeview__choice-textfield > .unity-text-field__input {
+	font-size: 11px;
+	height: 35px;
+	max-width: 1000px;
+	min-width: 0px;
+}
+.nsframe-nodeview__choice-textfield:focus > .unity-text-field__input {
+	height: 25px;
+	margin: 4px;
+	padding: 4px;
+}
+
+.nsframe-nodeview__quote-textfield > .unity-text-field__input {
+	background-color: var(--ns-colors-window-dark-grey-4);
+	border-color: transparent;
+	border-left-color: var(--ns-colors-window-dark-grey-6);
+	border-left-width: 4px;
+	padding: 16px;
+	max-width: 600px;
+	overflow: visible;
+	white-space: normal;
+}
+.nsframe-nodeview__quote-textfield:hover > .unity-text-field__input {
+	background-color: var(--ns-colors-window-dark-grey-5);
+}
+.nsframe-nodeview__quote-textfield:focus > .unity-text-field__input {
+	background-color: var(--ns-colors-window-dark-grey-1);
+	border-color: var(--ns-colors-window-dark-grey-6);
+}
+
+/* BUTTONS */
+.nsframe-nodeview__button {
+	background-color: var(--ns-colors-window-dark-grey-5);
+	border-color: var(--ns-colors-window-dark-grey-1);
+	margin: 4px;
+	max-height: 25px;
+	/* border-radius: 0px; */
+}
+.nsframe-nodeview__button:hover {
+	background-color: #2B2D2F;
+}
+.nsframe-nodeview__button:active {
+	background-color: var(--ns-colors-window-dark-grey-3);
+	color: var(--ns-oclors-window-yellow);
+}
+
+/* ELEMENTS */
+TextField {
+	margin-left: 0px;
+}
+
+.nsframe-nodeview__custom-data-container > Foldout {
+	margin-left: -4px;
+	margin-top: 4px;
+}
+.nsframe-nodeview__custom-data-container > Foldout > TextField {
+	margin-left: -12px;
+	margin-top: 8px;
+}
+
+/* BUILT IN */
+.unity-toggle__text {
+	margin-left: 2px;
+}
