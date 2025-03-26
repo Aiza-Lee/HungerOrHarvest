@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2273045342668823788}
   - component: {fileID: 6389194272981458147}
   - component: {fileID: -734447015871360061}
+  - component: {fileID: -6048452261312405856}
   m_Layer: 8
   m_Name: Cottage
   m_TagString: Untagged
@@ -140,6 +141,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff2a54c97fcaa94abe45327c408b1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6048452261312405856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42990976938659487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf1179e851b2ff4d8a58615689f1686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RATE: 1
 --- !u!1 &5222953922506104471
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameLogic
 {
-	public class PanelMgr : MonoSingleton<PanelMgr> {
+	public class UIMgr : MonoSingleton<UIMgr> {
 		public List<Pair<ViewPanelType, PanelBase>> Panels;
 		private readonly Dictionary<int, PanelBase> _panelDict = new();
 

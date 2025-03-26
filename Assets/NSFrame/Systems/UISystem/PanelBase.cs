@@ -7,7 +7,7 @@ namespace NSFrame
 		public int TypeIndex { get => (int)UIType; }
 		public bool Opened;
 
-		public virtual void Awake() {
+		protected virtual void Awake() {
 			this.AddToFrame();
 		}
 		public abstract void OnShow();

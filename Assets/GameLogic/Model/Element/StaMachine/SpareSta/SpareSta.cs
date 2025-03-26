@@ -12,13 +12,18 @@ namespace GameLogic
 		private int _idx;
 		private int _timer;
 
-		private VillLogicBase Vill => _staMachine.AttachedVill;
+		private VillLogicBase Vill => AttachedVill;
 
 
 		public override void Enter() {}
 		public override void Execute() {
-			if (_isArrived) {
-				_target = RouteMgr.Inst.GetRandomVillSpareCoord();
+			if (_isArrived || _route.Count == 0) {
+				
+
+				do {
+					_target = RouteMgr.Inst.GetRandomVillSpareCoord();
+				} while(_target == Vill.Coord);
+				
 				_route = RouteMgr.Inst.GetRoute(Vill.Coord, _target);
 				_isArrived = false;
 				_idx = 0;
@@ -38,7 +43,9 @@ namespace GameLogic
 
 		#region IPooledObject
 		protected override void DerivedInitForPool() {}
-		protected override void DerivedDestroyForPool() {}
+		protected override void DerivedDestroyForPool() {
+			_route = null;
+		}
 		#endregion
 
 		#region ISaveable

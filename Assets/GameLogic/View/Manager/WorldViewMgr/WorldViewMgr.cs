@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace GameLogic
 {
-	public class EleViewMgr : MonoSingleton<EleViewMgr> {
-
+	public class WorldViewMgr : MonoSingleton<WorldViewMgr> {
 		protected override void Awake() {
 			base.Awake();
 			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);

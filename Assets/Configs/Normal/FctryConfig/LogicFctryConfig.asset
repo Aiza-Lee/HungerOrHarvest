@@ -13,25 +13,32 @@ MonoBehaviour:
   m_Name: LogicFctryConfig
   m_EditorClassIdentifier: 
   DefaultStaMachine:
-    ID: 0
-    CurStaType: 2
     CurStaSave:
       rid: -2
-    AttachedVillID: 0
   DefaultSpareSta:
     StaType: 2
     AttachedSMID: 0
+    Entered: 0
     Target:
       X: 0
       Y: 0
-    IsArrived: 1
+    IsArrived: 0
     Route: []
+    Timer: 0
+    Idx: 0
   DefaultSleepSta:
     StaType: 1
     AttachedSMID: 0
+    Entered: 0
   DefaultWorkSta:
     StaType: 0
     AttachedSMID: 0
+    Entered: 0
+    ArchID: 0
+    IsArrived: 0
+    Route: []
+    Timer: 0
+    Idx: 0
   DefaultNormalVill:
     ID: 0
     VillType: 0
@@ -52,6 +59,9 @@ MonoBehaviour:
     Coord:
       X: 0
       Y: 0
+    StaMachine:
+      CurStaSave:
+        rid: -2
   DefaultCottage:
     ArchType: 0
     ID: 0

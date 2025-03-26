@@ -8,7 +8,7 @@ namespace GameLogic
 		private WorldMgr() {
 			EventSystem.AddListener((int) LogicEvt.InitAllManager, () => {
 				MaxArchODR = MinArchODR = 0;
-				MaxUnlockedLayer = MinUnlockedLayer = 0;
+				_maxUnlockedLayer = _minUnlockedLayer = 0;
 				EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
 				EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
 				EventSystem.AddListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L, OnLayerAdded);
@@ -28,16 +28,24 @@ namespace GameLogic
 		private readonly Dictionary<ulong, VillLogicBase> _villDict = new();
 		private readonly Dictionary<ulong, ArchLogicBase> _archsDict = new();
 		private readonly Dictionary<int, Pair<int, int>> _olRange = new();
+		private int _maxUnlockedLayer;
+		private int _minUnlockedLayer;
 
 
 		public List<VillLogicBase> GetAllVills => _vills;
 		public List<ArchLogicBase> GetAllArchs => _archs;
 		public List<LayerLogicBase> GetAllLayers => _layers;
+		public int MaxUnlockedLayer => _maxUnlockedLayer;
+		public int MinUnlockedLayer => _minUnlockedLayer;
 		public int MaxArchODR { get; private set; }
 		public int MinArchODR { get; private set; }
-		public int MaxUnlockedLayer { get; private set; }
-		public int MinUnlockedLayer { get; private set; }
+		/// <summary>
+		/// 地图的正向边缘
+		/// </summary>
 		public int LayerPosEdge { get; private set; }
+		/// <summary>
+		/// 地图的负向边缘
+		/// </summary>
 		public int LayerNegEdge { get; private set; }
 
 		private void OnArchAdded(ArchLogicBase arch) {
@@ -97,8 +105,8 @@ namespace GameLogic
 				Debug.LogWarning("unlock an already unlocked OL");
 				return;
 			}
-			MaxUnlockedLayer = Mathf.Max(ol.LYR, MaxUnlockedLayer);
-			MinUnlockedLayer = Mathf.Min(ol.LYR, MinUnlockedLayer);
+			_maxUnlockedLayer = Mathf.Max(ol.LYR, MaxUnlockedLayer);
+			_minUnlockedLayer = Mathf.Min(ol.LYR, MinUnlockedLayer);
 			if (_olRange.TryGetValue(ol.LYR, out var range)) {
 				range.Key = Mathf.Min(range.Key, ol.ODR);
 				range.Value = Mathf.Max(range.Value, ol.ODR);
@@ -116,6 +124,8 @@ namespace GameLogic
 				ArchSaves = new(),
 				LayerSaves = new(),
 				OL_Range = new(),
+				MaxUnlockedLayer = _maxUnlockedLayer,
+				MinUnlockedLayer = _minUnlockedLayer,
 			};
 			foreach (var v in _vills) save.VillSaves.Add(v.GetSave());
 			foreach (var a in _archs) save.ArchSaves.Add(a.GetSave());
@@ -127,12 +137,12 @@ namespace GameLogic
 			ClearCache();
 			
 			save.VillSaves.ForEach( (save) => LogicFctry.Inst.LoadVill(save) );
-
 			save.ArchSaves.ForEach( (save) => LogicFctry.Inst.LoadArch(save) );
-
 			save.LayerSaves.ForEach( (save) => LogicFctry.Inst.LoadLayer(save) );
-
 			save.OL_Range.ForEach( (pair) => _olRange.Add(pair.Key, pair.Value) );
+
+			_maxUnlockedLayer = save.MaxUnlockedLayer;
+			_minUnlockedLayer = save.MinUnlockedLayer;
 		}
 		private void ClearCache() {
 			_vills.Clear();

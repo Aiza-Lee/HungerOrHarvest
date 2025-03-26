@@ -212,6 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5000195185043624739}
   - component: {fileID: -2513581988032978773}
+  - component: {fileID: 1376255160889592929}
   m_Layer: 8
   m_Name: WasteLandLayer
   m_TagString: Untagged
@@ -247,6 +248,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1c67346a41aed469ca39af624bbca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1376255160889592929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011307254257003627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf1179e851b2ff4d8a58615689f1686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RATE: 1
 --- !u!1 &2350055605833583972
 GameObject:
   m_ObjectHideFlags: 0

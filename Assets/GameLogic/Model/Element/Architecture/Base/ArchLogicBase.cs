@@ -27,18 +27,28 @@ namespace GameLogic
 		public List<VillLogicBase> InVills => _inVills;
 		public RTList<float> ConsBuffs_F => _consBuffs_F;
 		public RTList<float> ProdBuffs_F => _prodBuffs_F;
+		public Coord Coord => _ol.ToCoord();
 
 		public ArchConfigBase Config { get; private set; }
 		private ArchLevelConfigBase Lconfig => Config.LevelConfigs[_level];
 
 
 		#region Public Methods
+		public virtual bool CheckCapacity() {
+			return InVills.Count < Lconfig.MaxContain;
+		}
 		public virtual void AddVill(VillLogicBase vill) {
 			_inVills.Add(vill);
 		}
 		public virtual void RemoveVill(VillLogicBase vill) {
+			_inVills.Remove(vill);
 		}
-		public virtual void Destroy() {}
+		public virtual void Destroy() {
+			//todo:
+			foreach (var v in _inVills) {
+				v.SetSpare();
+			}
+		}
 		public virtual void LevelUp() {}
 		#endregion
 

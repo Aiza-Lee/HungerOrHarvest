@@ -38,6 +38,7 @@ namespace GameLogic
 		#endregion
 
 		[Header("挂载")] public ConstConfig Config;
+		public static ConstConfig GetConfig => Inst.Config;
 
 
 		protected override void Awake() {

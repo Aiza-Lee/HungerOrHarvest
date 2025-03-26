@@ -1,12 +1,13 @@
 using System.Collections;
+using NSFrame;
 using UnityEngine;
 
 namespace GameLogic
 {
 	[RequireComponent(typeof(SmoothMove), typeof(SmoothCameraSize))]
-	public class CameraController : MonoBehaviour {
+	public class WorldCameraMgr : MonoSingleton<WorldCameraMgr> {
 		private bool _moveable = true;
-		private ViewConstConfig ViewConfig => ViewConstMgr.Inst.Config;
+		private ViewConstConfig ViewConfig => ViewConstMgr.GetConfig;
 		
 		[SerializeField] private CameraSize _cameraSize;
 		public CameraSize CameraSize { 
@@ -19,10 +20,14 @@ namespace GameLogic
 
 		public SmoothMove SmoothMove { get; private set; }
 		public SmoothCameraSize SmoothCameraSize { get; private set; }
+		public Camera Camera { get; private set; }
 
-		private void Awake() {
+		protected override void Awake() {
+			base.Awake();
+			Camera = GetComponent<Camera>();
 			SmoothMove = GetComponent<SmoothMove>();
 			SmoothCameraSize = GetComponent<SmoothCameraSize>();
+			transform.position = new(0, transform.position.y, -ViewConstMgr.LayerGap);
 		}
 
 		private void Update() {
@@ -52,18 +57,18 @@ namespace GameLogic
 
 				if (Input.GetKeyDown(KeyCode.W)) {
 					SmoothMove.StopCur();
-					SmoothMove.Translate(ConstMgr.Y_PER_LYR * ViewConfig.VZ_LY_RATE * Vector3.forward);
-					StartCoroutine(LockLeftRight(SmoothMove.Configs[0].Time));
+					SmoothMove.Translate(ConstMgr.Y_PER_LYR * ViewConstMgr.VZ_MY_RATE * Vector3.forward);
+					StartCoroutine(LockMoveCoro(SmoothMove.Configs[0].Time));
 				}
 				if (Input.GetKeyUp(KeyCode.S)) {
 					SmoothMove.StopCur();
-					SmoothMove.Translate(ConstMgr.Y_PER_LYR * ViewConfig.VZ_LY_RATE * Vector3.back);
-					StartCoroutine(LockLeftRight(SmoothMove.Configs[0].Time));
+					SmoothMove.Translate(ConstMgr.Y_PER_LYR * ViewConstMgr.VZ_MY_RATE * Vector3.back);
+					StartCoroutine(LockMoveCoro(SmoothMove.Configs[0].Time));
 				}
 			}
 
 		}
-		IEnumerator LockLeftRight(float time) {
+		IEnumerator LockMoveCoro(float time) {
 			_moveable = false;
 			yield return new WaitForSecondsRealtime(time);
 			_moveable = true;

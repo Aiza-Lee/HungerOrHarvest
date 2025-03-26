@@ -1,4 +1,3 @@
-using NSFrame;
 using UnityEngine;
 
 namespace GameLogic
@@ -7,13 +6,11 @@ namespace GameLogic
 	public abstract class VillViewBase : MonoBehaviour {
 
 		private VillLogicBase _villLogic;
-		public SmoothFade SmoothFade { get; private set; }
 		public SmoothMove SmoothMove { get; private set; }
 		public SpriteRenderer SpriteRenderer { get; private set; }
 
 		private void Awake() {
 			SpriteRenderer = GetComponent<SpriteRenderer>();
-			SmoothFade = GetComponent<SmoothFade>();
 			SmoothMove = GetComponent<SmoothMove>();
 			SmoothMove.Configs[0].Time = ConstMgr.Inst.Config.VILL_ONE_MOVE_TICK * TickTrigger.Inst.TickTime;
 			SpriteRenderer.sortingOrder = ViewConstMgr.VILL_SORTING_ORDER;

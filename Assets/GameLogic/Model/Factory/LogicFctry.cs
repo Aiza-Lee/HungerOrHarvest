@@ -14,6 +14,9 @@ namespace GameLogic
 		public LogicFctryConfig Config;
 
 		#region Vill
+		/// <summary>
+		/// 根据保存数据创建一个新的Vill，并初始化为保存数据的值
+		/// </summary>
 		public VillLogicBase LoadVill(VillSaveBase save) {
 			var vill = NewEmptyVill(save.VillType);
 			vill.InitFromSave(save.Clone());
@@ -22,16 +25,14 @@ namespace GameLogic
 
 			return vill;
 		}
+		/// <summary>
+		/// 根据类型创建一个新的Vill，并初始化为默认值
+		/// </summary>
 		public VillLogicBase NewVill(VillType type, OL ol) {
-			var vill = NewEmptyVill(type);
 			var save = Config.GetDefaultVillSave(type).Clone();
-			save.ID = IDMgr.Inst.GetID();
-			save.Coord = ol.ToCoord();
-			vill.InitFromSave(save);
-
-			EventSystem.Invoke<VillLogicBase>((int)LogicEvt.VillAdded_V, vill);
-
-			return vill;
+				save.ID = IDMgr.Inst.GetID();
+				save.Coord = ol.ToCoord();
+			return LoadVill(save);
 		}
 
 		private VillLogicBase NewEmptyVill(VillType type) {
@@ -43,20 +44,27 @@ namespace GameLogic
 		#endregion
 
 		#region StaMachine
-		public StaMachine LoadStaMachine(StaMachineSave save) {
-			var sm = new StaMachine();
+		/// <summary>
+		/// 根据保存数据创建一个新的StaMachine，并初始化为保存数据的值
+		/// </summary>
+		public StaMachine LoadStaMachine(VillLogicBase vill, StaMachineSave save) {
+			var sm = new StaMachine(vill);
 			sm.InitFromSave(save);
 			return sm;
 		}
-		public StaMachine NewStaMachine() {
-			var sm = new StaMachine();
+		/// <summary>
+		/// 根据类型创建一个新的StaMachine，并初始化为默认值
+		/// </summary>
+		public StaMachine NewStaMachine(VillLogicBase vill) {
 			var save = Config.DefaultStaMachine.Clone();
-			sm.InitFromSave(save);
-			return sm;
+			return LoadStaMachine(vill, save);
 		}
 		#endregion
 
 		#region Sta
+		/// <summary>
+		/// 根据保存数据创建一个新的Sta，并初始化为保存数据的值
+		/// </summary>
 		public StaBase LoadSta(StaSaveBase save) {
 			var type = save.StaType;
 			StaBase sta = type switch {
@@ -85,10 +93,14 @@ namespace GameLogic
 			sta.InitFromSave(save);
 			return sta;
 		}
+
 		#endregion
 
 
 		#region Arch
+		/// <summary>
+		/// 根据保存数据创建一个新的Arch，并初始化为保存数据的值
+		/// </summary>
 		public ArchLogicBase LoadArch(ArchSaveBase save) {
 			var arch = NewEmptyArch(save.ArchType);
 			arch.InitFromSave(save.Clone());
@@ -97,6 +109,9 @@ namespace GameLogic
 
 			return arch;
 		}
+		/// <summary>
+		/// 根据类型创建一个新的Arch，并初始化为默认值
+		/// </summary>
 		public ArchLogicBase NewArch(ArchType type, OL ol) {
 			var arch = NewEmptyArch(type);
 
@@ -136,6 +151,9 @@ namespace GameLogic
 
 
 		#region Layer
+		/// <summary>
+		/// 根据类型创建一个新的Layer，并初始化为默认值
+		/// </summary>
 		public LayerLogicBase LoadLayer(LayerSaveBase save) {
 			var layer = NewEmptyLayer(save.LayerType);
 			layer.InitFromSave(save.Clone());
@@ -144,6 +162,9 @@ namespace GameLogic
 
 			return layer;
 		}
+		/// <summary>
+		/// 根据类型创建一个新的Layer，并初始化为默认值
+		/// </summary>
 		public LayerLogicBase NewLayer(LayerType type, int lyr) {
 			var layer = NewEmptyLayer(type);
 			var save = Config.GetDefaultLayerSave(type).Clone();

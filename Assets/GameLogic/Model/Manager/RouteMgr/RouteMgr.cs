@@ -24,9 +24,13 @@ namespace GameLogic
 			}
 		}
 
+		/// <summary>
+		/// 获取从start到end的路径，不包含start，包含end
+		/// </summary>
 		public List<Coord> GetRoute(Coord start, Coord end) {
 			if (start.OnSameEdge(end)) {
-				return new(){ end };
+				if (start == end) { return new(); }
+				else { return new(){ end }; }
 			}
 			
 			var q = new PriorityQueue<Coord>();
@@ -40,7 +44,7 @@ namespace GameLogic
 				var cur = top.Value;
 				var dis = cost[cur];
 				if (cur.OnSameEdge(end)) {
-					var res = ReconstructPath(cameFrom, cur, addStart: true);
+					var res = ReconstructPath(cameFrom, cur, addStart: false);
 					if (cur != end) {
 						res.Add(end);
 					}

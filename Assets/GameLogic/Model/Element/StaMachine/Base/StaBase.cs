@@ -5,9 +5,14 @@ namespace GameLogic
 	public abstract class StaBase : ISaveable<StaSaveBase>, IPooledObject {
 
 		protected StaMachine _staMachine;
+		protected VillLogicBase AttachedVill => _staMachine.AttachedVill;
+		private bool _entered;
+		public bool Entered => _entered;
 
 		public abstract StaType StaType { get; }
-		public abstract void Enter();
+		public virtual void Enter() {
+			_entered = true;
+		}
 		public abstract void Execute();
 		public abstract void Exit();
 
@@ -33,12 +38,14 @@ namespace GameLogic
 		protected abstract StaSaveBase GetDerivedSave();
 		public StaSaveBase GetSave() {
 			var save = GetDerivedSave();
-			save.StaType = StaType;
+				save.StaType = StaType;
+				save.Entered = _entered;
 			return save;
 		}
 
 		protected abstract void InitDerivedFromSave(StaSaveBase save);
 		public void InitFromSave(StaSaveBase save) {
+			_entered = save.Entered;
 			InitDerivedFromSave(save);
 		}
 		#endregion

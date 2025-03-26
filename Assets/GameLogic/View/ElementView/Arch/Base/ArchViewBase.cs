@@ -7,15 +7,12 @@ namespace GameLogic
 		
 		private ArchLogicBase _archLogic;
 		
-		public SmoothFade SmoothFade { get; private set; }
 		public SpriteRenderer SpriteRenderer { get; private set; }
 
 		private void Awake() {
-			SmoothFade = GetComponent<SmoothFade>();
 			SpriteRenderer = GetComponent<SpriteRenderer>();
 			SpriteRenderer.sortingOrder = ViewConstMgr.ARCH_SORTING_ORDER;
 		}
-		
 
 		public  void SetArch(ArchLogicBase arch) {
 			_archLogic = arch;

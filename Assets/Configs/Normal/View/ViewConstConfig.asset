@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccddb59df0d769b45b18a860ff324f8c, type: 3}
   m_Name: ViewConstConfig
   m_EditorClassIdentifier: 
-  VX_LX_RATE: 0.2
-  VZ_LY_RATE: 0.2
+  VX_MX_RATE: 0.4
+  VZ_MY_RATE: 0.4
   DEFAULT_Y: 0
   CAMERA_MOVE_SPEED: 12
   CAMERA_STOP_LENGTH: 1

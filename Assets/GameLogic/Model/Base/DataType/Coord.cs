@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameLogic
 {
-	[System.Serializable]
+	[Serializable]
 	public struct Coord {
 		public int X;
 		public int Y;

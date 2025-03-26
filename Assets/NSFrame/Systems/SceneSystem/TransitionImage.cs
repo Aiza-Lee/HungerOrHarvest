@@ -5,7 +5,7 @@ namespace NSFrame {
 	public class TransitionImage : PanelBase {
 		public Image Image;
 		private RectTransform _rectTransform;
-		public override void Awake() {
+		protected override void Awake() {
 			base.Awake();
 			_rectTransform = GetComponent<RectTransform>();
 			_rectTransform.offsetMin = new(0, 0);

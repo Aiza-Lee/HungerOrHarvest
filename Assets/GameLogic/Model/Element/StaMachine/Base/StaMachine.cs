@@ -3,33 +3,45 @@ using NSFrame;
 namespace GameLogic
 {
 	public class StaMachine : ISaveable<StaMachineSave> {
-		public StaMachine() {
+		public StaMachine(VillLogicBase vill) {
+			_vill = vill;
 			EventSystem.AddListener((int)LogicEvt.Tick, Execute);
 		}
+		~StaMachine() {
+			EventSystem.RemoveListener((int)LogicEvt.Tick, Execute);
+		}
+		private readonly VillLogicBase _vill;
 
 		private StaBase _curSta;
-		private VillLogicBase _vill;
 
 
-		public StaType CurSta => _curSta.StaType;
+		public StaType CurStaType => _curSta.StaType;
 		public VillLogicBase AttachedVill => _vill;
 
 
 		private void Execute() {
 			_curSta.Execute();
 		}
+		private void PushCurStaToPool() {
+			if (_curSta == null) return;
+			switch (_curSta.StaType) {
+				case StaType.Work: PoolSystem.PushObj(_curSta as WorkSta); break;
+				case StaType.Sleep: PoolSystem.PushObj(_curSta as SleepSta); break;
+				case StaType.Spare: PoolSystem.PushObj(_curSta as SpareSta); break;
+			}
+		}
 
 
 		#region PublicMethods
-		public void SetOwner(VillLogicBase vill) { _vill = vill; }
 		public void SetStaByType(StaType staType) {
 			SetSta(LogicFctry.Inst.NewSta(staType));
 		}
 		public void SetSta(StaBase sta) {
 			sta.SetStaMachine(this);
 			_curSta?.Exit();
+			PushCurStaToPool();
 			_curSta = sta;
-			_curSta.Enter();
+			if (!_curSta.Entered) { _curSta.Enter(); }
 		}
 		#endregion
 
@@ -41,7 +53,7 @@ namespace GameLogic
 			};
 		}
 		public void InitFromSave(StaMachineSave save) {
-			if (save.CurStaSave != null) {
+			if (save != null && save.CurStaSave != null) {
 				SetSta(LogicFctry.Inst.LoadSta(save.CurStaSave));
 			} else {
 				SetSta(LogicFctry.Inst.NewSta(StaType.Spare));

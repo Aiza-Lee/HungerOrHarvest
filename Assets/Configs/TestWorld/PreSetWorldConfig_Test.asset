@@ -23,6 +23,10 @@ MonoBehaviour:
     Value:
       Key: -3
       Value: 3
+  - Key: -1
+    Value:
+      Key: -3
+      Value: 3
   Arch_OL:
   - Key: 0
     Value:
@@ -30,12 +34,20 @@ MonoBehaviour:
       LYR: 0
   - Key: 0
     Value:
-      ODR: 0
+      ODR: 2
+      LYR: 1
+  - Key: 0
+    Value:
+      ODR: -1
       LYR: 1
   Vill_OL:
   - Key: 0
     Value:
       ODR: 0
+      LYR: 1
+  - Key: 0
+    Value:
+      ODR: 1
       LYR: 1
   UnlockedRepo: 000000000100000002000000
   StartingRepo:
@@ -45,5 +57,5 @@ MonoBehaviour:
     - RepoType: 1
       Value: 100
     - RepoType: 5
-      Value: 1
+      Value: 3
     Full: 0

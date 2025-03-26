@@ -3,7 +3,14 @@ namespace GameLogic
 	public class UnlockOLCmd : ICommand {
 		private OL _ol;
 
-		public bool Check() { return true; }
+		public string CmdTitle => "解锁OL";
+		public string Description => $"{_ol}";
+		public string FailReason => $"{_ol} 已解锁";
+
+		public bool Check() {
+			if (WorldMgr.Inst.IsOLUnlocked(_ol)) { return false; }
+			return true;
+		}
 
 		public ICommand Init(ICmdData data) {
 			var d = (UnlockOLCmdData)data;

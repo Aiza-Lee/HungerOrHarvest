@@ -11,6 +11,7 @@ namespace GameLogic
 		public RTList<float> ProdBuffs;
 		public Coord Coord;
 		public StaMachineSave StaMachine;
+		public ulong ArchToEnter;
 		
 
 		protected abstract VillSaveBase GetDerivedClone();
@@ -26,6 +27,7 @@ namespace GameLogic
 				save.ProdBuffs = ProdBuffs.Clone();
 				save.Coord = Coord;
 				save.StaMachine = StaMachine.Clone();
+				save.ArchToEnter = ArchToEnter;
 			return save;
 		}
 	}

@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 5000195185043624739}
   - component: {fileID: 3681788425469499771}
   - component: {fileID: 1190543676491821184}
+  - component: {fileID: -6640089217545907345}
   m_Layer: 8
   m_Name: BeachLayer
   m_TagString: Untagged
@@ -352,6 +353,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a708084c528218c49acf68f12a6d3809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6640089217545907345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011307254257003627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf1179e851b2ff4d8a58615689f1686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RATE: 1
 --- !u!1 &2350055605833583972
 GameObject:
   m_ObjectHideFlags: 0

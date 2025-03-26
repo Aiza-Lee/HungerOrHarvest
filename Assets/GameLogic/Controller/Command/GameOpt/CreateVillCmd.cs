@@ -4,6 +4,11 @@ namespace GameLogic
 
 		private VillType _villType;
 		private OL _ol;
+
+		public string CmdTitle => "生成村民";
+		public string Description => $"类型:{_villType}  位置:{_ol.ToCoord()}";
+		public string FailReason => string.Empty;
+
 		public ICommand Init(ICmdData data) {
 			var d = (CreateVillCmdData)data;
 			_villType = d.VillType;

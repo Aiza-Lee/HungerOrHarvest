@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "HungerOrHarvest.sln"
+	"dotnet.defaultSolution": "HungerOrHarvest.sln",
+	"dotnet.preferCSharpExtension": true
 }

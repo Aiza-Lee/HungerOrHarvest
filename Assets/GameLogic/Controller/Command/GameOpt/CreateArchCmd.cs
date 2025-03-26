@@ -4,6 +4,11 @@ namespace GameLogic
 		private ArchType _archType;
 		private OL _ol;
 
+		public string CmdTitle => "建造建筑";
+		public string Description => $"类型:{_archType}  位置:{_ol.ToCoord()}";
+		public string FailReason => "资源不足";
+
+
 		public ICommand Init(ICmdData data) {
 			var d = (CreateArchCmdData)data;
 			_archType = d.ArchType;

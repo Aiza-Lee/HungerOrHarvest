@@ -1,5 +1,4 @@
 using System;
-using NSFrame;
 
 namespace GameLogic
 {
@@ -14,6 +13,7 @@ namespace GameLogic
 		private JTList<float> _jobExps_F;
 		private RTList<float> _consBuffs, _prodBuffs;
 		private StaMachine _staMachine;
+		private ulong _archToEnter;
 
 		public ulong ID => _id;
 		public string FirstName => _firstName;
@@ -21,16 +21,17 @@ namespace GameLogic
 		public Coord Coord => _coord;
 		public RTList<float> ConsBuffs => _consBuffs;
 		public RTList<float> ProdBuffs => _prodBuffs;
-		public StaType CurSta {
-			get { return _staMachine.CurSta; }
-			set { _staMachine.SetStaByType(value); }
-		}
+		public ulong ArchToEnter => _archToEnter;
+		public StaType CurSta => _staMachine.CurStaType;
+
+
+		#region Event
 
 		public event Action<Coord> OnCoordChange;
 
+		#endregion
 
-		#region Public Method
-		public void SetStaMachine(StaMachine sm) => _staMachine = sm;
+		#region PublicMethods
 		public void AddExp(JTList<float> exps) {
 			foreach (var JF in exps.List) {
 				var idx = JF.Index;
@@ -63,6 +64,19 @@ namespace GameLogic
 			_coord += dltCoord;
 			OnCoordChange?.Invoke(dltCoord);
 		}
+
+		public void SetWork(ulong arch) {
+			_archToEnter = arch;
+			_staMachine.SetStaByType(StaType.Work);
+		}
+		public void SetSpare() {
+			_staMachine.SetStaByType(StaType.Spare);
+		}
+		public void SetSleep(ulong arch) {
+			_archToEnter = arch;
+			_staMachine.SetStaByType(StaType.Sleep);
+		}
+
 		#endregion
 
 		#region ISaveable
@@ -78,6 +92,7 @@ namespace GameLogic
 				save.ConsBuffs = _consBuffs.Clone();
 				save.ProdBuffs = _prodBuffs.Clone();
 				save.StaMachine = _staMachine.GetSave();
+				save.ArchToEnter = _archToEnter;
 			return save;
 		}
 
@@ -92,8 +107,8 @@ namespace GameLogic
 			_jobExps_F = save.JobExps.ConvertToFull();
 			_consBuffs = save.ConsBuffs;
 			_prodBuffs = save.ProdBuffs;
-			_staMachine = LogicFctry.Inst.LoadStaMachine(save.StaMachine);
-			_staMachine.SetOwner(this);
+			_staMachine = LogicFctry.Inst.LoadStaMachine(this, save.StaMachine);
+			_archToEnter = save.ArchToEnter;
 		}
 		#endregion
 	}
