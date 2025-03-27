@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameLogic
 {
-	public abstract class SmoothChangeBase<T> : MonoBehaviour, IViewStoppable where T : struct {
+	public abstract class SmoothChangeBase<T> : MonoBehaviour where T : struct {
 		abstract public T GetCurVal();
 		abstract protected void DerivedSetCurVal(T val);
 		public void SetCurVal(T val) {
@@ -36,10 +36,8 @@ namespace GameLogic
 		private Action _endCallback;
 
 		private void Update() {
-			if (_updateable) {
-				if (_running) {
-					DealChange();
-				}
+			if (_running) {
+				DealChange();
 			}
 		}
 
@@ -73,11 +71,5 @@ namespace GameLogic
 				_running = false;
 			}
 		}
-
-		#region IViewStoppable
-			private bool _updateable = true;
-			public void Pause() => _updateable = false;
-			public void Run() => _updateable = true;
-		#endregion
 	}
 }

@@ -13,7 +13,7 @@ namespace GameLogic
 		[SerializeField] private float _speed = 1f;
 		[SerializeField] private bool _pause = false;
 
-		private float _timeSum = 0f;
+		private float _realTimeSum = 0f;
 		private float RealTickTime => TickTime / _speed;
 
 		public Action BeforeTick;
@@ -38,8 +38,10 @@ namespace GameLogic
 
 				if (value == true) {
 					EventSystem.Invoke((int)LogicEvt.GamePause);
+					Time.timeScale = 0f;
 				} else {
-					_timeSum = Time.time;
+					_realTimeSum = Time.unscaledTime;
+					Time.timeScale = _speed;
 				}
 				_pause = value;
 			}
@@ -64,9 +66,9 @@ namespace GameLogic
 
 		void Update() {
 			if (_pause) { return; }
-			while (_timeSum + RealTickTime < Time.unscaledTime) {
+			while (_realTimeSum + RealTickTime < Time.unscaledTime) {
 				++TickSum;
-				_timeSum += RealTickTime;
+				_realTimeSum += RealTickTime;
 			}
 		}
 		

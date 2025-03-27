@@ -61,7 +61,7 @@ namespace GameLogic
 			UpdateVill();
 		}
 		private void UpdateVill() {
-			CurPageText.text = $"Page: {_curPage + 1}";
+			CurPageText.text = $"Page: {_curPage + 1} / {(_VillInfos.Count + PER_PAGE_VILL_COUNT - 1) / PER_PAGE_VILL_COUNT}";
 			for (int i = _curPage * PER_PAGE_VILL_COUNT, idx = 0; i < (_curPage + 1) * PER_PAGE_VILL_COUNT; ++i, ++idx) {
 				if (i < _VillInfos.Count) {
 					_sb.Clear();

@@ -48,7 +48,7 @@ namespace GameLogic
 			return HashCode.Combine(ODR, LYR);
 		}
 		public override readonly string ToString() {
-			return $"([{ODR}, {LYR}])";
+			return $"[{ODR}, {LYR}]";
 		}
 	}
 }

@@ -3,12 +3,19 @@ using UnityEngine;
 
 namespace GameLogic
 {
-	public class WorldViewMgr : MonoSingleton<WorldViewMgr> {
+	public class WorldViewMgr : MonoSingleton<WorldViewMgr>, IPlayerControll {
 		protected override void Awake() {
 			base.Awake();
 			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
 			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
 			EventSystem.AddListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L, OnLayerAdded);
+		}
+
+		private void Update() {
+			if (!Controllable) return;
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				CmdRunner.Run("/pause");
+			}
 		}
 
 		private void OnVillAdded(VillLogicBase vill) {
@@ -27,5 +34,9 @@ namespace GameLogic
 			var view = PrefabFctry.Inst.NewLayerView(layer);
 			view.SetSortingLayerID(layer.LYR);
 		}
+
+		#region IPlayerControll
+		public bool Controllable { get; set; } = true;
+		#endregion
 	}
 }

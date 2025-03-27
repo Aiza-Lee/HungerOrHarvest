@@ -1,31 +1,41 @@
+using UnityEngine;
+
 namespace GameLogic
 {
-	public class CreateVillCmd : ICommand {
+	/// <summary>
+	/// Args: VillType, OL
+	/// </summary>
+	public class CreateVillCmd : CommandBase {
 
-		private VillType _villType;
-		private OL _ol;
+		private readonly VillType _villType;
+		private readonly OL _ol;
+		private readonly bool _inited;
 
-		public string CmdTitle => "生成村民";
-		public string Description => $"类型:{_villType}  位置:{_ol.ToCoord()}";
-		public string FailReason => string.Empty;
-
-		public ICommand Init(ICmdData data) {
-			var d = (CreateVillCmdData)data;
-			_villType = d.VillType;
-			_ol = d.OL;
-			return this;
+		public CreateVillCmd(string[] args) : base(args) {
+			_inited = true;
+			if (args.Length != ArgCount) { _inited = false; return; }
+			if (!ParamConverter.TryConvertToEnum(args[0], out _villType)) {
+				_inited = false;
+				Debug.Log($"<<{CmdTitle}>> 参数VillType错误: 无法解析参数{args[0]}");
+			}
+			if (!ParamConverter.TryConvertToOL(args[1], out _ol)) {
+				_inited = false;
+				Debug.Log($"<<{CmdTitle}>> 参数OL错误: 无法解析参数{args[1]}");
+			}
 		}
-		public bool Check() {
-			return true;
+
+		public override string CmdTitle => "生成村民";
+		public override string Description => $"类型:{_villType}  OL:{_ol} Coord:{_ol.ToCoord()}";
+		public override string FailReason => string.Empty;
+		public override int ArgCount => 2;
+
+
+		public override bool Check() {
+			return _inited;
 		}
-		public void Execute() {
+		public override void Execute() {
 			LogicFctry.Inst.NewVill(_villType, _ol);
 		}
-	}
-
-	public class CreateVillCmdData : ICmdData {
-		public VillType VillType;
-		public OL OL;
 	}
 
 }

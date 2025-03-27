@@ -8,32 +8,21 @@ namespace GameLogic
 		public int SaveIndex;
 
 		private void Update() {
-			if (Input.GetKeyDown(KeyCode.Q)) {
-				EndGame();
-			}
-			if (Input.GetKeyDown(KeyCode.P)) {
-				CmdFctry.TogglePause().Run();
-			}
-			if (Input.GetKey(KeyCode.V)) {
-				CmdFctry.CreateVill(VillType.Normal, new(0, 0)).Run();
+			if (Input.GetKeyDown(KeyCode.F11)) {
+				CmdRunner.Run("/save");
+				#if UNITY_EDITOR
+					UnityEditor.EditorApplication.isPlaying = false;
+				#endif
 			}
 
 			// 开始游戏
-			if (Input.GetKeyDown(KeyCode.N)) {
+			if (Input.GetKeyDown(KeyCode.F12)) {
 				var saves = SaveMgr.Inst.GetSaveInfos();
 				if (saves.Count > SaveIndex) {
-					CmdFctry.LoadSave(saves[SaveIndex]).Run();
-				} else {
-					CmdFctry.NewWrold().Run();
+					SaveMgr.Inst.SaveInfo = saves[SaveIndex];
+					SaveMgr.Inst.LoadGame();
 				}
 			}
-		}
-
-		private void EndGame() {
-			CmdFctry.SaveGame().Run();
-			#if UNITY_EDITOR
-				UnityEditor.EditorApplication.isPlaying = false;
-			#endif
 		}
 	}
 }

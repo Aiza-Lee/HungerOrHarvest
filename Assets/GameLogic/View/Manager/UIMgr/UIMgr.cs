@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace GameLogic
 {
-	public class UIMgr : MonoSingleton<UIMgr> {
+	public class UIMgr : MonoSingleton<UIMgr>, IPlayerControll {
+
 		public List<Pair<ViewPanelType, PanelBase>> Panels;
 		private readonly Dictionary<int, PanelBase> _panelDict = new();
 
@@ -17,8 +18,10 @@ namespace GameLogic
 		}
 
 		private void Update() {
-			if (Input.GetKeyDown(KeyCode.Tab)) {
-				TogglePanel(ViewPanelType.MainTest);
+			if (Controllable) {
+				if (Input.GetKeyDown(KeyCode.Tab)) {
+					TogglePanel(ViewPanelType.MainTest);
+				}
 			}
 		}
 
@@ -31,5 +34,9 @@ namespace GameLogic
 				p.Toggle();
 			}
 		}
+
+		#region IPlayerControll
+		public bool Controllable { get; set; } = true;
+		#endregion
 	}
 }

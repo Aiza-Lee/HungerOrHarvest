@@ -1,21 +1,19 @@
 namespace GameLogic
 {
-	public class SaveGameCmd : ICommand {
-		public string CmdTitle => "保存游戏";
-		public string Description => "";
-		public string FailReason => "";
+	public class SaveGameCmd : CommandBase {
+		public SaveGameCmd(string[] args) : base(args) {}
 
-		public bool Check() {
+		public override string CmdTitle => "保存游戏";
+		public override string Description => "";
+		public override string FailReason => "";
+		public override int ArgCount => 0;
+
+		public override bool Check() {
 			return true;
 		}
 
-		public void Execute() {
+		public override void Execute() {
 			SaveMgr.Inst.SaveGame();
 		}
-
-		public ICommand Init(ICmdData _) {
-			return this;
-		}
 	}
-	public class SaveGameCmdData : ICmdData {}
 }

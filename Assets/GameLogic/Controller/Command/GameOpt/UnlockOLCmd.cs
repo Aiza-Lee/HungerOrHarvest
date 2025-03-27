@@ -1,28 +1,44 @@
+using UnityEngine;
+
 namespace GameLogic
 {
-	public class UnlockOLCmd : ICommand {
-		private OL _ol;
+	/// <summary>
+	/// Args: OL
+	/// </summary>
+	public class UnlockOLCmd : CommandBase {
+		private readonly OL _ol;
+		private bool _inited = false;
+		private string _failReason;
 
-		public string CmdTitle => "解锁OL";
-		public string Description => $"{_ol}";
-		public string FailReason => $"{_ol} 已解锁";
+		public UnlockOLCmd(string[] args) : base(args) {
+			_inited = true;
+			if (args.Length != ArgCount) { _inited = false; return; }
+			if (!ParamConverter.TryConvertToOL(args[0], out _ol)) {
+				_inited = false;
+				Debug.Log($"<<{CmdTitle}>> 参数OL错误: 无法解析参数{args[0]}");
+			}
+		}
 
-		public bool Check() {
-			if (WorldMgr.Inst.IsOLUnlocked(_ol)) { return false; }
+		public override string CmdTitle => "解锁OL";
+		public override string Description => $"{_ol}";
+		public override string FailReason => _failReason;
+		public override int ArgCount => 1;
+
+
+		public override bool Check() {
+			if (!_inited) {
+				_failReason = "参数错误";
+				return false;
+			}
+			if (WorldMgr.Inst.IsOLUnlocked(_ol)) { 
+				_failReason = $"{_ol} 已解锁";
+				return false; 
+			}
 			return true;
 		}
 
-		public ICommand Init(ICmdData data) {
-			var d = (UnlockOLCmdData)data;
-			_ol = d.OL;
-			return this;
-		}
-		public void Execute() {
+		public override void Execute() {
 			WorldMgr.Inst.UnlockOL(_ol);
 		}
-	}
-
-	public class UnlockOLCmdData : ICmdData {
-		public OL OL;
 	}
 }

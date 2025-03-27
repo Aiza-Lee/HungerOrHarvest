@@ -1,28 +1,36 @@
+using UnityEngine;
+
 namespace GameLogic
 {
-	public class SetVillSpareCmd : ICommand {
+	/// <summary>
+	/// Args: ulong
+	/// </summary>
+	public class SetVillSpareCmd : CommandBase {
 
-		private VillLogicBase _vill;
+		private readonly VillLogicBase _vill;
 
-		public string CmdTitle => "设置村民Spare";
-		public string Description => $"村民ID:{_vill.ID}  新状态:Spare";
-		public string FailReason => "村民不存在";
+		public SetVillSpareCmd(string[] args) : base(args) {
+			if (args.Length != ArgCount) { return; }
+			if (!ParamConverter.TryDefaultConvert<ulong>(args[0], out var vID)) {
+				Debug.Log($"<<{CmdTitle}>> 参数VillID错误: 无法解析参数{args[0]}");
+			} else {
+				_vill = WorldMgr.Inst.FindVill(vID);
+			}
+		}
 
-		public bool Check() {
+		public override string CmdTitle => "设置村民Spare";
+		public override string Description => $"村民ID:{_vill.ID}  新状态:Spare";
+		public override string FailReason => "村民不存在";
+		public override int ArgCount => 1;
+
+
+		public override bool Check() {
 			return _vill != null;
 		}
 
-		public void Execute() {
+		public override void Execute() {
 			_vill.SetSpare();
 		}
 
-		public ICommand Init(ICmdData data) {
-			var d = data as SetVillSpareCmdData;
-			_vill = d.Vill;
-			return this;
-		}
-	}
-	public class SetVillSpareCmdData : ICmdData {
-		public VillLogicBase Vill;
 	}
 }

@@ -1,16 +1,17 @@
 namespace GameLogic
 {
-	public class TogglePauseCmd : ICommand {
-		public string CmdTitle => "切换暂停状态";
-		public string Description => $"当前状态:{(TickTrigger.Inst.Pause ? "暂停" : "运行")}";
-		public string FailReason => string.Empty;
+	public class TogglePauseCmd : CommandBase {
+		public TogglePauseCmd(string[] args) : base(args) {}
 
-		public bool Check() => true;
+		public override string CmdTitle => "切换暂停状态";
+		public override string Description => $"当前状态:{(TickTrigger.Inst.Pause ? "暂停" : "运行")}";
+		public override string FailReason => string.Empty;
+		public override int ArgCount => 0;
 
-		public void Execute() {
+		public override bool Check() => true;
+
+		public override void Execute() {
 			TickTrigger.Inst.Pause = !TickTrigger.Inst.Pause;
 		}
-
-		public ICommand Init(ICmdData _) => this;
 	}
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GameLogic
 {
 	[RequireComponent(typeof(SmoothMove), typeof(SmoothCameraSize))]
-	public class WorldCameraMgr : MonoSingleton<WorldCameraMgr> {
+	public class WorldCameraMgr : MonoSingleton<WorldCameraMgr>, IPlayerControll {
 		private bool _moveable = true;
 		private ViewConstConfig ViewConfig => ViewConstMgr.GetConfig;
 		
@@ -31,6 +31,12 @@ namespace GameLogic
 		}
 
 		private void Update() {
+			if (Controllable) {
+				UpdatePlayerControll();
+			}
+		}
+
+		private void UpdatePlayerControll() {
 			if (Input.GetKeyDown(KeyCode.F1)) {
 				CameraSize = CameraSize.Focus;
 			} else if (Input.GetKeyDown(KeyCode.F2)) {
@@ -43,13 +49,13 @@ namespace GameLogic
 
 			if (_moveable) {
 				if (Input.GetKey(KeyCode.A)) {
-					SmoothMove.TranslateCurVal(- ViewConfig.CAMERA_MOVE_SPEED * Time.deltaTime * Vector3.right);
+					SmoothMove.TranslateCurVal(-ViewConfig.CAMERA_MOVE_SPEED * Time.unscaledDeltaTime * Vector3.right);
 				}
 				if (Input.GetKeyUp(KeyCode.A)) {
-					SmoothMove.Translate(- ViewConfig.CAMERA_STOP_LENGTH * Vector3.right);
+					SmoothMove.Translate(-ViewConfig.CAMERA_STOP_LENGTH * Vector3.right);
 				}
 				if (Input.GetKey(KeyCode.D)) {
-					SmoothMove.TranslateCurVal(ViewConfig.CAMERA_MOVE_SPEED * Time.deltaTime * Vector3.right);
+					SmoothMove.TranslateCurVal(ViewConfig.CAMERA_MOVE_SPEED * Time.unscaledDeltaTime * Vector3.right);
 				}
 				if (Input.GetKeyUp(KeyCode.D)) {
 					SmoothMove.Translate(ViewConfig.CAMERA_STOP_LENGTH * Vector3.right);
@@ -66,12 +72,16 @@ namespace GameLogic
 					StartCoroutine(LockMoveCoro(SmoothMove.Configs[0].Time));
 				}
 			}
-
 		}
+
 		IEnumerator LockMoveCoro(float time) {
 			_moveable = false;
 			yield return new WaitForSecondsRealtime(time);
 			_moveable = true;
 		}
+
+		#region IPlayerControll
+		public bool Controllable { get; set; } = true;
+		#endregion
 	}
 }
