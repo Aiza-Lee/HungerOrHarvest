@@ -12,33 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ceca0b985aec64f98d04b93bcbc5cb, type: 3}
   m_Name: LogicFctryConfig
   m_EditorClassIdentifier: 
-  DefaultStaMachine:
-    CurStaSave:
-      rid: -2
-  DefaultSpareSta:
-    StaType: 2
-    AttachedSMID: 0
-    Entered: 0
+  DefaultMoveToTaskSave:
+    TaskType: 0
+    IsDone: 0
     Target:
       X: 0
       Y: 0
-    IsArrived: 0
     Route: []
     Timer: 0
     Idx: 0
-  DefaultSleepSta:
-    StaType: 1
-    AttachedSMID: 0
-    Entered: 0
-  DefaultWorkSta:
-    StaType: 0
-    AttachedSMID: 0
-    Entered: 0
-    ArchID: 0
-    IsArrived: 0
-    Route: []
-    Timer: 0
-    Idx: 0
+  DefaultSleepTaskSave:
+    TaskType: 1
+    IsDone: 0
+    HomeID: 0
+  DefaultWorkTaskSave:
+    TaskType: 2
+    IsDone: 0
+    WorkArchId: 0
   DefaultNormalVill:
     ID: 0
     VillType: 0
@@ -59,9 +49,8 @@ MonoBehaviour:
     Coord:
       X: 0
       Y: 0
-    StaMachine:
-      CurStaSave:
-        rid: -2
+    HomeID: 0
+    PrevWorkArchID: 0
   DefaultCottage:
     ArchType: 0
     ID: 0
@@ -75,6 +64,7 @@ MonoBehaviour:
     ConsBuffs:
       List: []
       Full: 0
+    BookedPosVillIDs: 
     InVillIDs: 
   DefaultGrassLayerSave:
     ID: 0
@@ -100,8 +90,3 @@ MonoBehaviour:
     ID: 0
     LayerType: 3
     LYR: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }

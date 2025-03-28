@@ -1,8 +1,7 @@
 namespace GameLogic {
 	public enum TaskType {
-		Move,
+		MoveTo,
 		Sleep,
 		Work,
-		Spare,
 	}
 }

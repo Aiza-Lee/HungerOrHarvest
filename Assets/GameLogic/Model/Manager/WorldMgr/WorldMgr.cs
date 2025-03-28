@@ -136,6 +136,7 @@ namespace GameLogic
 		public void InitFromSave(WorldSave save) {
 			ClearCache();
 			
+			// note: 这里的顺序很重要，村民、TaskRunner、Task的 InitFromSave 中不能调用 FindArch
 			save.VillSaves.ForEach( (save) => LogicFctry.Inst.LoadVill(save) );
 			save.ArchSaves.ForEach( (save) => LogicFctry.Inst.LoadArch(save) );
 			save.LayerSaves.ForEach( (save) => LogicFctry.Inst.LoadLayer(save) );

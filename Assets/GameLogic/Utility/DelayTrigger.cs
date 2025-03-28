@@ -14,11 +14,11 @@ namespace GameLogic
 		private int _delayTick;
 		private int _tickCount;
 
-		public void DestroyForPool() {
+		public void CleanBeforePush() {
 			_action = null;
 			EventSystem.RemoveListener((int)LogicEvt.Tick, AddTick);
 		}
-		public void InitForPool() {
+		public void InitAfterPop() {
 			EventSystem.AddListener((int)LogicEvt.Tick, AddTick);
 		}
 
@@ -43,5 +43,6 @@ namespace GameLogic
 		public static void Run(Action action, int delayTick) {
 			PoolSystem.PopObj<DelayTrigger>().SetTrigger(action, delayTick);
 		}
+
 	}
 }

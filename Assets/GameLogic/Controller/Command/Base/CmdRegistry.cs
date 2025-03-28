@@ -9,6 +9,8 @@ namespace GameLogic
 
 			/* Game Operation */
 			{ "vill-new", (args) => new CreateVillCmd(args) },
+			{ "vill-spare", (args) => new SetVillSpareCmd(args) },
+			{ "vill-work", (args) => new SetVillWorkCmd(args) },
 			{ "arch-new", (args) => new CreateArchCmd(args) },
 			{ "speed", (args) => new SetSpeedCmd(args) },
 			{ "unlock-ol", (args) => new UnlockOLCmd(args) },

@@ -25,7 +25,7 @@ namespace GameLogic
 		}
 
 		public override string CmdTitle => "设置村民Work";
-		public override string Description => $"建筑ID:{_arch.ID}  建筑类型:{_arch.ArchType}  村民ID:{_vill.ID}  新状态:Work";
+		public override string Description => $"村民ID:{_vill.ID}  新状态:Work  分配至  建筑ID:{_arch.ID}  建筑类型:{_arch.ArchType}";
 		public override string FailReason => _failReason;
 		public override int ArgCount => 2;
 
@@ -47,8 +47,7 @@ namespace GameLogic
 		}
 
 		public override void Execute() {
-			_vill.SetWork(_arch.ID);
-			_arch.AddVill(_vill);
+			_vill.GoWork(_arch.ID);
 		}
 
 	}

@@ -22,7 +22,7 @@ MonoBehaviour:
     Full: 0
   ExtraProdVelsPerOne:
     List:
-    - RepoType: 6
+    - RepoType: 0
       Value: 10
     Full: 0
   InherentConsVels:
@@ -36,6 +36,6 @@ MonoBehaviour:
     Full: 0
   ExpAdds:
     List:
-    - Job: 1
+    - Job: 0
       Value: 0.001
     Full: 0

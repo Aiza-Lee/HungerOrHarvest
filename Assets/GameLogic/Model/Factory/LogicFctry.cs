@@ -6,9 +6,9 @@ namespace GameLogic
 
 		protected override void Awake() {
 			base.Awake();
-			PoolSystem.InitObjectPool<SleepSta>();
-			PoolSystem.InitObjectPool<WorkSta>();
-			PoolSystem.InitObjectPool<SpareSta>();
+			PoolSystem.InitObjectPool<MoveToTask>();
+			PoolSystem.InitObjectPool<WorkTask>();
+			PoolSystem.InitObjectPool<SleepTask>();
 		}
 
 		public LogicFctryConfig Config;
@@ -19,7 +19,7 @@ namespace GameLogic
 		/// </summary>
 		public VillLogicBase LoadVill(VillSaveBase save) {
 			var vill = NewEmptyVill(save.VillType);
-			vill.InitFromSave(save.Clone());
+			vill.InitFromSave(save);
 
 			EventSystem.Invoke<VillLogicBase>((int)LogicEvt.VillAdded_V, vill);
 
@@ -43,56 +43,59 @@ namespace GameLogic
 		}
 		#endregion
 
-		#region StaMachine
-		/// <summary>
-		/// 根据保存数据创建一个新的StaMachine，并初始化为保存数据的值
-		/// </summary>
-		public StaMachine LoadStaMachine(VillLogicBase vill, StaMachineSave save) {
-			var sm = new StaMachine(vill);
-			sm.InitFromSave(save);
-			return sm;
+		#region VillTaskRunner
+
+		public VillTaskRunner LoadVillTaskRunner(VillLogicBase vill, VillTaskRunnerSave save) {
+			var runner = new VillTaskRunner(vill);
+			runner.InitFromSave(save);
+			return runner;
 		}
-		/// <summary>
-		/// 根据类型创建一个新的StaMachine，并初始化为默认值
-		/// </summary>
-		public StaMachine NewStaMachine(VillLogicBase vill) {
-			var save = Config.DefaultStaMachine.Clone();
-			return LoadStaMachine(vill, save);
+
+		public VillTaskRunner NewVillTaskRunner(VillLogicBase vill) {
+			return LoadVillTaskRunner(vill, Config.DefaultVillTaskRunnerSave.Clone());
 		}
+
 		#endregion
 
-		#region Sta
-		/// <summary>
-		/// 根据保存数据创建一个新的Sta，并初始化为保存数据的值
-		/// </summary>
-		public StaBase LoadSta(StaSaveBase save) {
-			var type = save.StaType;
-			StaBase sta = type switch {
-				StaType.Sleep => PoolSystem.PopObj<SleepSta>(),
-				StaType.Work => PoolSystem.PopObj<WorkSta>(),
-				StaType.Spare => PoolSystem.PopObj<SpareSta>(),
-				_ => throw new System.NotImplementedException(),
-			};
-			sta.InitFromSave(save);
-			return sta;
+		#region Task
+
+		public TaskBase LoadTask(TaskSaveBase save) {
+			var task = NewEmptyTask(save.TaskType);
+			task.InitFromSave(save);
+			return task;
 		}
 
-		public StaBase NewSta(StaType type) {
-			StaBase sta = type switch {
-				StaType.Work => PoolSystem.PopObj<WorkSta>(),
-				StaType.Sleep => PoolSystem.PopObj<SleepSta>(),
-				StaType.Spare => PoolSystem.PopObj<SpareSta>(),
-				_ => throw new System.NotImplementedException(),
-			};
-			StaSaveBase save = type switch {
-				StaType.Work => Config.DefaultWorkSta.Clone(),
-				StaType.Sleep => Config.DefaultSleepSta.Clone(),
-				StaType.Spare => Config.DefaultSpareSta.Clone(),
-				_ => throw new System.NotImplementedException(),
-			};
-			sta.InitFromSave(save);
-			return sta;
+		public MoveToTask NewMoveToTask(Coord target) {
+			var save = Config.DefaultMoveToTaskSave.Clone() as MoveToTaskSave;
+				save.Target = target;
+			var task = PoolSystem.PopObj<MoveToTask>();
+			task.InitFromSave(save);
+			return task;
 		}
+		public SleepTask NewSleepTask(ulong homeID) {
+			var save = Config.DefaultSleepTaskSave.Clone() as SleepTaskSave;
+				save.HomeID = homeID;
+			var task = PoolSystem.PopObj<SleepTask>();
+			task.InitFromSave(save);
+			return task;
+		}
+		public WorkTask NewWorkTask(ulong archID) {
+			var save = Config.DefaultWorkTaskSave.Clone() as WorkTaskSave;
+				save.WorkArchId = archID;
+			var task = PoolSystem.PopObj<WorkTask>();
+			task.InitFromSave(save);
+			return task;
+		}
+
+		private TaskBase NewEmptyTask(TaskType type) {
+			return type switch {
+				TaskType.MoveTo => PoolSystem.PopObj<MoveToTask>(),
+				TaskType.Sleep => PoolSystem.PopObj<SleepTask>(),
+				TaskType.Work => PoolSystem.PopObj<WorkTask>(),
+				_ => throw new System.NotImplementedException(),
+			};
+		}
+
 
 		#endregion
 

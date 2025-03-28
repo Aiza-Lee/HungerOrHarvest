@@ -9,6 +9,7 @@ namespace GameLogic {
 		public int Level;
 		public RTList<float> ProdBuffs;
 		public RTList<float> ConsBuffs;
+		public List<ulong> BookedPosVillIDs;
 		public List<ulong> InVillIDs;
 
 		protected abstract ArchSaveBase GetDerivedClone();
@@ -20,6 +21,7 @@ namespace GameLogic {
 				save.Level = Level;
 				save.ProdBuffs = ProdBuffs.Clone();
 				save.ConsBuffs = ConsBuffs.Clone();
+				save.BookedPosVillIDs = new(BookedPosVillIDs);
 				save.InVillIDs = new(InVillIDs);
 			return save;
 		}

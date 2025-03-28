@@ -6,15 +6,25 @@ namespace GameLogic
 	public class LogicFctryConfig : ScriptableObject {
 
 
-		[Space][Space][Space] [Header("Default Sta Mahcine Save")] 
-		[Space] public StaMachineSave DefaultStaMachine;
+		// [Space][Space][Space] [Header("Default Sta Mahcine Save")] 
+		// [Space] public StaMachineSave DefaultStaMachine;
 
+
+		[Space][Space][Space] [Header("Default Vill Task Runner Save")] 
+		[Space] public VillTaskRunnerSave DefaultVillTaskRunnerSave;
 
 
 		[Space][Space][Space] [Header("Default Sta Save")]
-		[Space] public SpareStaSave DefaultSpareSta;
-		[Space] public SleepStaSave DefaultSleepSta;
-		[Space] public WorkStaSave DefaultWorkSta;
+		[Space] public MoveToTaskSave DefaultMoveToTaskSave;
+		[Space] public SleepTaskSave DefaultSleepTaskSave;
+		[Space] public WorkTaskSave DefaultWorkTaskSave;
+
+
+
+		// [Space][Space][Space] [Header("Default Sta Save")]
+		// [Space] public SpareStaSave DefaultSpareSta;
+		// [Space] public SleepStaSave DefaultSleepSta;
+		// [Space] public WorkStaSave DefaultWorkSta;
 
 
 

@@ -7,14 +7,14 @@ using UnityEngine;
 namespace GameLogic
 {
 	public class VillTestPanelInMain : MonoBehaviour {
-		public Transform VillInfoContainer; 
+		public Transform VillInfoLayout; 
 		public GameObject OneVillInfoPrefab;
 		public TextMeshProUGUI CurPageText;
 
 		private readonly List<TextMeshProUGUI> _VillInfoTexts = new();
 		private readonly List<VillLogicBase> _VillInfos = new(); 
 		private readonly int[] _villFormat = { 20, 20, 20 };
-		private const int PER_PAGE_VILL_COUNT = 10;
+		private const int PER_PAGE_VILL_COUNT = 20;
 		private int _curPage;
 		private readonly StringBuilder _sb = new(2048);
 
@@ -35,13 +35,13 @@ namespace GameLogic
 
 
 		private void Start() {
-			var cnt = VillInfoContainer.childCount;
+			var cnt = VillInfoLayout.childCount;
 			while (cnt-- != 0) {
-				Destroy(VillInfoContainer.GetChild(0).gameObject);
+				Destroy(VillInfoLayout.GetChild(0).gameObject);
 			}
 			_VillInfoTexts.Clear();
 			for (int i = 0; i < PER_PAGE_VILL_COUNT; ++i) {
-				_VillInfoTexts.Add(GameObject.Instantiate(OneVillInfoPrefab, VillInfoContainer).GetComponent<TextMeshProUGUI>());
+				_VillInfoTexts.Add(GameObject.Instantiate(OneVillInfoPrefab, VillInfoLayout).GetComponent<TextMeshProUGUI>());
 			}
 		}
 		private void OnEnable() {

@@ -7,7 +7,7 @@ namespace NSFrame {
 	/// </summary>
 	public static class EventSystem {
 		
-		private static readonly Dictionary<int, IEventInfo>[] _eventInfos = new Dictionary<int, IEventInfo>[Enum.GetValues(typeof(EventType)).Length];
+		private static readonly Dictionary<int, EventInfoBase>[] _eventInfos = new Dictionary<int, EventInfoBase>[Enum.GetValues(typeof(EventType)).Length];
 
 		static EventSystem() {
 			for (int i = 0; i < _eventInfos.Length; ++i) {
@@ -15,41 +15,39 @@ namespace NSFrame {
 			}
 		}
 
-		private interface IEventInfo { public void Destroy(); }
-		private class EventInfo : IEventInfo, IPooledObject {
+		private abstract class EventInfoBase : IPooledObject {
+			public void InitAfterPop() { }
+			public abstract void CleanBeforePush();
+		}
+		private class EventInfo : EventInfoBase {
 			public Action handler;
-			public void Destroy() { handler = null; PoolSystem.PushObj(this); }
-
-			public void DestroyForPool() {}
-			public void InitForPool() {}
+			public override void CleanBeforePush() {
+				handler = null;
+			}
 		}
-		private class EventInfo<T> : IEventInfo, IPooledObject {
+		private class EventInfo<T> : EventInfoBase, IPooledObject {
 			public Action<T> handler;
-			public void Destroy(){ handler = null; PoolSystem.PushObj(this); }
-
-			public void DestroyForPool() {}
-			public void InitForPool() {}
+			public override void CleanBeforePush() {
+				handler = null;
+			}
 		}
-		private class EventInfo<T1, T2> : IEventInfo, IPooledObject {
+		private class EventInfo<T1, T2> : EventInfoBase, IPooledObject {
 			public Action<T1, T2> handler;
-			public void Destroy() { handler = null; PoolSystem.PushObj(this); }
-
-			public void DestroyForPool() {}
-			public void InitForPool() {}
+			public override void CleanBeforePush() {
+				handler = null;
+			}
 		}
-		private class EventInfo<T1, T2, T3> : IEventInfo, IPooledObject {
+		private class EventInfo<T1, T2, T3> : EventInfoBase, IPooledObject {
 			public Action<T1, T2, T3> handler;
-			public void Destroy() { handler = null; PoolSystem.PushObj(this); }
-
-			public void DestroyForPool() {}
-			public void InitForPool() {}
+			public override void CleanBeforePush() {
+				handler = null;
+			}
 		}
-		private class EventInfo<T1, T2, T3, T4> : IEventInfo, IPooledObject {
+		private class EventInfo<T1, T2, T3, T4> : EventInfoBase, IPooledObject {
 			public Action<T1, T2, T3, T4> handler;
-			public void Destroy() { handler = null; PoolSystem.PushObj(this); }
-
-			public void DestroyForPool() {}
-			public void InitForPool() {}
+			public override void CleanBeforePush() {
+				handler = null;
+			}
 		}
 		
 		public static void AddListener(int eventID, Action action, EventType eventType = EventType.Default) {
@@ -167,14 +165,17 @@ namespace NSFrame {
 		public static void RemoveEvent(int eventID, EventType eventType = EventType.Default) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) {
-				_eventInfos[type][eventID].Destroy();
+				var ei = _eventInfos[type][eventID];
+				PoolSystem.PushObj(ei.GetType(), ei);
 				_eventInfos[type].Remove(eventID);
 			}
 		}
 		public static void RemoveAllEvent(EventType eventType = EventType.Default) {
 			int type = (int)eventType;
-			foreach (int eventID in _eventInfos[type].Keys) 
-				_eventInfos[type][eventID].Destroy();
+			foreach (int eventID in _eventInfos[type].Keys) {
+				var ei = _eventInfos[type][eventID];
+				PoolSystem.PushObj(ei.GetType(), ei);
+			}
 			_eventInfos[type].Clear();
 		}
 	}

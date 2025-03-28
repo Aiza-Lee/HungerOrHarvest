@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 namespace NSFrame {
-	public class ObjectPool<T> : IObjectPool where T : class,IPooledObject, new() {
+	public class ObjectPool<T> : IObjectPool where T : class, IPooledObject, new() {
 
 		const int MAX_POP_PER_FRAME = 4;
 
@@ -22,7 +22,7 @@ namespace NSFrame {
 				Debug.LogError("NS: Trying to put a wrong type object to ObjectPool.");
 				return;
 			}
-			item.DestroyForPool();
+			item.CleanBeforePush();
 			if (_maxCapacity != -1 && _poolQue.Count == _maxCapacity) return;
 			_poolQue.Enqueue(item);
 		}
@@ -30,7 +30,7 @@ namespace NSFrame {
 			if (!_poolQue.TryDequeue(out T obj)) {
 				obj = new T();
 			}
-			obj.InitForPool();
+			obj.InitAfterPop();
 			return obj;
 		}
 		public void SetMaxCapacity(int maxCapacity) {

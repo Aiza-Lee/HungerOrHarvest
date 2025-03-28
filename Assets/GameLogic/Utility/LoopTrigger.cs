@@ -17,12 +17,12 @@ namespace GameLogic
 		private int _sumTriggerTimes;
 		private int _triggerCnt;
 
-		public void DestroyForPool() {
+		public void CleanBeforePush() {
 			_action = null;
 			_onComplete = null;
 			EventSystem.RemoveListener((int)LogicEvt.Tick, AddTick);
 		}
-		public void InitForPool() {
+		public void InitAfterPop() {
 			EventSystem.AddListener((int)LogicEvt.Tick, AddTick);
 		}
 
@@ -54,5 +54,6 @@ namespace GameLogic
 		public static void Run(Action action, float gap, int triggerTimes, Action onComplete = null) {
 			PoolSystem.PopObj<LoopTrigger>().SetTrigger(action, gap, triggerTimes, onComplete);
 		}
+
 	}
 }

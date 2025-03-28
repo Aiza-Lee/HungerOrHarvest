@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DAY_TICKS: 300
   NIGHT_TICKS: 100
-  VILL_ONE_MOVE_TICK: 20
+  VILL_ONE_MOVE_TICK: 10
   JobConfigs:
   - Key: 0
     Value: {fileID: 11400000, guid: 6bd4c7cf2db66534ab385b4570afafdc, type: 2}

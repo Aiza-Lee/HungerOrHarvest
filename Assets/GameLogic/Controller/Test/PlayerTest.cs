@@ -21,6 +21,11 @@ namespace GameLogic
 				if (saves.Count > SaveIndex) {
 					SaveMgr.Inst.SaveInfo = saves[SaveIndex];
 					SaveMgr.Inst.LoadGame();
+				} else {
+					WorldGenerator.Inst.Generate();
+					var saveInfo = SaveSystem.CreateSaveFile();
+					SaveMgr.Inst.SaveInfo = saveInfo;
+					SaveMgr.Inst.SaveGame();
 				}
 			}
 		}

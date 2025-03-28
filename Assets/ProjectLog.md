@@ -11,24 +11,16 @@
 ## 可能的性能优化
 * View直接获取逻辑对象的引用而不是用ID来获取
 
-## 发布过的事件汇总
+## Note
 * 详见 `LogicEvent` 枚举
+* 跃层的村民的SortingLayer统一改成向上取整的那一层，跃层时更改SortingOrder为统一的较大值
+* 检查 代码中的 todo test throw
+
+
 
 ## Todo
-* 村民任务系统 -> 改成状态机，尤其要保留完成工作后的回调
-* 考虑专门做一个视察MGR状态的类，不然场景里放一大堆
-  * 非常有必要，主要是serialized私有字段并不能满足调整的要求，还是得在游戏场景中管理
 * 地图边缘(改成定长坐标得了)
-* 跃层的村民的SortingLayer统一改成向上取整的那一层，跃层时更改SortingOrder为统一的较大值
 
-
-## Todo2
-* 研究一下发光贴图，用这个方法解决Light不受Scale影响的问题
-  * Solution: 类似于 _MainTex 和 _BaseMap，在 sprite Editor 中添加次级纹理
-
-
-## Final Todo
-* 检查 代码中的 todo test throw
 
 ## 2025/2/21
 

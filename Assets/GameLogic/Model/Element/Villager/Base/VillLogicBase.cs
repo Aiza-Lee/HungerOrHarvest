@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace GameLogic
 {
@@ -12,26 +13,31 @@ namespace GameLogic
 		private JTList<int> _jobLevel_F;
 		private JTList<float> _jobExps_F;
 		private RTList<float> _consBuffs, _prodBuffs;
-		private StaMachine _staMachine;
-		private ulong _archToEnter;
+		private VillTaskRunner _taskRunner;
+		private ulong _homeID;
+		private ulong _prevWorkArchID;
 
 		public ulong ID => _id;
 		public string FirstName => _firstName;
 		public string LastName => _lastName;
 		public Coord Coord => _coord;
-		public RTList<float> ConsBuffs => _consBuffs;
-		public RTList<float> ProdBuffs => _prodBuffs;
-		public ulong ArchToEnter => _archToEnter;
-		public StaType CurSta => _staMachine.CurStaType;
+		public RTList<float> ConsBuffs_F => _consBuffs.ConvertToFull();
+		public RTList<float> ProdBuffs_F => _prodBuffs.ConvertToFull();
+		public VillTaskRunner TaskRunner => _taskRunner;
 
+
+		private void Die() {
+			Debug.Log($"Vill {_id} has no home");
+			// todo: 
+			TaskRunner.ResetTasks();
+		}
 
 		#region Event
-
 		public event Action<Coord> OnCoordChange;
-
 		#endregion
 
 		#region PublicMethods
+
 		public void AddExp(JTList<float> exps) {
 			foreach (var JF in exps.List) {
 				var idx = JF.Index;
@@ -65,16 +71,46 @@ namespace GameLogic
 			OnCoordChange?.Invoke(dltCoord);
 		}
 
-		public void SetWork(ulong arch) {
-			_archToEnter = arch;
-			_staMachine.SetStaByType(StaType.Work);
+		public bool GoWork(ulong archID) {
+			var arch = WorldMgr.Inst.FindArch(archID);
+			if (arch == null) {
+				return false;
+			}
+			if (!arch.TryBookPos(this)) {
+				return false;
+			}
+			_taskRunner.ResetTasks(
+				LogicFctry.Inst.NewMoveToTask(arch.Coord),
+				LogicFctry.Inst.NewWorkTask(archID)
+			);
+			_prevWorkArchID = archID;
+			return true;
+		}
+		public bool GoSleep() {
+			if (WorldMgr.Inst.FindArch(_homeID) is not CottageLogic cottage) {
+				return false;
+			}
+			if (!cottage.TryBookPos(this)) {
+				return false;
+			}
+			_taskRunner.ResetTasks(
+				LogicFctry.Inst.NewMoveToTask(cottage.Coord),
+				LogicFctry.Inst.NewSleepTask(_homeID)
+			);
+			return true;
 		}
 		public void SetSpare() {
-			_staMachine.SetStaByType(StaType.Spare);
+			_taskRunner.ResetTasks();
 		}
-		public void SetSleep(ulong arch) {
-			_archToEnter = arch;
-			_staMachine.SetStaByType(StaType.Sleep);
+		public void OnDayStart() {
+			if (!GoWork(_prevWorkArchID)) {
+				_taskRunner.ResetTasks();
+			}
+		}
+		public void OnNightStart() {
+			if (!GoSleep()) {
+				Die();
+			}
 		}
 
 		#endregion
@@ -83,32 +119,34 @@ namespace GameLogic
 		protected abstract VillSaveBase GetDerivedSave();
 		public VillSaveBase GetSave() {
 			var save = GetDerivedSave();
-				save.ID = _id;
-				save.FirstName = _firstName;
-				save.LastName = _lastName;
-				save.Coord = _coord;
-				save.JobLevel = _jobLevel_F.Clone();
-				save.JobExps = _jobExps_F.Clone();
-				save.ConsBuffs = _consBuffs.Clone();
-				save.ProdBuffs = _prodBuffs.Clone();
-				save.StaMachine = _staMachine.GetSave();
-				save.ArchToEnter = _archToEnter;
+				save.ID 			= _id;
+				save.FirstName 		= _firstName;
+				save.LastName 		= _lastName;
+				save.Coord 			= _coord;
+				save.JobLevel 		= _jobLevel_F.Clone();
+				save.JobExps 		= _jobExps_F.Clone();
+				save.ConsBuffs 		= _consBuffs.Clone();
+				save.ProdBuffs 		= _prodBuffs.Clone();
+				save.TaskRunner 	= _taskRunner.GetSave();
+				save.HomeID 		= _homeID;
+				save.PrevWorkArchID = _prevWorkArchID;
 			return save;
 		}
 
 		protected abstract void DerivedInitFromSave(VillSaveBase save);
 		public virtual void InitFromSave(VillSaveBase save) {
 			DerivedInitFromSave(save);
-			_id = save.ID;
-			_firstName = save.FirstName;
-			_lastName = save.LastName;
-			_coord = save.Coord;
-			_jobLevel_F = save.JobLevel.ConvertToFull();
-			_jobExps_F = save.JobExps.ConvertToFull();
-			_consBuffs = save.ConsBuffs;
-			_prodBuffs = save.ProdBuffs;
-			_staMachine = LogicFctry.Inst.LoadStaMachine(this, save.StaMachine);
-			_archToEnter = save.ArchToEnter;
+			_id 			= save.ID;
+			_firstName 		= save.FirstName;
+			_lastName 		= save.LastName;
+			_coord 			= save.Coord;
+			_jobLevel_F 	= save.JobLevel.ConvertToFull();
+			_jobExps_F 		= save.JobExps.ConvertToFull();
+			_consBuffs 		= save.ConsBuffs;
+			_prodBuffs 		= save.ProdBuffs;
+			_taskRunner 	= LogicFctry.Inst.LoadVillTaskRunner(this, save.TaskRunner);
+			_homeID 		= save.HomeID;
+			_prevWorkArchID = save.PrevWorkArchID;
 		}
 		#endregion
 	}
