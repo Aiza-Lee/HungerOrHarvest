@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic
@@ -10,9 +11,9 @@ namespace GameLogic
 		private bool _inited = false;
 		private string _failReason;
 
-		public UnlockOLCmd(string[] args) : base(args) {
+		public UnlockOLCmd(List<string> args) : base(args) {
 			_inited = true;
-			if (args.Length != ArgCount) { _inited = false; return; }
+			if (args.Count != ArgCount) { _inited = false; return; }
 			if (!ParamConverter.TryConvertToOL(args[0], out _ol)) {
 				_inited = false;
 				Debug.Log($"<<{CmdTitle}>> 参数OL错误: 无法解析参数{args[0]}");

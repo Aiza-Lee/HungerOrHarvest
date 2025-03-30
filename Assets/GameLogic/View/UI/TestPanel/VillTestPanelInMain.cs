@@ -13,7 +13,7 @@ namespace GameLogic
 
 		private readonly List<TextMeshProUGUI> _VillInfoTexts = new();
 		private readonly List<VillLogicBase> _VillInfos = new(); 
-		private readonly int[] _villFormat = { 20, 20, 20 };
+		private readonly int[] _villFormat = { 20, 20, 20, 20 };
 		private const int PER_PAGE_VILL_COUNT = 20;
 		private int _curPage;
 		private readonly StringBuilder _sb = new(2048);
@@ -32,6 +32,7 @@ namespace GameLogic
 
 
 		private void OnVillAdded(VillLogicBase vill) => _VillInfos.Add(vill);
+		private void OnVillDestroyed(VillLogicBase vill) => _VillInfos.Remove(vill);
 
 
 		private void Start() {
@@ -46,6 +47,7 @@ namespace GameLogic
 		}
 		private void OnEnable() {
 			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
+			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V, OnVillDestroyed);
 			_curPage = 0;
 			var vills = WorldMgr.Inst.GetAllVills;
 			foreach (var v in vills) {
@@ -54,6 +56,7 @@ namespace GameLogic
 		}
 		private void OnDisable() {
 			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
+			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V, OnVillDestroyed);
 			_VillInfos.Clear();
 		}
 
@@ -69,6 +72,7 @@ namespace GameLogic
 					_sb.Append($"ID: {v.ID}".PadRight(_villFormat[0]));
 					_sb.Append($"{v.Coord}".PadRight(_villFormat[1]));
 					_sb.Append($"Name: {v.LastName + v.FirstName}".PadRight(_villFormat[2]));
+					_sb.Append($"Task: {v.TaskRunner.CurTaskType}".PadRight(_villFormat[3]));
 					_sb.AppendLine();
 					_VillInfoTexts[idx].text = _sb.ToString();
 				} else {

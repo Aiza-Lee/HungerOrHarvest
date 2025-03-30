@@ -8,6 +8,9 @@ namespace GameLogic
 	public class WorldCameraMgr : MonoSingleton<WorldCameraMgr>, IPlayerControll {
 		private bool _moveable = true;
 		private ViewConstConfig ViewConfig => ViewConstMgr.GetConfig;
+
+		private Transform _curFocus;
+		private bool _IsFocusing = false;
 		
 		[SerializeField] private CameraSize _cameraSize;
 		public CameraSize CameraSize { 
@@ -31,9 +34,21 @@ namespace GameLogic
 		}
 
 		private void Update() {
-			if (Controllable) {
+			if (Controllable && !_IsFocusing) {
 				UpdatePlayerControll();
+			} else if (_IsFocusing) {
+				UpdateFocus();
 			}
+		}
+
+		private void UpdateFocus() {
+			if (_curFocus == null) {
+				Debug.LogWarning("Camera focus target lost.");
+				_IsFocusing = false;
+				return;
+			}
+			var target = _curFocus.position - ViewConstMgr.LayerGap * Vector3.forward;
+			SmoothMove.SetCurVal(new(target.x, transform.position.y, target.z));
 		}
 
 		private void UpdatePlayerControll() {
@@ -79,6 +94,21 @@ namespace GameLogic
 			yield return new WaitForSecondsRealtime(time);
 			_moveable = true;
 		}
+
+		#region PublicMethods
+		public void FocusOn(Transform target) {
+			_IsFocusing = true;
+			_curFocus = target;
+			CameraSize = CameraSize.Focus;
+		}
+		public void FreeView() {
+			if (!_IsFocusing) return;
+			_IsFocusing = false;
+			_curFocus = null;
+			CameraSize = CameraSize.Normal;
+			SmoothMove.SetCurVal(new(transform.position.x, transform.position.y, transform.position.GetBackLyrZ()));
+		}
+		#endregion
 
 		#region IPlayerControll
 		public bool Controllable { get; set; } = true;

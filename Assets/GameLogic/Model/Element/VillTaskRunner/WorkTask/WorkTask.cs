@@ -11,10 +11,10 @@ namespace GameLogic
 		}
 
 		public override void End() {
-			WorkArch.VillLeave(AttachedVill);
+			WorkArch.VillLeave(AttachedVill.ID);
 		}
 		public override void Enter() {
-			WorkArch.VillArrive(AttachedVill);
+			WorkArch.VillArrive(AttachedVill.ID);
 		}
 		public override void Execute() {
 			// note: 似乎村民的资源产出逻辑应该写在这里，目前写在 ArchLogicBase 的 UpdateRepo 中

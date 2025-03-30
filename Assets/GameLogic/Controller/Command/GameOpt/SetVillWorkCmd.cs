@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic
@@ -10,8 +11,8 @@ namespace GameLogic
 		private readonly ArchLogicBase _arch;
 		private string _failReason;
 
-		public SetVillWorkCmd(string[] args) : base(args) {
-			if (args.Length != ArgCount) { return; }
+		public SetVillWorkCmd(List<string> args) : base(args) {
+			if (args.Count != ArgCount) { return; }
 			if (!ParamConverter.TryDefaultConvert<ulong>(args[0], out var vID)) {
 				Debug.Log($"<<{CmdTitle}>> 参数VillID错误: 无法解析参数{args[0]}");
 			} else {

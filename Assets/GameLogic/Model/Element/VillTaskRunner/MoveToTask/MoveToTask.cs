@@ -10,8 +10,7 @@ namespace GameLogic
 		private int _idx;
 		private int _timer;
 
-		public override void End() {
-		}
+		public override void End() { }
 		public override void Enter() {
 			if (AttachedVill.Coord != _target) {
 				_idx = 0;
@@ -19,11 +18,11 @@ namespace GameLogic
 				_route = RouteMgr.Inst.GetRoute(AttachedVill.Coord, _target);
 			} else {
 				IsEnded = true;
-				End();
 			}
 		}
 
 		public override void Execute() {
+			if (IsEnded) { return; }
 			++_timer;
 			if (_timer >= ConstMgr.Inst.Config.VILL_ONE_MOVE_TICK) {
 				_timer = 0;

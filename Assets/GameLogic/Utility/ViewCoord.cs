@@ -14,5 +14,9 @@ namespace GameLogic
 		public static Vector3 ToViewCoord(this OL ol) {
 			return ol.ToCoord().ToViewCoord();
 		}
+
+		public static float GetBackLyrZ(this Vector3 vec3) {
+			return Mathf.FloorToInt(vec3.z / ViewConstMgr.LayerGap) * ViewConstMgr.LayerGap;
+		}
 	}
 }

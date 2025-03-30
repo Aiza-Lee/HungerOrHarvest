@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CottageLevelConfig_0
   m_EditorClassIdentifier: 
   Level: 0
-  MaxContain: 1
+  MaxContain: 50
   Introductions: 
   InherentProdVels:
     List:
@@ -23,7 +23,7 @@ MonoBehaviour:
   ExtraProdVelsPerOne:
     List:
     - RepoType: 0
-      Value: 10
+      Value: 0.2
     Full: 0
   InherentConsVels:
     List: []

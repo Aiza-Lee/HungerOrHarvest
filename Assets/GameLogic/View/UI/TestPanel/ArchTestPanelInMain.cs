@@ -33,6 +33,7 @@ namespace GameLogic
 
 
 		private void OnArchAdded(ArchLogicBase arch) => _ArchInfos.Add(arch);
+		private void OnArchDestroyed(ArchLogicBase arch) => _ArchInfos.Remove(arch);
 
 
 		private void Start() {
@@ -47,6 +48,7 @@ namespace GameLogic
 		}
 		private void OnEnable() {
 			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, OnArchDestroyed);
 			_curPage = 0;
 			var vills = WorldMgr.Inst.GetAllArchs;
 			foreach (var v in vills) {
@@ -55,6 +57,7 @@ namespace GameLogic
 		}
 		private void OnDisable() {
 			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
+			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, OnArchDestroyed);
 			_ArchInfos.Clear();
 		}
 
@@ -78,7 +81,7 @@ namespace GameLogic
 							++cnt;
 							if (cnt == PER_LINE_ID_COUNT) cnt = 0;
 						}
-						_sb.Append($"{vill.ID}".PadRight(_archFormat[0]));
+						_sb.Append($"{vill}".PadRight(_archFormat[0]));
 					}
 
 					_ArchInfoTexts[idx].text = _sb.AppendLine().ToString();

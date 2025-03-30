@@ -5,7 +5,7 @@ namespace GameLogic
 	/// <para>ID从1开始，每次调用GetID()方法时，返回当前ID并将ID加1</para>
 	/// ID为0表示无效ID
 	/// </summary>
-	public class IDMgr : ISaveable<IDMgrSave> {
+	public class IDMgr : ISaveable<IDMgrSave>, IClearMgr {
 		private IDMgr() {}
 		private static readonly IDMgr _inst = new();
 		public static IDMgr Inst => _inst;
@@ -25,5 +25,7 @@ namespace GameLogic
 		public void InitFromSave(IDMgrSave save) {
 			_curID = save.CurID;
 		}
+
+		public void ClearMgr() { }
 	}
 }

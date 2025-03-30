@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace GameLogic
 {
 	public class TogglePauseCmd : CommandBase {
-		public TogglePauseCmd(string[] args) : base(args) {}
+		public TogglePauseCmd(List<string> args) : base(args) {}
 
 		public override string CmdTitle => "切换暂停状态";
 		public override string Description => $"当前状态:{(TickTrigger.Inst.Pause ? "暂停" : "运行")}";

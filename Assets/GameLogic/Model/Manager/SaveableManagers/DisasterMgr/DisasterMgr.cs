@@ -1,9 +1,10 @@
 namespace GameLogic
 {
-	public sealed class DisasterMgr : ISaveable<DisasterMgrSave> {
+	public sealed class DisasterMgr : ISaveable<DisasterMgrSave>, IClearMgr {
 		private DisasterMgr() {}
 		public static DisasterMgr Inst { get; } = new();
 
+		public void ClearMgr() { }
 
 		public DisasterMgrSave GetSave() {
 			return new DisasterMgrSave();

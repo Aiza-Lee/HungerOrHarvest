@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic
@@ -9,8 +10,8 @@ namespace GameLogic
 
 		private readonly VillLogicBase _vill;
 
-		public SetVillSpareCmd(string[] args) : base(args) {
-			if (args.Length != ArgCount) { return; }
+		public SetVillSpareCmd(List<string> args) : base(args) {
+			if (args.Count != ArgCount) { return; }
 			if (!ParamConverter.TryDefaultConvert<ulong>(args[0], out var vID)) {
 				Debug.Log($"<<{CmdTitle}>> 参数VillID错误: 无法解析参数{args[0]}");
 			} else {
@@ -29,7 +30,7 @@ namespace GameLogic
 		}
 
 		public override void Execute() {
-			_vill.SetSpare();
+			_vill.GoSpare();
 		}
 
 	}

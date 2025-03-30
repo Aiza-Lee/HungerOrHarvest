@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ceca0b985aec64f98d04b93bcbc5cb, type: 3}
   m_Name: LogicFctryConfig
   m_EditorClassIdentifier: 
+  DefaultVillTaskRunnerSave:
+    Tasks: []
   DefaultMoveToTaskSave:
-    TaskType: 0
-    IsDone: 0
+    TaskType: 1
+    IsEnded: 0
     Target:
       X: 0
       Y: 0
@@ -22,18 +24,18 @@ MonoBehaviour:
     Timer: 0
     Idx: 0
   DefaultSleepTaskSave:
-    TaskType: 1
-    IsDone: 0
+    TaskType: 2
+    IsEnded: 0
     HomeID: 0
   DefaultWorkTaskSave:
-    TaskType: 2
-    IsDone: 0
+    TaskType: 3
+    IsEnded: 0
     WorkArchId: 0
   DefaultNormalVill:
     ID: 0
     VillType: 0
-    FirstName: "\u9ED8\u8BA4\u540D\u79F0"
-    LastName: "\u9ED8\u8BA4\u59D3\u6C0F"
+    FirstName: Bubbler
+    LastName: 
     JobLevel:
       List: []
       Full: 0
@@ -49,6 +51,8 @@ MonoBehaviour:
     Coord:
       X: 0
       Y: 0
+    TaskRunner:
+      Tasks: []
     HomeID: 0
     PrevWorkArchID: 0
   DefaultCottage:
@@ -66,6 +70,7 @@ MonoBehaviour:
       Full: 0
     BookedPosVillIDs: 
     InVillIDs: 
+    BondedVillIDs: 
   DefaultGrassLayerSave:
     ID: 0
     LayerType: 0
@@ -90,3 +95,6 @@ MonoBehaviour:
     ID: 0
     LayerType: 3
     LYR: 0
+  references:
+    version: 2
+    RefIds: []

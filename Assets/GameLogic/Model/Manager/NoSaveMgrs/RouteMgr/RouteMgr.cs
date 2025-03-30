@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameLogic
 {
-	public class RouteMgr {
+	public class RouteMgr : IClearMgr {
 		private RouteMgr() {}
 		public static RouteMgr Inst { get; } = new();
 		
@@ -89,5 +89,7 @@ namespace GameLogic
 			path.Reverse();
 			return path;
 		}
+
+		public void ClearMgr() { }
 	}
 }

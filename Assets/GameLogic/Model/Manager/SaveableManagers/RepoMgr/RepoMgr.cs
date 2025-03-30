@@ -1,6 +1,6 @@
 namespace GameLogic
 {
-	public sealed class RepoMgr : ISaveable<RepoMgrSave> {
+	public sealed class RepoMgr : ISaveable<RepoMgrSave>, IClearMgr {
 		private RepoMgr() {}
 		public static RepoMgr Inst { get; } = new();
 
@@ -99,5 +99,7 @@ namespace GameLogic
 			_globalProdBuffs_F = saveData.GlobalProdBuffs.ConvertToFull();
 			_unlockedRepos_F = saveData.UnlockedRepos.ConvertToFull();
 		}
+
+		public void ClearMgr() { }
 	}
 }

@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic
 {
 	public abstract class CommandBase {
 		public abstract int ArgCount { get; }
-		public CommandBase(string[] args) {
-			if (args.Length != ArgCount) {
+		public CommandBase(List<string> args) {
+			if (args.Count != ArgCount) {
 				Debug.Log($"<<{CmdTitle}>> 参数数量错误");
 				return;
 			}

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic
@@ -9,9 +10,9 @@ namespace GameLogic
 		private readonly float _speed;
 		private readonly bool _inited;
 
-		public SetSpeedCmd(string[] args) : base(args) {
+		public SetSpeedCmd(List<string> args) : base(args) {
 			_inited = true;
-			if (args.Length != ArgCount) { _inited = false; return; }
+			if (args.Count != ArgCount) { _inited = false; return; }
 			if (!ParamConverter.TryDefaultConvert(args[0], out _speed)) {
 				_inited = false;
 				Debug.Log($"<<{CmdTitle}>> 参数Speed错误: 无法解析参数{args[0]}");

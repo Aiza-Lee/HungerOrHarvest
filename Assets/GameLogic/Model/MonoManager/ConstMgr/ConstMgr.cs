@@ -20,8 +20,8 @@ namespace GameLogic
 		/// <summary>
 		/// 保证为偶数
 		/// </summary>
-		public static readonly int X_PER_ODR = 50;
-		public static readonly int Y_PER_LYR = 50;
+		public static readonly int X_PER_ODR = 24;
+		public static readonly int Y_PER_LYR = 48;
 		
 		public static readonly int VILL_SPARE_ORD_RADIUS = 3;
 

@@ -3,15 +3,31 @@ using NSFrame;
 
 namespace GameLogic
 {
-	public sealed class SaveMgr {
-		private SaveMgr() {}
-		public static SaveMgr Inst { get; } = new();
+	/// <summary>
+	/// 游戏从始至末的管理
+	/// </summary>
+	public class GameMgr : MonoSingleton<GameMgr> {
 
 		private SaveInfo _saveInfo;
-		public SaveInfo SaveInfo { get => _saveInfo; set => _saveInfo = value; }
 
-		public List<SaveInfo> GetSaveInfos() {
-			return SaveSystem.GetAllSaveInfos();
+		private  List<IClearMgr> _mgrs;
+
+		private void Start() {
+			_mgrs = new() {
+				MapMgr.Inst,
+				DisasterMgr.Inst,
+				IDMgr.Inst,
+				LogicTimeMgr.Inst,
+				RepoMgr.Inst,
+				RouteMgr.Inst,
+				RoomMgr.Inst,
+				WorldMgr.Inst,
+			};
+			EventSystem.Invoke((int)LogicEvt.MgrInitAfterMono);
+		}
+
+		public void RegisterSaveInfo(SaveInfo saveInfo) {
+			_saveInfo = saveInfo;
 		}
 
 		public void SaveGame() {
@@ -25,12 +41,12 @@ namespace GameLogic
 		}
 
 		public void LoadGame() {
+			_mgrs.ForEach(mgr => mgr.ClearMgr());
 			WorldMgr.Inst.InitFromSave(SaveSystem.LoadObject<WorldSave>(_saveInfo));
 			IDMgr.Inst.InitFromSave(SaveSystem.LoadObject<IDMgrSave>(_saveInfo));
 			LogicTimeMgr.Inst.InitFromSave(SaveSystem.LoadObject<LogicTimeMgrSave>(_saveInfo));
 			RepoMgr.Inst.InitFromSave(SaveSystem.LoadObject<RepoMgrSave>(_saveInfo));
 			DisasterMgr.Inst.InitFromSave(SaveSystem.LoadObject<DisasterMgrSave>(_saveInfo));
 		}
-
 	}
 }

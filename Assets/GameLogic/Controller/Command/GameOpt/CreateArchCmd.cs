@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic 
@@ -9,8 +10,8 @@ namespace GameLogic
 		private readonly ArchType _archType;
 		private readonly OL _ol;
 
-		public CreateArchCmd(string[] args) : base(args) {
-			if (args.Length != ArgCount) { return; }
+		public CreateArchCmd(List<string> args) : base(args) {
+			if (args.Count != ArgCount) { return; }
 			if (!ParamConverter.TryConvertToEnum(args[0], out _archType)) {
 				Debug.Log($"<<{CmdTitle}>> 参数ArchType错误: 无法解析参数{args[0]}");
 			}

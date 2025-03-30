@@ -1,9 +1,19 @@
 using System;
+using NSFrame;
 using UnityEngine;
 
 namespace GameLogic
 {
 	public abstract class VillLogicBase : ISaveable<VillSaveBase> {
+
+		public VillLogicBase() {
+			EventSystem.AddListener((int)LogicEvt.DayStart, OnDayStart);
+			EventSystem.AddListener((int)LogicEvt.NightStart, OnNightStart);
+		}
+
+		#region Injection
+		public void SetHomeID(ulong homeID) { _homeID = homeID; }
+		#endregion
 
 		public abstract VillType VillType { get; }
 
@@ -24,12 +34,27 @@ namespace GameLogic
 		public RTList<float> ConsBuffs_F => _consBuffs.ConvertToFull();
 		public RTList<float> ProdBuffs_F => _prodBuffs.ConvertToFull();
 		public VillTaskRunner TaskRunner => _taskRunner;
+		public ulong HomeID => _homeID;
 
 
-		private void Die() {
-			Debug.Log($"Vill {_id} has no home");
+		private void Destroy() {
 			// todo: 
-			TaskRunner.ResetTasks();
+			Debug.Log($"Vill {_id} has no home");
+			_taskRunner.Destroy();
+			_taskRunner = null;
+			EventSystem.RemoveListener((int)LogicEvt.DayStart, OnDayStart);
+			EventSystem.RemoveListener((int)LogicEvt.NightStart, OnNightStart);
+			EventSystem.Invoke((int)LogicEvt.VillDestroyed_V, this);
+		}
+		private void OnDayStart() {
+			if (!GoWork(_prevWorkArchID)) {
+				_taskRunner.ResetTasks();
+			}
+		}
+		private void OnNightStart() {
+			if (!GoSleep()) {
+				Destroy();
+			}
 		}
 
 		#region Event
@@ -76,7 +101,7 @@ namespace GameLogic
 			if (arch == null) {
 				return false;
 			}
-			if (!arch.TryBookPos(this)) {
+			if (!arch.TryBookPos(ID)) {
 				return false;
 			}
 			_taskRunner.ResetTasks(
@@ -87,10 +112,11 @@ namespace GameLogic
 			return true;
 		}
 		public bool GoSleep() {
+			if (_taskRunner.CurTaskType == TaskType.Sleep) { return true; }
 			if (WorldMgr.Inst.FindArch(_homeID) is not CottageLogic cottage) {
 				return false;
 			}
-			if (!cottage.TryBookPos(this)) {
+			if (!cottage.TryBookPos(ID)) {
 				return false;
 			}
 			_taskRunner.ResetTasks(
@@ -99,18 +125,8 @@ namespace GameLogic
 			);
 			return true;
 		}
-		public void SetSpare() {
+		public void GoSpare() {
 			_taskRunner.ResetTasks();
-		}
-		public void OnDayStart() {
-			if (!GoWork(_prevWorkArchID)) {
-				_taskRunner.ResetTasks();
-			}
-		}
-		public void OnNightStart() {
-			if (!GoSleep()) {
-				Die();
-			}
 		}
 
 		#endregion

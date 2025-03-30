@@ -11,19 +11,16 @@ namespace GameLogic
 		}
 
 		public override void End() {
-			Cottage.VillLeave(AttachedVill);
-			AttachedVill.OnDayStart();
+			Cottage.VillLeave(AttachedVill.ID);
 		}
 
 		public override void Enter() {
-			Cottage.VillArrive(AttachedVill);
+			Cottage.VillArrive(AttachedVill.ID);
 		}
 
 		public override void Execute() {}
 
-		protected override void CleanBeforePush_Derived() {
-			Cottage = null;
-		}
+		protected override void CleanBeforePush_Derived() { Cottage = null; }
 		protected override void InitAfterPop_Derived() { }
 
 

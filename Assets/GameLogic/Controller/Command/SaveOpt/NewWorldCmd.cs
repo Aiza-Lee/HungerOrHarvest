@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using NSFrame;
 
 namespace GameLogic
 {
 	public class NewWorldCmd : CommandBase {
-		public NewWorldCmd(string[] args) : base(args) {}
+		public NewWorldCmd(List<string> args) : base(args) {}
 
 		public override string CmdTitle => "新建世界";
 		public override string Description => "";
@@ -16,9 +17,9 @@ namespace GameLogic
 
 		public override void Execute() {
 			var saveInfo = SaveSystem.CreateSaveFile();
-			SaveMgr.Inst.SaveInfo = saveInfo;
+			GameMgr.Inst.RegisterSaveInfo(saveInfo);
 			WorldGenerator.Inst.Generate();
-			SaveMgr.Inst.SaveGame();
+			GameMgr.Inst.SaveGame();
 		}
 	}
 }

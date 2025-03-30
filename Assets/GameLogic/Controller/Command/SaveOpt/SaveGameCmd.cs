@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace GameLogic
 {
 	public class SaveGameCmd : CommandBase {
-		public SaveGameCmd(string[] args) : base(args) {}
+		public SaveGameCmd(List<string> args) : base(args) {}
 
 		public override string CmdTitle => "保存游戏";
 		public override string Description => "";
@@ -13,7 +15,7 @@ namespace GameLogic
 		}
 
 		public override void Execute() {
-			SaveMgr.Inst.SaveGame();
+			GameMgr.Inst.SaveGame();
 		}
 	}
 }

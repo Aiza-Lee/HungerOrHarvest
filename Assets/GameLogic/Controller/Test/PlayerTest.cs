@@ -17,15 +17,15 @@ namespace GameLogic
 
 			// 开始游戏
 			if (Input.GetKeyDown(KeyCode.F12)) {
-				var saves = SaveMgr.Inst.GetSaveInfos();
+				var saves = SaveSystem.GetAllSaveInfos();
 				if (saves.Count > SaveIndex) {
-					SaveMgr.Inst.SaveInfo = saves[SaveIndex];
-					SaveMgr.Inst.LoadGame();
+					GameMgr.Inst.RegisterSaveInfo(saves[SaveIndex]);
+					GameMgr.Inst.LoadGame();
 				} else {
 					WorldGenerator.Inst.Generate();
 					var saveInfo = SaveSystem.CreateSaveFile();
-					SaveMgr.Inst.SaveInfo = saveInfo;
-					SaveMgr.Inst.SaveGame();
+					GameMgr.Inst.RegisterSaveInfo(saveInfo);
+					GameMgr.Inst.SaveGame();
 				}
 			}
 		}

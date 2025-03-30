@@ -1,9 +1,9 @@
 using NSFrame;
 
 namespace GameLogic
-{
-	public sealed class LogicTimeMgr : ISaveable<LogicTimeMgrSave> {
-		private LogicTimeMgr() { EventSystem.AddListener((int)LogicEvt.InitAllManager, () => TickTrigger.Inst.AfterTick += AddTick); }
+{ 
+	public sealed class LogicTimeMgr : ISaveable<LogicTimeMgrSave>, IClearMgr {
+		private LogicTimeMgr() { EventSystem.AddListener((int)LogicEvt.MgrInitAfterMono, () => TickTrigger.Inst.AfterTick += AddTick); }
 		~LogicTimeMgr() { TickTrigger.Inst.AfterTick -= AddTick; }
 		public static LogicTimeMgr Inst { get; } = new();
 
@@ -51,5 +51,7 @@ namespace GameLogic
 			_inDay = save.InDay;
 			_days = save.Days;
 		}
+
+		public void ClearMgr() { }
 	}
 }

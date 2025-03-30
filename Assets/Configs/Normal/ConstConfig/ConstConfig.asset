@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe93103ccd0cb9445ab38e992e2dae7b, type: 3}
   m_Name: ConstConfig
   m_EditorClassIdentifier: 
-  DAY_TICKS: 300
-  NIGHT_TICKS: 100
+  DAY_TICKS: 10000
+  NIGHT_TICKS: 6000
   VILL_ONE_MOVE_TICK: 10
   JobConfigs:
   - Key: 0

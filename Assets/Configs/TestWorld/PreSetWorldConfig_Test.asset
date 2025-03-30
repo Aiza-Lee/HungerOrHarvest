@@ -40,15 +40,7 @@ MonoBehaviour:
     Value:
       ODR: -1
       LYR: 1
-  Vill_OL:
-  - Key: 0
-    Value:
-      ODR: 0
-      LYR: 1
-  - Key: 0
-    Value:
-      ODR: 1
-      LYR: 1
+  Vill_OL: []
   UnlockedRepo: 000000000100000002000000
   StartingRepo:
     List:

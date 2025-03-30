@@ -4,20 +4,25 @@ using UnityEngine;
 
 namespace GameLogic
 {
-	public class WorldMgr : ISaveable<WorldSave> {
+	public class WorldMgr : ISaveable<WorldSave>, IClearMgr {
 		private WorldMgr() {
-			EventSystem.AddListener((int) LogicEvt.InitAllManager, () => {
-				MaxArchODR = MinArchODR = 0;
-				_maxUnlockedLayer = _minUnlockedLayer = 0;
-				EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
-				EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
-				EventSystem.AddListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L, OnLayerAdded);
-			});
+			MaxArchODR = MinArchODR = 0;
+			_maxUnlockedLayer = _minUnlockedLayer = 0;
+
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
+			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
+			EventSystem.AddListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L, OnLayerAdded);
+
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, OnArchDestroy);
+			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V, OnVillDestroy);
 		}
 		~WorldMgr() {
 			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
 			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
 			EventSystem.RemoveListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L, OnLayerAdded);
+
+			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, OnArchDestroy);
+			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V, OnVillDestroy);
 		}
 		public static WorldMgr Inst { get; private set; } = new();
 		
@@ -64,20 +69,29 @@ namespace GameLogic
 			LayerNegEdge = Mathf.Min(layer.LYR, LayerNegEdge);
 		}
 
+		private void OnArchDestroy(ArchLogicBase arch) {
+			_archs.Remove(arch);
+			_archsDict.Remove(arch.ID);
+		}
+		private void OnVillDestroy(VillLogicBase vill) {
+			_vills.Remove(vill);
+			_villDict.Remove(vill.ID);
+		}
+
 
 		#region PublicMethods
 		public VillLogicBase FindVill(ulong id) {
 			if (_villDict.TryGetValue(id, out var vill)) { return vill; }
-			Debug.LogError($"id:{id} has no matched Vill");
+			Debug.LogWarning($"id:{id} has no matched Vill");
 			return null;
 		}
 		public ArchLogicBase FindArch(ulong id) {
 			if (_archsDict.TryGetValue(id, out var arch)) { return arch; }
-			Debug.LogError($"id:{id} has no matched Arch");
+			Debug.LogWarning($"id:{id} has no matched Arch");
 			return null;
 		}
 		public LayerLogicBase FindLayer(int lyr) {
-			if (lyr < LayerNegEdge || lyr > LayerPosEdge) { Debug.LogError("lyr out of range"); return null; }
+			if (lyr < LayerNegEdge || lyr > LayerPosEdge) { Debug.LogWarning("lyr out of range"); return null; }
 			if (_layersOrdered) {
 				return _layers[lyr - LayerNegEdge];
 			} else {
@@ -134,8 +148,6 @@ namespace GameLogic
 			return save;
 		}
 		public void InitFromSave(WorldSave save) {
-			ClearCache();
-			
 			// note: 这里的顺序很重要，村民、TaskRunner、Task的 InitFromSave 中不能调用 FindArch
 			save.VillSaves.ForEach( (save) => LogicFctry.Inst.LoadVill(save) );
 			save.ArchSaves.ForEach( (save) => LogicFctry.Inst.LoadArch(save) );
@@ -145,7 +157,9 @@ namespace GameLogic
 			_maxUnlockedLayer = save.MaxUnlockedLayer;
 			_minUnlockedLayer = save.MinUnlockedLayer;
 		}
-		private void ClearCache() {
+		#endregion
+
+		public void ClearMgr() {
 			_vills.Clear();
 			_archs.Clear();
 			_layers.Clear();
@@ -153,6 +167,5 @@ namespace GameLogic
 			_archsDict.Clear();
 			_olRange.Clear();
 		}
-		#endregion
 	}
 }

@@ -9,14 +9,42 @@ namespace GameLogic
 			AttachedVill = vill;
 			EventSystem.AddListener((int)LogicEvt.Tick, Execute);
 		}
-		~VillTaskRunner() {
-			EventSystem.RemoveListener((int)LogicEvt.Tick, Execute);
-		}
-
 		private readonly Queue<TaskBase> _tasks = new();
 		private TaskBase _curTask;
 
 		public VillLogicBase AttachedVill { get; private set; }
+		public TaskType CurTaskType => _curTask?.TaskType ?? TaskType.None;
+
+		private void Execute() {
+
+			if (_curTask == null || _curTask.IsEnded) {
+				if (_curTask != null) {
+					PoolSystem.PushObj(_curTask.GetType(), _curTask);
+					_curTask = null;
+				}
+				_tasks.TryDequeue(out _curTask);
+				if (_curTask == null) {
+					Coord target;
+					do {
+						// 如果没有任务，则随机一个空闲的村民位置作为目标位置
+						target = RouteMgr.Inst.GetRandomVillSpareCoord();
+					} while (target == AttachedVill.Coord);
+					_curTask = LogicFctry.Inst.NewMoveToTask(target);
+					_curTask.SetVill(AttachedVill);
+				}
+				_curTask.Enter();
+			}
+
+			_curTask.Execute();
+		}
+
+
+		#region PublicMethods
+		public void Destroy() {
+			EventSystem.RemoveListener((int)LogicEvt.Tick, Execute);
+			AttachedVill = null;
+			_curTask = null;
+		}
 
 		/// <summary>
 		/// 在当前任务列表后追加一个任务
@@ -39,35 +67,12 @@ namespace GameLogic
 				PoolSystem.PushObj(tmpTask.GetType(), tmpTask);
 			}
 
-			foreach (var t in _tasks) {
-				PoolSystem.PushObj(t.GetType(), t);
-			}
-			for (int i = 0; i < task.Length; i++) {
-				AppendTask(task[i]);
-			}
+			foreach (var t in _tasks) { PoolSystem.PushObj(t.GetType(), t); }
+			_tasks.Clear();
+
+			for (int i = 0; i < task.Length; i++) { AppendTask(task[i]); }
 		}
-
-		private void Execute() {
-
-			if (_curTask == null || _curTask.IsEnded) {
-				if (_curTask != null) {
-					PoolSystem.PushObj(_curTask.GetType(), _curTask);
-				}
-				_tasks.TryDequeue(out _curTask);
-				if (_curTask == null) {
-					Coord target;
-					do {
-						// 如果没有任务，则随机一个空闲的村民位置作为目标位置
-						target = RouteMgr.Inst.GetRandomVillSpareCoord();
-					} while (target == AttachedVill.Coord);
-					_curTask = LogicFctry.Inst.NewMoveToTask(target);
-					_curTask.SetVill(AttachedVill);
-				}
-				_curTask.Enter();
-			}
-
-			_curTask.Execute();
-		}
+		#endregion
 
 		#region ISaveable
 		public VillTaskRunnerSave GetSave() {

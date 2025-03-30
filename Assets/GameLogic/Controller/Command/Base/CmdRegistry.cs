@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace GameLogic
 {
 	public static class CmdRegistry {
-		private static readonly Dictionary<string, Func<string[], CommandBase>> _allCmds = new() {
+		private static readonly Dictionary<string, Func<List<string>, CommandBase>> _allCmds = new() {
 
 			/* Game Operation */
+				/* ViewOpt */
+				{ "cam-free", (args) => new CameraFreeViewCmd(args) },
+				{ "cam-follow-vill", (args) => new CameraFocusVillCmd(args) },
 			{ "vill-new", (args) => new CreateVillCmd(args) },
 			{ "vill-spare", (args) => new SetVillSpareCmd(args) },
 			{ "vill-work", (args) => new SetVillWorkCmd(args) },
@@ -21,9 +23,10 @@ namespace GameLogic
 			{ "world-new", (args) => new NewWorldCmd(args) },
 
 			/* Administrator */
+			{ "multi", (args) => new MultiCmdCmd(args) },
 		};
 
-		public static bool TryGetCmd(string cmd, string[] args, out CommandBase result) {
+		public static bool TryGetCmd(string cmd, List<string> args, out CommandBase result) {
 			if (!_allCmds.TryGetValue(cmd.ToLower(), out var generator)) {
 				result = null;
 				return false;

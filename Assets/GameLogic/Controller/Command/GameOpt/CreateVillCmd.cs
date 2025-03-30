@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic
@@ -11,9 +12,9 @@ namespace GameLogic
 		private readonly OL _ol;
 		private readonly bool _inited;
 
-		public CreateVillCmd(string[] args) : base(args) {
+		public CreateVillCmd(List<string> args) : base(args) {
 			_inited = true;
-			if (args.Length != ArgCount) { _inited = false; return; }
+			if (args.Count != ArgCount) { _inited = false; return; }
 			if (!ParamConverter.TryConvertToEnum(args[0], out _villType)) {
 				_inited = false;
 				Debug.Log($"<<{CmdTitle}>> 参数VillType错误: 无法解析参数{args[0]}");

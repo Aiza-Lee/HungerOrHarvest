@@ -1,8 +1,8 @@
-namespace GameLogic
-{
-	public enum StaType {
-		Work,
-		Sleep,
-		Spare,
-	}
-}
+// namespace GameLogic
+// {
+// 	public enum StaType {
+// 		Work,
+// 		Sleep,
+// 		Spare,
+// 	}
+// }

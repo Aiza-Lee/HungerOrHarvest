@@ -1,7 +1,7 @@
 namespace GameLogic
 {
 	public enum LogicEvt {
-		InitAllManager,
+		MgrInitAfterMono,
 
 		Tick,
 		TickSpeedChange_f,
