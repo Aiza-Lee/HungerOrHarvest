@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public static class CmdRunner {
 		public static bool Run(string cmdLine) {

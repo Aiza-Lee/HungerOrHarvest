@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02014eaa4b3ae0448968a0bfe0bf765a, type: 3}
   m_Name: PreSetWorldConfig_Test
   m_EditorClassIdentifier: 
-  PosLayers: 0000000000000000020000000100000005000000
-  NegLayers: 00000000000000000300000004000000
+  PosLayers: 00000000000000000000000002000000020000000100000005000000
+  NegLayers: 0000000000000000000000000300000004000000
   Layer_Range:
   - Key: 0
     Value:
@@ -28,19 +28,71 @@ MonoBehaviour:
       Key: -3
       Value: 3
   Arch_OL:
-  - Key: 0
+  - Key: 1
     Value:
       ODR: 0
       LYR: 0
-  - Key: 0
+  - Key: 1
     Value:
       ODR: 2
-      LYR: 1
-  - Key: 0
+      LYR: 0
+  - Key: 1
     Value:
       ODR: -1
       LYR: 1
-  Vill_OL: []
+  - Key: 1
+    Value:
+      ODR: 2
+      LYR: 0
+  - Key: 1
+    Value:
+      ODR: 1
+      LYR: -1
+  - Key: 16
+    Value:
+      ODR: 0
+      LYR: -2
+  Vill_OL:
+  - Key: 1
+    Value:
+      ODR: 0
+      LYR: 0
+  - Key: 1
+    Value:
+      ODR: 0
+      LYR: 0
+  - Key: 1
+    Value:
+      ODR: 0
+      LYR: 0
+  - Key: 1
+    Value:
+      ODR: 0
+      LYR: 0
+  - Key: 1
+    Value:
+      ODR: 0
+      LYR: 0
+  - Key: 1
+    Value:
+      ODR: 0
+      LYR: 0
+  - Key: 1
+    Value:
+      ODR: 0
+      LYR: 0
+  - Key: 1
+    Value:
+      ODR: 0
+      LYR: 0
+  - Key: 1
+    Value:
+      ODR: 0
+      LYR: 0
+  - Key: 1
+    Value:
+      ODR: 0
+      LYR: 0
   UnlockedRepo: 000000000100000002000000
   StartingRepo:
     List:

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameLogic.Utilities;
 using NSFrame;
 using UnityEngine;
 
@@ -9,20 +10,20 @@ namespace GameLogic
 			MaxArchODR = MinArchODR = 0;
 			_maxUnlockedLayer = _minUnlockedLayer = 0;
 
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
-			EventSystem.AddListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L, OnLayerAdded);
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
+			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
+			EventSystem.AddListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, OnLayerAdded);
 
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, OnArchDestroy);
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V, OnVillDestroy);
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroy);
+			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroy);
 		}
 		~WorldMgr() {
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
-			EventSystem.RemoveListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L, OnLayerAdded);
+			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
+			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
+			EventSystem.RemoveListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, OnLayerAdded);
 
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, OnArchDestroy);
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V, OnVillDestroy);
+			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroy);
+			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroy);
 		}
 		public static WorldMgr Inst { get; private set; } = new();
 		
@@ -127,7 +128,7 @@ namespace GameLogic
 			} else {
 				_olRange.Add(ol.LYR, new Pair<int, int>(ol.ODR, ol.ODR));
 			}
-			EventSystem.Invoke<OL>((int)LogicEvt.UnlockOL_O, ol);
+			EventSystem.Invoke<OL>((int)LogicEvt.UnlockOL_O_1, ol);
 		}
 		#endregion
 

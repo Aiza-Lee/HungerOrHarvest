@@ -4,9 +4,9 @@ using NSFrame;
 using TMPro;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View.Test
 {
-	public class VillTestPanelInMain : MonoBehaviour {
+	public class VillTestPanelInMain : MonoBehaviour, IClearMgr {
 		public Transform VillInfoLayout; 
 		public GameObject OneVillInfoPrefab;
 		public TextMeshProUGUI CurPageText;
@@ -36,6 +36,8 @@ namespace GameLogic
 
 
 		private void Start() {
+			GameViewMgr.Inst.RegisterClearableMgr(this);
+
 			var cnt = VillInfoLayout.childCount;
 			while (cnt-- != 0) {
 				Destroy(VillInfoLayout.GetChild(0).gameObject);
@@ -46,8 +48,8 @@ namespace GameLogic
 			}
 		}
 		private void OnEnable() {
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V, OnVillDestroyed);
+			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
+			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroyed);
 			_curPage = 0;
 			var vills = WorldMgr.Inst.GetAllVills;
 			foreach (var v in vills) {
@@ -55,8 +57,8 @@ namespace GameLogic
 			}
 		}
 		private void OnDisable() {
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V, OnVillDestroyed);
+			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
+			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroyed);
 			_VillInfos.Clear();
 		}
 
@@ -81,5 +83,10 @@ namespace GameLogic
 			}
 		}
 
+		#region IClearMgr
+		public void ClearMgr() {
+			_VillInfos.Clear();
+		}
+		#endregion
 	}
 }

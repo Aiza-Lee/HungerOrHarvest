@@ -33,7 +33,7 @@ MonoBehaviour:
     WorkArchId: 0
   DefaultNormalVill:
     ID: 0
-    VillType: 0
+    VillType: 1
     FirstName: Bubbler
     LastName: 
     JobLevel:
@@ -54,9 +54,9 @@ MonoBehaviour:
     TaskRunner:
       Tasks: []
     HomeID: 0
-    PrevWorkArchID: 0
+    AttachedWorkArchID: 0
   DefaultCottage:
-    ArchType: 0
+    ArchType: 1
     ID: 0
     OL:
       ODR: 0
@@ -68,9 +68,23 @@ MonoBehaviour:
     ConsBuffs:
       List: []
       Full: 0
-    BookedPosVillIDs: 
-    InVillIDs: 
     BondedVillIDs: 
+    InVillIDs: 
+  DefaultRuin:
+    ArchType: 16
+    ID: 0
+    OL:
+      ODR: 0
+      LYR: 0
+    Level: 0
+    ProdBuffs:
+      List: []
+      Full: 0
+    ConsBuffs:
+      List: []
+      Full: 0
+    BondedVillIDs: 
+    InVillIDs: 
   DefaultGrassLayerSave:
     ID: 0
     LayerType: 0

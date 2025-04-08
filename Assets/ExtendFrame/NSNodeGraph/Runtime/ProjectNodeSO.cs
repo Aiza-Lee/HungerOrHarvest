@@ -9,7 +9,8 @@ namespace ExtendFrame {
 		public string Tag;
 		[TextArea(5, 30)] public string Text;
 		public List<NSPair<RepoType, ulong>> Demands;
-		public List<NSPair<ArchType, int>> Unlocks, Buffs;
+		public List<NSPair<ArchType, int>> Unlocks;
+		public List<NSPair<ArchType, float>> Buffs;
 
 	}
 }

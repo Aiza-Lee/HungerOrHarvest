@@ -2,46 +2,48 @@ using System.Collections.Generic;
 using NSFrame;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
-	public class WorldViewMgr : MonoSingleton<WorldViewMgr>, IPlayerControll {
+	public class WorldViewMgr : MonoSingleton<WorldViewMgr>, IPlayerControll, IClearMgr {
 		private readonly Dictionary<ulong, VillViewBase> _villViews = new();
 		private readonly Dictionary<ulong, ArchViewBase> _archViews = new();
 		private readonly Dictionary<ulong, LayerViewBase> _layerViews = new();
 
 		protected override void Awake() {
 			base.Awake();
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
-			EventSystem.AddListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L, OnLayerAdded);
 
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, OnArchDestroyed);
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V, OnVillDestroyed);
+			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
+			EventSystem.AddListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, OnLayerAdded);
+
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroyed);
+			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroyed);
+		}
+		private void Start() {
+			GameViewMgr.Inst.RegisterClearableMgr(this);
 		}
 		protected void OnDestroy() {
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
-			EventSystem.RemoveListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L, OnLayerAdded);
+			GameViewMgr.Inst.UnregisterClearableMgr(this);
 
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, OnArchDestroyed);
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V, OnVillDestroyed);
+			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
+			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
+			EventSystem.RemoveListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, OnLayerAdded);
+
+			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroyed);
+			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroyed);
 		}
 
 		private void Update() {
 			if (!Controllable) return;
 			if (Input.GetKeyDown(KeyCode.Space)) {
-				CmdRunner.Run("/pause");
+				Controller.CmdRunner.Run("/pause");
 			}
 		}
 
 		private void OnVillAdded(VillLogicBase vill) {
 			var view = PrefabFctry.Inst.NewVillView(vill);
 			_villViews.Add(vill.ID, view);
-			if (vill.Coord.IsOnLayer()) {
-				view.SetSortingLayerID(vill.Coord.Y / ConstMgr.Y_PER_LYR);
-			} else {
-				view.SetSortingLayerID(Mathf.FloorToInt(1f * vill.Coord.Y / ConstMgr.Y_PER_LYR));
-			}
+			view.SetSortingLayerIDbyY(vill.Coord.Y);
 		}
 		private void OnArchAdded(ArchLogicBase arch) {
 			var view = PrefabFctry.Inst.NewArchView(arch);
@@ -69,8 +71,26 @@ namespace GameLogic
 		public bool TryGetVillView(ulong id, out VillViewBase vView) {
 			return _villViews.TryGetValue(id, out vView);
 		}
+		public VillViewBase FindVillView(ulong id) { return _villViews[id]; }
 		public bool TryGetArchView(ulong id, out ArchViewBase aView) {
 			return _archViews.TryGetValue(id, out aView);
+		}
+		public ArchViewBase FindArchView(ulong id) { return _archViews[id]; }
+		public List<ArchViewBase> GetAllArchViews(ArchType archType) {
+			var list = new List<ArchViewBase>();
+			foreach (var view in _archViews.Values) { if (view.Logic.ArchType == archType) { list.Add(view); } }
+			return list;
+		}
+		#endregion
+
+		#region IClearMgr
+		public void ClearMgr() {
+			foreach (var view in _villViews.Values) { Destroy(view.gameObject); }
+			_villViews.Clear();
+			foreach (var view in _archViews.Values) { Destroy(view.gameObject); }
+			_archViews.Clear();
+			foreach (var view in _layerViews.Values) { Destroy(view.gameObject); }
+			_layerViews.Clear();
 		}
 		#endregion
 

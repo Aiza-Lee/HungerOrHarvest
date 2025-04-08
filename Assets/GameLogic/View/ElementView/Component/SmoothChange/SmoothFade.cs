@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	[RequireComponent(typeof(SpriteRenderer))]
 	public class SmoothFade : SmoothChangeBase<float> {
@@ -15,7 +15,7 @@ namespace GameLogic
 			return Material.GetFloat(VALUE_NAME);
 		}
 
-		protected override void DerivedSetCurVal(float val) { 
+		protected override void SetCurVal_Derived(float val) { 
 			Material.SetFloat(VALUE_NAME, val);
 		}
 

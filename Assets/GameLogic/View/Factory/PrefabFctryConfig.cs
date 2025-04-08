@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	[CreateAssetMenu(fileName = "PrefabFctryConfig", menuName = "HungerOrHarvest/Config/View/PrefabFctryConfig")]
 	public class PrefabFctryConfig : ScriptableObject {

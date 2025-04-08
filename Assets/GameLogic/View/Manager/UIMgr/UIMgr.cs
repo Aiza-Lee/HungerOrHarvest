@@ -3,8 +3,12 @@ using System.Linq;
 using NSFrame;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
+	/// <summary>
+	/// <para> 所有的 UI 需要在编辑器中的这个单例处注册，这个类负责开始时触发所有类从而触发 NSFrame 的注册 </para>
+	/// 同时也时统一触发 UI 面板的接口
+	/// </summary>
 	public class UIMgr : MonoSingleton<UIMgr>, IPlayerControll {
 
 		public List<Pair<ViewPanelType, PanelBase>> Panels;
@@ -22,6 +26,7 @@ namespace GameLogic
 				if (Input.GetKeyDown(KeyCode.Tab)) {
 					TogglePanel(ViewPanelType.MainTest);
 				}
+				if (Input.GetKeyDown(KeyCode.Escape)) { TogglePanel(ViewPanelType.WorldVillOperationPanel); }
 			}
 		}
 

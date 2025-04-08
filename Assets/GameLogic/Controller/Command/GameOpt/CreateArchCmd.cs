@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic 
+namespace GameLogic.Controller
 {
 	/// <summary>
 	/// Args: ArchType, OL
@@ -9,6 +9,8 @@ namespace GameLogic
 	public class CreateArchCmd : CommandBase {
 		private readonly ArchType _archType;
 		private readonly OL _ol;
+
+		private string _failReason;
 
 		public CreateArchCmd(List<string> args) : base(args) {
 			if (args.Count != ArgCount) { return; }
@@ -22,13 +24,19 @@ namespace GameLogic
 
 		public override string CmdTitle => "建造建筑";
 		public override string Description => $"类型:{_archType}  OL:{_ol} Coord:{_ol.ToCoord()}";
-		public override string FailReason => "资源不足";
+		public override string FailReason => _failReason;
 		public override int ArgCount => 2;
 
 
 		public override bool Check() {
 			var config = ConstMgr.Inst.Config.FindConfig(_archType);
-			if (!RepoMgr.Inst.CheckRequest(config.ConstructCost)) { return false; }
+			if (!RepoMgr.Inst.CheckRequest(config.ConstructCost)) { 
+				_failReason = "资源不足";
+				return false; 
+			} else if (!_ol.CheckAvailableForArch()) {
+				_failReason = $"位置{_ol}不合法";
+				return false;
+			}
 			return true;
 		}
 		public override void Execute() {

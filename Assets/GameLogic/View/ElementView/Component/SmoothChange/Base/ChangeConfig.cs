@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	[System.Serializable]
 	public class ChangeConfig {

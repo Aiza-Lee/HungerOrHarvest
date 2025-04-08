@@ -7,12 +7,9 @@ namespace GameLogic
 {
 	public sealed class RoomMgr : IClearMgr {
 		private RoomMgr() {
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
-		}
-		~RoomMgr() {
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V, OnVillAdded);
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
+			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroyed);
 		}
 		public static RoomMgr Inst { get; } = new();
 
@@ -20,8 +17,8 @@ namespace GameLogic
 		private readonly HashSet<ulong> _occupiedCottageIDs = new();
 
 		private void OnVillAdded(VillLogicBase vill) {
-			if (vill.HomeID != 0 || vill.TaskRunner.CurTaskType == TaskType.Leave) { return; }
-			FindRoomForVill(vill);
+			if (!vill.IsHomeless || vill.TaskRunner.CurTaskType == TaskType.Leave) { return; }
+			FindRoomForVill_private(vill);
 		}
 		private void OnArchAdded(ArchLogicBase arch) {
 			if (arch is not CottageLogic cottage) return;
@@ -31,24 +28,35 @@ namespace GameLogic
 				_availableCottageIDs.Add(cottage.ID);
 			}
 		}
-
-		#region PublicMethods
-		public bool FindRoomForVill(VillLogicBase vill) {
-
+		private void OnArchDestroyed(ArchLogicBase arch) {
+			if (arch is not CottageLogic cottage) return;
+			if (_occupiedCottageIDs.Contains(cottage.ID)) {
+				_occupiedCottageIDs.Remove(cottage.ID);
+			}
+			if (_availableCottageIDs.Contains(cottage.ID)) {
+				_occupiedCottageIDs.Remove(cottage.ID);
+			}
+		}
+		private bool FindRoomForVill_private(VillLogicBase vill) {
 			if (_availableCottageIDs.Count == 0) {
 				Debug.LogWarning("<RoomMgr>: No Available Cottage When Vill Added.");
 				return false;
 			}
 			var ctgID = _availableCottageIDs.First();
 			vill.SetHomeID(ctgID);
-			var cottage = WorldMgr.Inst.FindArch(ctgID) as CottageLogic;
+			var cottage = WorldMgr.Inst.FindArch(ctgID);
 
-			cottage.AddBondedVill(vill.ID);
+			cottage.TryBondVill(vill.ID);
 			if (cottage.BondedVillCount == cottage.Lconfig.MaxContain) {
 				_availableCottageIDs.Remove(ctgID);
 				_occupiedCottageIDs.Add(ctgID);
 			}
 			return true;
+		}
+
+		#region PublicMethods
+		public bool FindRoomForVill(VillLogicBase vill) {
+			return FindRoomForVill_private(vill);
 		}
 
 		public void ClearMgr() {

@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	public class SmoothMove : SmoothChangeBase<Vector3>{
 		public override Vector3 GetCurVal() {
 			return transform.localPosition;
 		}
 
-		protected override void DerivedSetCurVal(Vector3 val) {
+		protected override void SetCurVal_Derived(Vector3 val) {
 			transform.localPosition = val;
 		}
 		protected override Vector3 Add(Vector3 lhv, Vector3 rhv) => lhv + rhv;

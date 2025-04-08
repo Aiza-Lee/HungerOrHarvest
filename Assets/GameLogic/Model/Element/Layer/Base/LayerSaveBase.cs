@@ -1,10 +1,12 @@
+using UnityEngine;
+
 namespace GameLogic
 {
 	[System.Serializable]
 	public abstract class LayerSaveBase {
-		public ulong ID;
+		[HideInInspector] public ulong ID;
 		public LayerType LayerType;
-		public int LYR;
+		[HideInInspector] public int LYR;
 		
 		protected abstract LayerSaveBase GetDerivedClone();
 		public LayerSaveBase Clone() {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public static class CmdParser {
 		public static bool TryParse(string input, out string cmd, out List<string> args) {

@@ -2,7 +2,7 @@ using System;
 using NSFrame;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Utilities
 {
 	[Serializable]
 	public class DelayTrigger : IPooledObject {
@@ -16,10 +16,10 @@ namespace GameLogic
 
 		public void CleanBeforePush() {
 			_action = null;
-			EventSystem.RemoveListener((int)LogicEvt.Tick, AddTick);
+			EventSystem.RemoveListener((int)LogicEvt.Tick_0, AddTick);
 		}
 		public void InitAfterPop() {
-			EventSystem.AddListener((int)LogicEvt.Tick, AddTick);
+			EventSystem.AddListener((int)LogicEvt.Tick_0, AddTick);
 		}
 
 		private void SetTrigger(Action action, int delayTick) {

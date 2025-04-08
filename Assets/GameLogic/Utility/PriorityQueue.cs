@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GameLogic 
+namespace GameLogic.Utilities
 {
 	public class PriorityQueue<T> {
 		public struct Node {

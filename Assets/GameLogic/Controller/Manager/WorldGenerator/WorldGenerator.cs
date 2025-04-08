@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NSFrame;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public sealed class WorldGenerator : MonoSingleton<WorldGenerator> {
 

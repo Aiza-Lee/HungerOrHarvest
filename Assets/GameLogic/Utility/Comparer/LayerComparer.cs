@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace GameLogic
+namespace GameLogic.Utilities
 {
 	public sealed class LayerComparer : IComparer<LayerLogicBase> {
 		private LayerComparer() {}

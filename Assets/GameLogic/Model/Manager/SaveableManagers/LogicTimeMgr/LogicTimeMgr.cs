@@ -24,14 +24,14 @@ namespace GameLogic
 			if (_inDay) {
 				if (_todayTick == ConstMgr.Inst.Config.DAY_TICKS) {
 					_inDay = false;
-					EventSystem.Invoke((int)LogicEvt.NightStart);
+					EventSystem.Invoke((int)LogicEvt.NightStart_0);
 				} 
 			} else {
 				if (_todayTick == ConstMgr.Inst.Config.DAY_TICKS + ConstMgr.Inst.Config.NIGHT_TICKS) {
 					_inDay = true;
 					_days++;
 					_todayTick = 0;
-					EventSystem.Invoke((int)LogicEvt.DayStart);
+					EventSystem.Invoke((int)LogicEvt.DayStart_0);
 				}
 			}
 		}

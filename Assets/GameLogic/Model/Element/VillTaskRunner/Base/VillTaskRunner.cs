@@ -7,7 +7,7 @@ namespace GameLogic
 
 		public VillTaskRunner(VillLogicBase vill) {
 			AttachedVill = vill;
-			EventSystem.AddListener((int)LogicEvt.Tick, Execute);
+			EventSystem.AddListener((int)LogicEvt.Tick_0, Execute);
 		}
 		private readonly Queue<TaskBase> _tasks = new();
 		private TaskBase _curTask;
@@ -41,7 +41,7 @@ namespace GameLogic
 
 		#region PublicMethods
 		public void Destroy() {
-			EventSystem.RemoveListener((int)LogicEvt.Tick, Execute);
+			EventSystem.RemoveListener((int)LogicEvt.Tick_0, Execute);
 			AttachedVill = null;
 			_curTask = null;
 		}

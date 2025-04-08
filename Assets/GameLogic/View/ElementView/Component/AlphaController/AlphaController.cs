@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	public class AlphaController : MonoBehaviour {
 		[Tooltip("0.x for Vill. 1f for Arch and Layer.")]public  float RATE = 0.1f;

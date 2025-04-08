@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	/// <summary>
 	/// Args: float

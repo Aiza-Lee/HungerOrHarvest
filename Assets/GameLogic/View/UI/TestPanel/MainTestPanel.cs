@@ -2,7 +2,7 @@ using System.Text;
 using NSFrame;
 using TMPro;
 
-namespace GameLogic
+namespace GameLogic.View.Test
 {
 	public class MainTestPanel : PanelBase {
 

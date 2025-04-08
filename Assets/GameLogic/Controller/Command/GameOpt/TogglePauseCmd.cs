@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public class TogglePauseCmd : CommandBase {
 		public TogglePauseCmd(List<string> args) : base(args) {}

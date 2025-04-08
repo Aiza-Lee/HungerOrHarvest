@@ -1,12 +1,14 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	[RequireComponent(typeof(SmoothFade))]
 	public abstract class ArchViewBase : MonoBehaviour {
 		
 		private ArchLogicBase _archLogic;
 		
+		public ArchLogicBase Logic => _archLogic;
+
 		public SpriteRenderer SpriteRenderer { get; private set; }
 
 		private void Awake() {

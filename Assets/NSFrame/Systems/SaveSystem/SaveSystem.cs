@@ -18,7 +18,7 @@ namespace NSFrame {
 		private static readonly string SAVE_DIR;
 		private static readonly string SETTING_DIR;
 		// <SaveInfo,<文件名称,实际的对象>>
-		private static readonly Dictionary<SaveInfo, Dictionary<string, object>> _cacheDic = new();
+		// private static readonly Dictionary<SaveInfo, Dictionary<string, object>> _cacheDic = new();
 		private static readonly List<SaveInfo> _saveInfoList = new();
 
 		static SaveSystem() {
@@ -43,7 +43,7 @@ namespace NSFrame {
 				for (int i = 0; i < fileInfos.Length; ++i) 
 					if (fileInfos[i].GetNameWithoutExtension() == typeof(SaveInfo).Name) {
 						SaveInfo saveInfo = LoadFromFile<SaveInfo>(SAVE_DIR.AddPath(subDirInfo.Name).AddPath(typeof(SaveInfo).Name));
-						_cacheDic.Add(saveInfo, new());
+						// _cacheDic.Add(saveInfo, new());
 						_saveInfoList.Add(saveInfo);
 						break;
 					}
@@ -57,7 +57,7 @@ namespace NSFrame {
 			SaveInfo saveInfo = new(randomFile, saveName, DateTime.Now.ToString());
 			_saveInfoList.Add(saveInfo);
 			SaveObject(saveInfo, saveInfo);
-			UpdateCache(saveInfo, typeof(SaveInfo).Name, saveInfo);
+			// UpdateCache(saveInfo, typeof(SaveInfo).Name, saveInfo);
 			return saveInfo;
 		}
 		public static void DeletSaveFile(SaveInfo saveInfo) {
@@ -65,7 +65,7 @@ namespace NSFrame {
 				_saveInfoList.RemoveAt(i);
 				break;
 			}
-			_cacheDic.Remove(saveInfo);
+			// _cacheDic.Remove(saveInfo);
 			Directory.Delete(SAVE_DIR.AddPath(saveInfo.DirName), true);
 		}
 		private static string RandomFile() {
@@ -84,11 +84,11 @@ namespace NSFrame {
 
 		#region 关于缓存
 
-		private static void UpdateCache(SaveInfo saveInfo, string fileName, object obj) {
-			if (!_cacheDic.ContainsKey(saveInfo)) _cacheDic.Add(saveInfo, new());
-			if (!_cacheDic[saveInfo].ContainsKey(fileName)) _cacheDic[saveInfo].Add(fileName, obj);
-			else _cacheDic[saveInfo][fileName] = obj;
-		}
+		// private static void UpdateCache(SaveInfo saveInfo, string fileName, object obj) {
+		// 	if (!_cacheDic.ContainsKey(saveInfo)) _cacheDic.Add(saveInfo, new());
+		// 	if (!_cacheDic[saveInfo].ContainsKey(fileName)) _cacheDic[saveInfo].Add(fileName, obj);
+		// 	else _cacheDic[saveInfo][fileName] = obj;
+		// }
 
 		#endregion
 
@@ -98,10 +98,10 @@ namespace NSFrame {
 			string dir = SAVE_DIR.AddPath(saveInfo.DirName);
 			CheckDir(dir);
 			SaveToFile(obj, dir.AddPath(fileName));
-			UpdateCache(saveInfo, fileName, obj);
+			// UpdateCache(saveInfo, fileName, obj);
 			saveInfo.Update(DateTime.Now.ToString());
 			SaveToFile(saveInfo, dir.AddPath(typeof(SaveInfo).Name));
-			UpdateCache(saveInfo, typeof(SaveInfo).Name, saveInfo);
+			// UpdateCache(saveInfo, typeof(SaveInfo).Name, saveInfo);
 		}
 		public static void SaveObject(SaveInfo saveInfo, object obj) {
 			SaveObject(saveInfo, obj.GetType().Name, obj);
@@ -112,14 +112,26 @@ namespace NSFrame {
 		}
 
 		public static T LoadObject<T>(SaveInfo saveInfo, string fileName) where T : class {
-			if (!_cacheDic.ContainsKey(saveInfo)) return null;
-			if (_cacheDic[saveInfo].ContainsKey(fileName)) return (T)_cacheDic[saveInfo][fileName];
+			// if (!_cacheDic.ContainsKey(saveInfo)) return null;
+			// if (_cacheDic[saveInfo].ContainsKey(fileName)) return (T)_cacheDic[saveInfo][fileName];
 			T obj = LoadFromFile<T>(SAVE_DIR.AddPath(saveInfo.DirName).AddPath(fileName));
-			_cacheDic[saveInfo].Add(fileName, obj);
+			// _cacheDic[saveInfo].Add(fileName, obj);
 			return obj;
 		}
 		public static T LoadObject<T>(SaveInfo saveInfo) where T : class {
 			return LoadObject<T>(saveInfo, typeof(T).Name);
+		}
+
+
+		public static object LoadObject(SaveInfo saveInfo, string fileName, Type type) {
+			// if (!_cacheDic.ContainsKey(saveInfo)) return null;
+			// if (_cacheDic[saveInfo].ContainsKey(fileName)) return _cacheDic[saveInfo][fileName];
+			object obj = LoadFromFile(SAVE_DIR.AddPath(saveInfo.DirName).AddPath(fileName), type);
+			// _cacheDic[saveInfo].Add(fileName, obj);
+			return obj;
+		}
+		public static object LoadObject(SaveInfo saveInfo, Type type) {
+			return LoadObject(saveInfo, type.Name, type);
 		}
 
 		#endregion
@@ -158,6 +170,11 @@ namespace NSFrame {
 			path += SAVE_EXTENSION;
 			if (!File.Exists(path)) return null;
 			return JsonUtility.FromJson<T>(File.ReadAllText(path));
+		}
+		private static object LoadFromFile(string path, Type type) {
+			path += SAVE_EXTENSION;
+			if (!File.Exists(path)) return null;
+			return JsonUtility.FromJson(File.ReadAllText(path), type);
 		}
 
 		#endregion

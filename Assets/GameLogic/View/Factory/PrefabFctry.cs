@@ -1,7 +1,8 @@
+using GameLogic.Utilities;
 using NSFrame;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	public class PrefabFctry : MonoSingleton<PrefabFctry> {
 		public PrefabFctryConfig Config;

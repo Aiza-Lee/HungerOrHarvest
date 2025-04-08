@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using GameLogic.View;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public class CameraFocusVillCmd : CommandBase {
 		private readonly ulong _id;
@@ -26,7 +27,7 @@ namespace GameLogic
 		}
 
 		public override void Execute() {
-			WorldCameraMgr.Inst.FocusOn(_view.transform);
+			WorldCameraFocus.Inst.FocusOn(_view.transform);
 		}
 	}
 }

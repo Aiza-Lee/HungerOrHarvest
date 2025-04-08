@@ -1,6 +1,6 @@
 using NSFrame;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	public class ViewConstMgr : MonoSingleton<ViewConstMgr> {
 

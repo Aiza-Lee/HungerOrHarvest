@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	public abstract class SmoothChangeBase<T> : MonoBehaviour where T : struct {
 		abstract public T GetCurVal();
-		abstract protected void DerivedSetCurVal(T val);
+		abstract protected void SetCurVal_Derived(T val);
 		abstract protected T Add(T lhv, T rhv);
 		abstract protected T Sub(T lhv, T rhv);
 		abstract protected T Mul(T lhv, float rhv);
@@ -36,7 +36,7 @@ namespace GameLogic
 			var time = Configs[_curModID].Time;
 			_elapsedTime += TickMove ? Time.deltaTime : Time.unscaledDeltaTime;
 			var newPrcs = Mathf.Clamp01(_elapsedTime / time);
-			DerivedSetCurVal(Add(_oriVal, Mul(_distance, curve.Evaluate(newPrcs))));
+			SetCurVal_Derived(Add(_oriVal, Mul(_distance, curve.Evaluate(newPrcs))));
 			if (_elapsedTime >= time) {
 				_endCallback?.Invoke();
 				_endCallback = null;
@@ -51,7 +51,7 @@ namespace GameLogic
 
 		#region PublicMethods
 		public void SetCurVal(T val) {
-			DerivedSetCurVal(val);
+			SetCurVal_Derived(val);
 			_target = val;
 			_running = false;
 		}

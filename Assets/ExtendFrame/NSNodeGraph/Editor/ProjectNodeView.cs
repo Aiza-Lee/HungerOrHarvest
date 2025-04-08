@@ -13,7 +13,7 @@ namespace ExtendFrame {
 		public string Tag, Text;
 		private readonly List<NSPairRef<RepoType, ulong>> _demands = new();
 		private readonly List<NSPairRef<ArchType, int>> _unlocks = new();
-		private readonly List<NSPairRef<ArchType, int>> _buffs = new();
+		private readonly List<NSPairRef<ArchType, float>> _buffs = new();
 		public TextField TextTF, TagTF;
 
 		private VisualElement _demandFoldout, _unlockFoldout, _buffFoldout;
@@ -96,7 +96,7 @@ namespace ExtendFrame {
 		private void AddNewBuff() {
 			AddBuff(new(ArchType.Cottage, 0));
 		}
-		public void AddBuff(NSPairRef<ArchType, int> buff) {
+		public void AddBuff(NSPairRef<ArchType, float> buff) {
 			_buffs.Add(buff);
 			var buffContainer = new VisualElement();
 			buffContainer.style.flexDirection = FlexDirection.Row;

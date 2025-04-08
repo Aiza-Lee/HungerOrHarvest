@@ -22,7 +22,7 @@ namespace GameLogic
 	public class JTList<T> where T : struct {
 		public List<JTPair<T>> List;
 		[HideInInspector] public bool Full;
-		public int Coutn => List.Count;
+		public int Count => List.Count;
 
 		public JTList(bool fill = false) {
 			List = new();

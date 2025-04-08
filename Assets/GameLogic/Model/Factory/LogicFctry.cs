@@ -21,7 +21,7 @@ namespace GameLogic
 			var vill = NewEmptyVill(save.VillType);
 			vill.InitFromSave(save);
 
-			EventSystem.Invoke<VillLogicBase>((int)LogicEvt.VillAdded_V, vill);
+			EventSystem.Invoke<VillLogicBase>((int)LogicEvt.VillAdded_V_1, vill);
 
 			return vill;
 		}
@@ -108,7 +108,7 @@ namespace GameLogic
 			var arch = NewEmptyArch(save.ArchType);
 			arch.InitFromSave(save.Clone());
 
-			EventSystem.Invoke<ArchLogicBase>((int)LogicEvt.ArchAdded_A, arch);
+			EventSystem.Invoke<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, arch);
 
 			return arch;
 		}
@@ -124,7 +124,7 @@ namespace GameLogic
 
 			arch.InitFromSave(save);
 			
-			EventSystem.Invoke<ArchLogicBase>((int)LogicEvt.ArchAdded_A, arch);
+			EventSystem.Invoke<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, arch);
 
 			return arch;
 		}
@@ -145,7 +145,7 @@ namespace GameLogic
 				ArchType.Garden => throw new System.NotImplementedException(),
 				ArchType.Fountain => throw new System.NotImplementedException(),
 				ArchType.Statue => throw new System.NotImplementedException(),
-				ArchType.Ruins => throw new System.NotImplementedException(),
+				ArchType.Ruin => new RuinLogic(),
 				_ => throw new System.NotImplementedException(),
 			};
 		}
@@ -161,7 +161,7 @@ namespace GameLogic
 			var layer = NewEmptyLayer(save.LayerType);
 			layer.InitFromSave(save.Clone());
 
-			EventSystem.Invoke<LayerLogicBase>((int)LogicEvt.LayerAdded_L, layer);
+			EventSystem.Invoke<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, layer);
 
 			return layer;
 		}
@@ -175,7 +175,7 @@ namespace GameLogic
 			save.LYR = lyr;
 			layer.InitFromSave(save);
 
-			EventSystem.Invoke<LayerLogicBase>((int)LogicEvt.LayerAdded_L, layer);
+			EventSystem.Invoke<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, layer);
 
 			return layer;
 		}

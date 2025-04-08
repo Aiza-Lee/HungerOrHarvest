@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	[CreateAssetMenu(fileName = "ViewConstConfig", menuName = "HungerOrHarvest/Config/View/ViewConstConfig")]
 	public class ViewConstConfig : ScriptableObject {

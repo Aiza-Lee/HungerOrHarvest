@@ -6,13 +6,13 @@ namespace GameLogic
 	public abstract class ArchLogicBase : ISaveable<ArchSaveBase> {
 
 		public ArchLogicBase() {
-			EventSystem.AddListener((int)LogicEvt.Tick, UpdateRepo);
+			EventSystem.AddListener((int)LogicEvt.Tick_0, UpdateRepo);
 		}
 		private OL _ol;
 		private ulong _id;
 		private int _level;
-		private List<ulong> _bookedPosVillIDs;
 		private List<ulong> _inVillIDs;
+		private List<ulong> _bondedVillIDs;
 		private RTList<float> _consBuffs_F;
 		private RTList<float> _prodBuffs_F;
 
@@ -21,9 +21,12 @@ namespace GameLogic
 		public OL OL => _ol;
 		public ulong ID => _id;
 		public int Level => _level;
-		public List<ulong> BookedPosVills => _bookedPosVillIDs;
 		public List<ulong> InVills => _inVillIDs;
+		public List<ulong> BondedVills => _bondedVillIDs;
+		public RTList<float> ConsBuffs_F => _consBuffs_F;
+		public RTList<float> ProdBuffs_F => _prodBuffs_F;
 		public Coord Coord => _ol.ToCoord();
+		public int BondedVillCount => _bondedVillIDs.Count;
 
 		public ArchConfigBase Config { get; private set; }
 		public ArchLevelConfigBase Lconfig => Config.LevelConfigs[_level];
@@ -33,76 +36,86 @@ namespace GameLogic
 				RepoMgr.Inst.ArchProd(Lconfig.InherentProdVels, _prodBuffs_F);
 			}
 		}
+		private bool CheckCapacity() {
+			return _bondedVillIDs.Count < Lconfig.MaxContain;
+		}
 
 		#region PublicMethods
-		public virtual void Destroy() {
-			foreach (var vID in _inVillIDs) {
-				WorldMgr.Inst.FindVill(vID)?.GoSpare();
+
+		protected abstract void Destroy_Derived();
+		public void Destroy() {
+			foreach (var vID in _bondedVillIDs) {
+				WorldMgr.Inst.FindVill(vID).OnBondedArchDestroyed();
 			}
-			EventSystem.RemoveListener((int)LogicEvt.Tick, UpdateRepo);
-			EventSystem.Invoke<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, this);
+			Destroy_Derived();
+			EventSystem.RemoveListener((int)LogicEvt.Tick_0, UpdateRepo);
+			EventSystem.Invoke<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, this);
 		}
 
-		public bool CheckCapacity() {
-			return _inVillIDs.Count + _bookedPosVillIDs.Count < Lconfig.MaxContain;
-		}
-		public bool TryBookPos(ulong vID) {
+		public bool TryBondVill(ulong vID) {
+			if (_bondedVillIDs.Exists(v => v == vID)) { return true; }
 			if (CheckCapacity()) {
-				_bookedPosVillIDs.Add(vID);
+				_bondedVillIDs.Add(vID);
 				return true;
 			}
 			return false;
 		}
-		public bool VillDisbook(ulong vID) {
-			if (_bookedPosVillIDs.Remove(vID)) {
+		public bool TryDisbondVill(ulong vID) {
+			if (_bondedVillIDs.Remove(vID)) {
 				return true;
 			} else {
 				return false;
 			}
 		}
 		public bool VillArrive(ulong vID) {
-			if (_bookedPosVillIDs.Remove(vID)) {
+			if (_bondedVillIDs.Contains(vID)) {
 				_inVillIDs.Add(vID);
+				EventSystem.Invoke<ulong, ulong>((int)LogicEvt.VillArriveArch_VuAu_2, vID, _id);
 				return true;
 			} else {
 				return false;
 			}
 		}
-		public virtual bool VillLeave(ulong vID) {
-			return _inVillIDs.Remove(vID);
+		public bool VillLeave(ulong vID) {
+			if (_inVillIDs.Remove(vID)) {
+				EventSystem.Invoke<ulong, ulong>((int)LogicEvt.VillLeaveArch_VuAu_2, vID, _id);
+				return true;
+			} else {
+				return false;
+			}
 		}
-		public virtual void LevelUp() {
+		public void LevelUp() {
 			_level++;
 		}
 		#endregion
 
 
 		#region ISaveable
-		protected abstract ArchSaveBase GetDerivedSave();
+		protected abstract ArchSaveBase GetSave_Derived();
 		public ArchSaveBase GetSave() {
-			var save = GetDerivedSave();
-				save.ArchType 			= ArchType;
-				save.ID 				= _id;
-				save.OL 				= _ol;
-				save.Level 				= _level;
-				save.ConsBuffs 			= _consBuffs_F.Clone();
-				save.ProdBuffs 			= _prodBuffs_F.Clone();
-				save.BookedPosVillIDs 	= new(_bookedPosVillIDs);
-				save.InVillIDs 			= new(_inVillIDs);
+			var save = GetSave_Derived();
+				save.ArchType 		= ArchType;
+				save.ID 			= _id;
+				save.OL 			= _ol;
+				save.Level 			= _level;
+				save.ConsBuffs 		= _consBuffs_F.Clone();
+				save.ProdBuffs 		= _prodBuffs_F.Clone();
+				save.BondedVillIDs 	= new(_bondedVillIDs);
+				save.InVillIDs 		= new(_inVillIDs);
 			return save;
 		}
 
-		protected abstract void DerivedInitFromSave(ArchSaveBase save);
+		protected abstract void InitFromSave_Derived(ArchSaveBase save);
 		public void InitFromSave(ArchSaveBase save) {
-			DerivedInitFromSave(save);
-			Config 				= ConstMgr.Inst.Config.FindConfig(save.ArchType);
-			_ol 				= save.OL;
-			_id 				= save.ID;
-			_level 				= save.Level;
-			_consBuffs_F 		= save.ConsBuffs.ConvertToFull();
-			_prodBuffs_F 		= save.ProdBuffs.ConvertToFull();
-			_bookedPosVillIDs 	= save.BookedPosVillIDs;
-			_inVillIDs 			= save.InVillIDs;
+			InitFromSave_Derived(save);
+			Config 			= ConstMgr.Inst.Config.FindConfig(save.ArchType);
+			_ol 			= save.OL;
+			_id 			= save.ID;
+			_level 			= save.Level;
+			_consBuffs_F 	= save.ConsBuffs.ConvertToFull();
+			_prodBuffs_F 	= save.ProdBuffs.ConvertToFull();
+			_bondedVillIDs 	= save.BondedVillIDs;
+			_inVillIDs 		= save.InVillIDs;
 		}
 		#endregion
 	}

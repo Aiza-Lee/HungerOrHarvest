@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameLogic
 {
 	[System.Serializable]
 	public class MoveToTaskSave : TaskSaveBase {
-		public Coord Target;
-		public List<Coord> Route;
-		public int Timer;
-		public int Idx;
+		[HideInInspector] public Coord Target;
+		[HideInInspector] public List<Coord> Route;
+		[HideInInspector] public int Timer;
+		[HideInInspector] public int Idx;
 		protected override TaskSaveBase Clone_Derived() {
 			return new MoveToTaskSave() {
 				Target = Target,

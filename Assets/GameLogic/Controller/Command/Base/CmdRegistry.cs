@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public static class CmdRegistry {
 		private static readonly Dictionary<string, Func<List<string>, CommandBase>> _allCmds = new() {
@@ -9,7 +9,8 @@ namespace GameLogic
 			/* Game Operation */
 				/* ViewOpt */
 				{ "cam-free", (args) => new CameraFreeViewCmd(args) },
-				{ "cam-follow-vill", (args) => new CameraFocusVillCmd(args) },
+				{ "cam-focus-vill", (args) => new CameraFocusVillCmd(args) },
+				{ "cam-focus-arch", (args) => new CameraFocusArchCmd(args) },
 			{ "vill-new", (args) => new CreateVillCmd(args) },
 			{ "vill-spare", (args) => new SetVillSpareCmd(args) },
 			{ "vill-work", (args) => new SetVillWorkCmd(args) },
@@ -20,6 +21,7 @@ namespace GameLogic
 
 			/* SaveOpt */
 			{ "save", (args) => new SaveGameCmd(args) },
+			{ "load", (args) => new LoadGameCmd(args) },
 			{ "world-new", (args) => new NewWorldCmd(args) },
 
 			/* Administrator */

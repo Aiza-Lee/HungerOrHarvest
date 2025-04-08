@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using GameLogic.View;
 using NSFrame;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public class NewWorldCmd : CommandBase {
 		public NewWorldCmd(List<string> args) : base(args) {}
@@ -16,10 +17,18 @@ namespace GameLogic
 		}
 
 		public override void Execute() {
+
+			GameViewMgr.Inst.ClearAllMgrs();
+			GameModelMgr.Inst.ClearAllMgrs();
+
 			var saveInfo = SaveSystem.CreateSaveFile();
-			GameMgr.Inst.RegisterSaveInfo(saveInfo);
+			GameModelMgr.Inst.RegisterSaveInfo(saveInfo);
+			GameViewMgr.Inst.RegisterSaveInfo(saveInfo);
+
 			WorldGenerator.Inst.Generate();
-			GameMgr.Inst.SaveGame();
+
+			GameModelMgr.Inst.SaveGame();
+			GameViewMgr.Inst.SaveGame();
 		}
 	}
 }

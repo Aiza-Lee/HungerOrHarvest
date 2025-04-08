@@ -1,13 +1,15 @@
+using GameLogic.View;
 using NSFrame;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public class PlayerTest : MonoBehaviour {
 
 		public int SaveIndex;
 
 		private void Update() {
+			// 保存并退出游戏
 			if (Input.GetKeyDown(KeyCode.F11)) {
 				CmdRunner.Run("/save");
 				#if UNITY_EDITOR
@@ -19,13 +21,11 @@ namespace GameLogic
 			if (Input.GetKeyDown(KeyCode.F12)) {
 				var saves = SaveSystem.GetAllSaveInfos();
 				if (saves.Count > SaveIndex) {
-					GameMgr.Inst.RegisterSaveInfo(saves[SaveIndex]);
-					GameMgr.Inst.LoadGame();
+					GameModelMgr.Inst.RegisterSaveInfo(saves[SaveIndex]);
+					GameViewMgr.Inst.RegisterSaveInfo(saves[SaveIndex]);
+					CmdRunner.Run("/load");
 				} else {
-					WorldGenerator.Inst.Generate();
-					var saveInfo = SaveSystem.CreateSaveFile();
-					GameMgr.Inst.RegisterSaveInfo(saveInfo);
-					GameMgr.Inst.SaveGame();
+					CmdRunner.Run("/world-new");
 				}
 			}
 		}

@@ -24,7 +24,7 @@ namespace GameLogic
 			private set {
 				while (_tickSum < value) {
 					BeforeTick?.Invoke();
-					EventSystem.Invoke((int)LogicEvt.Tick);
+					EventSystem.Invoke((int)LogicEvt.Tick_0);
 					AfterTick?.Invoke();
 					++_tickSum;
 				}
@@ -37,7 +37,7 @@ namespace GameLogic
 				if (value == _pause) return;
 
 				if (value == true) {
-					EventSystem.Invoke((int)LogicEvt.GamePause);
+					EventSystem.Invoke((int)LogicEvt.GamePause_0);
 					Time.timeScale = 0f;
 				} else {
 					_realTimeSum = Time.unscaledTime;
@@ -59,7 +59,7 @@ namespace GameLogic
 
 				Time.timeScale = value;
 				_speed = value;
-				EventSystem.Invoke<float>((int)LogicEvt.TickSpeedChange_f, value);
+				EventSystem.Invoke<float>((int)LogicEvt.TickSpeedChange_f_1, value);
 			}
 		}
 

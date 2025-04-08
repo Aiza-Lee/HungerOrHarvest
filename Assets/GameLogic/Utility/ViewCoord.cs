@@ -1,6 +1,7 @@
+using GameLogic.View;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Utilities
 {
 	public static class ViewCoord {
 		public static Vector3 ToViewCoord(this Coord coord) {

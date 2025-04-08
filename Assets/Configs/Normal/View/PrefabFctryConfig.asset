@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: PrefabFctryConfig
   m_EditorClassIdentifier: 
   VillPrefabs:
-  - Key: 0
+  - Key: 1
     Value: {fileID: 4632101640204001798, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
   ArchPrefabs:
-  - Key: 0
+  - Key: 1
     Value: {fileID: 42990976938659487, guid: 13d11edb5a6612349bc92446864abe54, type: 3}
+  - Key: 16
+    Value: {fileID: 118420102723132381, guid: 502de8e99b2b89643ba871d11179091d, type: 3}
   LayerPrefabs:
   - Key: 0
     Value: {fileID: 6027108390514112321, guid: 5878d12087484da4c90322c23862563f, type: 3}

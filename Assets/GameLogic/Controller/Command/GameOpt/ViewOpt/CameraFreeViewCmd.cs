@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using GameLogic.View;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public class CameraFreeViewCmd : CommandBase {
 		public CameraFreeViewCmd(List<string> args) : base(args) {}
@@ -16,7 +17,7 @@ namespace GameLogic
 		}
 
 		public override void Execute() {
-			WorldCameraMgr.Inst.FreeView();
+			WorldCameraFocus.Inst.FreeView();
 		}
 	}
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	public abstract class LayerViewBase : MonoBehaviour {
 		private LayerLogicBase _layerLogic;

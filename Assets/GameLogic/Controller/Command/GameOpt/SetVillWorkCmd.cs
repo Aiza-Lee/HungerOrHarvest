@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	/// <summary>
 	/// Args: ulong, ulong
@@ -40,7 +40,7 @@ namespace GameLogic
 				_failReason = "建筑不存在";
 				return false;
 			}
-			if (_arch.CheckCapacity()) {
+			if (_arch.TryBondVill(_vill.ID)) {
 				return true;
 			}
 			_failReason = "建筑已满";

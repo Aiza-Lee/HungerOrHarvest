@@ -5,21 +5,11 @@ namespace GameLogic
 	public class CottageLogic : ArchLogicBase {
 		public override ArchType ArchType => ArchType.Cottage;
 
-		#region Injection
-		public void AddBondedVill(ulong vID) { _bondedVillIDs.Add(vID); }
-		#endregion
+		protected override void Destroy_Derived() { }
 
-		private List<ulong> _bondedVillIDs = new();
-		public int BondedVillCount => _bondedVillIDs.Count;
-
-		protected override void DerivedInitFromSave(ArchSaveBase save) {
-			var sv = save as CottageSave;
-			_bondedVillIDs = sv.BondedVillIDs;
-		}
-		protected override ArchSaveBase GetDerivedSave() {
-			return new CottageSave() {
-				BondedVillIDs = new(_bondedVillIDs),
-			};
+		protected override void InitFromSave_Derived(ArchSaveBase _) { }
+		protected override ArchSaveBase GetSave_Derived() {
+			return new CottageSave();
 		}
 	}
 }

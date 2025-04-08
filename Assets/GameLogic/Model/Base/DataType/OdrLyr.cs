@@ -12,6 +12,8 @@ namespace GameLogic
 			ODR = odr;
 			LYR = lyr;
 		}
+
+		#region PublicMethods
 		public readonly OL Translate(int odr, int lyr) {
 			return new(ODR + odr, LYR + lyr);
 		}
@@ -28,6 +30,10 @@ namespace GameLogic
 		public readonly int Distance(OL other) {
 			return Mathf.Abs(ODR - other.ODR) + Mathf.Abs(LYR - other.LYR);
 		}
+		public readonly bool CheckAvailableForArch() {
+			return (ODR + LYR) % 2 == 0;
+		}
+		#endregion
 		
 
 

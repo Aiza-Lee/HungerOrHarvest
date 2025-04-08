@@ -35,6 +35,7 @@ namespace GameLogic
 		
 		[Space][Space][Space] [Header("Default Arch Save")]
 		[Space] public CottageSave DefaultCottage;
+		[Space] public RuinSave DefaultRuin;
 
 
 
@@ -71,7 +72,7 @@ namespace GameLogic
 				ArchType.Garden => throw new System.NotImplementedException(),
 				ArchType.Fountain => throw new System.NotImplementedException(),
 				ArchType.Statue => throw new System.NotImplementedException(),
-				ArchType.Ruins => throw new System.NotImplementedException(),
+				ArchType.Ruin => DefaultRuin,
 				_ => throw new System.NotImplementedException(),
 			};
 		}

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	[CreateAssetMenu(fileName = "PreSetWorldConfig", menuName = "HungerOrHarvest/Config/Preset World")]
 	public class PreSetConfig : ScriptableObject {

@@ -48,8 +48,6 @@ namespace GameLogic
 				Idx = _idx,
 			};
 		}
-
-
 		protected override void InitFromSave_Derived(TaskSaveBase save) {
 			var sv = save as MoveToTaskSave;
 			_target = sv.Target;

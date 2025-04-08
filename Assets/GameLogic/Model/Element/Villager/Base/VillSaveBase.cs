@@ -1,18 +1,20 @@
+using UnityEngine;
+
 namespace GameLogic
 {
 	[System.Serializable]
 	public abstract class VillSaveBase {
-		public ulong ID;
+		[HideInInspector] public ulong ID;
 		public VillType VillType;
 		public string FirstName, LastName;
 		public JTList<int> JobLevel;
 		public JTList<float> JobExps;
 		public RTList<float> ConsBuffs;
 		public RTList<float> ProdBuffs;
-		public Coord Coord;
-		public VillTaskRunnerSave TaskRunner;
-		public ulong HomeID;
-		public ulong PrevWorkArchID;
+		[HideInInspector] public Coord Coord;
+		[HideInInspector] public VillTaskRunnerSave TaskRunner;
+		[HideInInspector] public ulong HomeID;
+		[HideInInspector] public ulong AttachedWorkArchID;
 		
 
 		protected abstract VillSaveBase GetDerivedClone();
@@ -29,7 +31,7 @@ namespace GameLogic
 				save.Coord 			= Coord;
 				save.TaskRunner 	= TaskRunner.Clone();
 				save.HomeID 		= HomeID;
-				save.PrevWorkArchID = PrevWorkArchID;
+				save.AttachedWorkArchID = AttachedWorkArchID;
 			return save;
 		}
 	}

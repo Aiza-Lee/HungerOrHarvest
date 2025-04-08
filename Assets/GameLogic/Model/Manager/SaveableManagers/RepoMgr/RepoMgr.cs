@@ -86,18 +86,18 @@ namespace GameLogic
 
 		public RepoMgrSave GetSave() {
 			return new RepoMgrSave() {
-				Repos = _repos_F.Clone(),
+				Repos 			= _repos_F.Clone(),
 				GlobalConsBuffs = _globalConsBuffs_F.Clone(),
 				GlobalProdBuffs = _globalProdBuffs_F.Clone(),
-				UnlockedRepos = _unlockedRepos_F.Clone(),
+				UnlockedRepos 	= _unlockedRepos_F.Clone(),
 			};
 		}
 
 		public void InitFromSave(RepoMgrSave saveData) {
-			_repos_F = saveData.Repos.ConvertToFull();
-			_globalConsBuffs_F = saveData.GlobalConsBuffs.ConvertToFull();
-			_globalProdBuffs_F = saveData.GlobalProdBuffs.ConvertToFull();
-			_unlockedRepos_F = saveData.UnlockedRepos.ConvertToFull();
+			_repos_F 			= saveData.Repos.ConvertToFull();
+			_globalConsBuffs_F 	= saveData.GlobalConsBuffs.ConvertToFull();
+			_globalProdBuffs_F 	= saveData.GlobalProdBuffs.ConvertToFull();
+			_unlockedRepos_F 	= saveData.UnlockedRepos.ConvertToFull();
 		}
 
 		public void ClearMgr() { }

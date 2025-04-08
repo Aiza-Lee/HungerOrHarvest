@@ -7,7 +7,8 @@ namespace ExtendFrame {
 		public string OutputPortID;
 		public string Tag, Text;
 		public List<NSPair<RepoType, ulong>> Demands;
-		public List<NSPair<ArchType, int>> Unlocks, Buffs;
+		public List<NSPair<ArchType, int>> Unlocks;
+		public List<NSPair<ArchType, float>> Buffs;
 
 		public override void GetOutputPort(NSNodeViewBase nodeView, Dictionary<string, NSPort> ports) {
 			if (nodeView is ProjectNodeView projectNodeView) {

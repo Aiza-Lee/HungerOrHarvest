@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public class MultiCmdCmd : CommandBase {
 		private readonly int _times;

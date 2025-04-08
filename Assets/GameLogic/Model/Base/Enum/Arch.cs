@@ -1,6 +1,7 @@
 namespace GameLogic
 {
 	public enum ArchType {
+		None,
 		/* 居住 */
 		Cottage, 
 		/* 原始生产 */
@@ -22,6 +23,6 @@ namespace GameLogic
 		Fountain,
 		Statue,
 		/* 特殊 */
-		Ruins,
+		Ruin,
 	}
 }

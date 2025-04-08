@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public static class ParamConverter {
 		public static bool TryDefaultConvert<T>(string str, out T result) {

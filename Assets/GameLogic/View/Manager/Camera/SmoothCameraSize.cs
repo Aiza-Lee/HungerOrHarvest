@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	[RequireComponent(typeof(Camera))]
 	public class SmoothCameraSize : SmoothChangeBase<float> {
@@ -17,7 +17,7 @@ namespace GameLogic
 		public override float GetCurVal() {
 			return _camera.fieldOfView;
 		}
-		protected override void DerivedSetCurVal(float val) {
+		protected override void SetCurVal_Derived(float val) {
 			_camera.fieldOfView = val;
 		}
 	}

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using GameLogic.View;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public class SaveGameCmd : CommandBase {
 		public SaveGameCmd(List<string> args) : base(args) {}
@@ -15,7 +16,8 @@ namespace GameLogic
 		}
 
 		public override void Execute() {
-			GameMgr.Inst.SaveGame();
+			GameModelMgr.Inst.SaveGame();
+			GameViewMgr.Inst.SaveGame();
 		}
 	}
 }

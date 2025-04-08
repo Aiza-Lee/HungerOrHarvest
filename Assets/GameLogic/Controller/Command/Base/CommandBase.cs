@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Controller
 {
 	public abstract class CommandBase {
 		public abstract int ArgCount { get; }

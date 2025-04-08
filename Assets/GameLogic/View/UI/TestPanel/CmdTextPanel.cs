@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace GameLogic
+namespace GameLogic.View.Test
 {
 	public class CmdTextPanel : MonoBehaviour {
 		public TMP_InputField Text;
@@ -39,7 +39,7 @@ namespace GameLogic
 				if (Text.text != "") {
 					_cmdHistory.Add(Text.text);
 					_cmdHistoryIndex = _cmdHistory.Count;
-					CmdRunner.Run(Text.text);
+					Controller.CmdRunner.Run(Text.text);
 					Text.text = "";
 				}
 			}

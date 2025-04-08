@@ -1,13 +1,18 @@
+using GameLogic.Utilities;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View
 {
 	[RequireComponent(typeof(SmoothFade))]
 	public abstract class VillViewBase : MonoBehaviour {
 
 		private VillLogicBase _villLogic;
-		public SmoothMove SmoothMove { get; private set; }
-		public SpriteRenderer SpriteRenderer { get; private set; }
+		private SmoothMove SmoothMove { get; set; }
+		private SpriteRenderer SpriteRenderer { get; set; }
+
+		public VillLogicBase Logic => _villLogic;
+		public Sprite Sprite => SpriteRenderer.sprite;
+
 
 		private void Awake() {
 			SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -15,34 +20,37 @@ namespace GameLogic
 			SmoothMove.Configs[0].Time = ConstMgr.Inst.Config.VILL_ONE_MOVE_TICK * TickTrigger.Inst.TickTime;
 			SpriteRenderer.sortingOrder = ViewConstMgr.VILL_SORTING_ORDER;
 		}
-
+		private void OnDestroy() {
+			_villLogic.OnCoordChange -= OnLogicCoordChange;
+		}
+		
+		#region Injection
 		public void SetVill(VillLogicBase vill) {
 			_villLogic = vill;
 			_villLogic.OnCoordChange += OnLogicCoordChange;
 		}
+		#endregion
 
-		private void OnLogicCoordChange(Coord dlt) {
-			var ori = _villLogic.Coord - dlt;
-			if (ori.IsOnLayer() && dlt.Y != 0) {
-				SpriteRenderer.sortingOrder = ViewConstMgr.MAX_SORTING_ORDER;
-				if (dlt.Y == 1) {
-					SetSortingLayerID(ori.Y / ConstMgr.Y_PER_LYR + 1);
-				}
-			}
-			if (_villLogic.Coord.IsOnLayer()) {
-				if (dlt.Y != 0) {
-					SpriteRenderer.sortingOrder = ViewConstMgr.VILL_SORTING_ORDER;
-					if (dlt.Y == -1) {
-						SetSortingLayerID(_villLogic.Coord.Y / ConstMgr.Y_PER_LYR);
-					}
-				}
-			}
+		private void OnLogicCoordChange(Coord _) {
+			SetSortingLayerIDbyY(_villLogic.Coord.Y);
 			SmoothMove.SetTarget(_villLogic.Coord.ToViewCoord());
 		}
 
-		public void SetSortingLayerID(int lyr) {
+		private void SetSortingLayerID(int lyr) {
 			SpriteRenderer.sortingLayerID = SortingLayer.NameToID("m_Layer" + (ConstMgr.MAX_LYR + lyr));
 		}
+
+		#region PublicMethods
+		public void SetSortingLayerIDbyY(int y) {
+			SetSortingLayerID(Mathf.CeilToInt(1f * y / ConstMgr.Y_PER_LYR));
+			if (y % ConstMgr.Y_PER_LYR == 0) {
+				SpriteRenderer.sortingOrder = ViewConstMgr.VILL_SORTING_ORDER;
+			} else {
+				SpriteRenderer.sortingOrder = ViewConstMgr.MAX_SORTING_ORDER;
+			}
+		}
+		#endregion
+
 		
 	}
 }

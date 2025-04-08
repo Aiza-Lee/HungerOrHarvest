@@ -17,7 +17,18 @@ namespace GameLogic
 			WorkArch.VillArrive(AttachedVill.ID);
 		}
 		public override void Execute() {
-			// note: 似乎村民的资源产出逻辑应该写在这里，目前写在 ArchLogicBase 的 UpdateRepo 中
+			if (RepoMgr.Inst.TryVillCons(
+					WorkArch.Lconfig.ExtraConsVelsPerOne, 
+					WorkArch.ConsBuffs_F, 
+					AttachedVill.ConsBuffs_F
+				)) {
+					RepoMgr.Inst.VillProd(
+						WorkArch.Lconfig.ExtraProdVelsPerOne, 
+						WorkArch.ProdBuffs_F, 
+						AttachedVill.ProdBuffs_F
+					);
+					AttachedVill.AddExp(WorkArch.Lconfig.ExpAdds);
+				}
 		}
 
 		protected override void InitAfterPop_Derived() {}

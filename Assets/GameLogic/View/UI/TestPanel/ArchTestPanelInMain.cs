@@ -4,9 +4,9 @@ using NSFrame;
 using TMPro;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.View.Test
 {
-	public class ArchTestPanelInMain : MonoBehaviour {
+	public class ArchTestPanelInMain : MonoBehaviour, IClearMgr {
 		public Transform ArchInfoLayout; 
 		public GameObject InfoPrefab;
 		public TextMeshProUGUI CurPageText;
@@ -17,7 +17,7 @@ namespace GameLogic
 		private const int PER_PAGE_ARCH_COUNT = 5;
 		private const int PER_LINE_ID_COUNT = 3;
 		private int _curPage;
-		private readonly StringBuilder _sb = new(2048);
+		private readonly StringBuilder _sb = new();
 
 
 		public void NextPage() {
@@ -37,6 +37,8 @@ namespace GameLogic
 
 
 		private void Start() {
+			GameViewMgr.Inst.RegisterClearableMgr(this);
+
 			var cnt = ArchInfoLayout.childCount;
 			while (cnt-- != 0) {
 				Destroy(ArchInfoLayout.GetChild(0).gameObject);
@@ -47,8 +49,8 @@ namespace GameLogic
 			}
 		}
 		private void OnEnable() {
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, OnArchDestroyed);
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
+			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroyed);
 			_curPage = 0;
 			var vills = WorldMgr.Inst.GetAllArchs;
 			foreach (var v in vills) {
@@ -56,8 +58,8 @@ namespace GameLogic
 			}
 		}
 		private void OnDisable() {
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A, OnArchAdded);
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A, OnArchDestroyed);
+			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
+			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroyed);
 			_ArchInfos.Clear();
 		}
 
@@ -91,5 +93,10 @@ namespace GameLogic
 			}
 		}
 
+		#region IClearMgr
+		public void ClearMgr() {
+			_ArchInfos.Clear();
+		}
+		#endregion
 	}
 }

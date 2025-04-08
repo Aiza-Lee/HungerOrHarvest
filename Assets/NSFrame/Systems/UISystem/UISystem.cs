@@ -36,6 +36,7 @@ namespace NSFrame {
 				Canvas canvas = go.AddComponent<Canvas>();
 				canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 				canvas.vertexColorAlwaysGammaSpace = true;
+				canvas.sortingOrder = i;
 
 				CanvasScaler canvasScaler = go.AddComponent<CanvasScaler>();
 				canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -85,11 +86,11 @@ namespace NSFrame {
 			if (!panel.Opened) return;
 			panel.Opened = false;
 			panel.transform.SetAsFirstSibling();
+			panel.OnClose();
+			panel.gameObject.SetActive(false);
 			if (_activatedPanelCnt[panel.TypeIndex] == 1)
 				_canvases[panel.TypeIndex].gameObject.SetActive(false);
 			--_activatedPanelCnt[panel.TypeIndex];
-			panel.gameObject.SetActive(false);
-			panel.OnClose();
 		}
 
 		public static void AddUIPanel(PanelBase panel) {

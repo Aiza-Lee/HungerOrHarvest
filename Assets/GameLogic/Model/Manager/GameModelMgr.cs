@@ -6,14 +6,14 @@ namespace GameLogic
 	/// <summary>
 	/// 游戏从始至末的管理
 	/// </summary>
-	public class GameMgr : MonoSingleton<GameMgr> {
+	public class GameModelMgr : MonoSingleton<GameModelMgr> {
 
 		private SaveInfo _saveInfo;
 
-		private  List<IClearMgr> _mgrs;
+		private  List<IClearMgr> _clearableMgrs;
 
 		private void Start() {
-			_mgrs = new() {
+			_clearableMgrs = new() {
 				MapMgr.Inst,
 				DisasterMgr.Inst,
 				IDMgr.Inst,
@@ -41,12 +41,16 @@ namespace GameLogic
 		}
 
 		public void LoadGame() {
-			_mgrs.ForEach(mgr => mgr.ClearMgr());
-			WorldMgr.Inst.InitFromSave(SaveSystem.LoadObject<WorldSave>(_saveInfo));
-			IDMgr.Inst.InitFromSave(SaveSystem.LoadObject<IDMgrSave>(_saveInfo));
-			LogicTimeMgr.Inst.InitFromSave(SaveSystem.LoadObject<LogicTimeMgrSave>(_saveInfo));
-			RepoMgr.Inst.InitFromSave(SaveSystem.LoadObject<RepoMgrSave>(_saveInfo));
-			DisasterMgr.Inst.InitFromSave(SaveSystem.LoadObject<DisasterMgrSave>(_saveInfo));
+			ClearAllMgrs();
+			WorldMgr.Inst		.InitFromSave(SaveSystem.LoadObject<WorldSave>(_saveInfo));
+			IDMgr.Inst			.InitFromSave(SaveSystem.LoadObject<IDMgrSave>(_saveInfo));
+			LogicTimeMgr.Inst	.InitFromSave(SaveSystem.LoadObject<LogicTimeMgrSave>(_saveInfo));
+			RepoMgr.Inst		.InitFromSave(SaveSystem.LoadObject<RepoMgrSave>(_saveInfo));
+			DisasterMgr.Inst	.InitFromSave(SaveSystem.LoadObject<DisasterMgrSave>(_saveInfo));
+		}
+
+		public void ClearAllMgrs() {
+			_clearableMgrs.ForEach(mgr => mgr.ClearMgr());
 		}
 	}
 }
