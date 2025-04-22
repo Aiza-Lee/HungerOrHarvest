@@ -6,7 +6,7 @@ namespace GameLogic
 	public abstract class ArchLogicBase : ISaveable<ArchSaveBase> {
 
 		public ArchLogicBase() {
-			EventSystem.AddListener((int)LogicEvt.Tick_0, UpdateRepo);
+			EventSystem.AddListener((int)ModelEvt.Tick_0, UpdateRepo, EventType.Model);
 		}
 		private OL _ol;
 		private ulong _id;
@@ -36,9 +36,6 @@ namespace GameLogic
 				RepoMgr.Inst.ArchProd(Lconfig.InherentProdVels, _prodBuffs_F);
 			}
 		}
-		private bool CheckCapacity() {
-			return _bondedVillIDs.Count < Lconfig.MaxContain;
-		}
 
 		#region PublicMethods
 
@@ -48,13 +45,16 @@ namespace GameLogic
 				WorldMgr.Inst.FindVill(vID).OnBondedArchDestroyed();
 			}
 			Destroy_Derived();
-			EventSystem.RemoveListener((int)LogicEvt.Tick_0, UpdateRepo);
-			EventSystem.Invoke<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, this);
+			EventSystem.RemoveListener((int)ModelEvt.Tick_0, UpdateRepo, EventType.Model);
+			EventSystem.Invoke<ArchLogicBase>((int)ModelEvt.ArchDestroyed_A_1, this, EventType.Model);
 		}
 
+		public bool CheckCapacity() {
+			return _bondedVillIDs.Count < Lconfig.MaxContain;
+		}
 		public bool TryBondVill(ulong vID) {
 			if (_bondedVillIDs.Exists(v => v == vID)) { return true; }
-			if (CheckCapacity()) {
+			if (_bondedVillIDs.Count < Lconfig.MaxContain) {
 				_bondedVillIDs.Add(vID);
 				return true;
 			}
@@ -69,8 +69,9 @@ namespace GameLogic
 		}
 		public bool VillArrive(ulong vID) {
 			if (_bondedVillIDs.Contains(vID)) {
-				_inVillIDs.Add(vID);
-				EventSystem.Invoke<ulong, ulong>((int)LogicEvt.VillArriveArch_VuAu_2, vID, _id);
+				if (!_inVillIDs.Contains(vID)) 
+					_inVillIDs.Add(vID);
+				EventSystem.Invoke<ulong, ulong>((int)ModelEvt.VillArriveArch_VuAu_2, vID, _id, EventType.Model);
 				return true;
 			} else {
 				return false;
@@ -78,7 +79,7 @@ namespace GameLogic
 		}
 		public bool VillLeave(ulong vID) {
 			if (_inVillIDs.Remove(vID)) {
-				EventSystem.Invoke<ulong, ulong>((int)LogicEvt.VillLeaveArch_VuAu_2, vID, _id);
+				EventSystem.Invoke<ulong, ulong>((int)ModelEvt.VillLeaveArch_VuAu_2, vID, _id, EventType.Model);
 				return true;
 			} else {
 				return false;
@@ -108,7 +109,7 @@ namespace GameLogic
 		protected abstract void InitFromSave_Derived(ArchSaveBase save);
 		public void InitFromSave(ArchSaveBase save) {
 			InitFromSave_Derived(save);
-			Config 			= ConstMgr.Inst.Config.FindConfig(save.ArchType);
+			Config 			= ConstMgr.Inst.Config.FindArchConfig(save.ArchType);
 			_ol 			= save.OL;
 			_id 			= save.ID;
 			_level 			= save.Level;

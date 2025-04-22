@@ -62,12 +62,12 @@ namespace GameLogic.View
 				}
 
 				if (Input.GetKeyDown(KeyCode.W)) {
-					SmoothMove.StopCur();
+					SmoothMove.EndCurChange();
 					SmoothMove.Translate(ConstMgr.Y_PER_LYR * ViewConstMgr.VZ_MY_RATE * Vector3.forward);
 					StartCoroutine(LockMoveCoro(SmoothMove.Configs[0].Time));
 				}
 				if (Input.GetKeyUp(KeyCode.S)) {
-					SmoothMove.StopCur();
+					SmoothMove.EndCurChange();
 					SmoothMove.Translate(ConstMgr.Y_PER_LYR * ViewConstMgr.VZ_MY_RATE * Vector3.back);
 					StartCoroutine(LockMoveCoro(SmoothMove.Configs[0].Time));
 				}

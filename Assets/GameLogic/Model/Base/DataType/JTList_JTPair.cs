@@ -19,7 +19,7 @@ namespace GameLogic
 	}
 
 	[System.Serializable]
-	public class JTList<T> where T : struct {
+	public class JTList<T> {
 		public List<JTPair<T>> List;
 		[HideInInspector] public bool Full;
 		public int Count => List.Count;
@@ -28,7 +28,7 @@ namespace GameLogic
 			List = new();
 			if (fill) {
 				for (int i = 0; i < ConstMgr.JOB_TYPE_SIZE; ++i) {
-					List.Add(new((JobType)i, new()));
+					List.Add(new((JobType)i, default));
 				}
 			}
 		}
@@ -54,7 +54,7 @@ namespace GameLogic
 			var ori = List;
 			List = new();
 			for (int i = 0; i < ConstMgr.JOB_TYPE_SIZE; ++i) {
-				List.Add(new((JobType)i, new()));
+				List.Add(new((JobType)i, default));
 			}
 			if (ori != null) foreach (var pair in ori) {
 				List[pair.Index].Value = pair.Value;

@@ -1,75 +1,68 @@
+using System;
 using System.Collections.Generic;
 using NSFrame;
 using UnityEngine;
 
 namespace GameLogic.View.UI.WorldVillPanel
 {
-	public class VillGroup : MonoBehaviour {
-		[Header("挂载")]
-		public GameObject VillCardPrefab;
-		public RectTransform InnerRect;
+	public class VillGroup : GroupLayoutBase, IGroupLayoutEle {
 
-		public float Width => _rectTransform.rect.width;
+		private GroupType _groupType;
 
-		private float Space => InnerRect.offsetMin.x;
-		private readonly List<VillCard> _villCards = new();
-
-		public List<VillCard> VillCards => _villCards;
-
-		private RectTransform _rectTransform;
-		private void Awake() {
-			_rectTransform = GetComponent<RectTransform>();
-		}
-		private void OnDisable() {
-			_villCards.Clear();
+		private void GenerateVillCards(List<ulong> ids) {
+			foreach (var id in ids) {
+				var card = VillCardFactory.Inst.Create(id);
+				AddEle(card);
+			}
 		}
 
 		#region Injection
-		public void InjectInfo(ArchLogicBase arch = null) {
-			if (arch != null) {
-				foreach (var vID in arch.BondedVills) {
-					AddVillCard(PoolSystem.PopGO<VillCard>(VillCardPrefab).InjectVillView(WorldViewMgr.Inst.FindVillView(vID)));
-				}
+		public void InjectInfo(ArchLogicBase arch) {
+			_groupType = GroupType.Arch;
+			GenerateVillCards(arch.BondedVills);
+		}
+		public void InjectInfo(GroupType groupType) {
+			_groupType = groupType;
+			if (_groupType == GroupType.Homeless) {
+				GenerateVillCards(WorldMgr.Inst.GetHomelessVillIDs());
+			} else if (_groupType == GroupType.Workless) {
+				GenerateVillCards(WorldMgr.Inst.GetWorklessVillIDs());
 			}
 		}
  		#endregion
 
-		private void AddVillCard(VillCard villCard) {
-			villCard.transform.SetParent(InnerRect);
-			villCard.OnSetedAsChild();
-			float posx = _villCards.Count * (villCard.Width + Space);
-			SetCardPos(villCard, posx);
-
-			_villCards.Add(villCard);
-			this.SetRightEdge(posx + villCard.Width + Space * 2);
-		}
-		private void RemoveVillCard(VillCard villCard) {
-			_villCards.Remove(villCard);
-			RearrangeCards();
-		}
-		private void RearrangeCards() {
-			float pos = 0f;
-			for (int i = 0; i < _villCards.Count; i++) {
-				SetCardPos(_villCards[i], pos);
-				pos += _villCards[i].Width + Space;
-			}
-			this.SetRightEdge(pos + Space);
-		}
-		private void SetCardPos(VillCard villCard, float pos) {
-			villCard.SetRightEdge(pos + villCard.Width);
-			villCard.SetLeftEdge(pos);
-		}
-
 		#region PublicMethods
-		public void SetLeftEdge(float x) {
-			_rectTransform.offsetMin = new(x, _rectTransform.offsetMin.y);
+		public override void Clear() {
+			foreach (var ele in _eles) {
+				(ele as VillCard).Clear();
+			}
+			base.Clear();
+			_groupType = GroupType.None;
+			PoolSystem.PushGO(gameObject);
 		}
-		public void SetRightEdge(float x) {
-			_rectTransform.offsetMax = new(x, _rectTransform.offsetMax.y);
+		public override void SetWidth(float width) {
+			base.SetWidth(width);
+			OnDirty?.Invoke();
 		}
-		public void OnSetedAsChild() {
-			_rectTransform.offsetMin = new(0, 0);
-			_rectTransform.offsetMax = new(Space * 2, 0);
+		public override void RearrageEle() {
+			base.RearrageEle();
+			OnDirty?.Invoke();
+		}
+		#endregion
+
+		#region IGroupLayoutEle
+		public GroupLayoutBase BelongedGroup { get; set; }
+		public RectTransform RectTrans => _rectTrans;
+		public float Height => _rectTrans.rect.height;
+		public event Action OnDirty;
+		public void SetPos(float pos) {
+			_rectTrans.offsetMax = new(pos + Width, _rectTrans.offsetMax.y);
+			_rectTrans.offsetMin = new(pos, _rectTrans.offsetMin.y);
+		}
+		public void OnAddedToGroup() {
+			_rectTrans.offsetMin = new(0, 0);
+			_rectTrans.offsetMax = new(0, 0);
+			SetWidth(_space);
 		}
 		#endregion
 	}

@@ -49,8 +49,8 @@ namespace GameLogic.View.Test
 			}
 		}
 		private void OnEnable() {
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroyed);
+			EventSystem.AddListener<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, OnArchAdded, NSFrame.EventType.Model);
+			EventSystem.AddListener<ArchLogicBase>((int)ModelEvt.ArchDestroyed_A_1, OnArchDestroyed, NSFrame.EventType.Model);
 			_curPage = 0;
 			var vills = WorldMgr.Inst.GetAllArchs;
 			foreach (var v in vills) {
@@ -58,8 +58,8 @@ namespace GameLogic.View.Test
 			}
 		}
 		private void OnDisable() {
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroyed);
+			EventSystem.RemoveListener<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, OnArchAdded, NSFrame.EventType.Model);
+			EventSystem.RemoveListener<ArchLogicBase>((int)ModelEvt.ArchDestroyed_A_1, OnArchDestroyed, NSFrame.EventType.Model);
 			_ArchInfos.Clear();
 		}
 

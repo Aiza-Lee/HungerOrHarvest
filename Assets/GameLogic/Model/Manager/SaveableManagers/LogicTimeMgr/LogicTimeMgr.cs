@@ -3,7 +3,7 @@ using NSFrame;
 namespace GameLogic
 { 
 	public sealed class LogicTimeMgr : ISaveable<LogicTimeMgrSave>, IClearMgr {
-		private LogicTimeMgr() { EventSystem.AddListener((int)LogicEvt.MgrInitAfterMono, () => TickTrigger.Inst.AfterTick += AddTick); }
+		private LogicTimeMgr() { EventSystem.AddListener((int)ModelEvt.MgrInitAfterMono, () => TickTrigger.Inst.AfterTick += AddTick, NSFrame.EventType.Model); }
 		~LogicTimeMgr() { TickTrigger.Inst.AfterTick -= AddTick; }
 		public static LogicTimeMgr Inst { get; } = new();
 
@@ -12,26 +12,31 @@ namespace GameLogic
 		private bool _inDay = true;
 		private ulong _days;
 
+		private ulong DAY_TICKS => ConstMgr.Inst.Config.DAY_TICKS;
+		private ulong NIGHT_TICKS => ConstMgr.Inst.Config.NIGHT_TICKS;
+
 		public ulong TickSum => _tickSum;
 		public ulong TodayTick => _todayTick;
-		public bool Day => _inDay;
+		public bool IsDay => _inDay;
 		public ulong Days => _days;
+		public float DayProcess => 1f * _todayTick / DAY_TICKS;
+		public float NightProcess => 1f * (_todayTick - DAY_TICKS) / NIGHT_TICKS;
 
 
 		private void AddTick() {
 			++_tickSum;
 			++_todayTick;
 			if (_inDay) {
-				if (_todayTick == ConstMgr.Inst.Config.DAY_TICKS) {
+				if (_todayTick == DAY_TICKS) {
 					_inDay = false;
-					EventSystem.Invoke((int)LogicEvt.NightStart_0);
+					EventSystem.Invoke((int)ModelEvt.NightStart_0, NSFrame.EventType.Model);
 				} 
 			} else {
-				if (_todayTick == ConstMgr.Inst.Config.DAY_TICKS + ConstMgr.Inst.Config.NIGHT_TICKS) {
+				if (_todayTick == DAY_TICKS + NIGHT_TICKS) {
 					_inDay = true;
 					_days++;
 					_todayTick = 0;
-					EventSystem.Invoke((int)LogicEvt.DayStart_0);
+					EventSystem.Invoke((int)ModelEvt.DayStart_0, NSFrame.EventType.Model);
 				}
 			}
 		}

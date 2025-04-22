@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Farmer
   m_EditorClassIdentifier: 
   JobType: 0
+  ChineseName: "\u519C\u6C11"
   JobLevelConfigs:
   - {fileID: 11400000, guid: 9cecb8fd0e4c4974fa1106d8e9daf83d, type: 2}
   - {fileID: 11400000, guid: 23508fd1c71133742a906aecf027cef4, type: 2}

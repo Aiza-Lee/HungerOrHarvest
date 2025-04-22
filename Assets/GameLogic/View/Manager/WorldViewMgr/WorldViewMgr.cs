@@ -12,12 +12,12 @@ namespace GameLogic.View
 		protected override void Awake() {
 			base.Awake();
 
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
-			EventSystem.AddListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, OnLayerAdded);
+			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
+			EventSystem.AddListener<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, OnArchAdded, NSFrame.EventType.Model);
+			EventSystem.AddListener<LayerLogicBase>((int)ModelEvt.LayerAdded_L_1, OnLayerAdded, NSFrame.EventType.Model);
 
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroyed);
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroyed);
+			EventSystem.AddListener<ArchLogicBase>((int)ModelEvt.ArchDestroyed_A_1, OnArchDestroyed, NSFrame.EventType.Model);
+			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillDestroyed_V_1, OnVillDestroyed, NSFrame.EventType.Model);
 		}
 		private void Start() {
 			GameViewMgr.Inst.RegisterClearableMgr(this);
@@ -25,12 +25,12 @@ namespace GameLogic.View
 		protected void OnDestroy() {
 			GameViewMgr.Inst.UnregisterClearableMgr(this);
 
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
-			EventSystem.RemoveListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, OnLayerAdded);
+			EventSystem.RemoveListener<VillLogicBase>((int)ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
+			EventSystem.RemoveListener<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, OnArchAdded, NSFrame.EventType.Model);
+			EventSystem.RemoveListener<LayerLogicBase>((int)ModelEvt.LayerAdded_L_1, OnLayerAdded, NSFrame.EventType.Model);
 
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroyed);
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroyed);
+			EventSystem.RemoveListener<ArchLogicBase>((int)ModelEvt.ArchDestroyed_A_1, OnArchDestroyed, NSFrame.EventType.Model);
+			EventSystem.RemoveListener<VillLogicBase>((int)ModelEvt.VillDestroyed_V_1, OnVillDestroyed, NSFrame.EventType.Model);
 		}
 
 		private void Update() {

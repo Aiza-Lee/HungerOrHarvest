@@ -7,7 +7,7 @@ namespace GameLogic
 
 		public VillTaskRunner(VillLogicBase vill) {
 			AttachedVill = vill;
-			EventSystem.AddListener((int)LogicEvt.Tick_0, Execute);
+			EventSystem.AddListener((int)ModelEvt.Tick_0, Execute, NSFrame.EventType.Model);
 		}
 		private readonly Queue<TaskBase> _tasks = new();
 		private TaskBase _curTask;
@@ -41,7 +41,7 @@ namespace GameLogic
 
 		#region PublicMethods
 		public void Destroy() {
-			EventSystem.RemoveListener((int)LogicEvt.Tick_0, Execute);
+			EventSystem.RemoveListener((int)ModelEvt.Tick_0, Execute, NSFrame.EventType.Model);
 			AttachedVill = null;
 			_curTask = null;
 		}

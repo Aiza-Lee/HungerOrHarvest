@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using GameLogic.Utilities;
 using NSFrame;
 using UnityEngine;
@@ -10,20 +11,12 @@ namespace GameLogic
 			MaxArchODR = MinArchODR = 0;
 			_maxUnlockedLayer = _minUnlockedLayer = 0;
 
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
-			EventSystem.AddListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, OnLayerAdded);
+			EventSystem.AddListener<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, OnArchAdded, NSFrame.EventType.Model);
+			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
+			EventSystem.AddListener<LayerLogicBase>((int)ModelEvt.LayerAdded_L_1, OnLayerAdded, NSFrame.EventType.Model);
 
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroy);
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroy);
-		}
-		~WorldMgr() {
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
-			EventSystem.RemoveListener<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, OnLayerAdded);
-
-			EventSystem.RemoveListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroy);
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroy);
+			EventSystem.AddListener<ArchLogicBase>((int)ModelEvt.ArchDestroyed_A_1, OnArchDestroy, NSFrame.EventType.Model);
+			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillDestroyed_V_1, OnVillDestroy, NSFrame.EventType.Model);
 		}
 		public static WorldMgr Inst { get; private set; } = new();
 		
@@ -101,6 +94,13 @@ namespace GameLogic
 				return _layers[lyr - LayerNegEdge];
 			}
 		}
+		public List<ulong> GetHomelessVillIDs() {
+			return _vills.FindAll(v => v.IsHomeless).ConvertAll(v => v.ID);
+		}
+		public List<ulong> GetWorklessVillIDs() {
+			return _vills.FindAll(v => v.IsWorkless).ConvertAll(v => v.ID);
+		}
+		public bool IsAnyArch(ArchType archType) { return _archs.Exists(a => a.ArchType == archType); }
 
 		public Pair<int, int> GetLayerRange(int lyr) {
 			if (_olRange.TryGetValue(lyr, out var range)) { return range.Clone(); }
@@ -128,7 +128,22 @@ namespace GameLogic
 			} else {
 				_olRange.Add(ol.LYR, new Pair<int, int>(ol.ODR, ol.ODR));
 			}
-			EventSystem.Invoke<OL>((int)LogicEvt.UnlockOL_O_1, ol);
+			EventSystem.Invoke<OL>((int)ModelEvt.UnlockOL_O_1, ol, NSFrame.EventType.Model);
+		}
+
+		public ulong FindWorkForVill(ArchType archType) {
+			var arch = _archs.Find(a => a.ArchType == archType && a.CheckCapacity());
+			return arch == null ? 0 : arch.ID;
+		}
+		public bool FindWorkForVill(int villCnt, ArchType archType) {
+			int cnt = 0;
+			foreach (var arch in _archs) {
+				if (arch.ArchType == archType) {
+					cnt += arch.Lconfig.MaxContain - arch.BondedVillCount;
+					if (cnt >= villCnt) return true;
+				}
+			}
+			return false;
 		}
 		#endregion
 

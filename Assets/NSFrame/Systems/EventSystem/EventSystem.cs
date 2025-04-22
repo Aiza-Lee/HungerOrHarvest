@@ -50,7 +50,7 @@ namespace NSFrame {
 			}
 		}
 		
-		public static void AddListener(int eventID, Action action, EventType eventType = EventType.Default) {
+		public static void AddListener(int eventID, Action action, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo).handler += action;
@@ -61,7 +61,7 @@ namespace NSFrame {
 				_eventInfos[type].Add(eventID, eventInfo);
 			}
 		}
-		public static void AddListener<T>(int eventID, Action<T> action, EventType eventType = EventType.Default) {
+		public static void AddListener<T>(int eventID, Action<T> action, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) {
 				(_eventInfos[type][eventID] as EventInfo<T>).handler += action;
@@ -73,7 +73,7 @@ namespace NSFrame {
 				_eventInfos[type].Add(eventID, eventInfo);
 			}
 		}
-		public static void AddListener<T1, T2>(int eventID, Action<T1, T2> action, EventType eventType = EventType.Default) {
+		public static void AddListener<T1, T2>(int eventID, Action<T1, T2> action, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) {
 				(_eventInfos[type][eventID] as EventInfo<T1, T2>).handler += action;
@@ -85,7 +85,7 @@ namespace NSFrame {
 				_eventInfos[type].Add(eventID, eventInfo);
 			}
 		}
-		public static void AddListener<T1, T2, T3>(int eventID, Action<T1, T2, T3> action, EventType eventType = EventType.Default) {
+		public static void AddListener<T1, T2, T3>(int eventID, Action<T1, T2, T3> action, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) {
 				(_eventInfos[type][eventID] as EventInfo<T1, T2, T3>).handler += action;
@@ -97,7 +97,7 @@ namespace NSFrame {
 				_eventInfos[type].Add(eventID, eventInfo);
 			}
 		}
-		public static void AddListener<T1, T2, T3, T4>(int eventID, Action<T1, T2, T3, T4> action, EventType eventType = EventType.Default) {
+		public static void AddListener<T1, T2, T3, T4>(int eventID, Action<T1, T2, T3, T4> action, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) {
 				(_eventInfos[type][eventID] as EventInfo<T1, T2, T3, T4>).handler += action;
@@ -110,59 +110,59 @@ namespace NSFrame {
 			}
 		}
 	
-		public static void Invoke(int eventID, EventType eventType = EventType.Default) {
+		public static void Invoke(int eventID, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo).handler?.Invoke();
 		}
-		public static void Invoke<T>(int eventID, T arg, EventType eventType = EventType.Default) {
+		public static void Invoke<T>(int eventID, T arg, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo<T>).handler?.Invoke(arg);
 		}
-		public static void Invoke<T1, T2>(int eventID, T1 t1, T2 t2, EventType eventType = EventType.Default) {
+		public static void Invoke<T1, T2>(int eventID, T1 t1, T2 t2, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo<T1, T2>).handler?.Invoke(t1, t2);
 		}
-		public static void Invoke<T1, T2, T3>(int eventID, T1 t1, T2 t2, T3 t3, EventType eventType = EventType.Default) {
+		public static void Invoke<T1, T2, T3>(int eventID, T1 t1, T2 t2, T3 t3, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo<T1, T2, T3>).handler?.Invoke(t1, t2, t3);
 		}
-		public static void Invoke<T1, T2, T3, T4>(int eventID, T1 t1, T2 t2, T3 t3, T4 t4, EventType eventType = EventType.Default) {
+		public static void Invoke<T1, T2, T3, T4>(int eventID, T1 t1, T2 t2, T3 t3, T4 t4, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo<T1, T2, T3, T4>).handler?.Invoke(t1, t2, t3, t4);
 		}
 
-		public static void RemoveListener(int eventID, Action action, EventType eventType = EventType.Default) {
+		public static void RemoveListener(int eventID, Action action, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo).handler -= action;
 		}
-		public static void RemoveListener<T>(int eventID, Action<T> action, EventType eventType = EventType.Default) {
+		public static void RemoveListener<T>(int eventID, Action<T> action, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo<T>).handler -= action;
 		}
-		public static void RemoveListener<T1, T2>(int eventID, Action<T1, T2> action, EventType eventType = EventType.Default) {
+		public static void RemoveListener<T1, T2>(int eventID, Action<T1, T2> action, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo<T1, T2>).handler -= action;
 		}
-		public static void RemoveListener<T1, T2, T3>(int eventID, Action<T1, T2, T3> action, EventType eventType = EventType.Default) {
+		public static void RemoveListener<T1, T2, T3>(int eventID, Action<T1, T2, T3> action, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo<T1, T2, T3>).handler -= action;
 		}
-		public static void RemoveListener<T1, T2, T3, T4>(int eventID, Action<T1, T2, T3, T4> action, EventType eventType = EventType.Default) {
+		public static void RemoveListener<T1, T2, T3, T4>(int eventID, Action<T1, T2, T3, T4> action, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) 
 				(_eventInfos[type][eventID] as EventInfo<T1, T2, T3, T4>).handler -= action;
 		}
 
-		public static void RemoveEvent(int eventID, EventType eventType = EventType.Default) {
+		public static void RemoveEvent(int eventID, EventType eventType) {
 			int type = (int)eventType;
 			if (_eventInfos[type].ContainsKey(eventID)) {
 				var ei = _eventInfos[type][eventID];
@@ -170,7 +170,7 @@ namespace NSFrame {
 				_eventInfos[type].Remove(eventID);
 			}
 		}
-		public static void RemoveAllEvent(EventType eventType = EventType.Default) {
+		public static void RemoveAllEvent(EventType eventType) {
 			int type = (int)eventType;
 			foreach (int eventID in _eventInfos[type].Keys) {
 				var ei = _eventInfos[type][eventID];

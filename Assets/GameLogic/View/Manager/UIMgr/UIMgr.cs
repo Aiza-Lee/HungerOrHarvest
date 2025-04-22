@@ -11,14 +11,16 @@ namespace GameLogic.View
 	/// </summary>
 	public class UIMgr : MonoSingleton<UIMgr>, IPlayerControll {
 
-		public List<Pair<ViewPanelType, PanelBase>> Panels;
-		private readonly Dictionary<int, PanelBase> _panelDict = new();
+		[SerializeField] private List<Pair<ViewPanelType, PanelBase>> _RegisteredPanels;
 
-		public void AddPanel(ViewPanelType type, PanelBase panel) { _panelDict[(int)type] = panel; }
+		private readonly Dictionary<int, PanelBase> _panelDict = new();
 
 		protected override void Awake() {
 			base.Awake();
-			foreach (var panel in Panels) { panel.Value.gameObject.SetActive(true); }
+			foreach (var panel in _RegisteredPanels) { 
+				panel.Value.gameObject.SetActive(true);
+				_panelDict[(int)panel.Key] = panel.Value;
+			}
 		}
 
 		private void Update() {
@@ -34,11 +36,18 @@ namespace GameLogic.View
 			if (_panelDict.TryGetValue((int)type, out var panel)) {
 				panel.Toggle();
 			} else {
-				var p = Panels.Where((panel) => panel.Key == type).First().Value;
+				var p = _RegisteredPanels.Where((panel) => panel.Key == type).First().Value;
 				_panelDict[(int)type] = p;
 				p.Toggle();
 			}
 		}
+
+		#region PublicMethods
+		public void FindPanel<T>(out T panel) where T : PanelBase { 
+			panel = _panelDict.Values.OfType<T>().First(); 
+		}
+
+		#endregion
 
 		#region IPlayerControll
 		public bool Controllable { get; set; } = true;

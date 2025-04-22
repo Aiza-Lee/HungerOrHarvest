@@ -8,14 +8,14 @@ namespace GameLogic
 	public abstract class VillLogicBase : ISaveable<VillSaveBase> {
 
 		public VillLogicBase() {
-			EventSystem.AddListener((int)LogicEvt.DayStart_0, OnDayStart);
-			EventSystem.AddListener((int)LogicEvt.NightStart_0, OnNightStart);
+			EventSystem.AddListener((int)ModelEvt.DayStart_0, OnDayStart, NSFrame.EventType.Model);
+			EventSystem.AddListener((int)ModelEvt.NightStart_0, OnNightStart, NSFrame.EventType.Model);
 		}
 
 		#region Injection
 		public void SetHomeID(ulong homeID) { 
 			_homeID = homeID;
-			EventSystem.Invoke<ulong, ulong>((int)LogicEvt.NewRoomDistributed_VuAu_2, _id, _homeID);
+			EventSystem.Invoke<ulong, ulong>((int)ModelEvt.NewRoomDistributed_VuAu_2, _id, _homeID, NSFrame.EventType.Model);
 		}
 		#endregion
 
@@ -54,9 +54,9 @@ namespace GameLogic
 			Debug.Log($"Vill {_id} has no home");
 			_taskRunner.Destroy();
 			_taskRunner = null;
-			EventSystem.RemoveListener((int)LogicEvt.DayStart_0, OnDayStart);
-			EventSystem.RemoveListener((int)LogicEvt.NightStart_0, OnNightStart);
-			EventSystem.Invoke((int)LogicEvt.VillDestroyed_V_1, this);
+			EventSystem.RemoveListener((int)ModelEvt.DayStart_0, OnDayStart, NSFrame.EventType.Model);
+			EventSystem.RemoveListener((int)ModelEvt.NightStart_0, OnNightStart, NSFrame.EventType.Model);
+			EventSystem.Invoke((int)ModelEvt.VillDestroyed_V_1, this, NSFrame.EventType.Model);
 		}
 		private void OnDayStart() {
 			if (!GoWork(_attachedWorkArchID)) {
@@ -74,12 +74,12 @@ namespace GameLogic
 
 			var jConfig = ConstMgr.Inst.Config.FindJobConfig(idx);
 			var levelNow = _jobLevel_F[idx].Value;
-			var nxtLevelConfig = jConfig.JobLevelConfigs[levelNow];
+			var levelConfig = jConfig.JobLevelConfigs[levelNow];
 
-			_consBuffs[idx].Value += nxtLevelConfig.ConsBuff;
-			_prodBuffs[idx].Value += nxtLevelConfig.ProdBuff;
+			_consBuffs[idx].Value += levelConfig.ConsBuff;
+			_prodBuffs[idx].Value += levelConfig.ProdBuff;
 
-			EventSystem.Invoke<ulong, JobType>((int)LogicEvt.VillLevelUp_VuJ_2, _id, job);
+			EventSystem.Invoke<ulong, JobType>((int)ModelEvt.VillLevelUp_VuJ_2, _id, job, NSFrame.EventType.Model);
 		}
 
 		#region Event
@@ -95,6 +95,10 @@ namespace GameLogic
 			return res;
 		}
 
+		/// <summary>
+		/// 添加经验值，如果当前经验值满了而没有下一级的 Config，那经验值不会再增加
+		/// </summary>
+		/// <param name="exps"></param>
 		public void AddExp(JTList<float> exps) {
 			foreach (var JF in exps.List) {
 				var idx = JF.Index;
@@ -103,11 +107,14 @@ namespace GameLogic
 				var jConfig = ConstMgr.Inst.Config.FindJobConfig(idx);
 				var level = _jobLevel_F[idx].Value;
 
-				if (jConfig.JobLevelConfigs.Count - 1 > level) {
-					var demand = jConfig.JobLevelConfigs[level].LevelUpDemand;
-					if (_jobExps_F[idx].Value >= demand) {
-						_jobExps_F[idx].Value -= demand;
+
+				var levelUpDemand = jConfig.JobLevelConfigs[level].LevelUpDemand;
+				if (_jobExps_F[idx].Value >= levelUpDemand) {
+					if (jConfig.JobLevelConfigs.Count - 1 > level) {
+						_jobExps_F[idx].Value -= levelUpDemand;
 						LevelUp(JF.Job);
+					} else {
+						_jobExps_F[idx].Value = levelUpDemand;
 					}
 				}
 			}
@@ -133,7 +140,7 @@ namespace GameLogic
 			if (_attachedWorkArchID != archID) {
 				var oriArchID = _attachedWorkArchID;
 				_attachedWorkArchID = archID;
-				EventSystem.Invoke<ulong, ulong, ulong>((int)LogicEvt.VillChengeWork_VuAuAu_3, ID, oriArchID, arch.ID);
+				EventSystem.Invoke<ulong, ulong, ulong>((int)ModelEvt.VillChengeWork_VuAuAu_3, ID, oriArchID, arch.ID, NSFrame.EventType.Model);
 			}
 			return true;
 		}
@@ -153,6 +160,8 @@ namespace GameLogic
 			return true;
 		}
 		public void GoSpare() {
+			WorldMgr.Inst.FindArch(_attachedWorkArchID)?.TryDisbondVill(ID);
+			_attachedWorkArchID = 0;
 			_taskRunner.ResetTasks();
 		}
 		public void OnBondedArchDestroyed() {
@@ -162,9 +171,19 @@ namespace GameLogic
 			} else {
 				var oriArchID = _attachedWorkArchID;
 				_attachedWorkArchID = 0;
-				EventSystem.Invoke<ulong, ulong, ulong>((int)LogicEvt.VillChengeWork_VuAuAu_3, ID, oriArchID, 0);
+				EventSystem.Invoke<ulong, ulong, ulong>((int)ModelEvt.VillChengeWork_VuAuAu_3, ID, oriArchID, 0, NSFrame.EventType.Model);
 			}
 			_taskRunner.ResetTasks();
+		}
+
+		public float GetJobProcess(JobType jobType) {
+			var idx = (int)jobType;
+			return 	
+				Mathf.Clamp01(_jobExps_F[idx].Value / 
+				ConstMgr.Inst.Config.FindJobConfig(jobType).JobLevelConfigs[_jobLevel_F[idx].Value].LevelUpDemand);
+		}
+		public int GetJobLevel(JobType jobType) {
+			return _jobLevel_F[(int)jobType].Value;
 		}
 
 		#endregion

@@ -7,9 +7,9 @@ namespace GameLogic
 {
 	public sealed class RoomMgr : IClearMgr {
 		private RoomMgr() {
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, OnArchAdded);
-			EventSystem.AddListener<ArchLogicBase>((int)LogicEvt.ArchDestroyed_A_1, OnArchDestroyed);
+			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
+			EventSystem.AddListener<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, OnArchAdded, NSFrame.EventType.Model);
+			EventSystem.AddListener<ArchLogicBase>((int)ModelEvt.ArchDestroyed_A_1, OnArchDestroyed, NSFrame.EventType.Model);
 		}
 		public static RoomMgr Inst { get; } = new();
 

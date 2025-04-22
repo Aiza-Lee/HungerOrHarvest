@@ -23,7 +23,7 @@ namespace GameLogic
 				RoomMgr.Inst,
 				WorldMgr.Inst,
 			};
-			EventSystem.Invoke((int)LogicEvt.MgrInitAfterMono);
+			EventSystem.Invoke((int)ModelEvt.MgrInitAfterMono, NSFrame.EventType.Model);
 		}
 
 		public void RegisterSaveInfo(SaveInfo saveInfo) {

@@ -10,5 +10,8 @@ namespace GameLogic.View
 		public float CAMERA_STOP_LENGTH;
 		public List<float> CameraSizes;
 
+		public Gradient EnvironmentLightColor_Day;
+		public Gradient EnvironmentLightColor_Night;
+
 	}
 }

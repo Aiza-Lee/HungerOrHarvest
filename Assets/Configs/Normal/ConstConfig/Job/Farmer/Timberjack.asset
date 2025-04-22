@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Timberjack
   m_EditorClassIdentifier: 
   JobType: 1
+  ChineseName: "\u4F10\u6728\u5DE5"
   JobLevelConfigs:
   - {fileID: 11400000, guid: 73a4c35817f5835418bed4de6397e95f, type: 2}
   - {fileID: 11400000, guid: ef581eff0a7e509409b0e3a5af972322, type: 2}

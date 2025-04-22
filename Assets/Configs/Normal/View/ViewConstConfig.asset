@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccddb59df0d769b45b18a860ff324f8c, type: 3}
   m_Name: ViewConstConfig
   m_EditorClassIdentifier: 
-  VX_MX_RATE: 0.4
-  VZ_MY_RATE: 0.4
-  DEFAULT_Y: 0
   CAMERA_MOVE_SPEED: 12
   CAMERA_STOP_LENGTH: 1
   CameraSizes:
@@ -22,3 +19,63 @@ MonoBehaviour:
   - 50
   - 75
   - 100
+  EnvironmentLightColor_Day:
+    serializedVersion: 2
+    key0: {r: 0.99215686, g: 0.73333335, b: 0.25882354, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 1, g: 1, b: 1, a: 0}
+    key3: {r: 0.99371064, g: 0.73452973, b: 0.25936466, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 10023
+    ctime2: 55898
+    ctime3: 65535
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+  EnvironmentLightColor_Night:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.64705884, b: 0, a: 1}
+    key1: {r: 0.101960786, g: 0.13725491, b: 0.49411765, a: 1}
+    key2: {r: 0.10196078, g: 0.1372549, b: 0.49411765, a: 0}
+    key3: {r: 1, g: 0.64705884, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 8995
+    ctime2: 55769
+    ctime3: 65535
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2

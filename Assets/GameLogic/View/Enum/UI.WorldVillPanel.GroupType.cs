@@ -5,6 +5,5 @@ namespace GameLogic.View.UI.WorldVillPanel
 		Arch,
 		Homeless,
 		Workless,
-		Sleep,
 	}
 }

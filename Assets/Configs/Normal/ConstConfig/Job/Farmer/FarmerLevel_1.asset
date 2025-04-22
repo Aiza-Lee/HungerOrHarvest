@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FarmerLevel_1
   m_EditorClassIdentifier: 
   Level: 1
-  LevelUpDemand: 400
+  LevelUpDemand: 5000
   ConsBuff: 0.02
   ProdBuff: 0.02

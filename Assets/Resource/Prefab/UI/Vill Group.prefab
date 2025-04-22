@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 4681358022215797234}
   - component: {fileID: 7629548240073378889}
   - component: {fileID: 8826518565400893434}
+  - component: {fileID: 5325882938985648982}
+  - component: {fileID: 5849952800678778099}
   m_Layer: 5
   m_Name: Vill Group
   m_TagString: Untagged
@@ -72,8 +74,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 6, y: 0}
-  m_SizeDelta: {x: 500, y: -12}
-  m_Pivot: {x: 0, y: 0.5}
+  m_SizeDelta: {x: 500, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &4681358022215797234
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -124,5 +126,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d21b8c488ef3da48be791fe6cd92562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VillCardPrefab: {fileID: 1086922419360795936, guid: 6b575ee753e49dc43bfc8f9748ccbea5, type: 3}
-  InnerRect: {fileID: 1838298146628551969}
+  _eleContainer: {fileID: 1838298146628551969}
+  _space: 4
+--- !u!114 &5325882938985648982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7250478268019217768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a14b931e089fb44e983170317cdad9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Configs:
+  - Curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Time: 0.5
+  TickMove: 0
+--- !u!114 &5849952800678778099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7250478268019217768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1697d16d624e344bb912147e459e550, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Configs:
+  - Curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Time: 0.5
+  TickMove: 0

@@ -21,7 +21,7 @@ namespace GameLogic
 			var vill = NewEmptyVill(save.VillType);
 			vill.InitFromSave(save);
 
-			EventSystem.Invoke<VillLogicBase>((int)LogicEvt.VillAdded_V_1, vill);
+			EventSystem.Invoke<VillLogicBase>((int)ModelEvt.VillAdded_V_1, vill, NSFrame.EventType.Model);
 
 			return vill;
 		}
@@ -108,7 +108,7 @@ namespace GameLogic
 			var arch = NewEmptyArch(save.ArchType);
 			arch.InitFromSave(save.Clone());
 
-			EventSystem.Invoke<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, arch);
+			EventSystem.Invoke<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, arch, NSFrame.EventType.Model);
 
 			return arch;
 		}
@@ -124,7 +124,7 @@ namespace GameLogic
 
 			arch.InitFromSave(save);
 			
-			EventSystem.Invoke<ArchLogicBase>((int)LogicEvt.ArchAdded_A_1, arch);
+			EventSystem.Invoke<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, arch, NSFrame.EventType.Model);
 
 			return arch;
 		}
@@ -161,7 +161,7 @@ namespace GameLogic
 			var layer = NewEmptyLayer(save.LayerType);
 			layer.InitFromSave(save.Clone());
 
-			EventSystem.Invoke<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, layer);
+			EventSystem.Invoke<LayerLogicBase>((int)ModelEvt.LayerAdded_L_1, layer, NSFrame.EventType.Model);
 
 			return layer;
 		}
@@ -175,7 +175,7 @@ namespace GameLogic
 			save.LYR = lyr;
 			layer.InitFromSave(save);
 
-			EventSystem.Invoke<LayerLogicBase>((int)LogicEvt.LayerAdded_L_1, layer);
+			EventSystem.Invoke<LayerLogicBase>((int)ModelEvt.LayerAdded_L_1, layer, NSFrame.EventType.Model);
 
 			return layer;
 		}

@@ -1,6 +1,9 @@
 namespace GameLogic
 {
-	public enum LogicEvt {
+	public enum ModelEvt {
+		/// <summary>
+		/// 由于Mono的单例激活依赖Unity创建实例，会慢于非Mono的静态单例的创建，因此需要在Mono单例激活后再初始化其他单例
+		/// </summary>
 		MgrInitAfterMono,
 
 		Tick_0,

@@ -1,6 +1,6 @@
 using NSFrame;
 
-namespace GameLogic.View.UI.WordRepoPanal
+namespace GameLogic.View.UI.WorldRepoPanal
 {
 	public class MainPanel : PanelBase {
 

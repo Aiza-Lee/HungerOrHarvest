@@ -24,7 +24,22 @@ namespace GameLogic.View
 		private float _elapsedTime;
 		private int _curModID;
 		private bool _running;
-		private Action _endCallback;
+		
+		private Action<T> OnChanged;
+		private Action _stopCallback;
+		private Action _doneCallback;
+
+		/// <summary>
+		/// 如果某次设置没有 set StopCallback 那再SetTarget的时候需要触发 StopCallback
+		/// 如果某次设置 set 了 StopCallback，那该callback的触发在设置的时候触发，然后替换为新的callback，就不能再在 SetTarget 中触发
+		/// </summary>
+		private bool _triggerStopCallbackFlag = true;
+		/// <summary>
+		/// 如果某次设置没有 set DoneCallback 那再SetTarget的时候需要清空 DoneCallback，防止上次的被打断的任务的残余 callback
+		/// 如果某次设置 set 了 DoneCallback，那SetTarget就不该清空
+		/// </summary>
+		private bool _clearDoneCallbackFlag = true;
+
 
 		private void Update() {
 			if (_running) {
@@ -32,16 +47,28 @@ namespace GameLogic.View
 			}
 		}
 		private void DealChange() {
+
 			var curve = Configs[_curModID].Curve;
 			var time = Configs[_curModID].Time;
 			_elapsedTime += TickMove ? Time.deltaTime : Time.unscaledDeltaTime;
 			var newPrcs = Mathf.Clamp01(_elapsedTime / time);
-			SetCurVal_Derived(Add(_oriVal, Mul(_distance, curve.Evaluate(newPrcs))));
+			var newVal = Add(_oriVal, Mul(_distance, curve.Evaluate(newPrcs)));
+			SetCurVal_Derived(newVal);
+			OnChanged?.Invoke(newVal);
+
 			if (_elapsedTime >= time) {
-				_endCallback?.Invoke();
-				_endCallback = null;
-				_running = false;
+				_stopCallback?.Invoke();
+				_doneCallback?.Invoke();
+				Reset();
 			}
+		}
+
+		private void Reset() {
+			_stopCallback = null;
+			_doneCallback = null;
+			OnChanged = null;
+			_curModID = 0;
+			_running = false;
 		}
 
 		#region PublicProperties
@@ -58,21 +85,64 @@ namespace GameLogic.View
 		public void TranslateCurVal(T val) {
 			SetCurVal(Add(GetCurVal(), val));
 		}
-		public void StopCur() {
+		public void EndCurChange() {
+			_stopCallback?.Invoke();
 			_running = false;
 			_target = GetCurVal();
 		}
+
 		public SmoothChangeBase<T> SetMod(int modID) {
 			_curModID = modID;
 			return this;
 		}
-		public void Translate(T val, Action endCallback = null) => SetTarget(Add(_target, val), endCallback);
-		public void SetTarget(T val, Action endCallback = null) {
+
+		/// <summary>
+		/// 每次值改变的时候触发, 方法参数为新值
+		/// </summary>
+		public SmoothChangeBase<T> SetOnChanged(Action<T> onChanged) {
+			OnChanged = onChanged;
+			return this;
+		}
+
+		/// <summary>
+		/// 只有在当前任务主动完成才能触发
+		/// </summary>
+		public SmoothChangeBase<T> SetDoneCallback(Action callback) {
+			_clearDoneCallbackFlag = false;
+			_doneCallback = callback;
+			return this;
+		}
+
+		/// <summary>
+		/// 当前任务截止就会触发，包括主动的任务完成和被另一个任务打断
+		/// </summary>
+		public SmoothChangeBase<T> SetStopCallback(Action callback) {
+			_stopCallback?.Invoke();
+			_triggerStopCallbackFlag = false;
+			_stopCallback = callback;
+			return this;
+		}
+
+
+		public void Translate(T val) => SetTarget(Add(_target, val));
+		public void SetTarget(T val) {
+			if (_triggerStopCallbackFlag) {
+				_stopCallback?.Invoke();
+				_stopCallback = null;
+			} else {
+				_triggerStopCallbackFlag = true;
+			}
+
+			if (_clearDoneCallbackFlag) {
+				_doneCallback = null;
+			} else {
+				_clearDoneCallbackFlag = true;
+			}
+
 			_oriVal = GetCurVal();
 			_target = val;
 			_distance = Sub(_target, GetCurVal());
 			_elapsedTime = 0f;
-			_endCallback = endCallback;
 			_running = true;
 		}
 		#endregion

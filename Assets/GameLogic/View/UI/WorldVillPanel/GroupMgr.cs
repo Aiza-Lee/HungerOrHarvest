@@ -1,119 +1,122 @@
-using System.Collections.Generic;
-using NSFrame;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace GameLogic.View.UI.WorldVillPanel 
 {
-	public class GroupMgr : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
-		public GameObject VillCardPrefab;
-		public GameObject VillGroupPrefab;
-		public float ScrollSpeed = 100;
-		
+	public class GroupMgr : GroupLayoutBase, IPointerEnterHandler, IPointerExitHandler {
+		[SerializeField] private float _scrollSpeed = 100;
+		// 为实现 Scroll
+		[SerializeField] private RectTransform _groupRoot;
 
-		private RectTransform _rectTransform;
+		/// <summary>
+		/// GroupRoot SmoothoffsetMin
+		/// </summary>
+		private SmoothOffsetMin _groupRootSOMin;
+		/// <summary>
+		/// GroupRoot SmoothoffsetMax
+		/// </summary>
+		private SmoothOffsetMax _groupRootSOMax;
+
 		private bool _isPointerIn;
-		private readonly List<VillGroup> _groups = new();
 		private GroupType _curGroupType;
-		private float GroupSpace => _rectTransform.offsetMin.y;
-		private float OutWidth;
-		private float LeftEdge => _rectTransform.offsetMin.x;
+		private ArchType _curArchType;
+		private float ParentWidth;
 
-		private void Awake() {
-			PoolSystem.InitPrefabPool(VillCardPrefab, 15);
-			PoolSystem.InitPrefabPool(VillGroupPrefab, 10);
-			OutWidth = GetComponentInParent<RectTransform>().rect.width;
-			_rectTransform = GetComponent<RectTransform>();
+		private float GroupSpace => _groupRoot.offsetMin.y;
+		private float LeftEdge => _groupRoot.offsetMin.x;
+
+		protected override void Awake() {
+			base.Awake();
+			_groupRootSOMin = _groupRoot.GetComponent<SmoothOffsetMin>();
+			_groupRootSOMax = _groupRoot.GetComponent<SmoothOffsetMax>();
+			ParentWidth = GetComponentInParent<RectTransform>().rect.width;
 		}
-
-		private void ClearGroup() {
-			foreach (var group in _groups) {
-				foreach (var card in group.VillCards) {
-					PoolSystem.PushGO(card.gameObject);
-				}
-				PoolSystem.PushGO(group.gameObject);
-			}
-			_groups.Clear();
-		}
-
-		private void RearrageGroups() {
-			var posX = 0f;
-			foreach (var group in _groups) {
-				group.SetRightEdge(posX + group.Width);
-				group.SetLeftEdge(posX);
-				posX += group.Width + GroupSpace;
-			}
-		}
-
 		private void Update() {
-			if (_isPointerIn) { UpdateScroll(); }
+			if (_isPointerIn) { 
+				UpdateScroll(); 
+			}
 		}
+
 		private void UpdateScroll() {
-			if (_groups.Count == 0) { return; }
-			if (Input.mouseScrollDelta.y > 0) { 
-				MoveRight(); 
-			} else if (Input.mouseScrollDelta.y < 0) { 
-				MoveLeft(); 
+			if (_eles.Count == 0) { return; }
+			if (Input.mouseScrollDelta.y != 0) {
+				if (Input.mouseScrollDelta.y > 0) { 
+					MoveRight(); 
+				} else if (Input.mouseScrollDelta.y < 0) { 
+					MoveLeft(); 
+				}
 			}
 		}
 		private void MoveRight() {
 			if (LeftEdge < GroupSpace) { 
-				SetLeftEdge(Mathf.Min(LeftEdge + ScrollSpeed * Time.unscaledDeltaTime, 0));
+				SetLeftEdge_Smooth(Mathf.Min(LeftEdge + _scrollSpeed * Time.unscaledDeltaTime, 0));
 			}
 		}
 		private void MoveLeft() {
 			if (LeftEdge > GroupSpace) {
-				SetLeftEdge(Mathf.Max(LeftEdge - ScrollSpeed * Time.unscaledDeltaTime, GroupSpace));
-			} else if (LeftEdge + CurWidth() > OutWidth) {
-				SetLeftEdge(Mathf.Max(LeftEdge - ScrollSpeed * Time.unscaledDeltaTime, OutWidth - CurWidth()));
+				SetLeftEdge_Smooth(Mathf.Max(LeftEdge - _scrollSpeed * Time.unscaledDeltaTime, GroupSpace));
+			} else if (LeftEdge + Width > ParentWidth) {
+				SetLeftEdge_Smooth(Mathf.Max(LeftEdge - _scrollSpeed * Time.unscaledDeltaTime, ParentWidth - Width));
 			}
 		}
-		private float CurWidth() {
-			float res = 0f;
-			foreach (var group in _groups) {
-				res += group.Width + GroupSpace;
-			}
-			return res;
+
+		private void SetLeftEdge_Smooth(float x) {
+			_groupRootSOMin.SetTarget(new(x, _groupRootSOMin.CurVal.y));
+		}
+		private void SetLeftEdge(float x) {
+			_groupRootSOMin.SetCurVal(new(x, _groupRootSOMin.CurVal.y));
 		}
 
 		#region PublicMethods
 
+		public void OnShow() {}
 		public void OnClose() {
-			ClearGroup();
-			_curGroupType = GroupType.None;
+			Clear();
 		}
 
 		public void SetCurGroupType(GroupType groupType, ArchType archType = ArchType.None) {
-			if (_curGroupType == groupType) { return; }
-			ClearGroup();
+			// if (_curGroupType == groupType && _curArchType == archType) { return; }
+			Clear();
 			_curGroupType = groupType;
+			_curArchType = archType;
+			// 如果是展示建筑的group
 			if (archType != ArchType.None) {
+				// 获取对应类型的全部建筑的 View
 				var archViews = WorldViewMgr.Inst.GetAllArchViews(archType);
 				archViews.Sort((a, b) => a.Logic.Coord.X.CompareTo(b.Logic.Coord.X));
 
+				// 为每一个 View 创建一个 Group
 				foreach (var archView in archViews) {
-					var group = PoolSystem.PopGO<VillGroup>(VillGroupPrefab, _rectTransform);
-					group.OnSetedAsChild();
-					group.InjectInfo(archView.Logic);
-					_groups.Add(group);
+					var group = VillGroupFactory.Inst.Create(archView.Logic);
+					AddEle(group);
+					group.RearrageEle();
 				}
+			} else { // 如果是展示 Homeless 或者 Workless 的group
+				var group = VillGroupFactory.Inst.Create(groupType);
+				AddEle(group);
+				group.RearrageEle();
 			}
-
-			RearrageGroups();
 		}
 
-		public void SetLeftEdge(float x) {
-			_rectTransform.offsetMin = new Vector2(x, _rectTransform.offsetMin.y);
+		public override void Clear() {
+			SetLeftEdge(0);
+			foreach (var ele in _eles) {
+				(ele as VillGroup).Clear();
+			}
+			_curGroupType = GroupType.None;
+			_curArchType = ArchType.None;
+			base.Clear();
 		}
+
 		#endregion
+
+		#region IPointer
 		public void OnPointerEnter(PointerEventData eventData) {
 			_isPointerIn = true;
-			Debug.Log("OnPointerEnter");
 		}
-
 		public void OnPointerExit(PointerEventData eventData) {
 			_isPointerIn = false;
-			Debug.Log("OnPointerExit");
 		}
+		#endregion
 	}
 }

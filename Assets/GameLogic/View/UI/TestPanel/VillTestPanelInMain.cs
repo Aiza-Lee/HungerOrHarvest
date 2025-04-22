@@ -48,8 +48,8 @@ namespace GameLogic.View.Test
 			}
 		}
 		private void OnEnable() {
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
-			EventSystem.AddListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroyed);
+			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
+			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillDestroyed_V_1, OnVillDestroyed, NSFrame.EventType.Model);
 			_curPage = 0;
 			var vills = WorldMgr.Inst.GetAllVills;
 			foreach (var v in vills) {
@@ -57,8 +57,8 @@ namespace GameLogic.View.Test
 			}
 		}
 		private void OnDisable() {
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillAdded_V_1, OnVillAdded);
-			EventSystem.RemoveListener<VillLogicBase>((int)LogicEvt.VillDestroyed_V_1, OnVillDestroyed);
+			EventSystem.RemoveListener<VillLogicBase>((int)ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
+			EventSystem.RemoveListener<VillLogicBase>((int)ModelEvt.VillDestroyed_V_1, OnVillDestroyed, NSFrame.EventType.Model);
 			_VillInfos.Clear();
 		}
 

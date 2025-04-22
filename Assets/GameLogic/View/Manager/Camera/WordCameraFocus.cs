@@ -8,7 +8,7 @@ namespace GameLogic.View
 		private Transform _curFocus;
 		private bool _IsFocusing = false;
 		private float _lastSetTargetTime = 0;
-		private const float SetTargetGapTime = .1f;
+		private float SetTargetGapTime => MainMgr.SmoothMove.Configs[1].Time / Mathf.PI;
 
 		private WorldCameraMgr MainMgr => WorldCameraMgr.Inst;
 
@@ -24,10 +24,10 @@ namespace GameLogic.View
 				_IsFocusing = false;
 				return;
 			}
-			if (Time.time - _lastSetTargetTime < SetTargetGapTime) return;
-			_lastSetTargetTime = Time.time;
+			if (Time.unscaledTime - _lastSetTargetTime < SetTargetGapTime) return;
+			_lastSetTargetTime = Time.unscaledTime;
 			var target = _curFocus.position - ViewConstMgr.LayerGap * Vector3.forward;
-			MainMgr.SmoothMove.SetTarget(new(target.x, transform.position.y, target.z));
+			MainMgr.SmoothMove.SetMod(1).SetTarget(new(target.x, transform.position.y, target.z));
 		}
 
 		#region PublicMethods
@@ -41,7 +41,7 @@ namespace GameLogic.View
 			_IsFocusing = false;
 			_curFocus = null;
 			MainMgr.CameraSize = CameraSize.Normal;
-			MainMgr.SmoothMove.SetCurVal(new(transform.position.x, transform.position.y, transform.position.GetBackLyrZ()));
+			MainMgr.SmoothMove.SetMod(0).SetTarget(new(transform.position.x, transform.position.y, transform.position.GetBackLyrZ()));
 		}
 		#endregion
 	}

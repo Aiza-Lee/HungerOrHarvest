@@ -29,7 +29,7 @@ namespace GameLogic.Controller
 
 
 		public override bool Check() {
-			var config = ConstMgr.Inst.Config.FindConfig(_archType);
+			var config = ConstMgr.Inst.Config.FindArchConfig(_archType);
 			if (!RepoMgr.Inst.CheckRequest(config.ConstructCost)) { 
 				_failReason = "资源不足";
 				return false; 
