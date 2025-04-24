@@ -28,6 +28,11 @@ namespace GameLogic.Controller
 					CmdRunner.Run("/world-new");
 				}
 			}
+
+			// PassNight
+			if (Input.GetKeyDown(KeyCode.F10)) {
+				LogicTimeMgr.Inst.PassNight();
+			}
 		}
 	}
 }

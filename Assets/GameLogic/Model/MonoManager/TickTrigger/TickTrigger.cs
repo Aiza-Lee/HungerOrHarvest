@@ -37,8 +37,8 @@ namespace GameLogic
 				if (value == _pause) return;
 
 				if (value == true) {
-					EventSystem.Invoke((int)ModelEvt.GamePause_0, NSFrame.EventType.Model);
 					Time.timeScale = 0f;
+					EventSystem.Invoke((int)ModelEvt.GamePause_0, NSFrame.EventType.Model);
 				} else {
 					_realTimeSum = Time.unscaledTime;
 					Time.timeScale = _speed;

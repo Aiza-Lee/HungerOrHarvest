@@ -14,6 +14,9 @@ namespace GameLogic
 		GamePause_0,
 
 		DayStart_0,
+		/// <summary>
+		/// 夜晚开始时，游戏暂停，确认每日信息后，游戏倍速进入下一天
+		/// </summary>
 		NightStart_0,
 
 		ArchAdded_A_1,

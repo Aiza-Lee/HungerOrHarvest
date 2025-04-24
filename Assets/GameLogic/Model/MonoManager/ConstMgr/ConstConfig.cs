@@ -9,6 +9,7 @@ namespace GameLogic
 		public ulong DAY_TICKS;
 		public ulong NIGHT_TICKS;
 		public float VILL_ONE_MOVE_TICK;
+		public float NIGHT_TIME_SPEED;
 
 		[Header("职业配置请务必完善每一种职业的配置信息,内部实现要求")]
 		public List<Pair<JobType, JobConfig>> JobConfigs;
