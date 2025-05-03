@@ -23,6 +23,12 @@ namespace GameLogic.View
 			}
 		}
 
+		private void Start() {
+			// test:
+				TogglePanel(ViewPanelType.WorldVillOperationPanel);
+				TogglePanel(ViewPanelType.WordRepoPanel);
+		}
+
 		private void Update() {
 			if (Controllable) {
 				if (Input.GetKeyDown(KeyCode.Tab)) {

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f971b98b1510c82419809965305fbd61
+guid: cc5a014a81944814d9da87300900bc6e
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: VillCardLightingEdge
+  - name: Title
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.49407116, y: -0.08219179}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 130
-      height: 260
-    spriteID: 02fbaaae90cddd94ca3b580dff83dd8c
+      width: 253
+      height: 219
+    spriteID: 8b709b601bbed9a4a96e99618073245f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,24 +144,24 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1983558756
-    name: VillCardLightingEdge
+    guid: 433284352
+    name: Title
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: VillCardLightingEdge
+    - name: Title
       frameIndex: 0
       cellRect:
-        x: 0
-        y: 0
-        width: 130
-        height: 260
-      spriteId: 02fbaaae90cddd94ca3b580dff83dd8c
+        x: 3
+        y: 18
+        width: 253
+        height: 219
+      spriteId: 8b709b601bbed9a4a96e99618073245f
     linkedCells: []
     parentIndex: -1
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 130, y: 260}
+  canvasSize: {x: 256, y: 260}

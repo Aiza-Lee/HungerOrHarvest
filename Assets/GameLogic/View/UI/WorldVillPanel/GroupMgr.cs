@@ -55,8 +55,8 @@ namespace GameLogic.View.UI.WorldVillPanel
 		private void MoveLeft() {
 			if (LeftEdge > GroupSpace) {
 				SetLeftEdge_Smooth(Mathf.Max(LeftEdge - _scrollSpeed * Time.unscaledDeltaTime, GroupSpace));
-			} else if (LeftEdge + Width > ParentWidth) {
-				SetLeftEdge_Smooth(Mathf.Max(LeftEdge - _scrollSpeed * Time.unscaledDeltaTime, ParentWidth - Width));
+			} else if (LeftEdge + EleSize > ParentWidth) {
+				SetLeftEdge_Smooth(Mathf.Max(LeftEdge - _scrollSpeed * Time.unscaledDeltaTime, ParentWidth - EleSize));
 			}
 		}
 
@@ -89,12 +89,12 @@ namespace GameLogic.View.UI.WorldVillPanel
 				foreach (var archView in archViews) {
 					var group = VillGroupFactory.Inst.Create(archView.Logic);
 					AddEle(group);
-					group.RearrageEle();
+					group.RearrangeEle();
 				}
 			} else { // 如果是展示 Homeless 或者 Workless 的group
 				var group = VillGroupFactory.Inst.Create(groupType);
 				AddEle(group);
-				group.RearrageEle();
+				group.RearrangeEle();
 			}
 		}
 

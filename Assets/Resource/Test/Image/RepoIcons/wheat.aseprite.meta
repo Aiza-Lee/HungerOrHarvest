@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a3a2ad545fb78cc40bedddf3516502a1
+guid: c5f8035e962755845972dd9de6ce4229
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -32,10 +32,10 @@ ScriptedImporter:
     sRGBTexture: 1
     spriteMode: 2
     spriteExtrude: 1
-    spriteMeshType: 1
+    spriteMeshType: 0
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
-    spritePixelsToUnits: 32
+    spritePixelsToUnits: 100
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -75,9 +75,9 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
-    defaultPivotAlignment: 2
+    defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 0
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -88,16 +88,16 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
-    defaultPivotAlignment: 2
+    defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 0
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638774813366426920
+  platformSettingsDirtyTick: 638819001180428474
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: LayerSprite
+  - name: wheat
     originalName: 
-    pivot: {x: 0.5, y: 0.93}
+    pivot: {x: 0.496063, y: -0.9195403}
     alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 35}
+    border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 0
-      y: 0
-      width: 2048
-      height: 509
-    spriteID: 1fca3d47e6d627a4c8a0b8105a12051f
+      x: 4
+      y: 4
+      width: 254
+      height: 87
+    spriteID: a30fe42a85db35f48a4a36d32aeaa411
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -140,24 +140,24 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
+    uvTransform: {x: 4, y: 4}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1846671706
-    name: LayerSprite
+    guid: -356121645
+    name: wheat
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: LayerSprite
+    - name: wheat
       frameIndex: 0
       cellRect:
-        x: 0
-        y: 0
-        width: 2048
-        height: 509
-      spriteId: 1fca3d47e6d627a4c8a0b8105a12051f
+        x: 2
+        y: 80
+        width: 254
+        height: 87
+      spriteId: a30fe42a85db35f48a4a36d32aeaa411
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -212,4 +212,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 2048, y: 512}
+  canvasSize: {x: 256, y: 260}

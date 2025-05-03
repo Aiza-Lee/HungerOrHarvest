@@ -44,8 +44,8 @@ namespace GameLogic.View.UI.WorldVillPanel
 			base.SetWidth(width);
 			OnDirty?.Invoke();
 		}
-		public override void RearrageEle() {
-			base.RearrageEle();
+		public override void RearrangeEle() {
+			base.RearrangeEle();
 			OnDirty?.Invoke();
 		}
 		#endregion
@@ -56,7 +56,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public float Height => _rectTrans.rect.height;
 		public event Action OnDirty;
 		public void SetPos(float pos) {
-			_rectTrans.offsetMax = new(pos + Width, _rectTrans.offsetMax.y);
+			_rectTrans.offsetMax = new(pos + EleSize, _rectTrans.offsetMax.y);
 			_rectTrans.offsetMin = new(pos, _rectTrans.offsetMin.y);
 		}
 		public void OnAddedToGroup() {

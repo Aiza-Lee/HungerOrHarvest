@@ -9,7 +9,7 @@ namespace GameLogic
 		private RTList<float> _globalProdBuffs_F = new(fill: true);
 		private RTList<bool> _unlockedRepos_F = new(fill: true);
 
-		public RTList<float> Repos => _repos_F;
+		public RTList<float> Repos_F => _repos_F;
 
 		public void AddRepo(RTList<float> adds) {
 			if (adds == null || adds.Count == 0) return;

@@ -13,7 +13,7 @@ namespace GameLogic.View.UI.WorldRepoPanal
 
 		#region IGroupLayoutEle
 		public GroupLayoutBase BelongedGroup { get; set; }
-		public float Width => 100f;
+		public float EleSize => 100f;
 		public float Height => 100f;
 		public RectTransform RectTrans => _recrTrans;
 		public event Action OnDirty;

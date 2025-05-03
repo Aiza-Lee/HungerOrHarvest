@@ -69,7 +69,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 			jobs.Full = true;
 			for (int i = 0; i < MaxJobInfoCount; i++) {
 				if (i < jobs.Count) {
-					_jobLevelTexts[i].Key.text = jobs[i].Job.ToString();
+					_jobLevelTexts[i].Key.text = ConstMgr.GetConfig.FindJobConfig(i).ChineseName;
 					_jobLevelTexts[i].Value.text = $"Lv.{jobs[i].Value}";
 				} else {
 					_jobLevelTexts[i].Key.text = string.Empty;
@@ -87,7 +87,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		private void Shrink() {
 			_expandMaskSOMax
 				.SetOnChanged((val) => OnDirty?.Invoke())
-				.SetStopCallback(() => _jobInfoLayout.Clear())
+				.SetDoneCallback(() => _jobInfoLayout.Clear())
 				.SetTarget(new(MIN_WIDTH, _expandMask.offsetMax.y));
 		}
 
@@ -124,7 +124,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		#region IGroupLayoutEle
 		public GroupLayoutBase BelongedGroup { get; set; }
 		public RectTransform RectTrans => _rectTrans;
-		public float Width => _expandMask.rect.width;
+		public float EleSize => _expandMask.rect.width;
 		public float Height => HEIGHT;
 		public event Action OnDirty;
 		public void SetPos(float x) {

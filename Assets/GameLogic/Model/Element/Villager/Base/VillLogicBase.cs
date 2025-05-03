@@ -76,8 +76,12 @@ namespace GameLogic
 			var levelNow = _jobLevel_F[idx].Value;
 			var levelConfig = jConfig.JobLevelConfigs[levelNow];
 
-			_consBuffs[idx].Value += levelConfig.ConsBuff;
-			_prodBuffs[idx].Value += levelConfig.ProdBuff;
+			foreach (var pr in levelConfig.RepoConsBuff.List) {
+				_consBuffs[pr.Index].Value += pr.Value;
+			}
+			foreach (var pr in levelConfig.RepoProdBuff.List) {
+				_prodBuffs[pr.Index].Value += pr.Value;
+			}
 
 			EventSystem.Invoke<ulong, JobType>((int)ModelEvt.VillLevelUp_VuJ_2, _id, job, NSFrame.EventType.Model);
 		}

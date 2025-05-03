@@ -48,7 +48,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 
 		#region IGroupLayoutEle
 		public GroupLayoutBase BelongedGroup { get; set; }
-		public float Width => Height;
+		public float EleSize => Height;
 		public RectTransform RectTrans => _rectTrans;
 		public event Action OnDirty;
 		public void OnAddedToGroup() {

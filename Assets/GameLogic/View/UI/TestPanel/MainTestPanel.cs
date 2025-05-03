@@ -17,7 +17,7 @@ namespace GameLogic.View.Test
 			UpdateTime();
 		}
 		private void UpdateRepo() {
-			var repos = RepoMgr.Inst.Repos;
+			var repos = RepoMgr.Inst.Repos_F;
 			_sb.Clear();
 			for (int i = 0; i < repos.Count; ++i) {
 				_sb.AppendLine($"{(RepoType)i}: \t{repos[i].Value:0.00}");

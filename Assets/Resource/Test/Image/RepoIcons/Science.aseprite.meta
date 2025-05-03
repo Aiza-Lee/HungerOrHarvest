@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f5957fe8459f7c040bda96637fb55173
+guid: 557f44b75f74e764aaed1bb804ef8635
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -32,10 +32,10 @@ ScriptedImporter:
     sRGBTexture: 1
     spriteMode: 2
     spriteExtrude: 1
-    spriteMeshType: 1
+    spriteMeshType: 0
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
-    spritePixelsToUnits: 128
+    spritePixelsToUnits: 100
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -97,7 +97,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638774817794577913
+  platformSettingsDirtyTick: 638819001180428474
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: VillagerSprite
+  - name: Science
     originalName: 
-    pivot: {x: 0.5, y: 0}
-    alignment: 7
+    pivot: {x: 0.496063, y: -0.74545455}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 92
-      height: 235
-    spriteID: 806c50338e87a114896291369d13cb43
+      width: 254
+      height: 110
+    spriteID: 570e60548f357cd40b02d11eaaeae515
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,20 +144,20 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1263806945
-    name: VillagerSprite
+    guid: -705124700
+    name: Science
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: VillagerSprite
+    - name: Science
       frameIndex: 0
       cellRect:
-        x: 216
-        y: 47
-        width: 92
-        height: 235
-      spriteId: 806c50338e87a114896291369d13cb43
+        x: 2
+        y: 82
+        width: 254
+        height: 110
+      spriteId: 570e60548f357cd40b02d11eaaeae515
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -212,4 +212,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 512, y: 512}
+  canvasSize: {x: 256, y: 260}
