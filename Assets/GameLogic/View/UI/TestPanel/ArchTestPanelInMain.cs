@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameLogic.View.Test
 {
-	public class ArchTestPanelInMain : MonoBehaviour, IClearMgr {
+	public class ArchTestPanelInMain : MonoBehaviour, IMananger {
 		public Transform ArchInfoLayout; 
 		public GameObject InfoPrefab;
 		public TextMeshProUGUI CurPageText;

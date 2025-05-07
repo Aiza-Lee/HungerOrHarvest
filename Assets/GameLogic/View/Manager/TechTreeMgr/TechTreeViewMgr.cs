@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameLogic.View
 {
-	public sealed class TechTreeViewMgr : MonoSingleton<TechTreeViewMgr>, IClearMgr, ISaveable<TechTreeMgrViewSave> {
+	public sealed class TechTreeViewMgr : MonoSingleton<TechTreeViewMgr>, IMananger, ISaveable<TechTreeMgrViewSave> {
 
 		private readonly Dictionary<ulong, TechNodeViewBase> _nodeViews = new();
 

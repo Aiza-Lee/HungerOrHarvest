@@ -1,6 +1,6 @@
 namespace GameLogic
 {
-	public sealed class RepoMgr : ISaveable<RepoMgrSave>, IClearMgr {
+	public sealed class RepoMgr : ISaveable<RepoMgrSave>, IMananger {
 		private RepoMgr() {}
 		public static RepoMgr Inst { get; } = new();
 

@@ -13,20 +13,18 @@ namespace GameLogic.View
 
 		[SerializeField] private List<Pair<ViewPanelType, PanelBase>> _RegisteredPanels;
 
-		private readonly Dictionary<int, PanelBase> _panelDict = new();
+		private readonly Dictionary<ViewPanelType, PanelBase> _panelDict = new();
 
 		protected override void Awake() {
 			base.Awake();
 			foreach (var panel in _RegisteredPanels) { 
 				panel.Value.gameObject.SetActive(true);
-				_panelDict[(int)panel.Key] = panel.Value;
+				_panelDict[panel.Key] = panel.Value;
 			}
 		}
 
 		private void Start() {
-			// test:
-				TogglePanel(ViewPanelType.WorldVillOperationPanel);
-				TogglePanel(ViewPanelType.WordRepoPanel);
+			TogglePanel(ViewPanelType.StartMenu);
 		}
 
 		private void Update() {
@@ -34,16 +32,19 @@ namespace GameLogic.View
 				if (Input.GetKeyDown(KeyCode.Tab)) {
 					TogglePanel(ViewPanelType.MainTest);
 				}
-				if (Input.GetKeyDown(KeyCode.Escape)) { TogglePanel(ViewPanelType.WorldVillOperationPanel); }
+				if (Input.GetKeyDown(KeyCode.Escape)) { 
+					TogglePanel(ViewPanelType.WorldVillOperationPanel); 
+				}
 			}
 		}
 
 		private void TogglePanel(ViewPanelType type) {
-			if (_panelDict.TryGetValue((int)type, out var panel)) {
+			if (_panelDict.TryGetValue(type, out var panel)) {
 				panel.Toggle();
 			} else {
 				var p = _RegisteredPanels.Where((panel) => panel.Key == type).First().Value;
-				_panelDict[(int)type] = p;
+				_panelDict[type] = p;
+				p.gameObject.SetActive(true);
 				p.Toggle();
 			}
 		}

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameLogic
 {
-	public sealed class RoomMgr : IClearMgr {
+	public sealed class RoomMgr : IMananger {
 		private RoomMgr() {
 			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
 			EventSystem.AddListener<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, OnArchAdded, NSFrame.EventType.Model);

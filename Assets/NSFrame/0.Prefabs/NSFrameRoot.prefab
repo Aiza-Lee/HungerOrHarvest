@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4850395402413387447}
   - component: {fileID: 8210667163194412414}
+  - component: {fileID: 4494826646575579848}
   m_Layer: 0
   m_Name: NSFrameRoot
   m_TagString: Untagged
@@ -48,3 +49,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c8feebf06752cf74a97299e8c1d5dada, type: 2}
   - {fileID: 11400000, guid: 0119aceb280b3ef439a854d3637e8abe, type: 2}
   - {fileID: 11400000, guid: ca24641f055cd0f44a783aefdc134df6, type: 2}
+--- !u!114 &4494826646575579848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8859108000239942443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b880a91ac1a98046b10c20d6250ac59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

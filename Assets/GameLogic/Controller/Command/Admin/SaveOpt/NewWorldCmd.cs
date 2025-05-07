@@ -21,14 +21,14 @@ namespace GameLogic.Controller
 			GameViewMgr.Inst.ClearAllMgrs();
 			GameModelMgr.Inst.ClearAllMgrs();
 
-			var saveInfo = SaveSystem.CreateSaveFile();
-			GameModelMgr.Inst.RegisterSaveInfo(saveInfo);
-			GameViewMgr.Inst.RegisterSaveInfo(saveInfo);
+			// var saveInfo = SaveSystem.CreateSaveFile();
+			// GameModelMgr.Inst.SetSaveInfo(saveInfo);
+			// GameViewMgr.Inst.SetSaveInfo(saveInfo);
 
 			WorldGenerator.Inst.Generate();
 
-			GameModelMgr.Inst.SaveGame();
-			GameViewMgr.Inst.SaveGame();
+			// GameModelMgr.Inst.SaveGame();
+			// GameViewMgr.Inst.SaveGame();
 		}
 	}
 }

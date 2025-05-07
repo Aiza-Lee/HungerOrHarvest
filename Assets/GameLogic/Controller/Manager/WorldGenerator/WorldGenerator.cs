@@ -46,6 +46,9 @@ namespace GameLogic.Controller
 				var type = config.NegLayers[i];
 				LogicFctry.Inst.NewLayer(type, - i - 1);
 			}
+
+			/* WORLD_BASE_INFO */
+			WorldBaseInfoMgr.Inst.SetWorldHashTag();
 		}
 	}
 }

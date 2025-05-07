@@ -31,7 +31,7 @@ namespace GameLogic.View
 
 		/// <summary>
 		/// 如果某次设置没有 set StopCallback 那再SetTarget的时候需要触发 StopCallback
-		/// 如果某次设置 set 了 StopCallback，那该callback的触发在设置的时候触发，然后替换为新的callback，就不能再在 SetTarget 中触发
+		/// 如果某次设置 set 了 StopCallback，那原本的callback的触发在设置的时候触发，然后替换为新的callback，就不能再在 SetTarget 中触发
 		/// </summary>
 		private bool _triggerStopCallbackFlag = true;
 		/// <summary>
@@ -57,17 +57,17 @@ namespace GameLogic.View
 			OnChanged?.Invoke(newVal);
 
 			if (_elapsedTime >= time) {
+				OnChanged = null;
+				_curModID = 0;
+				_running = false;
+
 				_stopCallback?.Invoke();
 				_doneCallback?.Invoke();
-				Reset();
 			}
 		}
-
-		private void Reset() {
+		private void OnInterprete() {
+			_stopCallback?.Invoke();
 			_stopCallback = null;
-			_doneCallback = null;
-			OnChanged = null;
-			_curModID = 0;
 			_running = false;
 		}
 
@@ -86,12 +86,13 @@ namespace GameLogic.View
 			SetCurVal(Add(GetCurVal(), val));
 		}
 		public void EndCurChange() {
-			_stopCallback?.Invoke();
+			OnInterprete();
 			_running = false;
 			_target = GetCurVal();
 		}
 
 		public SmoothChangeBase<T> SetMod(int modID) {
+			OnInterprete();
 			_curModID = modID;
 			return this;
 		}
@@ -100,6 +101,7 @@ namespace GameLogic.View
 		/// 每次值改变的时候触发, 方法参数为新值
 		/// </summary>
 		public SmoothChangeBase<T> SetOnChanged(Action<T> onChanged) {
+			OnInterprete();
 			OnChanged = onChanged;
 			return this;
 		}
@@ -108,6 +110,7 @@ namespace GameLogic.View
 		/// 只有在当前任务主动完成才能触发
 		/// </summary>
 		public SmoothChangeBase<T> SetDoneCallback(Action callback) {
+			OnInterprete();
 			_clearDoneCallbackFlag = false;
 			_doneCallback = callback;
 			return this;
@@ -117,7 +120,7 @@ namespace GameLogic.View
 		/// 当前任务截止就会触发，包括主动的任务完成和被另一个任务打断
 		/// </summary>
 		public SmoothChangeBase<T> SetStopCallback(Action callback) {
-			_stopCallback?.Invoke();
+			OnInterprete();
 			_triggerStopCallbackFlag = false;
 			_stopCallback = callback;
 			return this;
@@ -127,8 +130,7 @@ namespace GameLogic.View
 		public void Translate(T val) => SetTarget(Add(_target, val));
 		public void SetTarget(T val) {
 			if (_triggerStopCallbackFlag) {
-				_stopCallback?.Invoke();
-				_stopCallback = null;
+				OnInterprete();
 			} else {
 				_triggerStopCallbackFlag = true;
 			}

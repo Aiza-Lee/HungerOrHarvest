@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
 using GameLogic.Utilities;
 using NSFrame;
 using UnityEngine;
 
 namespace GameLogic
 {
-	public class WorldMgr : ISaveable<WorldSave>, IClearMgr {
+	public class WorldMgr : ISaveable<WorldSave>, IMananger {
 		private WorldMgr() {
 			MaxArchODR = MinArchODR = 0;
 			_maxUnlockedLayer = _minUnlockedLayer = 0;

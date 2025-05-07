@@ -4,5 +4,6 @@ namespace GameLogic.View
 		MainTest,
 		WorldVillOperationPanel,
 		WordRepoPanel,
+		StartMenu
 	}
 }

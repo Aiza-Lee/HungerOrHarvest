@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,10 +62,18 @@ namespace NSFrame {
 			if (panel.Opened) return;
 			panel.Opened = true;
 			panel.transform.SetAsLastSibling();
+
+			// 处理 Canvas 激活
 			if (_activatedPanelCnt[panel.TypeIndex] == 0)
 				_canvases[panel.TypeIndex].gameObject.SetActive(true);
 			++_activatedPanelCnt[panel.TypeIndex];
+
 			panel.gameObject.SetActive(true);
+			panel.OnShow();
+			// MonoServiceTool.NS_StartCoroutine(DoShowPanel(panel));
+		}
+		private static IEnumerator DoShowPanel(PanelBase panel) {
+			yield return null;
 			panel.OnShow();
 		}
 		public static void Toggle(PanelBase panel) {

@@ -10,10 +10,10 @@ namespace GameLogic
 
 		private SaveInfo _saveInfo;
 
-		private  List<IClearMgr> _clearableMgrs;
+		private  List<IMananger> _Mgrs;
 
 		private void Start() {
-			_clearableMgrs = new() {
+			_Mgrs = new() {
 				MapMgr.Inst,
 				DisasterMgr.Inst,
 				IDMgr.Inst,
@@ -23,10 +23,10 @@ namespace GameLogic
 				RoomMgr.Inst,
 				WorldMgr.Inst,
 			};
-			EventSystem.Invoke((int)ModelEvt.MgrInitAfterMono, NSFrame.EventType.Model);
+			EventSystem.Invoke((int)ModelEvt.MgrInitAfterMonoMgr, NSFrame.EventType.Model);
 		}
 
-		public void RegisterSaveInfo(SaveInfo saveInfo) {
+		public void SetSaveInfo(SaveInfo saveInfo) {
 			_saveInfo = saveInfo;
 		}
 
@@ -36,21 +36,23 @@ namespace GameLogic
 				IDMgr.Inst.GetSave(),
 				LogicTimeMgr.Inst.GetSave(),
 				RepoMgr.Inst.GetSave(),
-				DisasterMgr.Inst.GetSave()
+				DisasterMgr.Inst.GetSave(),
+				WorldBaseInfoMgr.Inst.GetSave()
 			);
 		}
 
 		public void LoadGame() {
 			ClearAllMgrs();
-			WorldMgr.Inst		.InitFromSave(SaveSystem.LoadObject<WorldSave>(_saveInfo));
-			IDMgr.Inst			.InitFromSave(SaveSystem.LoadObject<IDMgrSave>(_saveInfo));
-			LogicTimeMgr.Inst	.InitFromSave(SaveSystem.LoadObject<LogicTimeMgrSave>(_saveInfo));
-			RepoMgr.Inst		.InitFromSave(SaveSystem.LoadObject<RepoMgrSave>(_saveInfo));
-			DisasterMgr.Inst	.InitFromSave(SaveSystem.LoadObject<DisasterMgrSave>(_saveInfo));
+			WorldMgr.Inst			.InitFromSave(SaveSystem.LoadObject<WorldSave>(_saveInfo));
+			IDMgr.Inst				.InitFromSave(SaveSystem.LoadObject<IDMgrSave>(_saveInfo));
+			LogicTimeMgr.Inst		.InitFromSave(SaveSystem.LoadObject<LogicTimeMgrSave>(_saveInfo));
+			RepoMgr.Inst			.InitFromSave(SaveSystem.LoadObject<RepoMgrSave>(_saveInfo));
+			DisasterMgr.Inst		.InitFromSave(SaveSystem.LoadObject<DisasterMgrSave>(_saveInfo));
+			WorldBaseInfoMgr.Inst	.InitFromSave(SaveSystem.LoadObject<WorldBaseInfoMgrSave>(_saveInfo));
 		}
 
 		public void ClearAllMgrs() {
-			_clearableMgrs.ForEach(mgr => mgr.ClearMgr());
+			_Mgrs.ForEach(mgr => mgr.ClearMgr());
 		}
 	}
 }

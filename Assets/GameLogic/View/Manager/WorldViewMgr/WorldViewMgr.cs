@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameLogic.View
 {
-	public class WorldViewMgr : MonoSingleton<WorldViewMgr>, IPlayerControll, IClearMgr {
+	public class WorldViewMgr : MonoSingleton<WorldViewMgr>, IPlayerControll, IMananger {
 		private readonly Dictionary<ulong, VillViewBase> _villViews = new();
 		private readonly Dictionary<ulong, ArchViewBase> _archViews = new();
 		private readonly Dictionary<ulong, LayerViewBase> _layerViews = new();

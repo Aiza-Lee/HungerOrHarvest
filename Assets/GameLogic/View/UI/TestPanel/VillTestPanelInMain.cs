@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameLogic.View.Test
 {
-	public class VillTestPanelInMain : MonoBehaviour, IClearMgr {
+	public class VillTestPanelInMain : MonoBehaviour, IMananger {
 		public Transform VillInfoLayout; 
 		public GameObject OneVillInfoPrefab;
 		public TextMeshProUGUI CurPageText;

@@ -17,6 +17,8 @@ namespace GameLogic.Controller
 		}
 
 		public override void Execute() {
+			// note: 加载每日结束时候的存档会导致再一次触发那一天结束的自动存档，所以在这里标记，而跳过因为加载而产生的不必要的自动存档。
+			LogicTimeMgr.Inst.IsLoadingSave = true;
 			// note: ViewMgr先加载, 因为ModelMgr加载时会触发ViewMgr的事件
 			GameViewMgr.Inst.LoadGame();
 			GameModelMgr.Inst.LoadGame();

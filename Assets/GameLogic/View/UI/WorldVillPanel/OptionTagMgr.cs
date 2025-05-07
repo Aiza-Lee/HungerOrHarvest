@@ -18,6 +18,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		private float Space => _tagRoot.offsetMin.y;
 
 		private void Awake() {
+			// Debug.Log("OptionTagMgr Awake");
 			PoolSystem.InitPrefabPool(_optionTagPrefab, 30);
 		}
 

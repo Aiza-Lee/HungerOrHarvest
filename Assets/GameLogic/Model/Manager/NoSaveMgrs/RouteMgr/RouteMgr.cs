@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameLogic
 {
-	public class RouteMgr : IClearMgr {
+	public class RouteMgr : IMananger {
 		private RouteMgr() {}
 		public static RouteMgr Inst { get; } = new();
 		
