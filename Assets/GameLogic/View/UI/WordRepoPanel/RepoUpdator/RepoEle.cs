@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameLogic.View.UI.WorldRepoPanal
+namespace GameLogic.View.UI.WorldRepoPanel
 {
 	public class RepoEle : MonoBehaviour, IGroupLayoutEle {
 		private Image _image;
@@ -38,6 +38,7 @@ namespace GameLogic.View.UI.WorldRepoPanal
 			_rectTrans.offsetMin = new(0, - y - EleSize);
 			_rectTrans.offsetMax = new(0, - y);
 		}
+		public void Clear() {}
 		#endregion
 	}
 }

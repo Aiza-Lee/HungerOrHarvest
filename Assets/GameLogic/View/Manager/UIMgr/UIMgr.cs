@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NSFrame;
@@ -11,47 +12,55 @@ namespace GameLogic.View
 	/// </summary>
 	public class UIMgr : MonoSingleton<UIMgr>, IPlayerControll {
 
-		[SerializeField] private List<Pair<ViewPanelType, PanelBase>> _RegisteredPanels;
+		[SerializeField] private List<PanelBase> _RegisteredPanels;
 
-		private readonly Dictionary<ViewPanelType, PanelBase> _panelDict = new();
+		private readonly Dictionary<Type, PanelBase> _panelDict = new();
 
 		protected override void Awake() {
 			base.Awake();
 			foreach (var panel in _RegisteredPanels) { 
-				panel.Value.gameObject.SetActive(true);
-				_panelDict[panel.Key] = panel.Value;
+				panel.gameObject.SetActive(true);
+				_panelDict[panel.GetType()] = panel;
 			}
 		}
 
 		private void Start() {
-			TogglePanel(ViewPanelType.StartMenu);
+			TogglePanelImpl<UI.StartMenu.MainPanel>();
 		}
 
 		private void Update() {
 			if (Controllable) {
 				if (Input.GetKeyDown(KeyCode.Tab)) {
-					TogglePanel(ViewPanelType.MainTest);
+					TogglePanelImpl<Test.MainTestPanel>();
 				}
 				if (Input.GetKeyDown(KeyCode.Escape)) { 
-					TogglePanel(ViewPanelType.WorldVillOperationPanel); 
+					TogglePanelImpl<UI.WorldVillPanel.MainPanel>(); 
 				}
 			}
 		}
-
-		private void TogglePanel(ViewPanelType type) {
+		private T TogglePanelImpl<T>() where T : PanelBase {
+			var type = typeof(T);
 			if (_panelDict.TryGetValue(type, out var panel)) {
 				panel.Toggle();
+				return panel as T;
 			} else {
-				var p = _RegisteredPanels.Where((panel) => panel.Key == type).First().Value;
+				var p = _RegisteredPanels.Where((panel) => panel.GetType() == type).First();
 				_panelDict[type] = p;
 				p.gameObject.SetActive(true);
 				p.Toggle();
+				return p as T;
 			}
 		}
 
 		#region PublicMethods
+		public T TogglePanel<T>() where T : PanelBase {
+			return TogglePanelImpl<T>();
+		}
 		public void FindPanel<T>(out T panel) where T : PanelBase { 
-			panel = _panelDict.Values.OfType<T>().First(); 
+			panel = _panelDict[typeof(T)] as T;
+		}
+		public T FindPanel<T>() where T : PanelBase {
+			return _panelDict[typeof(T)] as T;
 		}
 
 		#endregion

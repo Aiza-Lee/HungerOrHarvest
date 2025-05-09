@@ -26,6 +26,9 @@ namespace GameLogic
 			EventSystem.Invoke((int)ModelEvt.MgrInitAfterMonoMgr, NSFrame.EventType.Model);
 		}
 
+
+		#region PublicMethods
+		public bool SaveInfoSeted() => _saveInfo != null;
 		public void SetSaveInfo(SaveInfo saveInfo) {
 			_saveInfo = saveInfo;
 		}
@@ -54,5 +57,6 @@ namespace GameLogic
 		public void ClearAllMgrs() {
 			_Mgrs.ForEach(mgr => mgr.ClearMgr());
 		}
+		#endregion
 	}
 }

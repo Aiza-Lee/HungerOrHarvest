@@ -1,4 +1,4 @@
-namespace GameLogic.View.UI.WorldRepoPanal
+namespace GameLogic.View.UI.WorldRepoPanel
 {
 	public class ArchEleLayout : GroupLayoutBase {
 

@@ -22,7 +22,7 @@ namespace NSFrame {
 			GameObject uiRoot = new("UI Root");
 			_UIRootTransform = uiRoot.transform;
 
-			_UIRootTransform.SetParent(NSFrameRoot.FrameRootTransform);
+			_UIRootTransform.SetParent(NSFrameRoot.Inst.transform);
 			_panelDic = new Dictionary<string, PanelBase>[TYPE_SIZE];
 			
 			_canvases = new Transform[TYPE_SIZE];

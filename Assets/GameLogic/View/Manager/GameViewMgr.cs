@@ -8,6 +8,7 @@ namespace GameLogic.View
 
 		private readonly List<IMananger> _clearableMgrs = new();
 
+		public bool SaveInfoSeted() => _saveInfo != null;
 		public void SetSaveInfo(SaveInfo saveInfo) {
 			_saveInfo = saveInfo;
 		}

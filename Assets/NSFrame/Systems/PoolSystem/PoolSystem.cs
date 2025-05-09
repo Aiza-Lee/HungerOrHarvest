@@ -15,7 +15,7 @@ namespace NSFrame {
 			_objectPoolDic = new();
 			_poolRootTransform = new GameObject("Pool Root").transform;
 			_poolRootTransform.position = Vector3.zero;
-			_poolRootTransform.SetParent(NSFrameRoot.FrameRootTransform);
+			_poolRootTransform.SetParent(NSFrameRoot.Inst.transform);
 		}
 
 	  #region Prefab Pool

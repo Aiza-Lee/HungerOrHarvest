@@ -11,12 +11,6 @@ namespace GameLogic.View.UI.WorldVillPanel
 				AddEle(info);
 			}
 		}
-		public override void Clear() {
-			foreach (var ele in _eles) {
-				(ele as VillExpandJobInfo).Clear();
-			}
-			base.Clear();
-		}
 		#endregion
 	}
 }

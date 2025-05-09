@@ -1,8 +1,7 @@
 using System;
-using GameLogic.View.UI.WorldVillPanel;
 using UnityEngine;
 
-namespace GameLogic.View.UI.WorldRepoPanal
+namespace GameLogic.View.UI.WorldRepoPanel
 {
 	public class ArchEle : MonoBehaviour, IGroupLayoutEle {
 
@@ -23,6 +22,7 @@ namespace GameLogic.View.UI.WorldRepoPanal
 		public void SetPos(float x) {
 			;
 		}
+		public void Clear() {}
 		#endregion
 	}
 }

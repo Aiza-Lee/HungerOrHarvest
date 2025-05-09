@@ -3,7 +3,7 @@ using NSFrame;
 using UnityEngine.UI;
 using UnityEngine;
 
-namespace GameLogic.View.UI.WorldRepoPanal
+namespace GameLogic.View.UI.WorldRepoPanel
 {
 	public class MainPanel : PanelBase {
 

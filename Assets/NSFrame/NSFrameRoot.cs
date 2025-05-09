@@ -5,11 +5,9 @@ namespace NSFrame
 {
 	public class NSFrameRoot : MonoSingleton<NSFrameRoot> {
 		public List<ConfigBase> ConfigBases;
-		public static Transform FrameRootTransform { get; private set; }
 		public static bool Initialized = false;
 		protected override void Awake() {
 			base.Awake();
-			FrameRootTransform = transform;
 			DontDestroyOnLoad(gameObject);
 			Initialized = true;
 		}

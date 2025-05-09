@@ -32,20 +32,8 @@ namespace GameLogic.View.UI.WorldVillPanel
  		#endregion
 
 		#region PublicMethods
-		public override void Clear() {
-			foreach (var ele in _eles) {
-				(ele as VillCard).Clear();
-			}
-			base.Clear();
-			_groupType = GroupType.None;
-			PoolSystem.PushGO(gameObject);
-		}
-		public override void SetWidth(float width) {
-			base.SetWidth(width);
-			OnDirty?.Invoke();
-		}
-		public override void RearrangeEle() {
-			base.RearrangeEle();
+		public override void SetLength(float width) {
+			base.SetLength(width);
 			OnDirty?.Invoke();
 		}
 		#endregion
@@ -54,6 +42,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public GroupLayoutBase BelongedGroup { get; set; }
 		public RectTransform RectTrans => _rectTrans;
 		public float Height => _rectTrans.rect.height;
+		public float EleSize => base.EleContainerSize;
 		public event Action OnDirty;
 		public void SetPos(float pos) {
 			_rectTrans.offsetMax = new(pos + EleSize, _rectTrans.offsetMax.y);
@@ -62,7 +51,12 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public void OnAddedToGroup() {
 			_rectTrans.offsetMin = new(0, 0);
 			_rectTrans.offsetMax = new(0, 0);
-			SetWidth(_space);
+			SetLength(_space);
+		}
+		void IGroupLayoutEle.Clear() {
+			base.Clear();
+			_groupType = GroupType.None;
+			PoolSystem.PushGO(gameObject);
 		}
 		#endregion
 	}

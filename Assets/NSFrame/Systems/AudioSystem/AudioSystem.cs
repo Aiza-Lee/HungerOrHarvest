@@ -18,7 +18,7 @@ namespace NSFrame
 			foreach (var pair in _config.SFXAuidoClips) _sfxClipsDic.Add(pair.Key, pair.Value);
 			GameObject audioRoot = new("Audio Root");
 			_audioRoot = audioRoot.transform;
-			_audioRoot.SetParent(NSFrameRoot.FrameRootTransform);
+			_audioRoot.SetParent(NSFrameRoot.Inst.transform);
 
 			GameObject sfxRoot = new("SFX Root");
 			_sfxRoot = sfxRoot.transform;
