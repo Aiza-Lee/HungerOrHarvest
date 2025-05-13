@@ -15,6 +15,16 @@ namespace GameLogic
 		public VillLogicBase AttachedVill { get; private set; }
 		public TaskType CurTaskType => _curTask?.TaskType ?? TaskType.None;
 
+		// private void SetMoveToRandomTask() {
+		// 	Coord target;
+		// 	do {
+		// 		// 如果没有任务，则随机一个空闲的村民位置作为目标位置
+		// 		target = RouteMgr.Inst.GetRandomVillSpareCoord();
+		// 	} while (target == AttachedVill.Coord);
+		// 	_curTask = LogicFctry.Inst.NewMoveToTask(target);
+		// 	_curTask.SetVill(AttachedVill);
+		// }
+
 		private void Execute() {
 
 			if (_curTask == null || _curTask.IsEnded) {
@@ -86,9 +96,15 @@ namespace GameLogic
 			return save;
 		}
 		public void InitFromSave(VillTaskRunnerSave save) {
-			foreach (var taskSave in save.Tasks) {
-				AppendTask(LogicFctry.Inst.LoadTask(taskSave));
+			_tasks.Clear();
+			try {
+				foreach (var taskSave in save.Tasks) {
+					AppendTask(LogicFctry.Inst.LoadTask(taskSave));
+				}
+			} catch {
+				// 如果加载失败，多半是因为没有存任何任务，所以直接清空任务列表即可
 			}
+
 		}
 		#endregion
 	}

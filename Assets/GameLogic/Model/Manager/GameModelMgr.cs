@@ -32,6 +32,7 @@ namespace GameLogic
 		public void SetSaveInfo(SaveInfo saveInfo) {
 			_saveInfo = saveInfo;
 		}
+		public SaveInfo CurSaveInfo => _saveInfo;
 
 		public void SaveGame() {
 			SaveSystem.SaveObjects( _saveInfo, 

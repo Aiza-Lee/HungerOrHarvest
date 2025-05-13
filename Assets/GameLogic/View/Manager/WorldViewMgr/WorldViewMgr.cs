@@ -95,7 +95,7 @@ namespace GameLogic.View
 		#endregion
 
 		#region IPlayerControll
-		public bool Controllable { get; set; } = true;
+		public bool Controllable { get; set; } = false;
 		#endregion
 	}
 }

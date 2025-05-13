@@ -1,15 +1,20 @@
 using System.Collections.Generic;
+using System.Net.WebSockets;
+using GameLogic.View;
 using NSFrame;
+using UnityEngine;
 
 namespace GameLogic.Controller
 {
 	public sealed class WorldGenerator : MonoSingleton<WorldGenerator> {
 
-		public List<PreSetConfig> Configs;
-		public int ChooseIndex;
+		[SerializeField] private PreSetConfig _defaultConfig;
+		[SerializeField] private List<PreSetConfig> _randomConfigs;
 
-		public void Generate() {
-			var config = Configs[ChooseIndex];
+		private void GenerateImpl(PreSetConfig config, string worldName) {
+			var saveInfo = SaveSystem.CreateSaveFile(worldName);
+			GameModelMgr.Inst.SetSaveInfo(saveInfo);
+			GameViewMgr.Inst.SetSaveInfo(saveInfo);
 
 			/* LAYER_RANGE */
 			foreach (var pr in config.Layer_Range) {
@@ -49,6 +54,25 @@ namespace GameLogic.Controller
 
 			/* WORLD_BASE_INFO */
 			WorldBaseInfoMgr.Inst.SetWorldHashTag();
+			WorldBaseInfoMgr.Inst.WorldName = worldName;
+
+			
+			GameModelMgr.Inst.SaveGame();
+			GameViewMgr.Inst.SaveGame();
+			// 提示UI这个存档是第一个存档，方便显示不同的文本
+			var baseSave = SaveSystem.LoadObject<WorldBaseInfoMgrSave>(saveInfo);
+			baseSave.StartingSave = true;
+			SaveSystem.SaveObject(saveInfo, baseSave);
+		}
+
+		public void GenerateDefaultWorld() {
+			GenerateImpl(_defaultConfig, "Default World");
+			WorldBaseInfoMgr.Inst.WorldName = "Default World";
+		}
+		public void GenerateRandomWorld(string worldName) {
+			var rId = Random.Range(0, _randomConfigs.Count);
+			GenerateImpl(_randomConfigs[rId], worldName);
+			WorldBaseInfoMgr.Inst.WorldName = worldName;
 		}
 	}
 }

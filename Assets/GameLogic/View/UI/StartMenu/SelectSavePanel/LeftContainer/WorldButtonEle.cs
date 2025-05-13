@@ -26,7 +26,7 @@ namespace GameLogic.View.UI.StartMenu.SelectSavePanel
 
 		#region IGroupLayoutEle
 		public GroupLayoutBase BelongedGroup { get; set;}
-		public float EleSize { get; }
+		public float EleSize => _eleSize;
 		public RectTransform RectTrans => _rectTrans;
 		public event Action OnDirty;
 		public void SetPos(float y) {

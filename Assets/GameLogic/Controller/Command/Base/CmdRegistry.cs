@@ -23,7 +23,6 @@ namespace GameLogic.Controller
 			// { "save", (args) => new SaveGameCmd(args) },
 			{ "auto-save", (args) => new AutoSaveGameCmd(args) },
 			{ "load", (args) => new LoadGameCmd(args) },
-			{ "world-new", (args) => new NewWorldCmd(args) },
 
 			/* Administrator */
 			{ "multi", (args) => new MultiCmdCmd(args) },

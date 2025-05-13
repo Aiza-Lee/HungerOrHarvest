@@ -17,7 +17,6 @@ namespace GameLogic.View.UI.StartMenu.SelectSavePanel
 		public override void OnClose() {
 			_saveInfos.Clear();
 			_groupedSaveInfosList.Clear();
-			UIMgr.Inst.TogglePanel<MainPanel>();
 		}
 		public override void OnShow() {
 			Refresh();
@@ -66,10 +65,10 @@ namespace GameLogic.View.UI.StartMenu.SelectSavePanel
 										.OrderByDescending(si => si.LastUpdateTime)
 										.ToList()
 				})
-				.OrderByDescending(g => g.SaveInfos.First().LastUpdateTime)
-				.Select(g => new Pair<string, Pair<string, List<SaveInfo>>>(
-					g.WorldHashID,
-					new(g.WorldName, g.SaveInfos)
+				.OrderByDescending(group => group.SaveInfos.First().LastUpdateTime)
+				.Select(group => new Pair<string, Pair<string, List<SaveInfo>>>(
+					group.WorldHashID,
+					new(group.WorldName, group.SaveInfos)
 				))
 				.ToList();
 		}

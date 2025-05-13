@@ -74,7 +74,7 @@ namespace NSFrame {
 
 		public static List<SaveInfo> GetAllSaveInfos() {
 			_saveInfoList.Sort(CmpByUpdateTime);
-			return _saveInfoList;
+			return new(_saveInfoList);
 		}
 		private static int CmpByUpdateTime(SaveInfo saveInfo1, SaveInfo saveInfo2) {
 			return (-1) * string.Compare(saveInfo1.LastUpdateTime, saveInfo2.LastUpdateTime);

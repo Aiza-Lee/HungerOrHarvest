@@ -19,7 +19,10 @@ namespace GameLogic.View.UI.StartMenu.SelectSavePanel
 
 		public void SetSaveInfo(SaveInfo saveInfo) {
 			_saveInfo = saveInfo;
-			_daysText.text = $"第 {SaveSystem.LoadObject<LogicTimeMgrSave>(saveInfo).Days + 1} 天结束时";
+			_daysText.text = 
+				SaveSystem.LoadObject<WorldBaseInfoMgrSave>(saveInfo).StartingSave
+					? "第 0 天开始时"
+					: $"第 {SaveSystem.LoadObject<LogicTimeMgrSave>(saveInfo).Days + 1} 天结束时";
 			_lastUpdateText.text = "存档时间: " + saveInfo.LastUpdateTime;
 		}
 		public void OnClicked() {
@@ -31,7 +34,6 @@ namespace GameLogic.View.UI.StartMenu.SelectSavePanel
 				GameModelMgr.Inst.SetSaveInfo(_saveInfo);
 				GameViewMgr.Inst.SetSaveInfo(_saveInfo);
 				UIMgr.Inst.TogglePanel<SelectSavePanel>();
-				UIMgr.Inst.TogglePanel<MainPanel>();
 				CmdRunner.Run("/load");
 			};
 		}

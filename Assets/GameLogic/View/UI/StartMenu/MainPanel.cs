@@ -1,3 +1,4 @@
+using GameLogic.Controller;
 using NSFrame;
 
 namespace GameLogic.View.UI.StartMenu
@@ -13,6 +14,8 @@ namespace GameLogic.View.UI.StartMenu
 				UIMgr.Inst.TogglePanel<WorldRepoPanel.MainPanel>();
 				UIMgr.Inst.TogglePanel<WorldVillPanel.MainPanel>();
 				UIMgr.Inst.TogglePanel<MainPanel>();
+				PlayerControllMgr.Inst.SetWorldMainControll(true);
+				CmdRunner.Run("/pause");
 			} else {
 				var popup = UIMgr.Inst.TogglePanel<PopUpPanels.CenterYesPanel>();
 				popup.SetTipText("请先选择存档");

@@ -19,6 +19,10 @@ namespace GameLogic
 		public Action BeforeTick;
 		public Action AfterTick;
 
+		private void Start() {
+			Pause = true;
+		}
+
 		public ulong TickSum {
 			get => _tickSum;
 			private set {

@@ -10,7 +10,7 @@ namespace GameLogic.View
 	/// <para> 所有的 UI 需要在编辑器中的这个单例处注册，这个类负责开始时触发所有类从而触发 NSFrame 的注册 </para>
 	/// 同时也时统一触发 UI 面板的接口
 	/// </summary>
-	public class UIMgr : MonoSingleton<UIMgr>, IPlayerControll {
+	public class UIMgr : MonoSingleton<UIMgr> {
 
 		[SerializeField] private List<PanelBase> _RegisteredPanels;
 
@@ -29,14 +29,11 @@ namespace GameLogic.View
 		}
 
 		private void Update() {
-			if (Controllable) {
+			#if UNITY_EDITOR
 				if (Input.GetKeyDown(KeyCode.Tab)) {
 					TogglePanelImpl<Test.MainTestPanel>();
 				}
-				if (Input.GetKeyDown(KeyCode.Escape)) { 
-					TogglePanelImpl<UI.WorldVillPanel.MainPanel>(); 
-				}
-			}
+			#endif
 		}
 		private T TogglePanelImpl<T>() where T : PanelBase {
 			var type = typeof(T);
@@ -63,10 +60,6 @@ namespace GameLogic.View
 			return _panelDict[typeof(T)] as T;
 		}
 
-		#endregion
-
-		#region IPlayerControll
-		public bool Controllable { get; set; } = true;
 		#endregion
 	}
 }

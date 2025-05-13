@@ -17,6 +17,7 @@ namespace GameLogic
 			return new WorldBaseInfoMgrSave { 
 				WorldName = WorldName, 
 				WorldHashID = _worldHashTag,
+				StartingSave = false,
 			};
 		}
 

@@ -17,7 +17,7 @@ namespace GameLogic
 		/// <summary>
 		/// 是否正在加载存档，如果是的话，就不应该在当前自动存档的时候保存
 		/// </summary>
-		public bool IsLoadingSave { get; set; }
+		public bool IsLoadingNotStartingSave { get; set; }
 
 		private ulong _tickSum;
 		/// <summary>
@@ -45,10 +45,10 @@ namespace GameLogic
 		private void AddLogicTickBeforeTick() {
 			// if (_inDay) {
 				if (_todayTick == DAY_TICKS) {
-					if (!IsLoadingSave) {
+					if (!IsLoadingNotStartingSave) {
 						CmdRunner.Run("/auto-save");
 					} else {
-						IsLoadingSave = false;
+						IsLoadingNotStartingSave = false;
 					}
 					_inDay = false;
 					EventSystem.Invoke((int)ModelEvt.NightStart_0, NSFrame.EventType.Model);
