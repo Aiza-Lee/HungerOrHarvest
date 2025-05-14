@@ -1,7 +1,12 @@
+using System.Collections.Generic;
+using NSFrame;
+
 namespace GameLogic
 {
 	public sealed class RepoMgr : ISaveable<RepoMgrSave>, IMananger {
-		private RepoMgr() {}
+		private RepoMgr() {
+			EventSystem.AddListener((int)ModelEvt.MgrInitAfterMonoMgr, InitAfterMono, EventType.Model);
+		}
 		public static RepoMgr Inst { get; } = new();
 
 		private RTList<float> _repos_F = new(fill: true);
@@ -9,88 +14,179 @@ namespace GameLogic
 		private RTList<float> _globalProdBuffs_F = new(fill: true);
 		private RTList<bool> _unlockedRepos_F = new(fill: true);
 
+		/// <summary>
+		/// note: 记录消耗量的绝对值
+		/// </summary>
+		private RTList<float> _dailyCons_F = new(fill: true);
+		private RTList<float> _dailyProd_F = new(fill: true);
+		private RTList<float> _lastSecondNet_F = new(fill: true);
+		private readonly Queue<RTList<float>> _ticksNetInLastSeconds = new();
+
+		private RTList<float> _curTickSum = new(fill: true);
+
 		public RTList<float> Repos_F => _repos_F;
+		/// <summary>
+		/// 实时更新的每日消耗总额
+		/// </summary>
+		public RTList<float> DailyCons_F => _dailyCons_F;
+		/// <summary>
+		/// 实时更新的每日产出总额
+		/// </summary>
+		public RTList<float> DailyProd_F => _dailyProd_F;
+		/// <summary>
+		/// 实时更新的每日净产量
+		/// </summary>
+		public RTList<float> DailyNet_F => _dailyProd_F.Sub_New(_dailyCons_F);
+		/// <summary>
+		/// 解锁的资源种类
+		/// </summary>
+		public RTList<bool> UnlockedRepos_F => _unlockedRepos_F;
 
-		public void AddRepo(RTList<float> adds) {
-			if (adds == null || adds.Count == 0) return;
-			foreach (var pair in adds.List) {
-				_repos_F[pair.Index].Value += pair.Value;
+		private void InitAfterMono() {
+			TickTrigger.Inst.BeforeTick += BeforeTick;
+			TickTrigger.Inst.AfterTick += AfterTick;
+		}
+		private void BeforeTick() {
+			_curTickSum = new(fill: true);
+		}
+		private void AfterTick() {
+			_lastSecondNet_F.Add(_curTickSum);
+			_ticksNetInLastSeconds.Enqueue(_curTickSum);
+			// 在队列中存储之前一秒内所有的帧产出信息，在超出时间后就弹出，并在_lastSecondNet_F中统计
+			while (_ticksNetInLastSeconds.Count > TickTrigger.Inst.TickPerSec) {
+				var item = _ticksNetInLastSeconds.Dequeue();
+				_lastSecondNet_F.Sub(item);
 			}
 		}
 
+		private bool TryTickConsumeImpl(RTList<float> cons) {
+			if (!_repos_F.BigEnoughThan(cons)) {
+				return false;
+			}
+			_repos_F.Sub(cons);
+			_dailyCons_F.Add(cons);
+			_curTickSum.Sub(cons);
+			return true;
+		}
+		private void TickProdImpl(RTList<float> prod) {
+			// todo: 处理最大容量问题
+			_repos_F.Add(prod);
+			_dailyProd_F.Add(prod);
+			_curTickSum.Add(prod);
+		}
+
+
+		#region PublicMethods
+
+		/// <summary>
+		/// 直接添加资源，用于初始化资源、加载存档，不计入每日统计
+		/// </summary>
+		/// <param name="repos"> 添加的资源 </param>
+		public void AddRepoFromSave(RTList<float> repos) {
+			if (repos == null || repos.Count == 0) return;
+			_repos_F.Add(repos);
+		}
+
+		/// <summary>
+		/// 检查当前资源是否满足消耗要求
+		/// </summary>
+		/// <param name="demands"> 消耗要求 </param>
 		public bool CheckRequest(RTList<float> demands) {
-			if (demands == null || demands.Count == 0) return true;
-			foreach (var pair in demands.List) {
-				if (_repos_F[pair.Index].Value < pair.Value) return false;
-			}
-			return true;
-		}
-		public bool TryConsume(RTList<float> cons) {
-			if (!CheckRequest(cons)) return false;
-			foreach (var pair in cons.List) {
-				_globalConsBuffs_F[pair.Index].Value -= pair.Value;
-			}
-			return true;
+			return _repos_F.BigEnoughThan(demands);
 		}
 
+		/// <summary>
+		/// 村民每逻辑帧的尝试消耗资源
+		/// </summary>
+		/// <param name="cons">欲消耗的资源数量</param>
+		/// <param name="archBuffs_F">所在建筑的减少消耗buff</param>
+		/// <param name="villBuffs_F">村民本身的减少消耗buff</param>
 		public bool TryVillCons(RTList<float> cons, RTList<float> archBuffs_F, RTList<float> villBuffs_F) {
 			if (cons == null || cons.Count == 0) return true;
-			int idx;
-			foreach (var pair in cons.List) {
-				idx = pair.Index;
-				if (_repos_F[idx].Value < pair.Value * (1f - archBuffs_F[idx].Value - villBuffs_F[idx].Value - _globalConsBuffs_F[idx].Value)) 
-					return false; 
-			}
-			foreach (var consume in cons.List) {
-				idx = consume.Index;
-				_repos_F[idx].Value -= consume.Value * (1f - archBuffs_F[idx].Value - villBuffs_F[idx].Value - _globalConsBuffs_F[idx].Value);
-			}
-			return true;
+			var buff_F = archBuffs_F.Add_New(villBuffs_F, _globalConsBuffs_F).Change((val) => 1f - val);
+			var realCons = cons.Mul_New(buff_F);
+			return TryTickConsumeImpl(realCons);
 		}
+		/// <summary>
+		/// 建筑本身的每逻辑帧尝试消耗资源
+		/// </summary>
+		/// <param name="cons">欲消耗的资源</param>
+		/// <param name="archBuffs_F">建筑的减少消耗buff</param>
 		public bool TryArchCons(RTList<float> cons, RTList<float> archBuffs_F) {
 			if (cons == null || cons.Count == 0) return true;
-			int idx;
-			foreach (var pair in cons.List) {
-				idx = pair.Index;
-				if (_repos_F[idx].Value < pair.Value * (1f - archBuffs_F[idx].Value - _globalConsBuffs_F[idx].Value)) 
-					return false; 
-			}
-			foreach (var pair in cons.List) {
-				idx = pair.Index;
-				_repos_F[idx].Value -= pair.Value * (1f - archBuffs_F[idx].Value - _globalConsBuffs_F[idx].Value);
-			}
-			return true;
+			var buff_F = archBuffs_F.Add_New(_globalConsBuffs_F).Change((val) => 1f - val);
+			var realCons = cons.Mul_New(buff_F);
+			return TryTickConsumeImpl(realCons);
 		}
+		/// <summary>
+		/// 村民每逻辑帧产出资源
+		/// </summary>
+		/// <param name="prod">欲产出的资源</param>
+		/// <param name="archBuffs_F">建筑的增加产出buff</param>
+		/// <param name="villBuffs_F">村民的增加产出buff</param>
 		public void VillProd(RTList<float> prod, RTList<float> archBuffs_F, RTList<float> villBuffs_F) {
-			int idx;
-			foreach (var pair in prod.List) {
-				idx = pair.Index;
-				_repos_F[pair.Index].Value += pair.Value * (1f + archBuffs_F[idx].Value + villBuffs_F[idx].Value + _globalProdBuffs_F[idx].Value);
-			}
+			var buff_F = archBuffs_F.Add_New(villBuffs_F, _globalProdBuffs_F).Change((val) => 1f + val);
+			var realProd = prod.Mul_New(buff_F);
+			TickProdImpl(realProd);
 		}
+		/// <summary>
+		/// 建筑每逻辑帧产出资源
+		/// </summary>
+		/// <param name="prod"> 欲产出的资源 </param>
+		/// <param name="archBuffs_F"> 建筑的增加产出buff </param>
 		public void ArchProd(RTList<float> prod, RTList<float> archBuffs_F) {
-			int idx;
-			foreach (var pair in prod.List) {
-				idx = pair.Index;
-				_repos_F[pair.Index].Value += pair.Value * (1f + archBuffs_F[idx].Value + _globalProdBuffs_F[idx].Value);
-			}
+			var buff_F = archBuffs_F.Add_New(_globalProdBuffs_F).Change((val) => 1f + val);
+			var realProd = prod.Mul_New(buff_F);
+			TickProdImpl(realProd);
 		}
 
-
+		/// <summary>
+		/// 添加全局的减少消耗buff
+		/// </summary>
+		/// <param name="repo">资源种类</param>
+		/// <param name="buff">buff值</param>
 		public void AddConsBuff(RepoType repo, float buff) { _globalConsBuffs_F[(int)repo].Value += buff; }
+		/// <summary>
+		/// 添加全局的减少消耗buff
+		/// </summary>
+		/// <param name="rtPair">资源种类和buff值的键值对</param>
 		public void AddConsBuff(RTPair<float> rtPair) { _globalConsBuffs_F[rtPair.Index].Value += rtPair.Value; }
+		/// <summary>
+		/// 添加全局的增加产出buff
+		/// </summary>
+		/// <param name="repo">资源种类</param>
+		/// <param name="buff">buff值</param>
 		public void AddProdBuff(RepoType repo, float buff) { _globalProdBuffs_F[(int)repo].Value += buff; }
+		/// <summary>
+		/// 添加全局的增加产出buff
+		/// </summary>
+		/// <param name="rtPair">资源种类和buff值的键值对</param>
 		public void AddProdBuff(RTPair<float> rtPair) { _globalProdBuffs_F[rtPair.Index].Value += rtPair.Value; }
-		public void UnlockRepo(RepoType repo) { _unlockedRepos_F[(int)repo].Value = true; }
-
+		/// <summary>
+		/// 解锁资源，通过事件中心发布资源解锁事件
+		/// </summary>
+		/// <param name="repo">解锁的资源种类</param>
+		public void UnlockRepo(RepoType repo) { 
+			_unlockedRepos_F[(int)repo].Value = true; 
+			EventSystem.Invoke<RepoType>((int)ModelEvt.UnlockRepo_R_1, repo, EventType.Model);
+		}
+		#endregion
 
 		public RepoMgrSave GetSave() {
-			return new RepoMgrSave() {
-				Repos 			= _repos_F.Clone(),
-				GlobalConsBuffs = _globalConsBuffs_F.Clone(),
-				GlobalProdBuffs = _globalProdBuffs_F.Clone(),
-				UnlockedRepos 	= _unlockedRepos_F.Clone(),
+			var save = new RepoMgrSave {
+				Repos = _repos_F.Clone(),
+				GlobalConsBuffs 		= _globalConsBuffs_F.Clone(),
+				GlobalProdBuffs 		= _globalProdBuffs_F.Clone(),
+				UnlockedRepos 			= _unlockedRepos_F.Clone(),
+				DailyCons 				= _dailyCons_F.Clone(),
+				DailyProd 				= _dailyProd_F.Clone(),
+				LastSecondNet			= _lastSecondNet_F.Clone(),
+				LastSecondTickProduces 	= new()
 			};
+			foreach (var item in _ticksNetInLastSeconds) {
+				save.LastSecondTickProduces.Add(item.Clone());
+			}
+			return save;
 		}
 
 		public void InitFromSave(RepoMgrSave saveData) {
@@ -98,8 +194,15 @@ namespace GameLogic
 			_globalConsBuffs_F 	= saveData.GlobalConsBuffs.ConvertToFull();
 			_globalProdBuffs_F 	= saveData.GlobalProdBuffs.ConvertToFull();
 			_unlockedRepos_F 	= saveData.UnlockedRepos.ConvertToFull();
+			_dailyCons_F 		= saveData.DailyCons.ConvertToFull();
+			_dailyProd_F 		= saveData.DailyProd.ConvertToFull();
+			_lastSecondNet_F	= saveData.LastSecondNet.ConvertToFull();
+			_ticksNetInLastSeconds.Clear();
+			foreach(var item in saveData.LastSecondTickProduces) {
+				_ticksNetInLastSeconds.Enqueue(item);
+			}
 		}
 
-		public void ClearMgr() { }
+		public void ClearMgr() {}
 	}
 }

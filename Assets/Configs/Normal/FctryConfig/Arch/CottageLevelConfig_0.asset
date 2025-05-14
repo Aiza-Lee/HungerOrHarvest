@@ -18,16 +18,20 @@ MonoBehaviour:
   InherentProdVels:
     List:
     - RepoType: 6
-      Value: 0.1
+      Value: 0.001
     Full: 0
   ExtraProdVelsPerOne:
-    List: []
+    List:
+    - RepoType: 6
+      Value: 0.01
     Full: 0
   InherentConsVels:
     List: []
     Full: 0
   ExtraConsVelsPerOne:
-    List: []
+    List:
+    - RepoType: 6
+      Value: 0.002
     Full: 0
   VolumeAdds:
     List: []

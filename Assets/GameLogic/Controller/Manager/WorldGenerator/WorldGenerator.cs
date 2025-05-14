@@ -40,7 +40,7 @@ namespace GameLogic.Controller
 			}
 
 			/* STRARTING_REPO */
-			RepoMgr.Inst.AddRepo(config.StartingRepo);
+			RepoMgr.Inst.AddRepoFromSave(config.StartingRepo);
 
 			/* CREATE_LAYER */
 			for (int i = 0; i < config.PosLayers.Count; ++i) {

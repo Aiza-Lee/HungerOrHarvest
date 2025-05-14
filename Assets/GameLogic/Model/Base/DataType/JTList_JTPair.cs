@@ -38,7 +38,7 @@ namespace GameLogic
 		}
 		public JTList<T> Clone() {
 			var nw = new JTList<T> { Full = this.Full };
-			List.ForEach( (pair) => nw.List.Add(pair) );
+			List.ForEach( (pair) => nw.List.Add(pair.Clone()) );
 			return nw;
 		}
 		public JTPair<T> this[int index] {

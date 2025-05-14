@@ -7,8 +7,8 @@ using UnityEngine;
 namespace GameLogic.View
 {
 	/// <summary>
-	/// <para> 所有的 UI 需要在编辑器中的这个单例处注册，这个类负责开始时触发所有类从而触发 NSFrame 的注册 </para>
-	/// 同时也时统一触发 UI 面板的接口
+	/// <para> 所有的 *单例UI* 需要在编辑器中的这个单例处注册，这个类负责开始时触发所有类从而触发 NSFrame 的注册 </para>
+	/// 同时也时统一触发 *单例UI* 面板的接口
 	/// </summary>
 	public class UIMgr : MonoSingleton<UIMgr> {
 

@@ -13,11 +13,22 @@ namespace GameLogic
 			RepoType = type;
 			Value = value;
 		}
+		public RTPair(RTPair<T> other) {
+			RepoType = other.RepoType;
+			Value = other.Value;
+		}
 	}
 
+	// todo: 由于相当频繁的创建和销毁，考虑使用对象池优化，注意手动回收
 	[Serializable] 
 	public class RTList<T> where T : struct {
 		public List<RTPair<T>> List;
+		/// <summary>
+		/// 将每一个值设为默认值(0)
+		/// </summary>
+		public void Clear() {
+			List.ForEach( (pair) => pair.Value = default );
+		}
 		public int Count => List.Count;
 		[HideInInspector] public bool Full;
 
@@ -27,7 +38,7 @@ namespace GameLogic
 			if (fill) {
 				Full = true;
 				for (int i = 0; i < ConstMgr.REPO_TYPE_SIZE; ++i) 
-					List.Add(new((RepoType)i, new()));
+					List.Add(new((RepoType)i, default));
 			}
 		}
 		public RTList() {
@@ -39,7 +50,7 @@ namespace GameLogic
 			var nw = new RTList<T> {
 				Full = this.Full
 			};
-			List.ForEach( (pair) => nw.List.Add(pair) );
+			List.ForEach( (pair) => nw.List.Add(new(pair)) );
 			return nw;
 		}
 

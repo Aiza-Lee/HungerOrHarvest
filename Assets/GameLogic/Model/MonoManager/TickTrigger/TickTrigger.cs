@@ -16,8 +16,9 @@ namespace GameLogic
 		private float _realTimeSum = 0f;
 		private float RealTickTime => TickTime / _speed;
 
-		public Action BeforeTick;
-		public Action AfterTick;
+		public event Action BeforeTick;
+		public event Action AfterTick;
+		public float TickPerSec => 1f / TickTime;
 
 		private void Start() {
 			Pause = true;

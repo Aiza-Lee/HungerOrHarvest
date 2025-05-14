@@ -1,4 +1,5 @@
 using GameLogic.View;
+using GameLogic.View.UI.PopUpPanels.ScreenEdgePanel;
 using NSFrame;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace GameLogic.Controller
 			// PassNight
 			if (Input.GetKeyDown(KeyCode.F10)) {
 				LogicTimeMgr.Inst.PassNight();
+				UIMgr.Inst.FindPanel<DailyReportPanel>().ClosePanel();
 			}
 		}
 	}

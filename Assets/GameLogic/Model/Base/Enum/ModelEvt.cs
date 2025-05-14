@@ -60,6 +60,12 @@ namespace GameLogic
 		/// 解锁的OL
 		/// </summary>
 		UnlockOL_O_1,
+
+		/// <summary>
+		/// 解锁新类型的资源
+		/// <para> 资源类型: RepoType </para>
+		/// </summary>
+		UnlockRepo_R_1,
 		
 	}
 }
