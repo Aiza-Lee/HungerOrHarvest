@@ -1,4 +1,4 @@
-namespace GameLogic
+namespace GameLogic.Model.Element.Vill
 {
 	public class NormalVillLogic : VillLogicBase {
 		public override VillType VillType => VillType.Normal;

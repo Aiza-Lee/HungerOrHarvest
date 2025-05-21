@@ -1,4 +1,4 @@
-namespace GameLogic
+namespace GameLogic.Model.Element.Vill
 {
 	[System.Serializable]
 	public class NormalVillSave : VillSaveBase {

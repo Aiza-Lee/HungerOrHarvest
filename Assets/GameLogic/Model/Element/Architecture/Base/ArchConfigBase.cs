@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic 
+namespace GameLogic.Model.Element.Arch
 {
 	public abstract class ArchConfigBase : ScriptableObject {
 		[Header("类型")] public ArchType ArchType;

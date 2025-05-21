@@ -20,7 +20,7 @@ namespace GameLogic
 				LogicTimeMgr.Inst,
 				RepoMgr.Inst,
 				RouteMgr.Inst,
-				RoomMgr.Inst,
+				// RoomMgr.Inst,
 				WorldMgr.Inst,
 			};
 			EventSystem.Invoke((int)ModelEvt.MgrInitAfterMonoMgr, NSFrame.EventType.Model);

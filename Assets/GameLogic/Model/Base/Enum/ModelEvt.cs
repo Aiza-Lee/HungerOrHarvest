@@ -50,13 +50,6 @@ namespace GameLogic
 		VillChengeWork_VuAuAu_3,
 
 		/// <summary>
-		/// 房间被分配给了村民
-		/// <para> 村民ID: ulong </para>
-		/// <para> 房间ID: ulong </para>
-		/// </summary>
-		NewRoomDistributed_VuAu_2,
-
-		/// <summary>
 		/// 解锁的OL
 		/// </summary>
 		UnlockOL_O_1,

@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using GameLogic.Model.Element.Arch;
+using GameLogic.Model.Element.Vill;
+using GameLogic.Model.Factory;
 using GameLogic.Utilities;
 using NSFrame;
 using UnityEngine;
@@ -131,7 +134,7 @@ namespace GameLogic
 		}
 
 		public ulong FindWorkForVill(ArchType archType) {
-			var arch = _archs.Find(a => a.ArchType == archType && a.CheckCapacity());
+			var arch = _archs.Find(a => a.ArchType == archType && a.CheckBondVill());
 			return arch == null ? 0 : arch.ID;
 		}
 		public bool FindWorkForVill(int villCnt, ArchType archType) {

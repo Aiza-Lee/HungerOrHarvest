@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Model.Element.Vill
 {
 	[System.Serializable]
 	public class SleepTaskSave : TaskSaveBase {

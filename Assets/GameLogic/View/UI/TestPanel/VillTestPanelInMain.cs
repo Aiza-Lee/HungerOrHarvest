@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using GameLogic.Model.Element.Vill;
 using NSFrame;
 using TMPro;
 using UnityEngine;
@@ -74,7 +75,7 @@ namespace GameLogic.View.Test
 					_sb.Append($"ID: {v.ID}".PadRight(_villFormat[0]));
 					_sb.Append($"{v.Coord}".PadRight(_villFormat[1]));
 					_sb.Append($"Name: {v.LastName + v.FirstName}".PadRight(_villFormat[2]));
-					_sb.Append($"Task: {v.TaskRunner.CurTaskType}".PadRight(_villFormat[3]));
+					_sb.Append($"Task: {v.CurTaskType}".PadRight(_villFormat[3]));
 					_sb.AppendLine();
 					_VillInfoTexts[idx].text = _sb.ToString();
 				} else {

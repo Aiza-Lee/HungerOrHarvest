@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using GameLogic.Model.Element.Arch;
 using NSFrame;
 using TMPro;
 using UnityEngine;
@@ -77,7 +78,7 @@ namespace GameLogic.View.Test
 					_sb.Append($"Type: {arch.ArchType}".PadRight(_archFormat[2]));
 
 					var cnt = 0;
-					foreach (var vill in arch.InVills) {
+					foreach (var vill in arch.InVillIDs) {
 						if (cnt == 0) {
 							_sb.AppendLine().Append("    ");
 							++cnt;

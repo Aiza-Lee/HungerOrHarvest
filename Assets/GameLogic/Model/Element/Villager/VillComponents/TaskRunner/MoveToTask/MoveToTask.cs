@@ -1,17 +1,34 @@
 using System.Collections.Generic;
 
-namespace GameLogic
+namespace GameLogic.Model.Element.Vill
 {
 	public class MoveToTask : TaskBase {
 		public override TaskType TaskType => TaskType.MoveTo;
 
+		/// <summary>
+		/// 目标坐标
+		/// </summary>
 		private Coord _target;
+		/// <summary>
+		/// 进入任务时，计算的路径
+		/// </summary>
 		private List<Coord> _route;
+		/// <summary>
+		/// 当前路径的索引
+		/// </summary>
 		private int _idx;
+		/// <summary>
+		/// 计时器，用于控制移动速度，判定当前逻辑帧是否可以移动
+		/// </summary>
 		private int _timer;
+		/// <summary>
+		/// 移动目标的类型
+		/// </summary>
+		private MoveToTargetType _targetType;
+		public MoveToTargetType TargetType => _targetType;
 
-		public override void End() { }
-		public override void Enter() {
+		public override void TaskEnd() { }
+		public override void TaskEnter() {
 			if (AttachedVill.Coord != _target) {
 				_idx = 0;
 				_timer = 0;
@@ -21,7 +38,7 @@ namespace GameLogic
 			}
 		}
 
-		public override void Execute() {
+		public override void TaskExecute() {
 			if (IsEnded) { return; }
 			++_timer;
 			if (_timer >= ConstMgr.Inst.Config.VILL_ONE_MOVE_TICK) {
@@ -32,7 +49,7 @@ namespace GameLogic
 				++_idx;
 				if (_idx >= _route.Count) {
 					IsEnded = true;
-					End();
+					TaskEnd();
 				}
 			}
 		}
@@ -42,18 +59,20 @@ namespace GameLogic
 
 		protected override TaskSaveBase GetSave_Derived() {
 			return new MoveToTaskSave() {
-				Target = _target,
-				Route = new(_route),
-				Timer = _timer,
-				Idx = _idx,
+				Target 		= _target,
+				Route 		= new(_route),
+				Timer 		= _timer,
+				Idx 		= _idx,
+				TargetType 	= _targetType
 			};
 		}
 		protected override void InitFromSave_Derived(TaskSaveBase save) {
 			var sv = save as MoveToTaskSave;
-			_target = sv.Target;
-			_route = sv.Route;
-			_timer = sv.Timer;
-			_idx = sv.Idx;
+			_target 	= sv.Target;
+			_route 		= sv.Route;
+			_timer 		= sv.Timer;
+			_idx 		= sv.Idx;
+			_targetType = sv.TargetType;
 		}
 
 	}

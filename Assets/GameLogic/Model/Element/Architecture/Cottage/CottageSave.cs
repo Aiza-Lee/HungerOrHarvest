@@ -1,6 +1,6 @@
 using System;
 
-namespace GameLogic
+namespace GameLogic.Model.Element.Arch
 {
 	[Serializable]
 	public class CottageSave : ArchSaveBase {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameLogic.Model.Element.Arch;
 using NSFrame;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		#region Injection
 		public void InjectInfo(ArchLogicBase arch) {
 			_groupType = GroupType.Arch;
-			GenerateVillCards(arch.BondedVills);
+			GenerateVillCards(arch.BondedVillIDs);
 		}
 		public void InjectInfo(GroupType groupType) {
 			_groupType = groupType;

@@ -1,15 +1,15 @@
 using NSFrame;
 
-namespace GameLogic
+namespace GameLogic.Model.Element.Vill
 {
 	public abstract class TaskBase : ISaveable<TaskSaveBase>, IPooledObject {
 		public bool IsEnded { get; protected set; }
 		public VillLogicBase AttachedVill { get; private set; }
 
 		public abstract TaskType TaskType { get; }
-		public abstract void Enter();
-		public abstract void Execute();
-		public abstract void End();
+		public abstract void TaskEnter();
+		public abstract void TaskExecute();
+		public abstract void TaskEnd();
 
 		public void SetVill(VillLogicBase vill) {
 			AttachedVill = vill;

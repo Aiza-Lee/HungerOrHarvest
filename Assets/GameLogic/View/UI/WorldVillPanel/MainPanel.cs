@@ -73,7 +73,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 					foreach (var vc in tmpVillIDs) {
 						vc.BelongedGroup.RemoveEle(vc);
 						vc.TransferTo(tag.RectTrans, (vc) => vc.Clear());
-						CmdRunner.Run($"/vill-work {vc.AttachedVillID} {WorldMgr.Inst.FindWorkForVill(archType)}");
+						CmdRunner.Run($"/vill-bond-arch {vc.AttachedVillID} {WorldMgr.Inst.FindWorkForVill(archType)}");
 					}
 
 				} else if (groupType == GroupType.Workless) {
@@ -81,7 +81,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 					foreach (var vc in tmpVillIDs) {
 						vc.BelongedGroup.RemoveEle(vc);
 						vc.TransferTo(tag.RectTrans, (vc) => vc.Clear());
-						CmdRunner.Run($"/vill-spare {vc.AttachedVillID}");
+						CmdRunner.Run($"/vill-disbond-workarch {vc.AttachedVillID}");
 					}
 				}
 			} else {

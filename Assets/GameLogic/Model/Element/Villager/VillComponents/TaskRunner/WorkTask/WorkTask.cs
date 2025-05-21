@@ -1,4 +1,6 @@
-namespace GameLogic
+using GameLogic.Model.Element.Arch;
+
+namespace GameLogic.Model.Element.Vill
 {
 	public class WorkTask : TaskBase {
 		public override TaskType TaskType => TaskType.Work;
@@ -10,25 +12,26 @@ namespace GameLogic
 			set => _workArch = value;
 		}
 
-		public override void End() {
+		public override void TaskEnd() {
 			WorkArch.VillLeave(AttachedVill.ID);
 		}
-		public override void Enter() {
+		public override void TaskEnter() {
 			WorkArch.VillArrive(AttachedVill.ID);
 		}
-		public override void Execute() {
+		public override void TaskExecute() {
+			// 通知资源中心产出资源
 			if (RepoMgr.Inst.TryVillCons(
-					WorkArch.Lconfig.ExtraConsVelsPerOne, 
-					WorkArch.ConsBuffs_F, 
+					WorkArch.Lconfig.ExtraConsVelsPerOne,
+					WorkArch.ConsBuffs_F,
 					AttachedVill.ConsBuffs_F
 				)) {
-					RepoMgr.Inst.VillProd(
-						WorkArch.Lconfig.ExtraProdVelsPerOne, 
-						WorkArch.ProdBuffs_F, 
-						AttachedVill.ProdBuffs_F
-					);
-					AttachedVill.AddExp(WorkArch.Lconfig.ExpAdds);
-				}
+				RepoMgr.Inst.VillProd(
+					WorkArch.Lconfig.ExtraProdVelsPerOne,
+					WorkArch.ProdBuffs_F,
+					AttachedVill.ProdBuffs_F
+				);
+				AttachedVill.AddExp(WorkArch.Lconfig.ExpAdds);
+			}
 		}
 
 		protected override void InitAfterPop_Derived() {}

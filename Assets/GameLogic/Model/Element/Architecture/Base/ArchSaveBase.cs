@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic {
+namespace GameLogic.Model.Element.Arch
+{
 	[System.Serializable]
 	public abstract class ArchSaveBase {
 		public ArchType ArchType;

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using GameLogic.Model.Element.Arch;
+using GameLogic.Model.Element.Vill;
 using UnityEngine;
 
 namespace GameLogic.Controller
@@ -6,12 +8,12 @@ namespace GameLogic.Controller
 	/// <summary>
 	/// Args: ulong, ulong
 	/// </summary>
-	public class SetVillWorkCmd : CommandBase {
+	public class VillBondArchCmd : CommandBase {
 		private readonly VillLogicBase _vill;
 		private readonly ArchLogicBase _arch;
 		private string _failReason;
 
-		public SetVillWorkCmd(List<string> args) : base(args) {
+		public VillBondArchCmd(List<string> args) : base(args) {
 			if (args.Count != ArgCount) { return; }
 			if (!ParamConverter.TryDefaultConvert<ulong>(args[0], out var vID)) {
 				Debug.Log($"<<{CmdTitle}>> 参数VillID错误: 无法解析参数{args[0]}");
@@ -25,8 +27,8 @@ namespace GameLogic.Controller
 			}
 		}
 
-		public override string CmdTitle => "设置村民Work";
-		public override string Description => $"村民ID:{_vill.ID}  新状态:Work  分配至  建筑ID:{_arch.ID}  建筑类型:{_arch.ArchType}";
+		public override string CmdTitle => "村民和建筑绑定";
+		public override string Description => $"村民ID:{_vill.ID} 绑定 建筑ID:{_arch.ID}  建筑类型:{_arch.ArchType}";
 		public override string FailReason => _failReason;
 		public override int ArgCount => 2;
 
@@ -40,7 +42,7 @@ namespace GameLogic.Controller
 				_failReason = "建筑不存在";
 				return false;
 			}
-			if (_arch.TryBondVill(_vill.ID)) {
+			if (_arch.CheckBondVill()) {
 				return true;
 			}
 			_failReason = "建筑已满";
@@ -48,7 +50,7 @@ namespace GameLogic.Controller
 		}
 
 		public override void Execute() {
-			_vill.GoWork(_arch.ID);
+			_vill.BondArch(_arch);
 		}
 
 	}

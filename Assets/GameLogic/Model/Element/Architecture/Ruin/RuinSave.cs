@@ -1,4 +1,4 @@
-namespace GameLogic
+namespace GameLogic.Model.Element.Arch
 {
 	[System.Serializable]
 	public class RuinSave : ArchSaveBase {

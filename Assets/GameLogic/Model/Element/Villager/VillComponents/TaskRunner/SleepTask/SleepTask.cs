@@ -1,4 +1,6 @@
-namespace GameLogic
+using GameLogic.Model.Element.Arch;
+
+namespace GameLogic.Model.Element.Vill
 {
 	public class SleepTask : TaskBase {
 		public override TaskType TaskType => TaskType.Sleep;
@@ -10,15 +12,15 @@ namespace GameLogic
 			set => _cottage = value;
 		}
 
-		public override void End() {
+		public override void TaskEnd() {
 			Cottage.VillLeave(AttachedVill.ID);
 		}
 
-		public override void Enter() {
+		public override void TaskEnter() {
 			Cottage.VillArrive(AttachedVill.ID);
 		}
 
-		public override void Execute() {}
+		public override void TaskExecute() {}
 
 		protected override void CleanBeforePush_Derived() { Cottage = null; }
 		protected override void InitAfterPop_Derived() { }

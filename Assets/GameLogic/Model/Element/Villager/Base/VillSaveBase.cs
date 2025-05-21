@@ -1,18 +1,16 @@
+using GameLogic.Model.Element.Vill;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Model.Element.Vill
 {
 	[System.Serializable]
 	public abstract class VillSaveBase {
 		[HideInInspector] public ulong ID;
 		public VillType VillType;
 		public string FirstName, LastName;
-		public JTList<int> JobLevel;
-		public JTList<float> JobExps;
-		public RTList<float> ConsBuffs;
-		public RTList<float> ProdBuffs;
 		[HideInInspector] public Coord Coord;
-		[HideInInspector] public VillTaskRunnerSave TaskRunner;
+		[HideInInspector] public TaskRunnerSave TaskRunner;
+		[HideInInspector] public ExpHelperSave ExpHelper;
 		[HideInInspector] public ulong HomeID;
 		[HideInInspector] public ulong AttachedWorkArchID;
 		
@@ -24,12 +22,9 @@ namespace GameLogic
 				save.VillType 		= VillType;
 				save.FirstName 		= FirstName;
 				save.LastName 		= LastName;
-				save.JobLevel 		= JobLevel.Clone();
-				save.JobExps 		= JobExps.Clone();
-				save.ConsBuffs 		= ConsBuffs.Clone();
-				save.ProdBuffs 		= ProdBuffs.Clone();
 				save.Coord 			= Coord;
 				save.TaskRunner 	= TaskRunner.Clone();
+				save.ExpHelper 		= ExpHelper.Clone();
 				save.HomeID 		= HomeID;
 				save.AttachedWorkArchID = AttachedWorkArchID;
 			return save;

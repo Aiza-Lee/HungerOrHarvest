@@ -1,7 +1,12 @@
+using GameLogic.Model.Element.Arch;
+using GameLogic.Model.Element.Vill;
 using NSFrame;
 
-namespace GameLogic 
+namespace GameLogic.Model.Factory
 {
+	/// <summary>
+	/// 逻辑层工厂，用于创建逻辑层对象。包括 村民，村民任务，村民任务执行器，建筑，层 等对象
+	/// </summary>
 	public class LogicFctry : MonoSingleton<LogicFctry> {
 
 		protected override void Awake() {
@@ -14,6 +19,7 @@ namespace GameLogic
 		public LogicFctryConfig Config;
 
 		#region Vill
+		
 		/// <summary>
 		/// 根据保存数据创建一个新的Vill，并初始化为保存数据的值
 		/// </summary>
@@ -21,7 +27,7 @@ namespace GameLogic
 			var vill = NewEmptyVill(save.VillType);
 			vill.InitFromSave(save);
 
-			EventSystem.Invoke<VillLogicBase>((int)ModelEvt.VillAdded_V_1, vill, NSFrame.EventType.Model);
+			EventSystem.Invoke<VillLogicBase>((int) ModelEvt.VillAdded_V_1, vill, NSFrame.EventType.Model);
 
 			return vill;
 		}
@@ -30,8 +36,8 @@ namespace GameLogic
 		/// </summary>
 		public VillLogicBase NewVill(VillType type, OL ol) {
 			var save = Config.GetDefaultVillSave(type).Clone();
-				save.ID = IDMgr.Inst.GetID();
-				save.Coord = ol.ToCoord();
+			save.ID = IDMgr.Inst.GetID();
+			save.Coord = ol.ToCoord();
 			return LoadVill(save);
 		}
 
@@ -44,17 +50,24 @@ namespace GameLogic
 		#endregion
 
 		#region VillTaskRunner
-
-		public VillTaskRunner LoadVillTaskRunner(VillLogicBase vill, VillTaskRunnerSave save) {
-			var runner = new VillTaskRunner(vill);
-			runner.InitFromSave(save);
+		public TaskRunner LoadVillTaskRunner(VillLogicBase vill, TaskRunnerSave save) {
+			var runner = new TaskRunner(vill);
+				runner.InitFromSave(save);
 			return runner;
 		}
-
-		public VillTaskRunner NewVillTaskRunner(VillLogicBase vill) {
+		public TaskRunner NewVillTaskRunner(VillLogicBase vill) {
 			return LoadVillTaskRunner(vill, Config.DefaultVillTaskRunnerSave.Clone());
 		}
-
+		#endregion
+		#region VillExpHelper
+		public ExpHelper LoadVillExpHelper(VillLogicBase vill, ExpHelperSave save) {
+			var helper = new ExpHelper(vill);
+				helper.InitFromSave(save);
+			return helper;
+		}
+		public ExpHelper NewVillExpHelper(VillLogicBase vill) {
+			return LoadVillExpHelper(vill, Config.DefaultVillExpHelperSave.Clone());
+		}
 		#endregion
 
 		#region Task
@@ -65,9 +78,11 @@ namespace GameLogic
 			return task;
 		}
 
-		public MoveToTask NewMoveToTask(Coord target) {
+		public MoveToTask NewMoveToTask(Coord target, MoveToTargetType targetType) {
 			var save = Config.DefaultMoveToTaskSave.Clone() as MoveToTaskSave;
 				save.Target = target;
+				save.TargetType = targetType;
+
 			var task = PoolSystem.PopObj<MoveToTask>();
 			task.InitFromSave(save);
 			return task;
@@ -75,6 +90,7 @@ namespace GameLogic
 		public SleepTask NewSleepTask(ulong homeID) {
 			var save = Config.DefaultSleepTaskSave.Clone() as SleepTaskSave;
 				save.HomeID = homeID;
+			
 			var task = PoolSystem.PopObj<SleepTask>();
 			task.InitFromSave(save);
 			return task;
@@ -82,6 +98,7 @@ namespace GameLogic
 		public WorkTask NewWorkTask(ulong archID) {
 			var save = Config.DefaultWorkTaskSave.Clone() as WorkTaskSave;
 				save.WorkArchId = archID;
+
 			var task = PoolSystem.PopObj<WorkTask>();
 			task.InitFromSave(save);
 			return task;
@@ -96,7 +113,6 @@ namespace GameLogic
 			};
 		}
 
-
 		#endregion
 
 
@@ -108,7 +124,7 @@ namespace GameLogic
 			var arch = NewEmptyArch(save.ArchType);
 			arch.InitFromSave(save.Clone());
 
-			EventSystem.Invoke<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, arch, NSFrame.EventType.Model);
+			EventSystem.Invoke<ArchLogicBase>((int) ModelEvt.ArchAdded_A_1, arch, NSFrame.EventType.Model);
 
 			return arch;
 		}
@@ -123,8 +139,8 @@ namespace GameLogic
 			save.OL = ol;
 
 			arch.InitFromSave(save);
-			
-			EventSystem.Invoke<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, arch, NSFrame.EventType.Model);
+
+			EventSystem.Invoke<ArchLogicBase>((int) ModelEvt.ArchAdded_A_1, arch, NSFrame.EventType.Model);
 
 			return arch;
 		}
@@ -149,7 +165,7 @@ namespace GameLogic
 				_ => throw new System.NotImplementedException(),
 			};
 		}
-		#endregion 
+		#endregion
 
 
 
@@ -161,7 +177,7 @@ namespace GameLogic
 			var layer = NewEmptyLayer(save.LayerType);
 			layer.InitFromSave(save.Clone());
 
-			EventSystem.Invoke<LayerLogicBase>((int)ModelEvt.LayerAdded_L_1, layer, NSFrame.EventType.Model);
+			EventSystem.Invoke<LayerLogicBase>((int) ModelEvt.LayerAdded_L_1, layer, NSFrame.EventType.Model);
 
 			return layer;
 		}
@@ -175,7 +191,7 @@ namespace GameLogic
 			save.LYR = lyr;
 			layer.InitFromSave(save);
 
-			EventSystem.Invoke<LayerLogicBase>((int)ModelEvt.LayerAdded_L_1, layer, NSFrame.EventType.Model);
+			EventSystem.Invoke<LayerLogicBase>((int) ModelEvt.LayerAdded_L_1, layer, NSFrame.EventType.Model);
 
 			return layer;
 		}

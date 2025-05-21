@@ -1,4 +1,4 @@
-namespace GameLogic
+namespace GameLogic.Model.Element.Arch
 {
 	public class RuinLogic : ArchLogicBase {
 		public override ArchType ArchType => ArchType.Ruin;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Model.Element.Arch
 {
 	public abstract class ArchLevelConfigBase : ScriptableObject {
 		[Header("等级")] public int Level;

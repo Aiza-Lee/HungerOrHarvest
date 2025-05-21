@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameLogic.Model.Factory;
 using UnityEngine;
 
 namespace GameLogic.Controller

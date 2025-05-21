@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Model.Element.Vill
 {
 	[System.Serializable]
-	public class VillTaskRunnerSave {
+	public class TaskRunnerSave {
 		[HideInInspector][SerializeReference] public List<TaskSaveBase> Tasks = new();
-		public VillTaskRunnerSave Clone() {
-			return new VillTaskRunnerSave() {
+		public TaskRunnerSave Clone() {
+			return new TaskRunnerSave() {
 				Tasks = new(Tasks),
 			};
 		}

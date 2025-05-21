@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using GameLogic.Model.Element.Vill;
+using GameLogic.Model.Element.Arch;
 
 namespace GameLogic
 {

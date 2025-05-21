@@ -1,29 +1,36 @@
 using System.Collections.Generic;
+using GameLogic.Model.Element.Arch;
+using GameLogic.Model.Factory;
 using NSFrame;
 
-namespace GameLogic
+namespace GameLogic.Model.Element.Vill
 {
-	public class VillTaskRunner : ISaveable<VillTaskRunnerSave> {
+	public class TaskRunner : ISaveable<TaskRunnerSave> {
 
-		public VillTaskRunner(VillLogicBase vill) {
-			AttachedVill = vill;
-			EventSystem.AddListener((int)ModelEvt.Tick_0, Execute, NSFrame.EventType.Model);
+		private readonly VillLogicBase _vill;
+
+		public TaskRunner(VillLogicBase vill) {
+			_vill = vill;
+			EventSystem.AddListener((int) ModelEvt.Tick_0, Execute, EventType.Model);
 		}
+		/// <summary>
+		/// 等待执行的 Task 队列
+		/// </summary>
 		private readonly Queue<TaskBase> _tasks = new();
+		/// <summary>
+		/// 当前正在执行的 Task
+		/// </summary>
 		private TaskBase _curTask;
 
-		public VillLogicBase AttachedVill { get; private set; }
 		public TaskType CurTaskType => _curTask?.TaskType ?? TaskType.None;
-
-		// private void SetMoveToRandomTask() {
-		// 	Coord target;
-		// 	do {
-		// 		// 如果没有任务，则随机一个空闲的村民位置作为目标位置
-		// 		target = RouteMgr.Inst.GetRandomVillSpareCoord();
-		// 	} while (target == AttachedVill.Coord);
-		// 	_curTask = LogicFctry.Inst.NewMoveToTask(target);
-		// 	_curTask.SetVill(AttachedVill);
-		// }
+		public MoveToTargetType? CurMoveToTargetType {
+			get {
+				if (_curTask is MoveToTask moveToTask) {
+					return moveToTask.TargetType;
+				}
+				return null;
+			}
+		}
 
 		private void Execute() {
 
@@ -38,29 +45,27 @@ namespace GameLogic
 					do {
 						// 如果没有任务，则随机一个空闲的村民位置作为目标位置
 						target = RouteMgr.Inst.GetRandomVillSpareCoord();
-					} while (target == AttachedVill.Coord);
-					_curTask = LogicFctry.Inst.NewMoveToTask(target);
-					_curTask.SetVill(AttachedVill);
+					} while (target == _vill.Coord);
+					_curTask = LogicFctry.Inst.NewMoveToTask(target, MoveToTargetType.Spare);
+					_curTask.SetVill(_vill);
 				}
-				_curTask.Enter();
+				_curTask.TaskEnter();
 			}
 
-			_curTask.Execute();
+			_curTask.TaskExecute();
 		}
 
 
 		#region PublicMethods
 		public void Destroy() {
-			EventSystem.RemoveListener((int)ModelEvt.Tick_0, Execute, NSFrame.EventType.Model);
-			AttachedVill = null;
-			_curTask = null;
+			EventSystem.RemoveListener((int)ModelEvt.Tick_0, Execute, EventType.Model);
 		}
 
 		/// <summary>
 		/// 在当前任务列表后追加一个任务
 		/// </summary>
 		public void AppendTask(TaskBase task) {
-			task.SetVill(AttachedVill);
+			task.SetVill(_vill);
 			_tasks.Enqueue(task);
 		}
 
@@ -73,7 +78,7 @@ namespace GameLogic
 			if (_curTask != null) {
 				var tmpTask = _curTask;
 				_curTask = null;
-				tmpTask?.End();
+				tmpTask?.TaskEnd();
 				PoolSystem.PushObj(tmpTask.GetType(), tmpTask);
 			}
 
@@ -82,11 +87,32 @@ namespace GameLogic
 
 			for (int i = 0; i < task.Length; i++) { AppendTask(task[i]); }
 		}
+
+		public bool SetGoWorkTasks(ArchLogicBase arch) {
+			if (arch == null) { return false; }
+			if (arch.ArchType == ArchType.Cottage) { return false; }
+			ResetTasks(
+				LogicFctry.Inst.NewMoveToTask(arch.Coord, MoveToTargetType.WorkArch),
+				LogicFctry.Inst.NewWorkTask(arch.ID)
+			);
+			return true;
+		}
+		public bool SetGoSleepTasks(ulong homeID) {
+			if (_vill.IsHomeless) { return false; }
+			var cottage = WorldMgr.Inst.FindArch(homeID);
+			if (!cottage.HasBondedVill(_vill.ID)) { return false; }
+			ResetTasks(
+				LogicFctry.Inst.NewMoveToTask(cottage.Coord, MoveToTargetType.HomeSleep),
+				LogicFctry.Inst.NewSleepTask(homeID)
+			);
+			return true;
+		}
+
 		#endregion
 
 		#region ISaveable
-		public VillTaskRunnerSave GetSave() {
-			var save = new VillTaskRunnerSave() {
+		public TaskRunnerSave GetSave() {
+			var save = new TaskRunnerSave() {
 				Tasks = new(),
 			};
 			save.Tasks.Add(_curTask?.GetSave());
@@ -95,7 +121,7 @@ namespace GameLogic
 			}
 			return save;
 		}
-		public void InitFromSave(VillTaskRunnerSave save) {
+		public void InitFromSave(TaskRunnerSave save) {
 			_tasks.Clear();
 			try {
 				foreach (var taskSave in save.Tasks) {
@@ -104,7 +130,6 @@ namespace GameLogic
 			} catch {
 				// 如果加载失败，多半是因为没有存任何任务，所以直接清空任务列表即可
 			}
-
 		}
 		#endregion
 	}

@@ -60,7 +60,7 @@ namespace NSFrame {
 			// UpdateCache(saveInfo, typeof(SaveInfo).Name, saveInfo);
 			return saveInfo;
 		}
-		public static void DeletSaveFile(SaveInfo saveInfo) {
+		public static void DeleteSaveFile(SaveInfo saveInfo) {
 			for (int i = 0; i < _saveInfoList.Count; ++i) if (_saveInfoList[i] == saveInfo) {
 				_saveInfoList.RemoveAt(i);
 				break;

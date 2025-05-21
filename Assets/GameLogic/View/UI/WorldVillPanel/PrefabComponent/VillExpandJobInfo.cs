@@ -1,4 +1,5 @@
 using System;
+using GameLogic.Model.Element.Vill;
 using NSFrame;
 using TMPro;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 
 		void Update() {
 			_lvNumber.text = (_villLogic.GetJobLevel(_jobType) /* + 1*/ ).ToString();
-			_expBarInner.offsetMax = new(-(1f - _villLogic.GetJobProcess(_jobType)) * ExpBarWidth, 0);
+			_expBarInner.offsetMax = new(-(1f - _villLogic.GetJobExpProportion(_jobType)) * ExpBarWidth, 0);
 			// todo: buff debuff
 		}
 

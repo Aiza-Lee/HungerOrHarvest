@@ -1,7 +1,12 @@
+using GameLogic.Model.Element.Arch;
+using GameLogic.Model.Element.Vill;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Model.Factory
 {
+	/// <summary>
+	/// 逻辑层工厂配置，用于配置逻辑层工厂创建实例的默认值
+	/// </summary>
 	[CreateAssetMenu(fileName = "LogicFctryConfig", menuName = "HungerOrHarvest/Config/Fctry/Logic Fctry")]
 	public class LogicFctryConfig : ScriptableObject {
 
@@ -11,21 +16,16 @@ namespace GameLogic
 
 
 		[Space][Space][Space] [Header("Default Vill Task Runner Save")] 
-		[Space] public VillTaskRunnerSave DefaultVillTaskRunnerSave;
-
+		[Space] public TaskRunnerSave DefaultVillTaskRunnerSave;
+		
+		[Space][Space][Space] [Header("Default Vill Exp Helper Save")]
+		[Space] public ExpHelperSave DefaultVillExpHelperSave;
+		
 
 		[Space][Space][Space] [Header("Default Sta Save")]
 		[Space] public MoveToTaskSave DefaultMoveToTaskSave;
 		[Space] public SleepTaskSave DefaultSleepTaskSave;
 		[Space] public WorkTaskSave DefaultWorkTaskSave;
-
-
-
-		// [Space][Space][Space] [Header("Default Sta Save")]
-		// [Space] public SpareStaSave DefaultSpareSta;
-		// [Space] public SleepStaSave DefaultSleepSta;
-		// [Space] public WorkStaSave DefaultWorkSta;
-
 
 
 		[Space][Space][Space] [Header("Default Vill Save")]

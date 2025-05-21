@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace GameLogic
+namespace GameLogic.Model.Element.Arch
 {
 	public class CottageLogic : ArchLogicBase {
 		public override ArchType ArchType => ArchType.Cottage;
