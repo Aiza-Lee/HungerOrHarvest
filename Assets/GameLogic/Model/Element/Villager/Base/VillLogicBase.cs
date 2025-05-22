@@ -28,10 +28,10 @@ namespace GameLogic.Model.Element.Vill
 		public bool IsHomeless => _homeID == 0;
 		public bool IsWorkless => _bondedWorkArchID == 0;
 
-		private void Destroy() {
+		private void DestroyImpl() {
 			_taskRunner.Destroy();
-			DisBondArchImpl(WorldMgr.Inst.FindArch(_bondedWorkArchID));
-			DisBondArchImpl(WorldMgr.Inst.FindArch(_homeID));
+			if (_bondedWorkArchID != 0) DisBondArchImpl(WorldMgr.Inst.FindArch(_bondedWorkArchID));
+			if (_homeID != 0) DisBondArchImpl(WorldMgr.Inst.FindArch(_homeID));
 			EventSystem.RemoveListener((int)ModelEvt.DayStart_0, OnDayStart, NSFrame.EventType.Model);
 			EventSystem.RemoveListener((int)ModelEvt.NightStart_0, OnNightStart, NSFrame.EventType.Model);
 			EventSystem.Invoke((int)ModelEvt.VillDestroyed_V_1, this, NSFrame.EventType.Model);
@@ -54,7 +54,7 @@ namespace GameLogic.Model.Element.Vill
 		/// </summary>
 		private void LeaveWorldImpl() {
 			// todo:
-			Destroy();
+			DestroyImpl();
 		}
 		private void OnNightStart() {
 			if (!_taskRunner.SetGoSleepTasks(_homeID)) { LeaveWorldImpl(); }
@@ -94,7 +94,12 @@ namespace GameLogic.Model.Element.Vill
 		#region PublicMethods
 
 		/// <summary>
-		/// 绑定到建筑
+		/// 销毁村民
+		/// </summary>
+		public void Destroy() => DestroyImpl();
+
+		/// <summary>
+		/// 绑定到建筑，绑定home和工作建筑都调用这个方法
 		/// </summary>
 		public void BondArch(ArchLogicBase arch) {
 			if (arch is CottageLogic) {

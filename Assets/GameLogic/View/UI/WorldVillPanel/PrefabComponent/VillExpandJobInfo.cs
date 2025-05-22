@@ -51,7 +51,9 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public GroupLayoutBase BelongedGroup { get; set; }
 		public float EleSize => Height;
 		public RectTransform RectTrans => _rectTrans;
+		#pragma warning disable 67
 		public event Action OnDirty;
+		#pragma warning restore 67
 		public void OnAddedToGroup() {
 			_rectTrans.offsetMin = new(0, 0);
 			_rectTrans.offsetMax = new(0, Height);

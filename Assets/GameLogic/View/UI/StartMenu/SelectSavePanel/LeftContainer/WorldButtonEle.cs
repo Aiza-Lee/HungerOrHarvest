@@ -28,7 +28,9 @@ namespace GameLogic.View.UI.StartMenu.SelectSavePanel
 		public GroupLayoutBase BelongedGroup { get; set;}
 		public float EleSize => _eleSize;
 		public RectTransform RectTrans => _rectTrans;
+		#pragma warning disable 67
 		public event Action OnDirty;
+		#pragma warning restore 67
 		public void SetPos(float y) {
 			_rectTrans.offsetMax = new(0, -y);
 			_rectTrans.offsetMin = new(0, -y - _eleSize);

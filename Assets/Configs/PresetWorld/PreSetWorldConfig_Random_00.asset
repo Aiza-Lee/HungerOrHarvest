@@ -44,6 +44,10 @@ MonoBehaviour:
     Value:
       ODR: 1
       LYR: 1
+  - Key: 16
+    Value:
+      ODR: 1
+      LYR: -1
   Vill_OL:
   - Key: 1
     Value:

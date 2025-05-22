@@ -178,11 +178,10 @@ namespace GameLogic
 		#endregion
 
 		public void ClearMgr() {
-			_vills.Clear();
-			_archs.Clear();
+			// arch 和 vill 的 destroy 会自动（WorldMgr通过事件中心监听了销毁事件）从 _archs 和 _vills 中移除
+			while (_archs.Count > 0) _archs[0].Destroy();
+			while (_vills.Count > 0) _vills[0].Destroy();
 			_layers.Clear();
-			_villDict.Clear();
-			_archsDict.Clear();
 			_olRange.Clear();
 		}
 	}

@@ -29,7 +29,9 @@ namespace GameLogic.View.UI.WorldRepoPanel
 		public GroupLayoutBase BelongedGroup { get; set; }
 		public float EleSize => 100;
 		public RectTransform RectTrans => _rectTrans;
+		#pragma warning disable 67
 		public event Action OnDirty;
+		#pragma warning restore 67
 		public void OnAddedToGroup() {
 			_rectTrans.offsetMin = new(0, 0);
 			_rectTrans.offsetMax = new(0, 0);
