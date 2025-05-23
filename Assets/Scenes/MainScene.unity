@@ -1033,7 +1033,7 @@ GameObject:
   - component: {fileID: 160456996}
   - component: {fileID: 160456997}
   m_Layer: 0
-  m_Name: View Const
+  m_Name: View Const Mgr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6860,7 +6860,7 @@ GameObject:
   - component: {fileID: 1166255945}
   - component: {fileID: 1166255946}
   m_Layer: 0
-  m_Name: Logic Const
+  m_Name: Model Const Mgr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6893,7 +6893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e59293818fe88418da423d5a7a7ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Config: {fileID: 11400000, guid: 2c914748929a99f42bd5b646c9e7599a, type: 2}
+  _config: {fileID: 11400000, guid: 2c914748929a99f42bd5b646c9e7599a, type: 2}
 --- !u!1 &1171510135
 GameObject:
   m_ObjectHideFlags: 0
@@ -11473,7 +11473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultConfig: {fileID: 11400000, guid: c5e795b23fa6bec4591d24cba6d71f8d, type: 2}
   _randomConfigs:
-  - {fileID: 11400000, guid: 82fc389a1a173bf4e8681bdd4ef78c09, type: 2}
+  - {fileID: 11400000, guid: f58fc7bed5a15d1478769c0097debec9, type: 2}
 --- !u!1001 &8439976758278198782
 PrefabInstance:
   m_ObjectHideFlags: 0

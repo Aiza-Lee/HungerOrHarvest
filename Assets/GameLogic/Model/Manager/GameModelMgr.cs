@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using NSFrame;
 
-namespace GameLogic
+namespace GameLogic.Model.Mgr
 {
 	/// <summary>
-	/// 游戏从始至末的管理
+	/// 游戏从始至末的管理，兼为其他Mgr的Mgr
 	/// </summary>
 	public class GameModelMgr : MonoSingleton<GameModelMgr> {
 

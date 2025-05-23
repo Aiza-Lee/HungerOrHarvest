@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,9 +6,9 @@ namespace GameLogic.View
 {
 	[CreateAssetMenu(fileName = "PrefabFctryConfig", menuName = "HungerOrHarvest/Config/View/PrefabFctryConfig")]
 	public class PrefabFctryConfig : ScriptableObject {
-		public List<Pair<VillType, GameObject>> VillPrefabs;
-		public List<Pair<ArchType, GameObject>> ArchPrefabs;
-		public List<Pair<LayerType, GameObject>> LayerPrefabs;
+		[SerializeField] private List<Pair<string, GameObject>> VillPrefabs;
+		[SerializeField] private List<Pair<string, GameObject>> ArchPrefabs;
+		[SerializeField] private List<Pair<string, GameObject>> LayerPrefabs;
 
 		private readonly Dictionary<ArchType, GameObject> _archs = new();
 		private readonly Dictionary<LayerType, GameObject> _layers = new();
@@ -15,21 +16,15 @@ namespace GameLogic.View
 
 		public void InitDict() {
 			_archs.Clear();
-			ArchPrefabs.ForEach( (pair) => _archs.Add(pair.Key, pair.Value) );
+			ArchPrefabs.ForEach( (pair) => _archs.Add(Enum.Parse<ArchType>(pair.Key), pair.Value) );
 			_layers.Clear();
-			LayerPrefabs.ForEach( (pair) => _layers.Add(pair.Key, pair.Value) );
+			LayerPrefabs.ForEach( (pair) => _layers.Add(Enum.Parse<LayerType>(pair.Key), pair.Value) );
 			_vills.Clear();
-			VillPrefabs.ForEach( (pair) => _vills.Add(pair.Key, pair.Value) );
+			VillPrefabs.ForEach( (pair) => _vills.Add(Enum.Parse<VillType>(pair.Key), pair.Value) );
 		}
 
-		public GameObject GetArchPrefab(ArchType type) {
-			return _archs[type];
-		}
-		public GameObject GetVillPrefab(VillType type) {
-			return _vills[type];
-		}
-		public GameObject GetLayerPrefab(LayerType type) {
-			return _layers[type];
-		}
+		public GameObject GetArchPrefab(ArchType type) => _archs[type];
+		public GameObject GetVillPrefab(VillType type) => _vills[type];
+		public GameObject GetLayerPrefab(LayerType type) => _layers[type];
 	}
 }

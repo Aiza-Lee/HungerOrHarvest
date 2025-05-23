@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ceca0b985aec64f98d04b93bcbc5cb, type: 3}
+  m_Name: LogicFctryConfig
+  m_EditorClassIdentifier: 
+  DefaultVillTaskRunnerSave:
+    Tasks: []
+  DefaultVillExpHelperSave:
+    JobLevel:
+      List: []
+      Full: 0
+    JobExps:
+      List: []
+      Full: 0
+    ConsBuffs:
+      List: []
+      Full: 0
+    ProdBuffs:
+      List: []
+      Full: 0
+  DefaultMoveToTaskSave:
+    TypeName: MoveTo
+    IsEnded: 0
+    Target:
+      X: 0
+      Y: 0
+    Route: []
+    Timer: 0
+    Idx: 0
+    TargetType: 0
+  DefaultSleepTaskSave:
+    TypeName: Sleep
+    IsEnded: 0
+    HomeID: 0
+  DefaultWorkTaskSave:
+    TypeName: Work
+    IsEnded: 0
+    WorkArchId: 0
+  DefaultNormalVill:
+    TypeName: Normal
+    ID: 0
+    FirstName: Bubbler
+    LastName: 
+    Coord:
+      X: 0
+      Y: 0
+    TaskRunner:
+      Tasks: []
+    ExpHelper:
+      JobLevel:
+        List: []
+        Full: 0
+      JobExps:
+        List: []
+        Full: 0
+      ConsBuffs:
+        List: []
+        Full: 0
+      ProdBuffs:
+        List: []
+        Full: 0
+    HomeID: 0
+    AttachedWorkArchID: 0
+  DefaultCottage:
+    TypeName: Cottage
+    ID: 0
+    OL:
+      ODR: 0
+      LYR: 0
+    Level: 0
+    ProdBuffs:
+      List: []
+      Full: 0
+    ConsBuffs:
+      List: []
+      Full: 0
+    BondedVillIDs: 
+    InVillIDs: 
+  DefaultRuin:
+    TypeName: Ruin
+    ID: 0
+    OL:
+      ODR: 0
+      LYR: 0
+    Level: 0
+    ProdBuffs:
+      List: []
+      Full: 0
+    ConsBuffs:
+      List: []
+      Full: 0
+    BondedVillIDs: 
+    InVillIDs: 
+  DefaultGrassLayerSave:
+    TypeName: Grass
+    ID: 0
+    LYR: 0
+  DefaultSnowLayerSave:
+    TypeName: Snow
+    ID: 0
+    LYR: 0
+  DefaultSeaEndLayerSave:
+    TypeName: SeaEnd
+    ID: 0
+    LYR: 0
+  DefaultSnowMountainEndLayerSave:
+    TypeName: SnowMountainEnd
+    ID: 0
+    LYR: 0
+  DefaultWasteLandLayerSave:
+    TypeName: WasteLand
+    ID: 0
+    LYR: 0
+  DefaultBeachLayerSave:
+    TypeName: Beach
+    ID: 0
+    LYR: 0
+  references:
+    version: 2
+    RefIds: []

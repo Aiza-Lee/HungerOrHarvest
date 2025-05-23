@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameLogic.Model.Mgr;
 using NSFrame;
 using TMPro;
 using UnityEngine;
@@ -69,7 +70,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 			jobs.Full = true;
 			for (int i = 0; i < MaxJobInfoCount; i++) {
 				if (i < jobs.Count) {
-					_jobLevelTexts[i].Key.text = ConstMgr.GetConfig.FindJobConfig(i).ChineseName;
+					_jobLevelTexts[i].Key.text = ConfigMgr.Config.FindJobConfig(i).ChineseName;
 					_jobLevelTexts[i].Value.text = $"Lv.{jobs[i].Value}";
 				} else {
 					_jobLevelTexts[i].Key.text = string.Empty;

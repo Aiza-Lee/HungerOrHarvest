@@ -1,4 +1,4 @@
-namespace GameLogic
+namespace GameLogic.Model.Element.Layer
 {
 	[System.Serializable]
 	public class WasteLandLayerSave : LayerSaveBase {

@@ -11,7 +11,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		[SerializeField] private GroupMgr _groupMgr;
 
 		public GroupType CurGroupType { get; private set; } = GroupType.None;
-		public ArchType CurArchType { get; private set; } = ArchType.None;
+		public ArchType? CurArchType { get; private set; } = null;
 		private readonly List<VillCard> _selectedVillIds = new();
 
 		/// <summary>
@@ -55,7 +55,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 			_optionTagMgr.SetAllTagDirty();
 		}
 
-		public void SetGroupType(GroupType groupType, ArchType archType = ArchType.None) {
+		public void SetGroupType(GroupType groupType, ArchType? archType = null) {
 			CurGroupType = groupType;
 			CurArchType = archType;
 			_groupMgr.SetCurGroupType(groupType, archType);
@@ -67,14 +67,14 @@ namespace GameLogic.View.UI.WorldVillPanel
 			if (Input.GetKey(KeyCode.LeftControl)) {
 				if (groupType == GroupType.Arch) {
 
-					// 虽然设计之初并没有要求group的view响应村民工作变化的事件，然而为了保险起见
-					// 即在设置工作的时候可能会调用 这里的 RemoveSelectedVillId 方法，从而改变用于枚举的_selectedVillIds
-					List<VillCard> tmpVillIDs = new(_selectedVillIds);
-					foreach (var vc in tmpVillIDs) {
-						vc.BelongedGroup.RemoveEle(vc);
-						vc.TransferTo(tag.RectTrans, (vc) => vc.Clear());
-						CmdRunner.Run($"/vill-bond-arch {vc.AttachedVillID} {WorldMgr.Inst.FindWorkForVill(archType)}");
-					}
+					// // 虽然设计之初并没有要求group的view响应村民工作变化的事件，然而为了保险起见
+					// // 即在设置工作的时候可能会调用 这里的 RemoveSelectedVillId 方法，从而改变用于枚举的_selectedVillIds
+					// List<VillCard> tmpVillIDs = new(_selectedVillIds);
+					// foreach (var vc in tmpVillIDs) {
+					// 	vc.BelongedGroup.RemoveEle(vc);
+					// 	vc.TransferTo(tag.RectTrans, (vc) => vc.Clear());
+					// 	CmdRunner.Run($"/vill-bond-arch {vc.AttachedVillID} {WorldMgr.Inst.FindWorkForVill(archType)}");
+					// }
 
 				} else if (groupType == GroupType.Workless) {
 					List<VillCard> tmpVillIDs = new(_selectedVillIds);

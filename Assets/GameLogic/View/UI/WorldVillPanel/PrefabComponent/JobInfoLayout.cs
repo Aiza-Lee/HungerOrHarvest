@@ -1,3 +1,5 @@
+using GameLogic.Model.Mgr;
+
 namespace GameLogic.View.UI.WorldVillPanel
 {
 	public class JobInfoLayout : GroupLayoutBase {

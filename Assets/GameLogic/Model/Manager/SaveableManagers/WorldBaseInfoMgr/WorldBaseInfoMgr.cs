@@ -1,6 +1,6 @@
 using System;
 
-namespace GameLogic
+namespace GameLogic.Model.Mgr
 {
 	sealed public class WorldBaseInfoMgr : ISaveable<WorldBaseInfoMgrSave>, IMananger {
 		private WorldBaseInfoMgr() {}

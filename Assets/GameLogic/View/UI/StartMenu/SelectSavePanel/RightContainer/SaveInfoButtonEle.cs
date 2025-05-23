@@ -1,5 +1,6 @@
 using System;
 using GameLogic.Controller;
+using GameLogic.Model.Mgr;
 using NSFrame;
 using TMPro;
 using UnityEngine;

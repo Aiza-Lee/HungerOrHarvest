@@ -1,7 +1,7 @@
 using GameLogic.Controller;
 using NSFrame;
 
-namespace GameLogic
+namespace GameLogic.Model.Mgr
 { 
 	public sealed class LogicTimeMgr : ISaveable<LogicTimeMgrSave>, IMananger {
 		private LogicTimeMgr() { 
@@ -29,8 +29,8 @@ namespace GameLogic
 
 		private float _lastDaySpeed;
 
-		private ulong DAY_TICKS => ConstMgr.Inst.Config.DAY_TICKS;
-		private ulong NIGHT_TICKS => ConstMgr.Inst.Config.NIGHT_TICKS;
+		private ulong DAY_TICKS => ConfigMgr.Config.DAY_TICKS;
+		private ulong NIGHT_TICKS => ConfigMgr.Config.NIGHT_TICKS;
 
 		public ulong TickSum => _tickSum;
 		public ulong TodayTick => _todayTick;
@@ -71,7 +71,7 @@ namespace GameLogic
 		#region PublicMethods
 		public void PassNight() {
 			if (_inDay) return;
-			var speed = ConstMgr.GetConfig.NIGHT_TIME_SPEED;
+			var speed = ConfigMgr.Config.NIGHT_TIME_SPEED;
 			TickTrigger.Inst.Speed = speed;
 			TickTrigger.Inst.Pause = false;
 		}

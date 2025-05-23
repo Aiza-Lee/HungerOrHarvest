@@ -12,8 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02014eaa4b3ae0448968a0bfe0bf765a, type: 3}
   m_Name: PreSetWorldConfig_Random_00
   m_EditorClassIdentifier: 
-  PosLayers: 000000000000000000000000000000000200000002000000010000000100000005000000
-  NegLayers: 0000000000000000000000000000000003000000040000000400000004000000
+  PosLayers:
+  - Grass
+  - Grass
+  - Grass
+  - Grass
+  - Beach
+  - Beach
+  - SeaEnd
+  NegLayers:
+  - Grass
+  - Grass
+  - Grass
+  - WasteLand
+  - Snow
+  - SnowMountainEnd
   Layer_Range:
   - Key: 0
     Value:
@@ -28,48 +41,52 @@ MonoBehaviour:
       Key: -3
       Value: 3
   Arch_OL:
-  - Key: 1
-    Value:
-      ODR: -1
-      LYR: 1
-  - Key: 1
+  - Key: Cottage
     Value:
       ODR: 0
       LYR: 0
-  - Key: 1
+  - Key: Cottage
     Value:
-      ODR: 0
-      LYR: 2
-  - Key: 1
+      ODR: 2
+      LYR: 0
+  - Key: Cottage
     Value:
-      ODR: 1
+      ODR: -1
       LYR: 1
-  - Key: 16
+  - Key: Cottage
+    Value:
+      ODR: 2
+      LYR: 0
+  - Key: Ruin
     Value:
       ODR: 1
       LYR: -1
   Vill_OL:
-  - Key: 1
+  - Key: Normal
     Value:
       ODR: 0
       LYR: 0
-  - Key: 1
+  - Key: Normal
     Value:
       ODR: 0
       LYR: 0
-  - Key: 1
+  - Key: Normal
     Value:
       ODR: 0
       LYR: 0
-  - Key: 1
+  - Key: Normal
     Value:
       ODR: 0
       LYR: 0
-  UnlockedRepo: 000000000100000002000000
-  StartingRepo:
+  UnlockedRepo:
+  - Wood
+  - Wheat
+  - Science
+  StartingRepoSave:
     List:
-    - RepoType: 0
+    - Key: Wood
       Value: 100
-    - RepoType: 1
+    - Key: Wheat
       Value: 100
-    Full: 0
+    - Key: Science
+      Value: 100

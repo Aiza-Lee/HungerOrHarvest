@@ -1,5 +1,6 @@
 using System;
 using GameLogic.Model.Element.Vill;
+using GameLogic.Model.Mgr;
 using NSFrame;
 using TMPro;
 using UnityEngine;
@@ -42,7 +43,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public void InjectVillAndJobType(VillLogicBase logic, JobType jobType) {
 			_villLogic = logic;
 			_jobType = jobType;
-			_jobNameText.text = ConstMgr.GetConfig.FindJobConfig(jobType).ChineseName;
+			_jobNameText.text = ConfigMgr.Config.FindJobConfig(jobType).ChineseName;
 		}
 
 		#endregion

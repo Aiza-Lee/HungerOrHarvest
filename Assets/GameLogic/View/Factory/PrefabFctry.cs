@@ -1,4 +1,5 @@
 using GameLogic.Model.Element.Arch;
+using GameLogic.Model.Element.Layer;
 using GameLogic.Model.Element.Vill;
 using GameLogic.Utilities;
 using NSFrame;
@@ -13,7 +14,7 @@ namespace GameLogic.View
 			Config.InitDict();
 		}
 		public VillViewBase NewVillView(VillLogicBase villLogic) {
-			var prefab = Config.VillPrefabs.Find(p => p.Key == villLogic.VillType).Value;
+			var prefab = Config.GetVillPrefab(villLogic.VillType);
 			var go = GameObject.Instantiate(prefab);
 			go.transform.position = villLogic.Coord.ToViewCoord();
 			var view = go.GetComponent<VillViewBase>();
@@ -22,7 +23,7 @@ namespace GameLogic.View
 		}
 
 		public ArchViewBase NewArchView(ArchLogicBase archLogic) {
-			var prefab = Config.ArchPrefabs.Find(p => p.Key == archLogic.ArchType).Value;
+			var prefab = Config.GetArchPrefab(archLogic.ArchType);
 			var go = GameObject.Instantiate(prefab);
 			go.transform.position = archLogic.OL.ToViewCoord();
 			var view = go.GetComponent<ArchViewBase>();
@@ -31,7 +32,7 @@ namespace GameLogic.View
 		}
 
 		public LayerViewBase NewLayerView(LayerLogicBase layerLogic) {
-			var prefab = Config.LayerPrefabs.Find(p => p.Key == layerLogic.LayerType).Value;
+			var prefab = Config.GetLayerPrefab(layerLogic.LayerType);
 			var go = GameObject.Instantiate(prefab);
 			go.transform.position = new OL(0, layerLogic.LYR).ToViewCoord();
 			var view = go.GetComponent<LayerViewBase>();

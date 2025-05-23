@@ -1,6 +1,6 @@
+using GameLogic.Model.Mgr;
 using GameLogic.View;
 using GameLogic.View.UI.PopUpPanels.ScreenEdgePanel;
-using NSFrame;
 using UnityEngine;
 
 namespace GameLogic.Controller

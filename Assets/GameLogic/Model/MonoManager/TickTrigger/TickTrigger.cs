@@ -2,7 +2,7 @@ using System;
 using NSFrame;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Model.Mgr
 {
 	public sealed class TickTrigger : MonoSingleton<TickTrigger> {
 
@@ -24,9 +24,9 @@ namespace GameLogic
 			Pause = true;
 		}
 
-		public ulong TickSum {
+		private ulong TickSum {
 			get => _tickSum;
-			private set {
+			set {
 				while (_tickSum < value) {
 					BeforeTick?.Invoke();
 					EventSystem.Invoke((int)ModelEvt.Tick_0, NSFrame.EventType.Model);

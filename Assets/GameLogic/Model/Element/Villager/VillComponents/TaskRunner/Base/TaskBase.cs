@@ -33,8 +33,8 @@ namespace GameLogic.Model.Element.Vill
 		protected abstract TaskSaveBase GetSave_Derived();
 		public TaskSaveBase GetSave() {
 			var save = GetSave_Derived();
-				save.TaskType = TaskType;
-				save.IsEnded = IsEnded;
+				save.TypeName 	= TaskType.ToString();
+				save.IsEnded 	= IsEnded;
 			return save;
 		}
 		protected abstract void InitFromSave_Derived(TaskSaveBase save);

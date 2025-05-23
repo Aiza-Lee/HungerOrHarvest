@@ -4,13 +4,15 @@ namespace GameLogic.Model.Element.Vill
 {
 	[System.Serializable]
 	public abstract class TaskSaveBase {
-		public TaskType TaskType;
+		public string TypeName;
+		private TaskType? _taskType;
+		public TaskType TaskType => _taskType ??= System.Enum.Parse<TaskType>(TypeName);
 		[HideInInspector] public bool IsEnded;
 		protected abstract TaskSaveBase Clone_Derived();
 		public TaskSaveBase Clone() {
 			var save = Clone_Derived();
-			save.TaskType = TaskType;
-			save.IsEnded = IsEnded;
+			save.TypeName 	= TypeName;
+			save.IsEnded 	= IsEnded;
 			return save;
 		}
 	}

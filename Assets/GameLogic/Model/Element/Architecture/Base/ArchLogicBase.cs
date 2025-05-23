@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GameLogic.Model.Element.Vill;
+using GameLogic.Model.Mgr;
 using NSFrame;
 
 namespace GameLogic.Model.Element.Arch
@@ -17,8 +18,8 @@ namespace GameLogic.Model.Element.Arch
 		public int Level { get; private set; }
 		public List<ulong> InVillIDs { get; private set; }
 		public List<ulong> BondedVillIDs { get; private set; }
-		public RTList<float> ConsBuffs_F { get; private set; }
-		public RTList<float> ProdBuffs_F { get; private set; }
+		public RTList<float> ConsBuffs_F { get; private set; } = new();
+		public RTList<float> ProdBuffs_F { get; private set; } = new();
 		public Coord Coord => OL.ToCoord();
 		public int BondedVillCount => BondedVillIDs.Count;
 
@@ -84,12 +85,12 @@ namespace GameLogic.Model.Element.Arch
 		protected abstract ArchSaveBase GetSave_Derived();
 		public ArchSaveBase GetSave() {
 			var save = GetSave_Derived();
-				save.ArchType 		= ArchType;
+				save.TypeName 		= ArchType.ToString();
 				save.ID 			= ID;
 				save.OL 			= OL;
 				save.Level 			= Level;
-				save.ConsBuffs 		= ConsBuffs_F.Clone();
-				save.ProdBuffs 		= ProdBuffs_F.Clone();
+				save.ConsBuffs 		= ConsBuffs_F.GetSave();
+				save.ProdBuffs 		= ProdBuffs_F.GetSave();
 				save.BondedVillIDs 	= new(BondedVillIDs);
 				save.InVillIDs 		= new(InVillIDs);
 			return save;
@@ -98,14 +99,14 @@ namespace GameLogic.Model.Element.Arch
 		protected abstract void InitFromSave_Derived(ArchSaveBase save);
 		public void InitFromSave(ArchSaveBase save) {
 			InitFromSave_Derived(save);
-			Config 			= ConstMgr.Inst.Config.FindArchConfig(save.ArchType);
-			OL 			= save.OL;
-			ID 			= save.ID;
+			Config 			= ConfigMgr.Config.FindArchConfig(save.ArchType);
+			OL 				= save.OL;
+			ID 				= save.ID;
 			Level 			= save.Level;
-			ConsBuffs_F 	= save.ConsBuffs.ConvertToFull();
-			ProdBuffs_F 	= save.ProdBuffs.ConvertToFull();
 			BondedVillIDs 	= save.BondedVillIDs;
 			InVillIDs 		= save.InVillIDs;
+			ConsBuffs_F.InitFromSave_Full(save.ConsBuffs);
+			ProdBuffs_F.InitFromSave_Full(save.ProdBuffs);
 		}
 		#endregion
 	}

@@ -1,12 +1,13 @@
-using GameLogic.Model.Element.Vill;
+using System;
 using UnityEngine;
 
 namespace GameLogic.Model.Element.Vill
 {
 	[System.Serializable]
 	public abstract class VillSaveBase {
+		public string TypeName;
+		public VillType VillType => Enum.Parse<VillType>(TypeName);
 		[HideInInspector] public ulong ID;
-		public VillType VillType;
 		public string FirstName, LastName;
 		[HideInInspector] public Coord Coord;
 		[HideInInspector] public TaskRunnerSave TaskRunner;
@@ -19,7 +20,7 @@ namespace GameLogic.Model.Element.Vill
 		public VillSaveBase Clone() {
 			var save = GetDerivedClone();
 				save.ID 			= ID;
-				save.VillType 		= VillType;
+				save.TypeName 		= TypeName;
 				save.FirstName 		= FirstName;
 				save.LastName 		= LastName;
 				save.Coord 			= Coord;

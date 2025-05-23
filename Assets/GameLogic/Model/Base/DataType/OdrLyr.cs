@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameLogic.Model.Mgr;
 using UnityEngine;
 
 namespace GameLogic

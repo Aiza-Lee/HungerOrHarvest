@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8119e0ead7a0e24fb5afbad61112263, type: 3}
+  m_Name: PrefabFctryConfig
+  m_EditorClassIdentifier: 
+  VillPrefabs:
+  - Key: Normal
+    Value: {fileID: 4632101640204001798, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
+  ArchPrefabs:
+  - Key: Cottage
+    Value: {fileID: 42990976938659487, guid: 13d11edb5a6612349bc92446864abe54, type: 3}
+  - Key: Ruin
+    Value: {fileID: 118420102723132381, guid: 502de8e99b2b89643ba871d11179091d, type: 3}
+  LayerPrefabs:
+  - Key: Grass
+    Value: {fileID: 6027108390514112321, guid: 5878d12087484da4c90322c23862563f, type: 3}
+  - Key: Snow
+    Value: {fileID: 2011307254257003627, guid: 17fffa9b5b4cf5b4bb28692bac405adf, type: 3}
+  - Key: WasteLand
+    Value: {fileID: 2011307254257003627, guid: 861413aa17269634e909bb865c8896c5, type: 3}
+  - Key: Beach
+    Value: {fileID: 2011307254257003627, guid: 170737da2746df44e8ab655145b2526e, type: 3}
+  - Key: SeaEnd
+    Value: {fileID: 2011307254257003627, guid: 38a1a584cb9a0504799b832def9fe790, type: 3}
+  - Key: SnowMountainEnd
+    Value: {fileID: 2011307254257003627, guid: d902915839f393349b3dee2c91d41aa3, type: 3}

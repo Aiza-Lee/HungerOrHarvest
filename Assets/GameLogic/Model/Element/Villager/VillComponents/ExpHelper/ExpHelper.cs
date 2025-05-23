@@ -1,3 +1,4 @@
+using GameLogic.Model.Mgr;
 using NSFrame;
 using UnityEngine;
 
@@ -8,10 +9,10 @@ namespace GameLogic.Model.Element.Vill
 	/// </summary>
 	public class ExpHelper : ISaveable<ExpHelperSave> {
 
-		private JTList<int> _jobLevel_F;
-		private JTList<float> _jobExps_F;
-		private RTList<float> _consBuffs_F;
-		private RTList<float> _prodBuffs_F;
+		private readonly JTList<int> _jobLevel_F = new();
+		private readonly JTList<float> _jobExps_F = new();
+		private readonly RTList<float> _consBuffs_F = new();
+		private readonly RTList<float> _prodBuffs_F = new();
 		private readonly VillLogicBase _vill;
 
 		public RTList<float> ConsBuffs_F => _consBuffs_F;
@@ -25,7 +26,7 @@ namespace GameLogic.Model.Element.Vill
 			var idx = (int) job;
 			var levelNow = ++_jobLevel_F[idx].Value;
 
-			var jConfig = ConstMgr.GetConfig.FindJobConfig(job);
+			var jConfig = ConfigMgr.Config.FindJobConfig(job);
 			var levelConfig = jConfig.JobLevelConfigs[levelNow];
 
 			foreach (var pr in levelConfig.RepoConsBuff.List) {
@@ -60,14 +61,14 @@ namespace GameLogic.Model.Element.Vill
 				var idx = JF.Index;
 				_jobExps_F[idx].Value += JF.Value;
 
-				var jConfig = ConstMgr.Inst.Config.FindJobConfig(idx);
+				var jConfig = ConfigMgr.Config.FindJobConfig(idx);
 				var level = _jobLevel_F[idx].Value;
 
 				var levelUpDemand = jConfig.JobLevelConfigs[level].LevelUpDemand;
 				if (_jobExps_F[idx].Value >= levelUpDemand) {
 					if (jConfig.JobLevelConfigs.Count - 1 > level) {
 						_jobExps_F[idx].Value -= levelUpDemand;
-						LevelUpImpl(JF.Job);
+						LevelUpImpl(JF.JobType);
 					} else {
 						_jobExps_F[idx].Value = levelUpDemand;
 					}
@@ -79,7 +80,7 @@ namespace GameLogic.Model.Element.Vill
 			var idx = (int) jobType;
 			return
 				Mathf.Clamp01(_jobExps_F[idx].Value /
-				ConstMgr.Inst.Config.FindJobConfig(jobType).JobLevelConfigs[_jobLevel_F[idx].Value].LevelUpDemand);
+				ConfigMgr.Config.FindJobConfig(jobType).JobLevelConfigs[_jobLevel_F[idx].Value].LevelUpDemand);
 		}
 
 		public int GetJobLevelImpl(JobType job) {
@@ -92,18 +93,18 @@ namespace GameLogic.Model.Element.Vill
 		#region ISaveable
 		public ExpHelperSave GetSave() {
 			return new() {
-				JobLevel = _jobLevel_F.Clone(),
-				JobExps = _jobExps_F.Clone(),
-				ConsBuffs = _consBuffs_F.Clone(),
-				ProdBuffs = _prodBuffs_F.Clone(),
+				JobLevel = _jobLevel_F.GetSave(),
+				JobExps = _jobExps_F.GetSave(),
+				ConsBuffs = _consBuffs_F.GetSave(),
+				ProdBuffs = _prodBuffs_F.GetSave(),
 			};
 		}
 
 		public void InitFromSave(ExpHelperSave save) {
-			_jobLevel_F = save.JobLevel.ConvertToFull();
-			_jobExps_F = save.JobExps.ConvertToFull();
-			_consBuffs_F = save.ConsBuffs.ConvertToFull();
-			_prodBuffs_F = save.ProdBuffs.ConvertToFull();
+			_jobLevel_F.InitFromSave_Full(save.JobLevel);
+			_jobExps_F.InitFromSave_Full(save.JobExps);
+			_consBuffs_F.InitFromSave_Full(save.ConsBuffs);
+			_prodBuffs_F.InitFromSave_Full(save.ProdBuffs);
 		}
 		#endregion
 	}

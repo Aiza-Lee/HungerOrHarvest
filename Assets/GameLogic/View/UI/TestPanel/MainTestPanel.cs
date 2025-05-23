@@ -1,4 +1,5 @@
 using System.Text;
+using GameLogic.Model.Mgr;
 using NSFrame;
 using TMPro;
 
@@ -27,8 +28,8 @@ namespace GameLogic.View.Test
 		private void UpdateTime() {
 			_sb.Clear();
 			var timeSave = LogicTimeMgr.Inst.GetSave();
-			_sb.AppendLine($"DayTicks: \t{ConstMgr.GetConfig.DAY_TICKS}");
-			_sb.AppendLine($"NightTicks: \t{ConstMgr.GetConfig.NIGHT_TICKS}");
+			_sb.AppendLine($"DayTicks: \t{ConfigMgr.Config.DAY_TICKS}");
+			_sb.AppendLine($"NightTicks: \t{ConfigMgr.Config.NIGHT_TICKS}");
 			_sb.AppendLine($"DayOrNight: \t{(timeSave.InDay ? "Day" : "Night")}");
 			_sb.AppendLine($"Days: \t{timeSave.Days}");
 			_sb.AppendLine($"TodayTick: \t{timeSave.TodayTick}");

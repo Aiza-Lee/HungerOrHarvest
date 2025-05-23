@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameLogic.Model.Factory;
+using GameLogic.Model.Mgr;
 using UnityEngine;
 
 namespace GameLogic.Controller
@@ -30,10 +31,10 @@ namespace GameLogic.Controller
 
 
 		public override bool Check() {
-			var config = ConstMgr.Inst.Config.FindArchConfig(_archType);
-			if (!RepoMgr.Inst.CheckRequest(config.ConstructCost)) { 
+			var config = ConfigMgr.Config.FindArchConfig(_archType);
+			if (!RepoMgr.Inst.CheckRequest(config.ConstructCost)) {
 				_failReason = "资源不足";
-				return false; 
+				return false;
 			} else if (!_ol.CheckAvailableForArch()) {
 				_failReason = $"位置{_ol}不合法";
 				return false;

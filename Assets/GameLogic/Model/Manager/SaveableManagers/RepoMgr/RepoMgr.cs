@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NSFrame;
 
-namespace GameLogic
+namespace GameLogic.Model.Mgr
 {
 	public sealed class RepoMgr : ISaveable<RepoMgrSave>, IMananger {
 		private RepoMgr() {
@@ -174,32 +174,35 @@ namespace GameLogic
 
 		public RepoMgrSave GetSave() {
 			var save = new RepoMgrSave {
-				Repos = _repos_F.Clone(),
-				GlobalConsBuffs 		= _globalConsBuffs_F.Clone(),
-				GlobalProdBuffs 		= _globalProdBuffs_F.Clone(),
-				UnlockedRepos 			= _unlockedRepos_F.Clone(),
-				DailyCons 				= _dailyCons_F.Clone(),
-				DailyProd 				= _dailyProd_F.Clone(),
-				LastSecondNet			= _lastSecondNet_F.Clone(),
+				Repos 					= _repos_F.GetSave(),
+				GlobalConsBuffs 		= _globalConsBuffs_F.GetSave(),
+				GlobalProdBuffs 		= _globalProdBuffs_F.GetSave(),
+				UnlockedRepos 			= _unlockedRepos_F.GetSave(),
+				DailyCons 				= _dailyCons_F.GetSave(),
+				DailyProd 				= _dailyProd_F.GetSave(),
+				LastSecondNet			= _lastSecondNet_F.GetSave(),
 				LastSecondTickProduces 	= new()
 			};
 			foreach (var item in _ticksNetInLastSeconds) {
-				save.LastSecondTickProduces.Add(item.Clone());
+				save.LastSecondTickProduces.Add(item.GetSave());
 			}
 			return save;
 		}
 
 		public void InitFromSave(RepoMgrSave saveData) {
-			_repos_F 			= saveData.Repos.ConvertToFull();
-			_globalConsBuffs_F 	= saveData.GlobalConsBuffs.ConvertToFull();
-			_globalProdBuffs_F 	= saveData.GlobalProdBuffs.ConvertToFull();
-			_unlockedRepos_F 	= saveData.UnlockedRepos.ConvertToFull();
-			_dailyCons_F 		= saveData.DailyCons.ConvertToFull();
-			_dailyProd_F 		= saveData.DailyProd.ConvertToFull();
-			_lastSecondNet_F	= saveData.LastSecondNet.ConvertToFull();
+			_repos_F.InitFromSave_Full(saveData.Repos);
+			_globalConsBuffs_F.InitFromSave_Full(saveData.GlobalConsBuffs);
+			_globalProdBuffs_F.InitFromSave_Full(saveData.GlobalProdBuffs);
+			_unlockedRepos_F.InitFromSave_Full(saveData.UnlockedRepos);
+			_dailyCons_F.InitFromSave_Full(saveData.DailyCons);
+			_dailyProd_F.InitFromSave_Full(saveData.DailyProd);
+			_lastSecondNet_F.InitFromSave_Full(saveData.LastSecondNet);
+
 			_ticksNetInLastSeconds.Clear();
 			foreach(var item in saveData.LastSecondTickProduces) {
-				_ticksNetInLastSeconds.Enqueue(item);
+				var list = new RTList<float>();
+				list.InitFromSave(item);
+				_ticksNetInLastSeconds.Enqueue(list);
 			}
 		}
 

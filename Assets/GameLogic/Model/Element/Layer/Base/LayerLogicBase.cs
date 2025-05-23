@@ -1,4 +1,4 @@
-namespace GameLogic
+namespace GameLogic.Model.Element.Layer
 {
 	public abstract class LayerLogicBase : ISaveable<LayerSaveBase> {
 		private ulong _id;
@@ -12,9 +12,9 @@ namespace GameLogic
 		protected abstract LayerSaveBase GetDerivedSave();
 		public LayerSaveBase GetSave() {
 			var save = GetDerivedSave();
-				save.ID = _id;
-				save.LYR = _lyr;
-				save.LayerType = LayerType;
+				save.ID 		= _id;
+				save.LYR 		= _lyr;
+				save.TypeName 	= LayerType.ToString();
 			return save;
 		}
 

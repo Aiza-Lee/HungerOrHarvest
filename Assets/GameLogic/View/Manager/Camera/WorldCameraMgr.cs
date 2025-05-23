@@ -1,4 +1,5 @@
 using System.Collections;
+using GameLogic.Model.Mgr;
 using NSFrame;
 using UnityEngine;
 

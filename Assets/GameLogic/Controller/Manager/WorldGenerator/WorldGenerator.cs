@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using GameLogic.Model.Factory;
+using GameLogic.Model.Mgr;
 using GameLogic.View;
 using NSFrame;
 using UnityEngine;
@@ -26,17 +28,17 @@ namespace GameLogic.Controller
 
 			/* ARCH_OL */
 			foreach (var pr in config.Arch_OL) {
-				LogicFctry.Inst.NewArch(pr.Key, pr.Value);
+				LogicFctry.Inst.NewArch(Enum.Parse<ArchType>(pr.Key), pr.Value);
 			}
 
 			/* VILL_OL */
 			foreach (var pr in config.Vill_OL) {
-				LogicFctry.Inst.NewVill(pr.Key, pr.Value);
+				LogicFctry.Inst.NewVill(Enum.Parse<VillType>(pr.Key), pr.Value);
 			}
 
 			/* UNLOCK_REPO */
 			foreach (var rt in config.UnlockedRepo) {
-				RepoMgr.Inst.UnlockRepo(rt);
+				RepoMgr.Inst.UnlockRepo(Enum.Parse<RepoType>(rt));
 			}
 
 			/* STRARTING_REPO */
@@ -44,18 +46,17 @@ namespace GameLogic.Controller
 
 			/* CREATE_LAYER */
 			for (int i = 0; i < config.PosLayers.Count; ++i) {
-				var type = config.PosLayers[i];
+				var type = Enum.Parse<LayerType>(config.PosLayers[i]);
 				LogicFctry.Inst.NewLayer(type, i);
 			}
 			for (int i = 0; i < config.NegLayers.Count; ++i) {
-				var type = config.NegLayers[i];
+				var type = Enum.Parse<LayerType>(config.NegLayers[i]);
 				LogicFctry.Inst.NewLayer(type, - i - 1);
 			}
 
 			/* WORLD_BASE_INFO */
 			WorldBaseInfoMgr.Inst.SetWorldHashTag();
 			WorldBaseInfoMgr.Inst.WorldName = worldName;
-
 			
 			GameModelMgr.Inst.SaveGame();
 			GameViewMgr.Inst.SaveGame();
@@ -70,7 +71,7 @@ namespace GameLogic.Controller
 			WorldBaseInfoMgr.Inst.WorldName = "Default World";
 		}
 		public void GenerateRandomWorld(string worldName) {
-			var rId = Random.Range(0, _randomConfigs.Count);
+			var rId = UnityEngine.Random.Range(0, _randomConfigs.Count);
 			GenerateImpl(_randomConfigs[rId], worldName);
 			WorldBaseInfoMgr.Inst.WorldName = worldName;
 		}

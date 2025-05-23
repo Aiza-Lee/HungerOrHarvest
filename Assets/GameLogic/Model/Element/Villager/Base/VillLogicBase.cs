@@ -155,7 +155,7 @@ namespace GameLogic.Model.Element.Vill
 		protected abstract VillSaveBase GetDerivedSave();
 		public VillSaveBase GetSave() {
 			var save = GetDerivedSave();
-				save.VillType 			= VillType;
+				save.TypeName 			= VillType.ToString();
 				save.ID 				= ID;
 				save.FirstName 			= FirstName;
 				save.LastName 			= LastName;

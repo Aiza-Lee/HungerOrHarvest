@@ -1,4 +1,5 @@
 using GameLogic.Controller;
+using GameLogic.Model.Mgr;
 using NSFrame;
 
 namespace GameLogic.View.UI.StartMenu

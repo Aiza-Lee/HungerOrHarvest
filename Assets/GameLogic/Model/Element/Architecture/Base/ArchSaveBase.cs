@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,19 +6,20 @@ namespace GameLogic.Model.Element.Arch
 {
 	[System.Serializable]
 	public abstract class ArchSaveBase {
-		public ArchType ArchType;
+		public string TypeName;
+		public ArchType ArchType => Enum.Parse<ArchType>(TypeName);
 		[HideInInspector] public ulong ID;
 		[HideInInspector] public OL OL;
-		public int Level;
-		public RTList<float> ProdBuffs;
-		public RTList<float> ConsBuffs;
+		[HideInInspector] public int Level;
+		[HideInInspector] public RTListSave<float> ProdBuffs;
+		[HideInInspector] public RTListSave<float> ConsBuffs;
 		[HideInInspector] public List<ulong> BondedVillIDs;
 		[HideInInspector] public List<ulong> InVillIDs;
 
 		protected abstract ArchSaveBase GetDerivedClone();
 		public ArchSaveBase Clone() {
 			var save = GetDerivedClone();
-				save.ArchType 		= ArchType;
+				save.TypeName 		= TypeName;
 				save.ID 			= ID;
 				save.OL 			= OL;
 				save.Level 			= Level;

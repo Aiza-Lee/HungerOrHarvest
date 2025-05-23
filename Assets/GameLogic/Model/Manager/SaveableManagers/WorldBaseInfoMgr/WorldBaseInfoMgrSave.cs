@@ -1,4 +1,4 @@
-namespace GameLogic
+namespace GameLogic.Model.Mgr
 {
 	public class WorldBaseInfoMgrSave {
 		public string WorldName;

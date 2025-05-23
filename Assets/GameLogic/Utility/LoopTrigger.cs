@@ -26,7 +26,7 @@ namespace GameLogic.Utilities
 			EventSystem.AddListener((int)ModelEvt.Tick_0, AddTick, NSFrame.EventType.Model);
 		}
 
-		private void SetTrigger(Action action, float delay, int SumTriggerTimes, Action onComplete = null) {
+		private void SetTrigger(Action action, float delay, int sumTriggerTimes, Action onComplete = null) {
 			if (delay <= 0) {
 				Debug.LogWarning("Do not need this delay trigger.");
 				return;
@@ -34,7 +34,7 @@ namespace GameLogic.Utilities
 			_action = action;
 			_onComplete = onComplete;
 			_gap = delay;
-			_sumTriggerTimes = SumTriggerTimes;
+			_sumTriggerTimes = sumTriggerTimes;
 			_triggerCnt = 0;
 			_tickCount = 0;
 		}
@@ -51,8 +51,15 @@ namespace GameLogic.Utilities
 			}
 		}
 
-		public static void Run(Action action, float gap, int triggerTimes, Action onComplete = null) {
-			PoolSystem.PopObj<LoopTrigger>().SetTrigger(action, gap, triggerTimes, onComplete);
+		/// <summary>
+		/// 开始循环触发action
+		/// </summary>
+		/// <param name="action"> 触发的action </param>
+		/// <param name="gap"> 间隔逻辑帧数量 </param>
+		/// <param name="triggerTimes"> 触发次数 </param>
+		/// <param name="callback"> 完成callback </param>
+		public static void Run(Action action, float gap, int triggerTimes, Action callback = null) {
+			PoolSystem.PopObj<LoopTrigger>().SetTrigger(action, gap, triggerTimes, callback);
 		}
 
 	}

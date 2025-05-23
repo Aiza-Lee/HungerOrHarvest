@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameLogic.Model.Element.Arch;
+using GameLogic.Model.Element.Layer;
 using GameLogic.Model.Element.Vill;
 using GameLogic.Model.Factory;
 using GameLogic.Utilities;
@@ -133,20 +134,20 @@ namespace GameLogic
 			EventSystem.Invoke<OL>((int)ModelEvt.UnlockOL_O_1, ol, NSFrame.EventType.Model);
 		}
 
-		public ulong FindWorkForVill(ArchType archType) {
-			var arch = _archs.Find(a => a.ArchType == archType && a.CheckBondVill());
-			return arch == null ? 0 : arch.ID;
-		}
-		public bool FindWorkForVill(int villCnt, ArchType archType) {
-			int cnt = 0;
-			foreach (var arch in _archs) {
-				if (arch.ArchType == archType) {
-					cnt += arch.Lconfig.MaxContain - arch.BondedVillCount;
-					if (cnt >= villCnt) return true;
-				}
-			}
-			return false;
-		}
+		// public ulong FindWorkForVill(ArchType archType) {
+		// 	var arch = _archs.Find(a => a.ArchType == archType && a.CheckBondVill());
+		// 	return arch == null ? 0 : arch.ID;
+		// }
+		// public bool FindWorkForVill(int villCnt, ArchType archType) {
+		// 	int cnt = 0;
+		// 	foreach (var arch in _archs) {
+		// 		if (arch.ArchType == archType) {
+		// 			cnt += arch.Lconfig.MaxContain - arch.BondedVillCount;
+		// 			if (cnt >= villCnt) return true;
+		// 		}
+		// 	}
+		// 	return false;
+		// }
 		#endregion
 
 		#region ISaveable

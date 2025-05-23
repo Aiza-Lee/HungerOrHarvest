@@ -28,7 +28,10 @@ namespace GameLogic.View.UI.WorldVillPanel
 				UIMgr.Inst.FindPanel(out _mainPanel);
 		}
 
-		private void SetSelectable_private(bool selectable) {
+		/// <summary>
+		/// 设置当前tag是否可选
+		/// </summary>
+		private void SetSelectableImpl(bool selectable) {
 			_unSelectableMask.SetActive(!selectable);
 			_image.raycastTarget = selectable;
 		}
@@ -39,17 +42,18 @@ namespace GameLogic.View.UI.WorldVillPanel
 			if (Input.GetKey(KeyCode.LeftControl)) {
 				if (_groupType == GroupType.Arch) {
 					if (_archType == _mainPanel.CurArchType) {
-						SetSelectable_private(false);
+						SetSelectableImpl(false);
 					} else {
-						SetSelectable_private(WorldMgr.Inst.FindWorkForVill(_mainPanel.SelectedVillCount, _archType));
+						// SetSelectableImpl(WorldMgr.Inst.FindWorkForVill(_mainPanel.SelectedVillCount, _archType));
+						SetSelectableImpl(false);
 					}
 				} else if (_groupType == GroupType.Homeless) {
-					SetSelectable_private(false);
+					SetSelectableImpl(false);
 				} else if (_groupType == GroupType.Workless) {
-					SetSelectable_private(_mainPanel.CurGroupType != GroupType.Workless);
+					SetSelectableImpl(_mainPanel.CurGroupType != GroupType.Workless);
 				}
 			} else {
-				SetSelectable_private(true);
+				SetSelectableImpl(true);
 			}
 		}
 

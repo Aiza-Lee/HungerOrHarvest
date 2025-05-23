@@ -1,4 +1,5 @@
 using GameLogic.Model.Element.Arch;
+using GameLogic.Model.Element.Layer;
 using GameLogic.Model.Element.Vill;
 using UnityEngine;
 
@@ -58,20 +59,6 @@ namespace GameLogic.Model.Factory
 		public ArchSaveBase GeDefaultArchSave(ArchType type) {
 			return type switch {
 				ArchType.Cottage => DefaultCottage,
-				ArchType.Farm => throw new System.NotImplementedException(),
-				ArchType.LumberMill => throw new System.NotImplementedException(),
-				ArchType.Quarry => throw new System.NotImplementedException(),
-				ArchType.Mine => throw new System.NotImplementedException(),
-				ArchType.Fishery => throw new System.NotImplementedException(),
-				ArchType.Well => throw new System.NotImplementedException(),
-				ArchType.Windmill => throw new System.NotImplementedException(),
-				ArchType.Ochard => throw new System.NotImplementedException(),
-				ArchType.Warehouse => throw new System.NotImplementedException(),
-				ArchType.Blacksmith => throw new System.NotImplementedException(),
-				ArchType.Workshop => throw new System.NotImplementedException(),
-				ArchType.Garden => throw new System.NotImplementedException(),
-				ArchType.Fountain => throw new System.NotImplementedException(),
-				ArchType.Statue => throw new System.NotImplementedException(),
 				ArchType.Ruin => DefaultRuin,
 				_ => throw new System.NotImplementedException(),
 			};

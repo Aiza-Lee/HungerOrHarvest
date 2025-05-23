@@ -1,3 +1,5 @@
+using GameLogic.Model.Element.Layer;
+using GameLogic.Model.Mgr;
 using UnityEngine;
 
 namespace GameLogic.View

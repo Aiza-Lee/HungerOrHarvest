@@ -1,4 +1,4 @@
-namespace GameLogic
+namespace GameLogic.Model.Element.Layer
 {
 	public class SeaEndLayerLogic : LayerLogicBase {
 		public override LayerType LayerType => LayerType.SeaEnd;

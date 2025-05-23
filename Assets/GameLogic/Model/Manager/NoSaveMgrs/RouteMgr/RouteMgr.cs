@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using GameLogic.Utilities;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Model.Mgr
 {
 	public class RouteMgr : IMananger {
 		private RouteMgr() {}
@@ -11,7 +11,7 @@ namespace GameLogic
 		private readonly int[] _randomOrder = new int[3];
 
 		public Coord GetRandomVillSpareCoord() {
-			var spare = ConstMgr.VILL_SPARE_ORD_RADIUS;
+			var spare = ConfigMgr.Config.FindVillConfig(VillType.Normal).SpareOrdRadius;
 			var odr = Random.Range(WorldMgr.Inst.MinArchODR - spare, WorldMgr.Inst.MaxArchODR + 1 + spare);
 			var lyr = Random.Range(WorldMgr.Inst.MinUnlockedLayer, WorldMgr.Inst.MaxUnlockedLayer + 1);
 			var middle = new OL(odr, lyr).ToCoord();

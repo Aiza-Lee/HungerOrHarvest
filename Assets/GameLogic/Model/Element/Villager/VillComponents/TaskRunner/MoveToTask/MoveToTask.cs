@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameLogic.Model.Mgr;
 
 namespace GameLogic.Model.Element.Vill
 {
@@ -41,7 +42,7 @@ namespace GameLogic.Model.Element.Vill
 		public override void TaskExecute() {
 			if (IsEnded) { return; }
 			++_timer;
-			if (_timer >= ConstMgr.Inst.Config.VILL_ONE_MOVE_TICK) {
+			if (_timer >= ConfigMgr.Config.VILL_ONE_MOVE_TICK) {
 				_timer = 0;
 				AttachedVill.Move(AttachedVill.Coord.DirectionTo(_route[_idx]));
 			}

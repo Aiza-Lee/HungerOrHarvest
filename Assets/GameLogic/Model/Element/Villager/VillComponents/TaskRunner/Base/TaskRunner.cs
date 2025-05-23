@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GameLogic.Model.Element.Arch;
 using GameLogic.Model.Factory;
+using GameLogic.Model.Mgr;
 using NSFrame;
 
 namespace GameLogic.Model.Element.Vill

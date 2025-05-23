@@ -1,4 +1,5 @@
 using GameLogic.Model.Element.Arch;
+using GameLogic.Model.Mgr;
 
 namespace GameLogic.Model.Element.Vill
 {
