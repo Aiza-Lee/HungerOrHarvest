@@ -12,14 +12,14 @@ namespace GameLogic.View.UI.WorldVillPanel
 
 		public GroupType CurGroupType { get; private set; } = GroupType.None;
 		public ArchType? CurArchType { get; private set; } = null;
-		private readonly List<VillCard> _selectedVillIds = new();
+		private readonly List<VillCard> _selectedCards = new();
 
 		/// <summary>
 		/// 当前是否按下 Ctrl 键
 		/// </summary>
 		private bool _useControlKey;
 
-		public int SelectedVillCount => _selectedVillIds.Count;
+		public int SelectedVillCount => _selectedCards.Count;
 
 		public override void OnClose() {
 			_optionTagMgr.OnClose();
@@ -46,12 +46,12 @@ namespace GameLogic.View.UI.WorldVillPanel
 
 		#region PublicMethods
 		
-		public void AddSelectedVillId(VillCard vc) {
-			_selectedVillIds.Add(vc);
+		public void SelectCard(VillCard vc) {
+			_selectedCards.Add(vc);
 			_optionTagMgr.SetAllTagDirty();
 		}
-		public void RemoveSelectedVillId(VillCard vc) {
-			_selectedVillIds.Remove(vc);
+		public void DeselectCard(VillCard vc) {
+			_selectedCards.Remove(vc);
 			_optionTagMgr.SetAllTagDirty();
 		}
 
@@ -77,7 +77,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 					// }
 
 				} else if (groupType == GroupType.Workless) {
-					List<VillCard> tmpVillIDs = new(_selectedVillIds);
+					List<VillCard> tmpVillIDs = new(_selectedCards);
 					foreach (var vc in tmpVillIDs) {
 						vc.BelongedGroup.RemoveEle(vc);
 						vc.TransferTo(tag.RectTrans, (vc) => vc.Clear());
@@ -88,7 +88,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 				SetGroupType(groupType, archType);
 			}
 			// 无论是否按住 ctrl 都应该清空选中的村民
-			_selectedVillIds.Clear();
+			_selectedCards.Clear();
 		}
 
 		#endregion

@@ -12,13 +12,13 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public void SetCurGroupType(GroupType groupType, ArchType? archType = null) {
 			// if (_curGroupType == groupType && _curArchType == archType) { return; }
 			Clear();
-			// 如果是展示建筑的group
-			if (archType != null) {
+			// 如果是展示arch的group
+			if (groupType == GroupType.Arch && archType != null) {
 				// 获取对应类型的全部建筑的 View
 				var archViews = WorldViewMgr.Inst.GetAllArchViews((ArchType) archType);
 				archViews.Sort((a, b) => a.Logic.Coord.X.CompareTo(b.Logic.Coord.X));
 
-				// 为每一个 View 创建一个 Group
+				// 为每一个建筑实例 创建一个 Group
 				foreach (var archView in archViews) {
 					var group = VillGroupFactory.Inst.Create(archView.Logic);
 					AddEle(group);

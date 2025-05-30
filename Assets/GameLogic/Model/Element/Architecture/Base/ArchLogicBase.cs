@@ -42,14 +42,14 @@ namespace GameLogic.Model.Element.Arch
 		#region IBondVill
 		public bool CheckBondVill() => BondedVillIDs.Count < Lconfig.MaxContain;
 		public bool HasBondedVill(ulong vID) => BondedVillIDs.Contains(vID);
-		public bool BondVill(VillLogicBase vill) {
+		public bool BondVill(ulong id) {
 			if (!CheckBondVill()) return false;
-			BondedVillIDs.Add(vill.ID);
+			BondedVillIDs.Add(id);
 			return true;
 		}
-		public bool DisBondVill(VillLogicBase vill) {
-			if (!HasBondedVill(vill.ID)) { return false; }
-			BondedVillIDs.Remove(vill.ID);
+		public bool DisBondVill(ulong id) {
+			if (!HasBondedVill(id)) { return false; }
+			BondedVillIDs.Remove(id);
 			return true;
 		}
 		#endregion

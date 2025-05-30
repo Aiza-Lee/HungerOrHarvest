@@ -18,11 +18,19 @@ namespace GameLogic.View.UI.WorldVillPanel
 		}
 
 		#region Injection
-		public void InjectInfo(ArchLogicBase arch) {
+		/// <summary>
+		/// 初始化group，group类型为建筑
+		/// </summary>
+		/// <param name="arch">建筑</param>
+		public void SetGroupInfo(ArchLogicBase arch) {
 			_groupType = GroupType.Arch;
 			GenerateVillCards(arch.BondedVillIDs);
 		}
-		public void InjectInfo(GroupType groupType) {
+		/// <summary>
+		/// 初始化group，group类型为非建筑
+		/// </summary>
+		/// <param name="groupType">group的类型</param>
+		public void SetGroupInfo(GroupType groupType) {
 			_groupType = groupType;
 			if (_groupType == GroupType.Homeless) {
 				GenerateVillCards(WorldMgr.Inst.GetHomelessVillIDs());

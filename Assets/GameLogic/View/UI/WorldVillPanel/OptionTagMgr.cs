@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GameLogic.Model.Mgr;
 using NSFrame;
@@ -9,7 +10,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		[Header("挂载")]
 		[SerializeField] private GameObject _optionTagPrefab;
 		[SerializeField] private RectTransform _tagRoot;
-		[SerializeField] private List<Pair<ArchType, Sprite>> _archIcons;
+		[SerializeField] private List<Pair<string, Sprite>> _archIcons;
 		[SerializeField] private Sprite _defaultIcon;
 		[SerializeField] private Sprite _homelessIcon;
 		[SerializeField] private Sprite _worklessIcon;
@@ -17,10 +18,12 @@ namespace GameLogic.View.UI.WorldVillPanel
 		private readonly List<OptionTag> _tags = new();
 		private float Width => _tagRoot.rect.height;
 		private float Space => _tagRoot.offsetMin.y;
+		private readonly List<Pair<ArchType, Sprite>> _icons = new();
 
 		private void Awake() {
 			// Debug.Log("OptionTagMgr Awake");
 			PoolSystem.InitPrefabPool(_optionTagPrefab, 30);
+			_archIcons.ForEach(p => _icons.Add(new Pair<ArchType, Sprite>(Enum.Parse<ArchType>(p.Key), p.Value)));
 		}
 
 		private OptionTag GetTagGO() {
@@ -28,8 +31,8 @@ namespace GameLogic.View.UI.WorldVillPanel
 			tag.OnSetedAsChild();
 			return tag;
 		}
-		private Sprite ArchTypeToIcon(ArchType archType) {
-			return _archIcons.Find(p => p.Key == archType).Value;
+		private Sprite FindIcon(ArchType archType) {
+			return _icons.Find(p => p.Key == archType).Value;
 		}
 		
 		private void RearrageAllTags() {
@@ -48,17 +51,17 @@ namespace GameLogic.View.UI.WorldVillPanel
 				if (aType == ArchType.Cottage) { continue; }
 				if (WorldMgr.Inst.IsAnyArch(aType)) {
 					var tag = GetTagGO();
-					tag.InjectInfo(ArchTypeToIcon(aType), aType);
+					tag.SetTagInfo(FindIcon(aType), aType);
 					_tags.Add(tag);
 				}
 			}
 
 			var homelessTag = GetTagGO();
-			homelessTag.InjectInfo(_homelessIcon, GroupType.Homeless);
+			homelessTag.SetTagInfo(_homelessIcon, GroupType.Homeless);
 			_tags.Add(homelessTag);
 
 			var worklessTag = GetTagGO();
-			worklessTag.InjectInfo(_worklessIcon, GroupType.Workless);
+			worklessTag.SetTagInfo(_worklessIcon, GroupType.Workless);
 			_tags.Add(worklessTag);
 
 			RearrageAllTags();

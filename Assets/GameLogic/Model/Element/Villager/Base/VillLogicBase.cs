@@ -74,7 +74,7 @@ namespace GameLogic.Model.Element.Vill
 				return;
 			}
 
-			arch.DisBondVill(this);
+			arch.DisBondVill(ID);
 			_bondedWorkArchID = 0;
 			EventSystem.Invoke<ulong, ulong, ulong>((int) ModelEvt.VillChengeWork_VuAuAu_3, ID, arch.ID, 0, NSFrame.EventType.Model);
 
@@ -108,7 +108,7 @@ namespace GameLogic.Model.Element.Vill
 				_bondedWorkArchID = arch.ID;
 			}
 			arch.OnArchDestroyed += OnBondedArchDestroyed;
-			arch.BondVill(this);
+			arch.BondVill(ID);
 			if (arch is not CottageLogic) {
 				// 绑定建筑后，可能需要直接触发去这个建筑工作
 				if (_taskRunner.CurTaskType == TaskType.MoveTo) {

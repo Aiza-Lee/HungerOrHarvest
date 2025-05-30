@@ -39,6 +39,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		private void Update() {
 			if (!Dirty) { return; }
 			Dirty = false;
+			// 按下左ctrl就是要开始调遣村民了
 			if (Input.GetKey(KeyCode.LeftControl)) {
 				if (_groupType == GroupType.Arch) {
 					if (_archType == _mainPanel.CurArchType) {
@@ -51,25 +52,36 @@ namespace GameLogic.View.UI.WorldVillPanel
 					SetSelectableImpl(false);
 				} else if (_groupType == GroupType.Workless) {
 					SetSelectableImpl(_mainPanel.CurGroupType != GroupType.Workless);
+				} else {
+					Debug.LogError("未知的GroupType");
 				}
 			} else {
 				SetSelectableImpl(true);
 			}
 		}
 
-		#region Injection
-		public void InjectInfo(Sprite sprite, ArchType archType) {
+		#region PublicMethods
+		/// <summary>
+		/// 设置建筑Tag的信息
+		/// </summary>
+		/// <param name="sprite">显示的图标</param>
+		/// <param name="archType">建筑类型</param>
+		public void SetTagInfo(Sprite sprite, ArchType archType) {
 			_groupType = GroupType.Arch;
 			_image.sprite = sprite;
 			_archType = archType;
 		}
-		public void InjectInfo(Sprite sprite, GroupType groupType) {
+		/// <summary>
+		/// 设置非建筑Tag的信息
+		/// </summary>
+		/// <param name="sprite">显示的图标</param>
+		/// <param name="groupType">设置组的类型</param>
+		public void SetTagInfo(Sprite sprite, GroupType groupType) {
 			_groupType = groupType;
 			_image.sprite = sprite;
 		}
-		#endregion
 
-		#region PublicMethods
+		// note: 这里由于 OptionTagMgr 写完的时候还没有开发出GroupLayout，所以这里是单独实现的
 		public void OnSetedAsChild() {
 			_rectTrans.offsetMin = new(_rectTrans.offsetMin.x, 0);
 			_rectTrans.offsetMax = new(_rectTrans.offsetMax.x, 0);
@@ -82,10 +94,10 @@ namespace GameLogic.View.UI.WorldVillPanel
 		}
 		public void OnPointerClick(PointerEventData _) {
 
-			Debug.Log("OnPointerClick");
+			// Debug.Log("OnPointerClick");
 
 			// note: 目前的权宜之计
-			// 在初始化的时候默认点击了homeless的tag，可能会在Start被调用之前进入这个函数导致 _mainPanel 为null
+			// 在初始化的时候默认点击了homeless的tag，可能会在Start被调用之前进入这个函数，导致_mainPanel为null
 			if (_mainPanel == null) {
 				UIMgr.Inst.FindPanel(out _mainPanel);
 			}

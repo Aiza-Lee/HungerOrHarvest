@@ -2458,9 +2458,9 @@ MonoBehaviour:
   _optionTagPrefab: {fileID: 1839388327620679353, guid: a437767b445df0b42913c9f6b68d0df5, type: 3}
   _tagRoot: {fileID: 18494107}
   _archIcons:
-  - Key: 1
+  - Key: Cottage
     Value: {fileID: 8616614370515334069, guid: 1197e0cffbce0084385e63671fc454c0, type: 3}
-  - Key: 16
+  - Key: Ruin
     Value: {fileID: 3936202811613502375, guid: ff888e693048c744589f7662323f4d94, type: 3}
   _defaultIcon: {fileID: 21300000, guid: b4b365f76c14a2242afef4ebe75b011f, type: 3}
   _homelessIcon: {fileID: -5145901034632892785, guid: d782ff35adee55846b494881b1d7063d, type: 3}

@@ -12,10 +12,10 @@ namespace GameLogic.Model.Element.Arch
 		/// <summary>
 		/// 绑定村民，如果绑定成功，则返回 true，否则返回 false
 		/// </summary>
-		bool BondVill(VillLogicBase vill);
+		bool BondVill(ulong id);
 		/// <summary>
 		/// 解绑村民，如果解绑成功，则返回 true，否则返回 false
 		/// </summary>
-		bool DisBondVill(VillLogicBase vill);
+		bool DisBondVill(ulong id);
 	}
 }

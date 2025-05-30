@@ -12,12 +12,12 @@ namespace GameLogic.View.UI.WorldVillPanel
 		}
 		public VillGroup Create(ArchLogicBase archLogic) { 
 			var vg = PoolSystem.PopGO<VillGroup>(_villGroupPrefab); 
-			vg.InjectInfo(archLogic);
+			vg.SetGroupInfo(archLogic);
 			return vg;
 		}
 		public VillGroup Create(GroupType groupType) { 
 			var vg = PoolSystem.PopGO<VillGroup>(_villGroupPrefab);
-			vg.InjectInfo(groupType);
+			vg.SetGroupInfo(groupType);
 			return vg;
 		}
 	}

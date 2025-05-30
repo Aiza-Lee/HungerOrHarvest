@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 namespace GameLogic.View.UI.WorldVillPanel
 {
+	/// <summary>
+	/// 村民卡片
+	/// </summary>
 	public class VillCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IGroupLayoutEle {
 		[SerializeField] private TextMeshProUGUI _nameText;
 		[SerializeField] private List<Pair<TextMeshProUGUI, TextMeshProUGUI>> _jobLevelTexts;
@@ -46,10 +49,10 @@ namespace GameLogic.View.UI.WorldVillPanel
 			UIMgr.Inst.FindPanel(out _mainPanel);
 		}
 		private void OnEnable() {
-			NSFrame.EventSystem.AddListener<ulong, JobType>((int)ModelEvt.VillLevelUp_VuJ_2, OnVillLevelChange, NSFrame.EventType.Model);
+			NSFrame.EventSystem.AddListener<ulong, JobType>((int) ModelEvt.VillLevelUp_VuJ_2, OnVillLevelChange, NSFrame.EventType.Model);
 		}
 		private void OnDisable() {
-			NSFrame.EventSystem.RemoveListener<ulong, JobType>((int)ModelEvt.VillLevelUp_VuJ_2, OnVillLevelChange, NSFrame.EventType.Model);
+			NSFrame.EventSystem.RemoveListener<ulong, JobType>((int) ModelEvt.VillLevelUp_VuJ_2, OnVillLevelChange, NSFrame.EventType.Model);
 		}
 		private void Update() {
 			if (_villView == null) return;
@@ -162,10 +165,10 @@ namespace GameLogic.View.UI.WorldVillPanel
 				_lightingEdge.SetActive(Selected);
 
 				if (Selected) {
-					_mainPanel.AddSelectedVillId(this);
+					_mainPanel.SelectCard(this);
 					Shrink();
 				} else {
-					_mainPanel.RemoveSelectedVillId(this);
+					_mainPanel.DeselectCard(this);
 					Expand();
 				}
 
