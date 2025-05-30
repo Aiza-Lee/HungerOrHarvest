@@ -64,29 +64,29 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public void OnOptionTagClicked(OptionTag tag) {
 			var groupType = tag.GroupType;
 			var archType = tag.ArchType;
-			if (Input.GetKey(KeyCode.LeftControl)) {
-				if (groupType == GroupType.Arch) {
+			// if (Input.GetKey(KeyCode.LeftControl)) {
+			// 	if (groupType == GroupType.Arch) {
 
-					// // 虽然设计之初并没有要求group的view响应村民工作变化的事件，然而为了保险起见
-					// // 即在设置工作的时候可能会调用 这里的 RemoveSelectedVillId 方法，从而改变用于枚举的_selectedVillIds
-					// List<VillCard> tmpVillIDs = new(_selectedVillIds);
-					// foreach (var vc in tmpVillIDs) {
-					// 	vc.BelongedGroup.RemoveEle(vc);
-					// 	vc.TransferTo(tag.RectTrans, (vc) => vc.Clear());
-					// 	CmdRunner.Run($"/vill-bond-arch {vc.AttachedVillID} {WorldMgr.Inst.FindWorkForVill(archType)}");
-					// }
+			// 		// // 虽然设计之初并没有要求group的view响应村民工作变化的事件，然而为了保险起见
+			// 		// // 即在设置工作的时候可能会调用 这里的 RemoveSelectedVillId 方法，从而改变用于枚举的_selectedVillIds
+			// 		// List<VillCard> tmpVillIDs = new(_selectedVillIds);
+			// 		// foreach (var vc in tmpVillIDs) {
+			// 		// 	vc.BelongedGroup.RemoveEle(vc);
+			// 		// 	vc.TransferTo(tag.RectTrans, (vc) => vc.Clear());
+			// 		// 	CmdRunner.Run($"/vill-bond-arch {vc.AttachedVillID} {WorldMgr.Inst.FindWorkForVill(archType)}");
+			// 		// }
 
-				} else if (groupType == GroupType.Workless) {
-					List<VillCard> tmpVillIDs = new(_selectedCards);
-					foreach (var vc in tmpVillIDs) {
-						vc.BelongedGroup.RemoveEle(vc);
-						vc.TransferTo(tag.RectTrans, (vc) => vc.Clear());
-						CmdRunner.Run($"/vill-disbond-workarch {vc.AttachedVillID}");
-					}
-				}
-			} else {
+			// 	} else if (groupType == GroupType.Workless) {
+			// 		List<VillCard> tmpVillIDs = new(_selectedCards);
+			// 		foreach (var vc in tmpVillIDs) {
+			// 			vc.BelongedGroup.RemoveEle(vc);
+			// 			vc.TransferTo(tag.RectTrans, (vc) => vc.Clear());
+			// 			CmdRunner.Run($"/vill-disbond-workarch {vc.AttachedVillID}");
+			// 		}
+			// 	}
+			// } else {
 				SetGroupType(groupType, archType);
-			}
+			// }
 			// 无论是否按住 ctrl 都应该清空选中的村民
 			_selectedCards.Clear();
 		}

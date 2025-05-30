@@ -62,7 +62,9 @@ namespace GameLogic.View
 				_running = false;
 
 				_stopCallback?.Invoke();
+				_stopCallback = null;
 				_doneCallback?.Invoke();
+				_doneCallback = null;
 			}
 		}
 		private void OnInterprete() {

@@ -14,7 +14,6 @@ namespace GameLogic.View.UI.WorldVillPanel
 	/// </summary>
 	public class VillCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IGroupLayoutEle {
 		[SerializeField] private TextMeshProUGUI _nameText;
-		[SerializeField] private List<Pair<TextMeshProUGUI, TextMeshProUGUI>> _jobLevelTexts;
 		[SerializeField] private Image _image;
 		[SerializeField] private RectTransform _expandMask;
 		[SerializeField] private GameObject _lightingEdge;
@@ -31,8 +30,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public const float MAX_WIDTH = 500f;
 		public const float MIN_WIDTH = 130f;
 		public const float HEIGHT = 260f;
-
-		public int MaxJobInfoCount => _jobLevelTexts.Count;
+		
 		public ulong AttachedVillID => _villView.Logic.ID;
 		public bool Selected { get; private set; }
 
@@ -48,15 +46,8 @@ namespace GameLogic.View.UI.WorldVillPanel
 		private void Start() {
 			UIMgr.Inst.FindPanel(out _mainPanel);
 		}
-		private void OnEnable() {
-			NSFrame.EventSystem.AddListener<ulong, JobType>((int) ModelEvt.VillLevelUp_VuJ_2, OnVillLevelChange, NSFrame.EventType.Model);
-		}
-		private void OnDisable() {
-			NSFrame.EventSystem.RemoveListener<ulong, JobType>((int) ModelEvt.VillLevelUp_VuJ_2, OnVillLevelChange, NSFrame.EventType.Model);
-		}
 		private void Update() {
 			if (_villView == null) return;
-			UpdateLevelText();
 		}
 
 		#region Injection
@@ -68,30 +59,16 @@ namespace GameLogic.View.UI.WorldVillPanel
 		}
 		#endregion
 
-		private void UpdateLevelText() {
-			var jobs = _villView.Logic.GetSortedJobLevels();
-			jobs.Full = true;
-			for (int i = 0; i < MaxJobInfoCount; i++) {
-				if (i < jobs.Count) {
-					_jobLevelTexts[i].Key.text = ConfigMgr.Config.FindJobConfig(i).ChineseName;
-					_jobLevelTexts[i].Value.text = $"Lv.{jobs[i].Value}";
-				} else {
-					_jobLevelTexts[i].Key.text = string.Empty;
-					_jobLevelTexts[i].Value.text = string.Empty;
-				}
-			}
-		}
-
 		private void Expand() {
-			_jobInfoLayout.Init(AttachedVillID);
+			_jobInfoLayout.OnExpand(AttachedVillID);
 			_expandMaskSOMax
-				.SetOnChanged((val) => OnDirty?.Invoke())
+				.SetOnChanged((_) => OnDirty?.Invoke())
 				.SetTarget(new(MAX_WIDTH, _expandMask.offsetMax.y));
 		}
 		private void Shrink() {
 			_expandMaskSOMax
-				.SetOnChanged((val) => OnDirty?.Invoke())
-				.SetDoneCallback(() => _jobInfoLayout.Clear())
+				.SetOnChanged((_) => OnDirty?.Invoke())
+				.SetDoneCallback(() => _jobInfoLayout.OnShrinkDone())
 				.SetTarget(new(MIN_WIDTH, _expandMask.offsetMax.y));
 		}
 
@@ -101,10 +78,14 @@ namespace GameLogic.View.UI.WorldVillPanel
 			_image.sprite = null;
 			Selected = false;
 			_lightingEdge.SetActive(false);
-			_jobInfoLayout.Clear();
 			PoolSystem.PushGO(gameObject);
 		}
 
+		/// <summary>
+		/// 将该卡片移动到目标位置，并逐渐缩小到 0 后销毁
+		/// </summary>
+		/// <param name="target">目标位置</param>
+		/// <param name="callBack">移动完成后的回调</param>
 		public void TransferTo(RectTransform target, Action<VillCard> callBack) {
 			_rectTrans.SetParent(target);
 			_rectTrans.SetAsLastSibling();
@@ -115,13 +96,6 @@ namespace GameLogic.View.UI.WorldVillPanel
 			_smoothScale
 				.SetDoneCallback(() => { callBack?.Invoke(this); })
 				.SetTarget(new(0f, 0f, 0f));
-		}
-		#endregion
-
-		#region EventSystem
-		private void OnVillLevelChange(ulong vID, JobType _) {
-			if (_villView.Logic.ID != vID) return;
-			UpdateLevelText();
 		}
 		#endregion
 

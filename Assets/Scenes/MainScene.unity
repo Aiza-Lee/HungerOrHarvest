@@ -5634,7 +5634,7 @@ GameObject:
   - component: {fileID: 920635457}
   - component: {fileID: 920635456}
   m_Layer: 5
-  m_Name: DailyReportPanel
+  m_Name: Daily Report Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6860,7 +6860,7 @@ GameObject:
   - component: {fileID: 1166255945}
   - component: {fileID: 1166255946}
   m_Layer: 0
-  m_Name: Model Const Mgr
+  m_Name: Model Config Mgr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,7 +11,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		}
 		public VillExpandJobInfo Create(ulong villID, JobType jobType) {
 			var info = PoolSystem.PopGO<VillExpandJobInfo>(_prefab);
-			info.InjectVillAndJobType(WorldMgr.Inst.FindVill(villID), jobType);
+			info.SetJobInfo(WorldMgr.Inst.FindVill(villID), jobType);
 			return info;
 		}
 	}

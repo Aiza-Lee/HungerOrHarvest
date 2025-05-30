@@ -1,5 +1,6 @@
+using System;
+using System.Collections.Generic;
 using GameLogic.Model.Mgr;
-using NSFrame;
 using UnityEngine;
 
 namespace GameLogic.Model.Element.Vill
@@ -22,6 +23,8 @@ namespace GameLogic.Model.Element.Vill
 			_vill = vill;
 		}
 
+		public event Action<JobType> OnLevelUp;
+
 		private void LevelUpImpl(JobType job) {
 			var idx = (int) job;
 			var levelNow = ++_jobLevel_F[idx].Value;
@@ -36,20 +39,27 @@ namespace GameLogic.Model.Element.Vill
 				_prodBuffs_F[pr.Index].Value += pr.Value;
 			}
 
-			EventSystem.Invoke<ulong, JobType>(
-				(int) ModelEvt.VillLevelUp_VuJ_2,
-				_vill.ID, job,
-				NSFrame.EventType.Model
-			);
+			OnLevelUp?.Invoke(job);
 		}
 
 		#region PublicMethods
 
-		public JTList<int> GetSortedJobLevelsImpl() {
-			JTList<int> res = _jobLevel_F.Clone();
-			res.List.Sort((a, b) => b.Value.CompareTo(a.Value));
-			// 这里是用这个标记是否可以使用下标访问内容
-			res.Full = false;
+		/// <summary>
+		/// 返回排序后的所有工作
+		/// <para>排序规则：首先按照等级排序，相同等级的按照经验值排序</para>
+		/// </summary>
+		public List<JobType> GetSortedJobLevelsImpl() {
+			var res = new List<JobType>();
+			for (int i = 0; i < ConstMgr.JOB_TYPE_SIZE; ++i) {
+				res.Add((JobType) i);
+			}
+			res.Sort((lhv, rhv) => {
+				var l = (int) lhv;
+				var r = (int) rhv;
+				var rk1 = _jobLevel_F[r].Value.CompareTo(_jobLevel_F[l].Value);
+				if (rk1 != 0) return rk1;
+				return _jobExps_F[r].Value.CompareTo(_jobExps_F[l].Value);
+			});
 			return res;
 		}
 

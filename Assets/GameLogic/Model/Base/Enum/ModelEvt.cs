@@ -39,10 +39,6 @@ namespace GameLogic
 		/// </summary>
 		VillLeaveArch_VuAu_2,
 		/// <summary>
-		/// 村民ID，升级的JobType
-		/// </summary>
-		VillLevelUp_VuJ_2,
-		/// <summary>
 		/// <para> 村民ID: ulong </para> 
 		/// <para> 原来的建筑ID: ulong </para>
 		/// <para> 新的建筑ID: ulong </para>

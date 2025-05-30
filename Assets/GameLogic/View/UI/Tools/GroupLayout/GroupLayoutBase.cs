@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,7 +42,7 @@ namespace GameLogic.View.UI
 		protected readonly List<IGroupLayoutEle> _eles = new();
 
 		#region PublicMethods
-		public virtual void Clear() {
+		public void Clear() {
 			foreach (var ele in _eles) {
 				ele.Clear();
 				ele.OnDirty -= RearrangeEle;
@@ -68,6 +69,17 @@ namespace GameLogic.View.UI
 			}
 			SetLength(pos + _space);
 		}
+		/// <summary>
+		/// 对group中的元素进行排序
+		/// </summary>
+		/// <param name="comparison">调用者提供的排序方法</param>
+		public virtual void SortEle(Comparison<IGroupLayoutEle> comparison) {
+			_eles.Sort(comparison);
+			RearrangeEle();
+		}
+		/// <summary>
+		/// 添加一个元素到group中
+		/// </summary>
 		public void AddEle(IGroupLayoutEle ele) {
 			ele.RectTrans.SetParent(_eleContainer);
 			_eles.Add(ele);
@@ -76,6 +88,9 @@ namespace GameLogic.View.UI
 			ele.BelongedGroup = this;
 			RearrangeEle();
 		}
+		/// <summary>
+		/// 从group中移除一个元素
+		/// </summary>
 		public void RemoveEle(IGroupLayoutEle ele) {
 			_eles.Remove(ele);
 			ele.OnDirty -= RearrangeEle;

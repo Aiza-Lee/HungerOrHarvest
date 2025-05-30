@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GameLogic.Model.Element.Arch;
 using GameLogic.Model.Factory;
 using NSFrame;
@@ -89,6 +90,10 @@ namespace GameLogic.Model.Element.Vill
 
 		#region Event
 		public event Action<Coord> OnCoordChange;
+		public event Action<JobType> OnLevelUp {
+			add => _expHelper.OnLevelUp += value;
+			remove => _expHelper.OnLevelUp -= value;
+		}
 		#endregion
 
 		#region PublicMethods
@@ -136,9 +141,10 @@ namespace GameLogic.Model.Element.Vill
 		}
 
 		/// <summary>
-		/// 返回按照经验值从大到小排序的职业等级
+		/// 返回排序后的所有工作
+		/// <para>排序规则：首先按照等级排序，相同等级的按照经验值排序</para>
 		/// </summary>
-		public JTList<int> GetSortedJobLevels() => _expHelper.GetSortedJobLevelsImpl();
+		public List<JobType> GetSortedJobLevels() => _expHelper.GetSortedJobLevelsImpl();
 		/// <summary>
 		/// 添加经验值，如果当前经验值满了而没有下一级的 Config，那经验值不会再增加
 		/// </summary>

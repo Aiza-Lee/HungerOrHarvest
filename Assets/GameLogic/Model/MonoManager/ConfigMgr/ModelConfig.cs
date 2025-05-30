@@ -15,7 +15,7 @@ namespace GameLogic.Model.Mgr
 		public float VILL_ONE_MOVE_TICK;
 		public float NIGHT_TIME_SPEED;
 
-		[Header("务必为每一种职业、建筑、村民创建配置")]
+		[Header("务必为每一种职业、建筑、村民创建配置, 否则程序无法正常运行")]
 		[Space]
 		[Space]
 		[SerializeField] private List<JobConfig> JobConfigs;

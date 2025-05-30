@@ -28,4 +28,8 @@ MonoBehaviour:
   VolumeAddsSave:
     List: []
   ExpAddsSave:
-    List: []
+    List:
+    - Key: Timberjack
+      Value: 0.5
+    - Key: Farmer
+      Value: 0.05
