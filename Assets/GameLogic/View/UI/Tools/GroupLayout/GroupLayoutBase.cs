@@ -44,7 +44,7 @@ namespace GameLogic.View.UI
 		#region PublicMethods
 		public void Clear() {
 			foreach (var ele in _eles) {
-				ele.Clear();
+				ele.LogicDestroy();
 				ele.OnDirty -= RearrangeEle;
 				ele.BelongedGroup = null;
 			}

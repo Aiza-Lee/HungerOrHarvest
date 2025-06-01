@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using GameLogic.Model.Element.Arch;
 using GameLogic.Model.Element.Layer;
 using GameLogic.Model.Element.Vill;
 using GameLogic.Model.Factory;
+using GameLogic.Model.Mgr;
 using GameLogic.Utilities;
 using NSFrame;
 using UnityEngine;
@@ -77,6 +80,11 @@ namespace GameLogic
 
 
 		#region PublicMethods
+		public IEnumerable<ArchLogicBase> FindAllArchs(ArchType archType) {
+			return from arch in _archs
+				   where arch.ArchType == archType
+				   select arch;
+		}
 		public VillLogicBase FindVill(ulong id) {
 			if (_villDict.TryGetValue(id, out var vill)) { return vill; }
 			Debug.LogWarning($"id:{id} has no matched Vill");
@@ -97,11 +105,12 @@ namespace GameLogic
 				return _layers[lyr - LayerNegEdge];
 			}
 		}
-		public List<ulong> GetHomelessVillIDs() {
-			return _vills.FindAll(v => v.IsHomeless).ConvertAll(v => v.ID);
-		}
-		public List<ulong> GetWorklessVillIDs() {
-			return _vills.FindAll(v => v.IsWorkless).ConvertAll(v => v.ID);
+		/// <summary>
+		/// 根据predicate查找符合条件的vill的id
+		/// </summary>
+		/// <param name="predicate">条件</param>
+		public List<ulong> FindVillIDs(Func<VillLogicBase, bool> predicate) {
+			return _vills.FindAll(v => predicate(v)).ConvertAll(v => v.ID);
 		}
 		public bool IsAnyArch(ArchType archType) { return _archs.Exists(a => a.ArchType == archType); }
 
@@ -134,20 +143,62 @@ namespace GameLogic
 			EventSystem.Invoke<OL>((int)ModelEvt.UnlockOL_O_1, ol, NSFrame.EventType.Model);
 		}
 
-		// public ulong FindWorkForVill(ArchType archType) {
-		// 	var arch = _archs.Find(a => a.ArchType == archType && a.CheckBondVill());
-		// 	return arch == null ? 0 : arch.ID;
-		// }
-		// public bool FindWorkForVill(int villCnt, ArchType archType) {
-		// 	int cnt = 0;
-		// 	foreach (var arch in _archs) {
-		// 		if (arch.ArchType == archType) {
-		// 			cnt += arch.Lconfig.MaxContain - arch.BondedVillCount;
-		// 			if (cnt >= villCnt) return true;
-		// 		}
-		// 	}
-		// 	return false;
-		// }
+		/// <summary>
+		/// 为多个村民寻找工作，返回是否有这么多空位（工作建筑和Home都适用）
+		/// </summary>
+		/// <param name="villCnt">需要的工作数量</param>
+		/// <param name="archType">建筑类型</param>
+		public bool HaveBondPosForVills(int villCnt, ArchType archType) {
+			var workcnt = 0;
+			var archs = _archs.Where(arch => arch.ArchType == archType);
+			foreach (var arch in archs) {
+				workcnt += arch.RestBondPositions;
+				if (workcnt >= villCnt) {
+					return true;
+				}
+			}
+			return false;
+		}
+		/// <summary>
+		/// 为村民寻找最近的工作点（相对于家的坐标）
+		/// </summary>
+		/// <param name="villID">村民ID</param>
+		/// <param name="archType">建筑类型</param>
+		/// <param name="workArch">找到的建筑，没找到则为null</param>
+		/// <returns>成功找到返回true，失败返回false</returns>
+		public bool FindWorkForVill(ulong villID, ArchType archType, out ArchLogicBase workArch) {
+			var vill = FindVill(villID);
+			var home = FindArch(vill.HomeID);
+			// 寻找最近的
+			var archs = from arch in _archs
+						where arch.ArchType == archType && arch.CheckBondVill()
+						orderby RouteMgr.Inst.GetRoute(home.Coord, arch.Coord).Count
+						select arch;
+			if (archs.Count() > 0) {
+				workArch = archs.First();
+				return true;
+			}
+			workArch = null;
+			return false;
+		}
+		/// <summary>
+		/// 为村民寻找随机的家
+		/// </summary>
+		/// <param name="villID">村民ID</param>
+		/// <param name="cottage">找到的家，没找到的话为null</param>
+		/// <returns>成功找到返回true，失败返回false</returns>
+		public bool FindHomeForVill(ulong villID, out CottageLogic cottage) {
+			var vill = FindVill(villID);
+			var cottages = from c in _archs
+						   where c.ArchType == ArchType.Cottage && c.CheckBondVill()
+						   select c;
+			if (cottages.Count() > 0) {
+				cottage = cottages.First() as CottageLogic;
+				return true;
+			}
+			cottage = null;
+			return false;
+		}
 		#endregion
 
 		#region ISaveable

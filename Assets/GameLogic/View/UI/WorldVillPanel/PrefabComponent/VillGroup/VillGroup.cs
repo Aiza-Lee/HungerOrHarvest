@@ -8,8 +8,6 @@ namespace GameLogic.View.UI.WorldVillPanel
 {
 	public class VillGroup : GroupLayoutBase, IGroupLayoutEle {
 
-		private GroupType _groupType;
-
 		private void GenerateVillCards(List<ulong> ids) {
 			foreach (var id in ids) {
 				var card = VillCardFactory.Inst.Create(id);
@@ -23,7 +21,6 @@ namespace GameLogic.View.UI.WorldVillPanel
 		/// </summary>
 		/// <param name="arch">建筑</param>
 		public void SetGroupInfo(ArchLogicBase arch) {
-			_groupType = GroupType.Arch;
 			GenerateVillCards(arch.BondedVillIDs);
 		}
 		/// <summary>
@@ -31,11 +28,10 @@ namespace GameLogic.View.UI.WorldVillPanel
 		/// </summary>
 		/// <param name="groupType">group的类型</param>
 		public void SetGroupInfo(GroupType groupType) {
-			_groupType = groupType;
-			if (_groupType == GroupType.Homeless) {
-				GenerateVillCards(WorldMgr.Inst.GetHomelessVillIDs());
-			} else if (_groupType == GroupType.Workless) {
-				GenerateVillCards(WorldMgr.Inst.GetWorklessVillIDs());
+			if (groupType == GroupType.Homeless) {
+				GenerateVillCards(WorldMgr.Inst.FindVillIDs((v) => v.IsHomeless));
+			} else if (groupType == GroupType.Workless) {
+				GenerateVillCards(WorldMgr.Inst.FindVillIDs((v) => !v.IsHomeless && v.IsWorkless));
 			}
 		}
  		#endregion
@@ -60,11 +56,10 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public void OnAddedToGroup() {
 			_rectTrans.offsetMin = new(0, 0);
 			_rectTrans.offsetMax = new(0, 0);
-			SetLength(_space);
+			RearrangeEle();
 		}
-		void IGroupLayoutEle.Clear() {
+		public void LogicDestroy() {
 			base.Clear();
-			_groupType = GroupType.None;
 			PoolSystem.PushGO(gameObject);
 		}
 		#endregion

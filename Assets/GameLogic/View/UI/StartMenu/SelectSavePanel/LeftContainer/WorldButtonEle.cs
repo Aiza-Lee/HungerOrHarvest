@@ -39,7 +39,7 @@ namespace GameLogic.View.UI.StartMenu.SelectSavePanel
 			_rectTrans.offsetMax = new(0, 0);
 			_rectTrans.offsetMin = new(0, 0);
 		}
-		public void Clear() {
+		public void LogicDestroy() {
 			PoolSystem.PushGO(gameObject);
 		}
 		#endregion

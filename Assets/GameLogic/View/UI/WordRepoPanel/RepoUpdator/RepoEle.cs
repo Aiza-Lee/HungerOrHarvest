@@ -40,7 +40,7 @@ namespace GameLogic.View.UI.WorldRepoPanel
 			_rectTrans.offsetMin = new(0, - y - EleSize);
 			_rectTrans.offsetMax = new(0, - y);
 		}
-		public void Clear() {}
+		public void LogicDestroy() {}
 		#endregion
 	}
 }

@@ -11,13 +11,19 @@ namespace GameLogic.View.UI.WorldVillPanel
 
 		public bool Dirty { get; set; }
 
+		/// <summary>
+		/// Tag代表的组类型
+		/// </summary>
 		private GroupType _groupType;
-		private ArchType _archType;
+		private ArchType? _archType;
 		private RectTransform _rectTrans;
 		private MainPanel _mainPanel;
 
-		public GroupType GroupType => _groupType;
-		public ArchType ArchType => _archType;
+		/// <summary>
+		/// Tag代表的组类型
+		/// </summary>
+		public GroupType TagGroupType => _groupType;
+		public ArchType? TagArchType => _archType;
 		public RectTransform RectTrans => _rectTrans;
 
 		private void Awake() {
@@ -41,19 +47,44 @@ namespace GameLogic.View.UI.WorldVillPanel
 			Dirty = false;
 			// 按下左ctrl就是要开始调遣村民了
 			if (Input.GetKey(KeyCode.LeftControl)) {
-				if (_groupType == GroupType.Arch) {
-					if (_archType == _mainPanel.CurArchType) {
-						SetSelectableImpl(false);
-					} else {
-						// SetSelectableImpl(WorldMgr.Inst.FindWorkForVill(_mainPanel.SelectedVillCount, _archType));
-						SetSelectableImpl(false);
+				switch (_groupType) {
+					// 分配家，只能对Homeless的生效
+					case GroupType.Home: {
+							SetSelectableImpl(
+								_mainPanel.CurGroupType == GroupType.Homeless
+								&& WorldMgr.Inst.HaveBondPosForVills(_mainPanel.SelectedVillCount, ArchType.Cottage)
+							);
+							break;
+						}
+					// 调遣到工作建筑
+					case GroupType.Arch: {
+							SetSelectableImpl(
+								_mainPanel.CurGroupType != GroupType.Homeless
+								&& _mainPanel.CurGroupType != GroupType.Home
+								&& WorldMgr.Inst.HaveBondPosForVills(_mainPanel.SelectedVillCount, (ArchType) _archType)
+								&& (
+									_mainPanel.CurGroupType != GroupType.Arch
+									|| (_mainPanel.CurGroupType == GroupType.Arch && _mainPanel.CurArchType != _archType)
+								) 
+							);
+							break;
 					}
-				} else if (_groupType == GroupType.Homeless) {
-					SetSelectableImpl(false);
-				} else if (_groupType == GroupType.Workless) {
-					SetSelectableImpl(_mainPanel.CurGroupType != GroupType.Workless);
-				} else {
-					Debug.LogError("未知的GroupType");
+					// 使没有home 或者没有工作
+					case GroupType.Workless: {
+							SetSelectableImpl(
+								_mainPanel.CurGroupType == GroupType.Arch
+							);
+							break;
+						}
+					// 使没有home，只在Home处生效
+					case GroupType.Homeless: {
+							SetSelectableImpl(_mainPanel.CurGroupType == GroupType.Home);
+							break;
+						}
+					default: {
+							Debug.LogError("未知的GroupType");
+							break;
+						}
 				}
 			} else {
 				SetSelectableImpl(true);

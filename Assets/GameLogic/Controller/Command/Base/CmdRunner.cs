@@ -20,14 +20,14 @@ namespace GameLogic.Controller
 		public static bool Run(this CommandBase cmd) {
 			if (cmd.Check()) {
 				cmd.Execute();
-				#if UNITY_EDITOR
-					Debug.Log($"CMD:<<{cmd.CmdTitle}>>  {cmd.Description}");
-				#endif
+#if UNITY_EDITOR
+				Debug.Log($"CMD:<<{cmd.CmdTitle}>>  {cmd.Description}");
+#endif
 				return true;
 			} else {
-				#if UNITY_EDITOR
-					Debug.Log($"CMD Fail:{cmd.FailReason}");
-				#endif
+#if UNITY_EDITOR
+				Debug.Log($"CMD Fail:{cmd.FailReason}");
+#endif
 				return false;
 			}
 		}

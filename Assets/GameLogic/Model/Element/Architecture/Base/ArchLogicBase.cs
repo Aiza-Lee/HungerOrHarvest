@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using GameLogic.Model.Element.Vill;
 using GameLogic.Model.Mgr;
 using NSFrame;
 
@@ -78,6 +77,10 @@ namespace GameLogic.Model.Element.Arch
 				return false;
 			}
 		}
+		/// <summary>
+		/// 余下的可以绑定的位置总量
+		/// </summary>
+		public int RestBondPositions => Lconfig.MaxContain - BondedVillIDs.Count;
 		#endregion
 
 

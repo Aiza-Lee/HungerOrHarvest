@@ -20,6 +20,10 @@ namespace GameLogic.View.UI
 		/// 当被加入到groupLayoutBase中的时候被调用
 		/// </summary>
 		void OnAddedToGroup();
-		void Clear();
+		/// <summary>
+		/// 逻辑上销毁自己的操作，这里一般指把自己放回对象池
+		/// <para>记得在Unity的生命周期方法中执行解除引用的操作</para>
+		/// </summary>
+		void LogicDestroy();
 	}
 }

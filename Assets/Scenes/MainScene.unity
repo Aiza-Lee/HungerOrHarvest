@@ -2465,6 +2465,7 @@ MonoBehaviour:
   _defaultIcon: {fileID: 21300000, guid: b4b365f76c14a2242afef4ebe75b011f, type: 3}
   _homelessIcon: {fileID: -5145901034632892785, guid: d782ff35adee55846b494881b1d7063d, type: 3}
   _worklessIcon: {fileID: 415782171917306013, guid: f26facd4d51dbaf45bf64814bd88b472, type: 3}
+  _homeIcon: {fileID: 1160301879414176733, guid: 69ba7836976bdfa419fbea6e5585bea7, type: 3}
 --- !u!1 &344965641
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace GameLogic.View.UI.WorldVillPanel 
 {
 	public class GroupMgr : ScrollGroupLayoutBase {
@@ -9,25 +11,38 @@ namespace GameLogic.View.UI.WorldVillPanel
 			Clear();
 		}
 
-		public void SetCurGroupType(GroupType groupType, ArchType? archType = null) {
-			// if (_curGroupType == groupType && _curArchType == archType) { return; }
+		/// <summary>
+		/// 设置当前显示的组类型
+		/// </summary>
+		/// <param name="groupType">组的类型</param>
+		/// <param name="archType">如果组是Arch，对应的建筑类型</param>
+		public void SetCurGroupType(GroupType groupType, ArchType? archType) {
 			Clear();
-			// 如果是展示arch的group
-			if (groupType == GroupType.Arch && archType != null) {
-				// 获取对应类型的全部建筑的 View
-				var archViews = WorldViewMgr.Inst.GetAllArchViews((ArchType) archType);
-				archViews.Sort((a, b) => a.Logic.Coord.X.CompareTo(b.Logic.Coord.X));
-
-				// 为每一个建筑实例 创建一个 Group
-				foreach (var archView in archViews) {
-					var group = VillGroupFactory.Inst.Create(archView.Logic);
-					AddEle(group);
-					group.RearrangeEle();
-				}
-			} else { // 如果是展示 Homeless 或者 Workless 的group
-				var group = VillGroupFactory.Inst.Create(groupType);
-				AddEle(group);
-				group.RearrangeEle();
+			switch (groupType) {
+				case GroupType.Arch: {
+						var archs = WorldMgr.Inst.FindAllArchs((ArchType) archType).ToList();
+						archs.Sort((a, b) => a.Coord.X.CompareTo(b.Coord.X));
+						foreach (var arch in archs) {
+							var group = VillGroupFactory.Inst.Create(arch);
+							AddEle(group);
+						}
+						break;
+					}
+				case GroupType.Home: {
+						var homes = WorldMgr.Inst.FindAllArchs(ArchType.Cottage).ToList();
+						homes.Sort((a, b) => a.Coord.X.CompareTo(b.Coord.X));
+						foreach (var home in homes) {
+							var group = VillGroupFactory.Inst.Create(home);
+							AddEle(group);
+						}
+						break;
+					}
+				case GroupType.Homeless:
+				case GroupType.Workless: {
+						var group = VillGroupFactory.Inst.Create(groupType);
+						AddEle(group);
+						break;
+					}
 			}
 		}
 

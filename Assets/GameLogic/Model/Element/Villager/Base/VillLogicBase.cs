@@ -15,24 +15,24 @@ namespace GameLogic.Model.Element.Vill
 
 		private TaskRunner _taskRunner;
 		private ExpHelper _expHelper;
-		private ulong _homeID;
 		private ulong _bondedWorkArchID;
 
 		public ulong ID { get; private set; }
 		public string FirstName { get; private set; }
 		public string LastName { get; private set; }
 		public Coord Coord { get; private set; }
+		public ulong HomeID { get; private set; }
 		public RTList<float> ConsBuffs_F => _expHelper.ConsBuffs_F;
 		public RTList<float> ProdBuffs_F => _expHelper.ProdBuffs_F;
 		public TaskType CurTaskType => _taskRunner.CurTaskType;
 
-		public bool IsHomeless => _homeID == 0;
+		public bool IsHomeless => HomeID == 0;
 		public bool IsWorkless => _bondedWorkArchID == 0;
 
 		private void DestroyImpl() {
 			_taskRunner.Destroy();
 			if (_bondedWorkArchID != 0) DisBondArchImpl(WorldMgr.Inst.FindArch(_bondedWorkArchID));
-			if (_homeID != 0) DisBondArchImpl(WorldMgr.Inst.FindArch(_homeID));
+			if (HomeID != 0) DisBondArchImpl(WorldMgr.Inst.FindArch(HomeID));
 			EventSystem.RemoveListener((int)ModelEvt.DayStart_0, OnDayStart, NSFrame.EventType.Model);
 			EventSystem.RemoveListener((int)ModelEvt.NightStart_0, OnNightStart, NSFrame.EventType.Model);
 			EventSystem.Invoke((int)ModelEvt.VillDestroyed_V_1, this, NSFrame.EventType.Model);
@@ -58,7 +58,7 @@ namespace GameLogic.Model.Element.Vill
 			DestroyImpl();
 		}
 		private void OnNightStart() {
-			if (!_taskRunner.SetGoSleepTasks(_homeID)) { LeaveWorldImpl(); }
+			if (!_taskRunner.SetGoSleepTasks(HomeID)) { LeaveWorldImpl(); }
 		}
 
 		private void OnBondedArchDestroyed(ArchLogicBase arch) {
@@ -71,7 +71,8 @@ namespace GameLogic.Model.Element.Vill
 			if (arch == null) { return; }
 			arch.OnArchDestroyed -= OnBondedArchDestroyed;
 			if (arch is CottageLogic) {
-				_homeID = 0;
+				arch.DisBondVill(ID);
+				HomeID = 0;
 				return;
 			}
 
@@ -84,6 +85,10 @@ namespace GameLogic.Model.Element.Vill
 				_taskRunner.ResetTasks();
 			} else if (_taskRunner.CurTaskType == TaskType.MoveTo && _taskRunner.CurMoveToTargetType == MoveToTargetType.WorkArch) {
 				// 如果正在移动到工作建筑, 重置任务
+				_taskRunner.ResetTasks();
+			} else if (_taskRunner.CurTaskType == TaskType.None) {
+				// 如果在同一个逻辑帧中经行了建筑的绑定和解绑
+				// taskRunner还没有来得及把队列中的任务添加到正在执行的任务
 				_taskRunner.ResetTasks();
 			}
 		}
@@ -108,7 +113,7 @@ namespace GameLogic.Model.Element.Vill
 		/// </summary>
 		public void BondArch(ArchLogicBase arch) {
 			if (arch is CottageLogic) {
-				_homeID = arch.ID;
+				HomeID = arch.ID;
 			} else {
 				_bondedWorkArchID = arch.ID;
 			}
@@ -133,7 +138,7 @@ namespace GameLogic.Model.Element.Vill
 		/// <summary>
 		/// 与 home 解绑
 		/// </summary>
-		public void DisBondHome() => DisBondArchImpl(WorldMgr.Inst.FindArch(_homeID));
+		public void DisBondHome() => DisBondArchImpl(WorldMgr.Inst.FindArch(HomeID));
 
 		public void Move(Coord dltCoord) {
 			Coord += dltCoord;
@@ -168,7 +173,7 @@ namespace GameLogic.Model.Element.Vill
 				save.Coord 				= Coord;
 				save.TaskRunner 		= _taskRunner.GetSave();
 				save.ExpHelper 			= _expHelper.GetSave();
-				save.HomeID 			= _homeID;
+				save.HomeID 			= HomeID;
 				save.AttachedWorkArchID = _bondedWorkArchID;
 			return save;
 		}
@@ -182,7 +187,7 @@ namespace GameLogic.Model.Element.Vill
 			Coord 				= save.Coord;
 			_taskRunner 		= LogicFctry.Inst.LoadVillTaskRunner(this, save.TaskRunner);
 			_expHelper			= LogicFctry.Inst.LoadVillExpHelper(this, save.ExpHelper);
-			_homeID 			= save.HomeID;
+			HomeID 			= save.HomeID;
 			_bondedWorkArchID 	= save.AttachedWorkArchID;
 		}
 		#endregion

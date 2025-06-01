@@ -35,7 +35,7 @@ namespace GameLogic.View.UI.WorldVillPanel {
 		}
 
 		#region PublicMethods
-		public void Clear() {
+		public void LogicDestroy() {
 			_villLogic = null;
 			PoolSystem.PushGO(gameObject);
 		}

@@ -24,7 +24,7 @@ namespace GameLogic.View.UI.WorldRepoPanel
 		public void SetPos(float x) {
 			;
 		}
-		public void Clear() {}
+		public void LogicDestroy() {}
 		#endregion
 	}
 }

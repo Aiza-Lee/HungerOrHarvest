@@ -30,7 +30,7 @@ namespace GameLogic.View
 
 		private void Update() {
 			#if UNITY_EDITOR
-				if (Input.GetKeyDown(KeyCode.Tab)) {
+				if (Input.GetKeyDown(KeyCode.Tab) && Input.GetKey(KeyCode.LeftControl)) {
 					TogglePanelImpl<Test.MainTestPanel>();
 				}
 			#endif

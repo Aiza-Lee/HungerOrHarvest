@@ -6,6 +6,10 @@ namespace GameLogic.Model.Element.Arch
 	/// 建筑绑定村民的接口，由村民调用建筑绑定村民的逻辑
 	/// </summary>
 	public interface IBondVill {
+		/// <summary>
+		/// 检查当前是否可以再绑定一个vill
+		/// </summary>
+		/// <returns></returns>
 		bool CheckBondVill();
 		bool HasBondedVill(ulong vID);
 

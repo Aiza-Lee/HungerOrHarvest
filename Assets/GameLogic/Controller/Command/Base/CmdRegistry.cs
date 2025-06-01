@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameLogic.Controller
 {
@@ -37,6 +38,19 @@ namespace GameLogic.Controller
 			}
 			result = generator(args);
 			return true;
+		}
+		
+		// 获取所有命令列表
+		public static List<string> GetAllCommands() {
+			return _allCmds.Keys.ToList();
+		}
+		
+		// 获取匹配前缀的命令列表
+		public static List<string> GetMatchingCommands(string prefix) {
+			prefix = prefix.ToLower();
+			return _allCmds.Keys
+				.Where(cmd => cmd.StartsWith(prefix))
+				.ToList();
 		}
 	}
 }

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using GameLogic.Model.Mgr;
 using NSFrame;
 using TMPro;
 using UnityEngine;
@@ -27,6 +25,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		private MainPanel _mainPanel;
 
 		private VillViewBase _villView;
+		private bool _isFocused;
 		public const float MAX_WIDTH = 500f;
 		public const float MIN_WIDTH = 130f;
 		public const float HEIGHT = 260f;
@@ -73,7 +72,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		}
 
 		#region PublicMethods
-		public void Clear() {
+		public void LogicDestroy() {
 			_villView = null;
 			_image.sprite = null;
 			Selected = false;
@@ -128,13 +127,19 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public void OnPointerExit(PointerEventData _) {
 			if (Selected) return;
 			Shrink();
-			Controller.CmdRunner.Run("/cam-free");
+			if (_isFocused) {
+				Controller.CmdRunner.Run("/cam-free");
+				_isFocused = false;
+			}
 		}
 		#endregion
 		#region IPointerClickHandler
 		public void OnPointerClick(PointerEventData _) {
 			if (Input.GetKey(KeyCode.LeftControl)) {
-				Controller.CmdRunner.Run("/cam-free");
+				if (_isFocused) {
+					Controller.CmdRunner.Run("/cam-free");
+					_isFocused = false;
+				}
 				Selected = !Selected;
 				_lightingEdge.SetActive(Selected);
 
@@ -148,6 +153,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 
 			} else {
 				Controller.CmdRunner.Run("/cam-focus-vill " + _villView.Logic.ID);
+				_isFocused = true;
 			}
 		}
 		#endregion
