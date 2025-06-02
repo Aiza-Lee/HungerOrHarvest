@@ -2,14 +2,16 @@ using System.Collections.Generic;
 using GameLogic.Utilities;
 using UnityEngine;
 
-namespace GameLogic.Model.Mgr
-{
+namespace GameLogic.Model.Mgr {
 	public class RouteMgr : IMananger {
-		private RouteMgr() {}
+		private RouteMgr() { }
 		public static RouteMgr Inst { get; } = new();
-		
+
 		private readonly int[] _randomOrder = new int[3];
 
+		/// <summary>
+		/// 返回指定范围内村民可随机游荡的坐标
+		/// </summary>
 		public Coord GetRandomVillSpareCoord() {
 			var spare = ConfigMgr.Config.FindVillConfig(VillType.Normal).SpareOrdRadius;
 			var odr = Random.Range(WorldMgr.Inst.MinArchODR - spare, WorldMgr.Inst.MaxArchODR + 1 + spare);
@@ -30,10 +32,9 @@ namespace GameLogic.Model.Mgr
 		/// </summary>
 		public List<Coord> GetRoute(Coord start, Coord end) {
 			if (start.OnSameEdge(end)) {
-				if (start == end) { return new(); }
-				else { return new(){ end }; }
+				if (start == end) { return new(); } else { return new() { end }; }
 			}
-			
+
 			var q = new PriorityQueue<Coord>();
 			var cost = new Dictionary<Coord, int>();
 			var cameFrom = new Dictionary<Coord, Coord>();
@@ -44,12 +45,16 @@ namespace GameLogic.Model.Mgr
 				var top = q.Dequeue();
 				var cur = top.Value;
 				var dis = cost[cur];
+				// 如果 cur 和 end 在同一条边上，那么 cur 到 end 的路径就是 end
 				if (cur.OnSameEdge(end)) {
-					var res = ReconstructPath(cameFrom, cur, addStart: false);
-					if (cur != end) {
-						res.Add(end);
+					// 但是要保证 end 是可到达的
+					if (!end.IsOL() || end.Y >= cur.Y) {
+						var res = ReconstructPath(cameFrom, cur, addStart: false);
+						if (cur != end) {
+							res.Add(end);
+						}
+						return res;
 					}
-					return res;
 				}
 
 				var nbrOLs = top.Value.GetNeighborOLs();
@@ -62,7 +67,6 @@ namespace GameLogic.Model.Mgr
 					int r = Random.Range(i, cnt);
 					(_randomOrder[i], _randomOrder[r]) = (_randomOrder[r], _randomOrder[i]);
 				}
-
 
 				for (int i = 0; i < cnt; i++) {
 					var neighbor = neighbors[_randomOrder[i]];

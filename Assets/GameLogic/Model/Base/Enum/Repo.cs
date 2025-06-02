@@ -2,7 +2,7 @@ namespace GameLogic
 {
 	public enum RepoType {
 		Wood,
-		Wheat,
+		Food,
 		Water,
 		Iron,
 		Meat,

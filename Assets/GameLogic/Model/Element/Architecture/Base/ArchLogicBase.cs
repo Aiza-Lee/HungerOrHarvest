@@ -26,8 +26,8 @@ namespace GameLogic.Model.Element.Arch
 		public ArchLevelConfigBase Lconfig => Config.LevelConfigs[Level];
 
 		private void UpdateRepo() {
-			if (RepoMgr.Inst.TryArchCons(Lconfig.InherentConsVels, ConsBuffs_F)) {
-				RepoMgr.Inst.ArchProd(Lconfig.InherentProdVels, ProdBuffs_F);
+			if (RepoMgr.Inst.TryCons(Lconfig.InherentConsVels, ConsBuffs_F)) {
+				RepoMgr.Inst.Prod(Lconfig.InherentProdVels, ProdBuffs_F);
 			}
 		}
 

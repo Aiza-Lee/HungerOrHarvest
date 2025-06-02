@@ -22,14 +22,25 @@ namespace GameLogic.Model.Factory
 		[Space][Space][Space] [Header("Default Vill Exp Helper Save")]
 		[Space] public ExpHelperSave DefaultVillExpHelperSave;
 		
+		[Space][Space][Space] [Header("Default Vill Vit Helper Save")]
+		[Space] public VitHelperSave DefaultVillVitHelperSave;
+		[Space][Space][Space] [Header("Default Vill BondArch Helper Save")]
+		[Space] public BondArchHelperSave DefaultBondArchHelperSave;
+		[Space][Space][Space] [Header("Default Vill RepoBuff Helper Save")]
+		[Space] public RepoBuffHelperSave DefaultRepoBuffHelperSave;
+		
+		
 
-		[Space][Space][Space] [Header("Default Sta Save")]
+		[Space]
+		[Space][Space] [Header("Default Task Save")]
 		[Space] public MoveToTaskSave DefaultMoveToTaskSave;
 		[Space] public SleepTaskSave DefaultSleepTaskSave;
 		[Space] public WorkTaskSave DefaultWorkTaskSave;
+		[Space] public RecoverVitTaskSave DefaultRecoverVitTaskSave;
 
 
-		[Space][Space][Space] [Header("Default Vill Save")]
+		[Space]
+		[Space][Space] [Header("Default Vill Save")]
 		[Space] public NormalVillSave DefaultNormalVill;
 
 

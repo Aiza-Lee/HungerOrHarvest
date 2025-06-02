@@ -16,6 +16,7 @@ MonoBehaviour:
   NIGHT_TICKS: 4000
   VILL_ONE_MOVE_TICK: 10
   NIGHT_TIME_SPEED: 90
+  _vitConfig: {fileID: 11400000, guid: 213b7e1ddddf7044f95d47fa6050cef7, type: 2}
   JobConfigs:
   - {fileID: 11400000, guid: 6bd4c7cf2db66534ab385b4570afafdc, type: 2}
   - {fileID: 11400000, guid: 9eeec722603cf884aa4ad83faba99f97, type: 2}

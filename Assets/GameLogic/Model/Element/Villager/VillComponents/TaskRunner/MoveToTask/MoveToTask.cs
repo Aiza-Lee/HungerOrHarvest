@@ -30,10 +30,10 @@ namespace GameLogic.Model.Element.Vill
 
 		public override void TaskEnd() { }
 		public override void TaskEnter() {
-			if (AttachedVill.Coord != _target) {
+			if (Impler.Coord != _target) {
 				_idx = 0;
 				_timer = 0;
-				_route = RouteMgr.Inst.GetRoute(AttachedVill.Coord, _target);
+				_route = RouteMgr.Inst.GetRoute(Impler.Coord, _target);
 			} else {
 				IsEnded = true;
 			}
@@ -44,9 +44,9 @@ namespace GameLogic.Model.Element.Vill
 			++_timer;
 			if (_timer >= ConfigMgr.Config.VILL_ONE_MOVE_TICK) {
 				_timer = 0;
-				AttachedVill.Move(AttachedVill.Coord.DirectionTo(_route[_idx]));
+				Impler.Move(Impler.Coord.DirectionTo(_route[_idx]));
 			}
-			if (_route[_idx] == AttachedVill.Coord) {
+			if (_route[_idx] == Impler.Coord) {
 				++_idx;
 				if (_idx >= _route.Count) {
 					IsEnded = true;

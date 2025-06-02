@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: wheat
+  - name: Food
     originalName: 
-    pivot: {x: 0.496063, y: -0.9195403}
+    pivot: {x: 0.493617, y: -0.56896555}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 254
-      height: 87
-    spriteID: a30fe42a85db35f48a4a36d32aeaa411
+      width: 235
+      height: 116
+    spriteID: 965082ad87ed7cf438aa8b99a8300ccc
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,20 +144,20 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -356121645
-    name: wheat
+    guid: -150168470
+    name: Food
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: wheat
+    - name: Food
       frameIndex: 0
       cellRect:
-        x: 2
-        y: 80
-        width: 254
-        height: 87
-      spriteId: a30fe42a85db35f48a4a36d32aeaa411
+        x: 12
+        y: 66
+        width: 235
+        height: 116
+      spriteId: 965082ad87ed7cf438aa8b99a8300ccc
     linkedCells: []
     parentIndex: -1
   platformSettings:

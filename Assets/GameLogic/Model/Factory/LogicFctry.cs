@@ -3,8 +3,7 @@ using GameLogic.Model.Element.Layer;
 using GameLogic.Model.Element.Vill;
 using NSFrame;
 
-namespace GameLogic.Model.Factory
-{
+namespace GameLogic.Model.Factory {
 	/// <summary>
 	/// 逻辑层工厂，用于创建逻辑层对象。包括 村民，村民任务，村民任务执行器，建筑，层 等对象
 	/// </summary>
@@ -15,12 +14,13 @@ namespace GameLogic.Model.Factory
 			PoolSystem.InitObjectPool<MoveToTask>();
 			PoolSystem.InitObjectPool<WorkTask>();
 			PoolSystem.InitObjectPool<SleepTask>();
+			PoolSystem.InitObjectPool<RecoverVitTask>();
 		}
 
 		public LogicFctryConfig Config;
 
 		#region Vill
-		
+
 		/// <summary>
 		/// 根据保存数据创建一个新的Vill，并初始化为保存数据的值
 		/// </summary>
@@ -37,8 +37,8 @@ namespace GameLogic.Model.Factory
 		/// </summary>
 		public VillLogicBase NewVill(VillType type, OL ol) {
 			var save = Config.GetDefaultVillSave(type).Clone();
-			save.ID = IDMgr.Inst.GetID();
-			save.Coord = ol.ToCoord();
+			save.LogicImpler.ID = IDMgr.Inst.GetID();
+			save.LogicImpler.Coord = ol.ToCoord();
 			return LoadVill(save);
 		}
 
@@ -51,23 +51,53 @@ namespace GameLogic.Model.Factory
 		#endregion
 
 		#region VillTaskRunner
-		public TaskRunner LoadVillTaskRunner(VillLogicBase vill, TaskRunnerSave save) {
-			var runner = new TaskRunner(vill);
-				runner.InitFromSave(save);
+		public TaskRunner LoadVillTaskRunner(LogicImpler logicImpler, TaskRunnerSave save) {
+			var runner = new TaskRunner(logicImpler);
+			runner.InitFromSave(save);
 			return runner;
 		}
-		public TaskRunner NewVillTaskRunner(VillLogicBase vill) {
-			return LoadVillTaskRunner(vill, Config.DefaultVillTaskRunnerSave.Clone());
+		public TaskRunner NewVillTaskRunner(LogicImpler logicImpler) {
+			return LoadVillTaskRunner(logicImpler, Config.DefaultVillTaskRunnerSave.Clone());
 		}
 		#endregion
 		#region VillExpHelper
-		public ExpHelper LoadVillExpHelper(VillLogicBase vill, ExpHelperSave save) {
-			var helper = new ExpHelper(vill);
-				helper.InitFromSave(save);
+		public ExpHelper LoadVillExpHelper(LogicImpler logicImpler, ExpHelperSave save) {
+			var helper = new ExpHelper(logicImpler);
+			helper.InitFromSave(save);
 			return helper;
 		}
-		public ExpHelper NewVillExpHelper(VillLogicBase vill) {
-			return LoadVillExpHelper(vill, Config.DefaultVillExpHelperSave.Clone());
+		public ExpHelper NewVillExpHelper(LogicImpler logicImpler) {
+			return LoadVillExpHelper(logicImpler, Config.DefaultVillExpHelperSave.Clone());
+		}
+		#endregion
+		#region VillVitHelper
+		public VitHelper LoadVillVitHelper(LogicImpler logicImpler, VitHelperSave save) {
+			var helper = new VitHelper(logicImpler);
+			helper.InitFromSave(save);
+			return helper;
+		}
+		public VitHelper NewVillVitHelper(LogicImpler logicImpler) {
+			return LoadVillVitHelper(logicImpler, Config.DefaultVillVitHelperSave.Clone());
+		}
+		#endregion
+		#region BondArchHelper
+		public BondArchHelper LoadBondArchHelper(LogicImpler logicImpler, BondArchHelperSave save) {
+			var helper = new BondArchHelper(logicImpler);
+			helper.InitFromSave(save);
+			return helper;
+		}
+		public BondArchHelper NewBondArchHelper(LogicImpler logicImpler) {
+			return LoadBondArchHelper(logicImpler, Config.DefaultBondArchHelperSave.Clone());
+		}
+		#endregion
+		#region RepoBuffHelper
+		public RepoBuffHelper LoadVillRepoBuffHelper(LogicImpler logicImpler, RepoBuffHelperSave save) {
+			var helper = new RepoBuffHelper(logicImpler);
+			helper.InitFromSave(save);
+			return helper;
+		}
+		public RepoBuffHelper NewVillRepoBuffHelper(LogicImpler logicImpler) { 
+			return LoadVillRepoBuffHelper(logicImpler, Config.DefaultRepoBuffHelperSave.Clone());
 		}
 		#endregion
 
@@ -81,26 +111,31 @@ namespace GameLogic.Model.Factory
 
 		public MoveToTask NewMoveToTask(Coord target, MoveToTargetType targetType) {
 			var save = Config.DefaultMoveToTaskSave.Clone() as MoveToTaskSave;
-				save.Target = target;
-				save.TargetType = targetType;
+			save.Target = target;
+			save.TargetType = targetType;
 
 			var task = PoolSystem.PopObj<MoveToTask>();
 			task.InitFromSave(save);
 			return task;
 		}
-		public SleepTask NewSleepTask(ulong homeID) {
+		public SleepTask NewSleepTask() {
 			var save = Config.DefaultSleepTaskSave.Clone() as SleepTaskSave;
-				save.HomeID = homeID;
-			
+
 			var task = PoolSystem.PopObj<SleepTask>();
 			task.InitFromSave(save);
 			return task;
 		}
-		public WorkTask NewWorkTask(ulong archID) {
+		public WorkTask NewWorkTask() {
 			var save = Config.DefaultWorkTaskSave.Clone() as WorkTaskSave;
-				save.WorkArchId = archID;
 
 			var task = PoolSystem.PopObj<WorkTask>();
+			task.InitFromSave(save);
+			return task;
+		}
+		public RecoverVitTask NewRecoverVitTask() {
+			var save = Config.DefaultRecoverVitTaskSave.Clone() as RecoverVitTaskSave;
+
+			var task = PoolSystem.PopObj<RecoverVitTask>();
 			task.InitFromSave(save);
 			return task;
 		}
@@ -110,7 +145,8 @@ namespace GameLogic.Model.Factory
 				TaskType.MoveTo => PoolSystem.PopObj<MoveToTask>(),
 				TaskType.Sleep => PoolSystem.PopObj<SleepTask>(),
 				TaskType.Work => PoolSystem.PopObj<WorkTask>(),
-				_ => throw new System.NotImplementedException(),
+				TaskType.Eat => PoolSystem.PopObj<RecoverVitTask>(),
+				_ => throw new System.NotImplementedException("没有实现Task的某个类型的创建"),
 			};
 		}
 
@@ -194,60 +230,5 @@ namespace GameLogic.Model.Factory
 			};
 		}
 		#endregion
-
-		// public VillLogicBase NewVill(VillSaveBase save = null, bool newID = false) {
-		// 	if (newID) {
-		// 		save.ID = IDMgr.Inst.GetID();
-		// 	}
-		// 	var prefab = Config.GetVillPrefab(save.VillType);
-		// 	var go = GameObject.Instantiate(prefab);
-		// 	if (!go.TryGetComponent<VillLogicBase>(out var vill)) {
-		// 		Debug.LogError("error");
-		// 		return null;
-		// 	}
-		// 	if (save != null) {
-		// 		go.name = save.LastName + save.FirstName;
-		// 		vill.InitFromSave(save);
-		// 	} else {
-		// 		go.name = DefaultVill.LastName + DefaultVill.FirstName;
-		// 		vill.InitFromSave(DefaultVill);
-		// 	}
-		// 	EventSystem.Invoke<VillLogicBase>((int)LogicEvt.VillCreated_V, vill);
-		// 	return vill;
-		// }
-
-
-		// public ArchLogicBase NewArch(ArchSaveBase save, bool newID = false) {
-		// 	if (newID) {
-		// 		save.ID = IDMgr.Inst.GetID();
-		// 	}
-		// 	var prefab = Config.GetArchPrefab(save.ArchType);
-		// 	var go = GameObject.Instantiate(prefab);
-		// 	if (!go.TryGetComponent<ArchLogicBase>(out var arch)) {
-		// 		Debug.LogError("error");
-		// 		return null;
-		// 	}
-		// 	go.name = save.ArchType.ToString();
-		// 	arch.InitFromSave(save);
-		// 	EventSystem.Invoke<ArchLogicBase>((int)LogicEvt.ArchCreated_A, arch);
-		// 	return arch;
-		// }
-
-		// public LayerLogicBase NewLayer(LayerSaveBase save, bool newID = false) {
-		// 	if (newID) {
-		// 		save.ID = IDMgr.Inst.GetID();
-		// 	}
-		// 	var prefab = Config.GetLayerPrefab(save.LayerType);
-		// 	var go = GameObject.Instantiate(prefab);
-		// 	if (!go.TryGetComponent<LayerLogicBase>(out var layer)) {
-		// 		Debug.LogError("error");
-		// 		return null;
-		// 	}
-		// 	go.name = save.LayerType.ToString();
-		// 	layer.InitFromSave(save);
-		// 	EventSystem.Invoke<LayerLogicBase>((int)LogicEvt.LayerCreated_L, layer);
-		// 	return layer;
-		// }
-
 	}
 }

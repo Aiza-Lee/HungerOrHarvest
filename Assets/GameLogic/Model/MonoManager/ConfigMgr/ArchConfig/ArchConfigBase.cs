@@ -9,7 +9,6 @@ namespace GameLogic.Model.Mgr
 		private ArchType? _archType;
 		public ArchType ArchType => _archType ??= Enum.Parse<ArchType>(TypeName);
 		
-		[Header("类型")] 
 		[Header("名称")] public string Name;
 		[Header("大小")] public int Size;
 		[Header("建造时间")] public ulong ConstructTicks;

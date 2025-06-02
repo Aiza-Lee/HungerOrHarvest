@@ -1,6 +1,5 @@
 using GameLogic.Model.Mgr;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace GameLogic.View.UI.WorldVillPanel
 {
@@ -35,7 +34,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		/// </summary>
 		public void OnShrinkDone() {
 			Clear();
-			WorldMgr.Inst.FindVill(_attachedVillID).OnLevelUp -= OnLevelUp;
+			WorldMgr.Inst.FindVill(_attachedVillID).OnJobLevelUp -= OnLevelUp;
 			_attachedVillID = 0;
 		}
 		/// <summary>
@@ -44,7 +43,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		public void OnExpand(ulong villID) {
 			if (_attachedVillID != 0) return;
 			_attachedVillID = villID;
-			WorldMgr.Inst.FindVill(villID).OnLevelUp += OnLevelUp;
+			WorldMgr.Inst.FindVill(villID).OnJobLevelUp += OnLevelUp;
 			GenerateJobInfos();
 		}
 		#endregion

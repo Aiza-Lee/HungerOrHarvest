@@ -12,6 +12,7 @@ namespace GameLogic.Model.Mgr
 		[Header("额外消耗/每人")] public RTListSave<float> ExtraConsVelsPerOneSave;
 		[Header("存储量增量")] public RTListSave<float> VolumeAddsSave;
 		[Header("职业经验的增量")] public JTListSave<float> ExpAddsSave;
+		[Header("体力消耗速率")] public float VitConsRate;
 
 		private RTList<float> _inherentProdVels;
 		public RTList<float> InherentProdVels {

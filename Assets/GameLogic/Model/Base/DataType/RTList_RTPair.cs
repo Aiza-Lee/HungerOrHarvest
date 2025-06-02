@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using GameLogic.Model.Mgr;
 using UnityEngine;
 
@@ -31,7 +32,24 @@ namespace GameLogic
 		public int Count => List.Count;
 		[HideInInspector] public bool Full;
 
+		/// <summary>
+		/// 给定部分值创造一个RTList
+		/// </summary>
+		public RTList(params RTPair<T>[] pairs) {
+			List = pairs.Select(x => new RTPair<T>(x)).OrderBy(x => x.Index).ToList();
+			Full = List.Count == ConstMgr.REPO_TYPE_SIZE;
+		}
 
+		/// <summary>
+		/// 创造一个每一个value都是给定值的Full List
+		/// </summary>
+		public RTList(T val) {
+			Full = true;
+			List = new();
+			for (int i = 0; i < ConstMgr.REPO_TYPE_SIZE; ++i) {
+				List.Add(new((RepoType) i, val));
+			}
+		}
 		public RTList(bool fill = false) {
 			List = new();
 			if (fill) {
@@ -87,12 +105,15 @@ namespace GameLogic
 				Full = false;
 				return;
 			}
-			save.List.ForEach(
-				(pair) => List.Add(new(Enum.Parse<RepoType>(pair.Key), pair.Value))
-			);
-			List.Sort((a, b) => a.Index - b.Index);
+			List = save.List
+				.Select((pair) => new RTPair<T>(Enum.Parse<RepoType>(pair.Key), pair.Value))
+				.OrderBy((pair) => pair.Index)
+				.ToList();
 			Full = List.Count == ConstMgr.REPO_TYPE_SIZE;
 		}
+		/// <summary>
+		/// 从存档中加载数据，然后转换为Full，比分开调用两个函数效率更简洁
+		/// </summary>
 		public void InitFromSave_Full(RTListSave<T> save) {
 			InitFromSave(save);
 			ConvertToFull();

@@ -80,13 +80,13 @@ MonoBehaviour:
       LYR: 0
   UnlockedRepo:
   - Wood
-  - Wheat
+  - Food
   - Science
   StartingRepoSave:
     List:
     - Key: Wood
       Value: 100
-    - Key: Wheat
-      Value: 100
+    - Key: Food
+      Value: 1000
     - Key: Science
       Value: 100

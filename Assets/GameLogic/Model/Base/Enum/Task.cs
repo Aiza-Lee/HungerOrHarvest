@@ -1,9 +1,10 @@
-namespace GameLogic {
+namespace GameLogic 
+{
 	public enum TaskType {
-		None,
 		MoveTo,
 		Sleep,
 		Work,
+		Eat,
 		Leave,
 	}
 }

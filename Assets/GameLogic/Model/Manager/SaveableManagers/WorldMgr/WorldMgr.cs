@@ -232,7 +232,7 @@ namespace GameLogic
 		public void ClearMgr() {
 			// arch 和 vill 的 destroy 会自动（WorldMgr通过事件中心监听了销毁事件）从 _archs 和 _vills 中移除
 			while (_archs.Count > 0) _archs[0].Destroy();
-			while (_vills.Count > 0) _vills[0].Destroy();
+			while (_vills.Count > 0) _vills[0].LogicDestroy();
 			_layers.Clear();
 			_olRange.Clear();
 		}

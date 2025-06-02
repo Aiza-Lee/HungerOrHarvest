@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace GameLogic
 {
+	/// <summary>
+	/// 逻辑世界最小坐标
+	/// <para>方向:面向地图从上往下看，X正方向为从左到右（→），Y正方向为从下到上（↑）</para>
+	/// </summary>
 	[Serializable]
 	public struct Coord {
 		public int X;
@@ -35,10 +39,15 @@ namespace GameLogic
 			if (rX == 0) {
 				var ORD = X / ConstMgr.X_PER_ODR;
 				var tmp = 1f * Y / ConstMgr.Y_PER_LYR;
-				return new() {
-					new(ORD, Mathf.FloorToInt(tmp)),
-					new(ORD, Mathf.CeilToInt(tmp)),
-				};
+				// y 方向更大的
+				var upper = new OL(ORD, Mathf.CeilToInt(tmp));
+				// y 方向更小的
+				var lower = new OL(ORD, Mathf.FloorToInt(tmp));
+				if (upper.CheckAvailableForArch()) {
+					return new() { upper, lower };
+				} else {
+					return new() { upper };
+				}
 			}
 			if (rY == 0) {
 				var LYR = Y / ConstMgr.Y_PER_LYR;

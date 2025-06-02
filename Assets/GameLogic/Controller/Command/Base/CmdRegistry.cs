@@ -17,7 +17,10 @@ namespace GameLogic.Controller
 			{ "vill-disbond-workarch", (args) => new VillDisbondWorkCmd(args) },
 			{ "vill-disbond-home", (args) => new VillDisbondHomeCmd(args) },
 			{ "arch-new", (args) => new CreateArchCmd(args) },
-			{ "arch-destroy", (args) => new DestroyArchCmd(args) },
+
+			{ "destroy-arch", (args) => new DestroyArchCmd(args) },
+			{ "destroy-vill", (args) => new DestroyVillCmd(args) },
+
 			{ "speed", (args) => new SetSpeedCmd(args) },
 			{ "unlock-ol", (args) => new UnlockOLCmd(args) },
 			{ "pause", (args) => new TogglePauseCmd(args) },

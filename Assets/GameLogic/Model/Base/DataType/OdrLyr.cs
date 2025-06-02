@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace GameLogic
 {
+	/// <summary>
+	/// 逻辑中用于定位建筑和道路的大坐标，可以按照ConstMgr中的配置映射到Coord坐标
+	/// <para>方向:面向地图从上往下看，ODR正方向为从左到右（→），LYR正方向为从下到上（↑）</para>
+	/// <para>规定(ODR+LYR)为偶数的坐标可以放置建筑</para>
+	/// </summary>
 	[System.Serializable]
 	public struct OL {
 		public int ODR;
@@ -25,14 +30,14 @@ namespace GameLogic
 			return new() {
 				new(ODR - 1, LYR),
 				new(ODR + 1, LYR),
-				new(ODR, LYR + ((LYR + ODR) % 2 == 0 ? -1 : 1))
+				new(ODR, LYR + (Mathf.Abs(LYR + ODR) % 2 == 0 ? -1 : 1))
 			};
 		}
 		public readonly int Distance(OL other) {
 			return Mathf.Abs(ODR - other.ODR) + Mathf.Abs(LYR - other.LYR);
 		}
 		public readonly bool CheckAvailableForArch() {
-			return (ODR + LYR) % 2 == 0;
+			return Mathf.Abs(ODR + LYR) % 2 == 0;
 		}
 		#endregion
 		

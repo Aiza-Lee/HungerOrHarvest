@@ -15,8 +15,14 @@ namespace GameLogic.Model.Mgr
 		public float VILL_ONE_MOVE_TICK;
 		public float NIGHT_TIME_SPEED;
 
-		[Header("务必为每一种职业、建筑、村民创建配置, 否则程序无法正常运行")]
+		[Header("村民体力系统配置")]
+		[SerializeField] private VitConfig _vitConfig;
+		public VitConfig VitConfig => _vitConfig;
+
 		[Space]
+		[Space]
+		[Space]
+		[Header("务必为每一种职业、建筑、村民创建配置, 否则程序无法正常运行")]
 		[Space]
 		[SerializeField] private List<JobConfig> JobConfigs;
 		[SerializeField] private List<ArchConfigBase> ArchConfigs;
@@ -26,12 +32,7 @@ namespace GameLogic.Model.Mgr
 		private readonly List<Pair<ArchType, ArchConfigBase>> _archConfigs = new();
 		private readonly List<Pair<VillType, VillConfigBase>> _villConfigs = new();
 
-		// 这里注释掉的是防止配置不全导致不能直接使用下标，但是懒得写了
-		// private Dictionary<ArchType, ArchConfigBase> _archConfigs;
-
 		public void SetConfig() {
-			// _archConfigs = new();
-			// ArchConfigs.ForEach((pair) => _archConfigs.Add(pair.Key, pair.Value));
 
 			if (JobConfigs.Count != ConstMgr.JOB_TYPE_SIZE) {
 				Debug.LogError("职业配置数量不正确");
