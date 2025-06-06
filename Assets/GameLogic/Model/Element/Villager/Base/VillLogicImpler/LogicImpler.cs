@@ -1,5 +1,6 @@
 using System;
 using GameLogic.Model.Factory;
+using GameLogic.Utilities;
 using NSFrame;
 
 namespace GameLogic.Model.Element.Vill {
@@ -15,11 +16,11 @@ namespace GameLogic.Model.Element.Vill {
 			EventSystem.AddListener((int) ModelEvt.NightStart_0, InvokeOnNightStart, EventType.Model);
 		}
 
-		public TaskRunner TaskRunner { get; private set; }
 		public ExpHelper ExpHelper { get; private set; }
 		public RepoBuffHelper RepoBuffHelper { get; private set; }
 		public BondArchHelper BondArchHelper { get; private set; }
 		public VitHelper VitHelper { get; private set; }
+		public IStateMachine StateMachine { get; private set; }
 
 		public event Action TickUpdate;
 		public event Action OnNightStart;
@@ -48,7 +49,6 @@ namespace GameLogic.Model.Element.Vill {
 			EventSystem.RemoveListener((int) ModelEvt.Tick_0, InvokeTickUpdate, EventType.Model);
 			EventSystem.RemoveListener((int) ModelEvt.DayStart_0, InvokeOnDayStart, EventType.Model);
 			EventSystem.RemoveListener((int) ModelEvt.NightStart_0, InvokeOnNightStart, EventType.Model);
-			TaskRunner.LogicDestroy();
 			ExpHelper.LogicDestroy();
 			RepoBuffHelper.LogicDestroy();
 			VitHelper.LogicDestroy();
@@ -64,7 +64,6 @@ namespace GameLogic.Model.Element.Vill {
 				FirstName = FirstName,
 				LastName = LastName,
 				Coord = Coord,
-				TaskRunnerSave = TaskRunner.GetSave(),
 				ExpHelperSave = ExpHelper.GetSave(),
 				VitHelperSave = VitHelper.GetSave(),
 				BondArchHelperSave = BondArchHelper.GetSave()
@@ -75,7 +74,6 @@ namespace GameLogic.Model.Element.Vill {
 			FirstName = save.FirstName;
 			LastName = save.LastName;
 			Coord = save.Coord;
-			TaskRunner = LogicFctry.Inst.LoadVillTaskRunner(this, save.TaskRunnerSave);
 			ExpHelper = LogicFctry.Inst.LoadVillExpHelper(this, save.ExpHelperSave);
 			RepoBuffHelper = LogicFctry.Inst.LoadVillRepoBuffHelper(this, save.RepoBuffHelperSave);
 			VitHelper = LogicFctry.Inst.LoadVillVitHelper(this, save.VitHelperSave);

@@ -1,12 +1,10 @@
-using System;
 using UnityEngine;
 
 namespace GameLogic.Model.Element.Layer
 {
 	[System.Serializable]
 	public abstract class LayerSaveBase {
-		public string TypeName;
-		public LayerType LayerType => Enum.Parse<LayerType>(TypeName);
+		public abstract LayerType LayerType { get; }
 		[HideInInspector] public ulong ID;
 		[HideInInspector] public int LYR;
 		
@@ -14,7 +12,6 @@ namespace GameLogic.Model.Element.Layer
 		public LayerSaveBase Clone() {
 			var save = GetDerivedClone();
 				save.ID 		= ID;
-				save.TypeName 	= LayerType.ToString();
 				save.LYR 		= LYR;
 			return save;
 		}

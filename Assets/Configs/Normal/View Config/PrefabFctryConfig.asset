@@ -20,6 +20,8 @@ MonoBehaviour:
     Value: {fileID: 42990976938659487, guid: 13d11edb5a6612349bc92446864abe54, type: 3}
   - Key: Ruin
     Value: {fileID: 118420102723132381, guid: 502de8e99b2b89643ba871d11179091d, type: 3}
+  - Key: HunterCabin
+    Value: {fileID: 118420102723132381, guid: c51174b012327ff4f84ac38b55bf3314, type: 3}
   LayerPrefabs:
   - Key: Grass
     Value: {fileID: 6027108390514112321, guid: 5878d12087484da4c90322c23862563f, type: 3}

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using GameLogic.Model.Mgr;
+using GameLogic.Utilities;
 using UnityEngine;
 
 namespace GameLogic.Model.Element.Vill {
 	/// <summary>
 	/// 村民经验值管理器
 	/// </summary>
-	public class ExpHelper : ISaveable<ExpHelperSave>, IVillExp {
+	public class ExpHelper : ISaveable<ExpHelperSave>, IExpHelper {
 
 		private readonly JTList<int> _jobLevel_F = new();
 		private readonly JTList<float> _jobExps_F = new();

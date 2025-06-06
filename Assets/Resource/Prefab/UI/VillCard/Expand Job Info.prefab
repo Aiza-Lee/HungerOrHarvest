@@ -52,8 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jobNameText: {fileID: 3720042445936613208}
-  _expBarBack: {fileID: 761959706804360217}
-  _expBarInner: {fileID: 7621776898176854284}
+  _expBar: {fileID: 5696994154052289226}
   _lvNumber: {fileID: 1226392055341557151}
 --- !u!1 &5200561780790041371
 GameObject:
@@ -202,6 +201,7 @@ GameObject:
   - component: {fileID: 761959706804360217}
   - component: {fileID: 3715920770822525393}
   - component: {fileID: 4930435317068539012}
+  - component: {fileID: 5696994154052289226}
   m_Layer: 5
   m_Name: Exp Back
   m_TagString: Untagged
@@ -267,6 +267,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5696994154052289226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6328602597613358597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d6ec6b3e955cf47be261ebc64868e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _barBack: {fileID: 761959706804360217}
+  _barInner: {fileID: 7621776898176854284}
 --- !u!1 &7067826648517239465
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,5 +23,6 @@ MonoBehaviour:
   ArchConfigs:
   - {fileID: 11400000, guid: 1cb451dec55ae6647b4c5325dd2b097b, type: 2}
   - {fileID: 11400000, guid: 9e02b216ea707b34588f32012c49328d, type: 2}
+  - {fileID: 11400000, guid: 40b0fabf30c5eae4293a1b554bf6608d, type: 2}
   VillConfigs:
   - {fileID: 11400000, guid: 93e4bcd99bf32324b9723605e7cdf5a1, type: 2}

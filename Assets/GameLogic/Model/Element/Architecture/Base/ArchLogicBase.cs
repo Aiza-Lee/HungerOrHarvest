@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using GameLogic.Model.Mgr;
+using GameLogic.Utilities;
 using NSFrame;
 
-namespace GameLogic.Model.Element.Arch
-{
+namespace GameLogic.Model.Element.Arch {
 	public abstract class ArchLogicBase : ISaveable<ArchSaveBase>, IBondVill {
 		public abstract ArchType ArchType { get; }
 
 		public ArchLogicBase() {
-			EventSystem.AddListener((int)ModelEvt.Tick_0, UpdateRepo, EventType.Model);
+			EventSystem.AddListener((int) ModelEvt.Tick_0, UpdateRepo, EventType.Model);
 		}
 
 		public OL OL { get; private set; }
@@ -88,26 +88,25 @@ namespace GameLogic.Model.Element.Arch
 		protected abstract ArchSaveBase GetSave_Derived();
 		public ArchSaveBase GetSave() {
 			var save = GetSave_Derived();
-				save.TypeName 		= ArchType.ToString();
-				save.ID 			= ID;
-				save.OL 			= OL;
-				save.Level 			= Level;
-				save.ConsBuffs 		= ConsBuffs_F.GetSave();
-				save.ProdBuffs 		= ProdBuffs_F.GetSave();
-				save.BondedVillIDs 	= new(BondedVillIDs);
-				save.InVillIDs 		= new(InVillIDs);
+			save.ID = ID;
+			save.OL = OL;
+			save.Level = Level;
+			save.ConsBuffs = ConsBuffs_F.GetSave();
+			save.ProdBuffs = ProdBuffs_F.GetSave();
+			save.BondedVillIDs = new(BondedVillIDs);
+			save.InVillIDs = new(InVillIDs);
 			return save;
 		}
 
 		protected abstract void InitFromSave_Derived(ArchSaveBase save);
 		public void InitFromSave(ArchSaveBase save) {
 			InitFromSave_Derived(save);
-			Config 			= ConfigMgr.Config.FindArchConfig(save.ArchType);
-			OL 				= save.OL;
-			ID 				= save.ID;
-			Level 			= save.Level;
-			BondedVillIDs 	= save.BondedVillIDs;
-			InVillIDs 		= save.InVillIDs;
+			Config = ConfigMgr.Config.FindArchConfig(save.ArchType);
+			OL = save.OL;
+			ID = save.ID;
+			Level = save.Level;
+			BondedVillIDs = save.BondedVillIDs;
+			InVillIDs = save.InVillIDs;
 			ConsBuffs_F.InitFromSave_Full(save.ConsBuffs);
 			ProdBuffs_F.InitFromSave_Full(save.ProdBuffs);
 		}

@@ -1,4 +1,5 @@
 using GameLogic.Controller;
+using GameLogic.Utilities;
 using NSFrame;
 
 namespace GameLogic.Model.Mgr

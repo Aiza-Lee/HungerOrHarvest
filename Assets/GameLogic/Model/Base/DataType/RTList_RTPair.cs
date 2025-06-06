@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using GameLogic.Model.Mgr;
+using GameLogic.Utilities;
 using UnityEngine;
 
-namespace GameLogic
-{
+namespace GameLogic {
 	public class RTPair<T> {
 		public RepoType RepoType;
 		public T Value;
@@ -106,7 +105,7 @@ namespace GameLogic
 				return;
 			}
 			List = save.List
-				.Select((pair) => new RTPair<T>(Enum.Parse<RepoType>(pair.Key), pair.Value))
+				.Select((pair) => new RTPair<T>(pair.Key.ToEnum().Value, pair.Value))
 				.OrderBy((pair) => pair.Index)
 				.ToList();
 			Full = List.Count == ConstMgr.REPO_TYPE_SIZE;

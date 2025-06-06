@@ -75,3 +75,6 @@ crashlytics-build.properties
 
 # FontsAssets
 Assets/Resource/Font/createdFontAssets/*
+
+# XMind files
+*.xmind

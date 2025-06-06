@@ -12,13 +12,6 @@ namespace GameLogic.Model.Factory
 	public class LogicFctryConfig : ScriptableObject {
 
 
-		// [Space][Space][Space] [Header("Default Sta Mahcine Save")] 
-		// [Space] public StaMachineSave DefaultStaMachine;
-
-
-		[Space][Space][Space] [Header("Default Vill Task Runner Save")] 
-		[Space] public TaskRunnerSave DefaultVillTaskRunnerSave;
-		
 		[Space][Space][Space] [Header("Default Vill Exp Helper Save")]
 		[Space] public ExpHelperSave DefaultVillExpHelperSave;
 		
@@ -29,15 +22,6 @@ namespace GameLogic.Model.Factory
 		[Space][Space][Space] [Header("Default Vill RepoBuff Helper Save")]
 		[Space] public RepoBuffHelperSave DefaultRepoBuffHelperSave;
 		
-		
-
-		[Space]
-		[Space][Space] [Header("Default Task Save")]
-		[Space] public MoveToTaskSave DefaultMoveToTaskSave;
-		[Space] public SleepTaskSave DefaultSleepTaskSave;
-		[Space] public WorkTaskSave DefaultWorkTaskSave;
-		[Space] public RecoverVitTaskSave DefaultRecoverVitTaskSave;
-
 
 		[Space]
 		[Space][Space] [Header("Default Vill Save")]
@@ -48,10 +32,12 @@ namespace GameLogic.Model.Factory
 		[Space][Space][Space] [Header("Default Arch Save")]
 		[Space] public CottageSave DefaultCottage;
 		[Space] public RuinSave DefaultRuin;
+		[Space] public HunterCabinSave DefaultHunterCabin;
 
 
 
-		[Space][Space][Space] [Header("Default Layer Save")]
+		[Space]
+		[Space][Space] [Header("Default Layer Save")]
 		[Space] public GrassLayerSave DefaultGrassLayerSave;
 		[Space] public SnowLayerSave DefaultSnowLayerSave;
 		[Space] public SeaEndLayerSave DefaultSeaEndLayerSave;
@@ -71,6 +57,7 @@ namespace GameLogic.Model.Factory
 			return type switch {
 				ArchType.Cottage => DefaultCottage,
 				ArchType.Ruin => DefaultRuin,
+				ArchType.HunterCabin => DefaultHunterCabin,
 				_ => throw new System.NotImplementedException(),
 			};
 		}

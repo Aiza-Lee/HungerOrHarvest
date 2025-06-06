@@ -53,6 +53,8 @@ namespace GameLogic.View.UI.StartMenu.SelectSavePanel
 		private void InitAllSaves_Linq() {
 			_saveInfos = SaveSystem.GetAllSaveInfos();
 			
+			// todo: 清理失效存档
+
 			_groupedSaveInfosList = _saveInfos
 				.Select(si => new {
 					SaveInfo = si,

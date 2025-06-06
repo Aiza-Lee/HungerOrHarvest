@@ -5,15 +5,14 @@ using NSFrame;
 using TMPro;
 using UnityEngine;
 
-namespace GameLogic.View.Test
-{
+namespace GameLogic.View.Test {
 	public class VillTestPanelInMain : MonoBehaviour, IMananger {
-		public Transform VillInfoLayout; 
+		public Transform VillInfoLayout;
 		public GameObject OneVillInfoPrefab;
 		public TextMeshProUGUI CurPageText;
 
 		private readonly List<TextMeshProUGUI> _VillInfoTexts = new();
-		private readonly List<VillLogicBase> _VillInfos = new(); 
+		private readonly List<VillLogicBase> _VillInfos = new();
 		private readonly int[] _villFormat = { 20, 20, 20, 20 };
 		private const int PER_PAGE_VILL_COUNT = 20;
 		private int _curPage;
@@ -49,8 +48,8 @@ namespace GameLogic.View.Test
 			}
 		}
 		private void OnEnable() {
-			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
-			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillDestroyed_V_1, OnVillDestroyed, NSFrame.EventType.Model);
+			EventSystem.AddListener<VillLogicBase>((int) ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
+			EventSystem.AddListener<VillLogicBase>((int) ModelEvt.VillDestroyed_V_1, OnVillDestroyed, NSFrame.EventType.Model);
 			_curPage = 0;
 			var vills = WorldMgr.Inst.GetAllVills;
 			foreach (var v in vills) {
@@ -58,8 +57,8 @@ namespace GameLogic.View.Test
 			}
 		}
 		private void OnDisable() {
-			EventSystem.RemoveListener<VillLogicBase>((int)ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
-			EventSystem.RemoveListener<VillLogicBase>((int)ModelEvt.VillDestroyed_V_1, OnVillDestroyed, NSFrame.EventType.Model);
+			EventSystem.RemoveListener<VillLogicBase>((int) ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
+			EventSystem.RemoveListener<VillLogicBase>((int) ModelEvt.VillDestroyed_V_1, OnVillDestroyed, NSFrame.EventType.Model);
 			_VillInfos.Clear();
 		}
 
@@ -75,7 +74,6 @@ namespace GameLogic.View.Test
 					_sb.Append($"ID: {v.ID}".PadRight(_villFormat[0]));
 					_sb.Append($"{v.Coord}".PadRight(_villFormat[1]));
 					_sb.Append($"Name: {v.LastName + v.FirstName}".PadRight(_villFormat[2]));
-					_sb.Append($"Task: {v.CurTaskType}".PadRight(_villFormat[3]));
 					_sb.AppendLine();
 					_VillInfoTexts[idx].text = _sb.ToString();
 				} else {

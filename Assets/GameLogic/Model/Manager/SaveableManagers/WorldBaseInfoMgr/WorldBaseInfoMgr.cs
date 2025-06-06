@@ -1,12 +1,12 @@
 using System;
+using GameLogic.Utilities;
 
-namespace GameLogic.Model.Mgr
-{
+namespace GameLogic.Model.Mgr {
 	sealed public class WorldBaseInfoMgr : ISaveable<WorldBaseInfoMgrSave>, IMananger {
-		private WorldBaseInfoMgr() {}
+		private WorldBaseInfoMgr() { }
 		public static WorldBaseInfoMgr Inst { get; } = new();
-		
-		public string WorldName {get; set;}
+
+		public string WorldName { get; set; }
 		private string _worldHashTag;
 
 		public void SetWorldHashTag() {
@@ -14,20 +14,20 @@ namespace GameLogic.Model.Mgr
 		}
 
 		public WorldBaseInfoMgrSave GetSave() {
-			return new WorldBaseInfoMgrSave { 
-				WorldName = WorldName, 
+			return new WorldBaseInfoMgrSave {
+				WorldName = WorldName,
 				WorldHashID = _worldHashTag,
 				StartingSave = false,
 			};
 		}
 
 		public void InitFromSave(WorldBaseInfoMgrSave save) {
-			WorldName 		= save.WorldName;
-			_worldHashTag 	= save.WorldHashID;
+			WorldName = save.WorldName;
+			_worldHashTag = save.WorldHashID;
 		}
 
 		#region IManager
-		public void ClearMgr() {}
+		public void ClearMgr() { }
 		#endregion
 	}
 }

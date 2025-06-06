@@ -17,7 +17,8 @@ MonoBehaviour:
   Introductions: 
   InherentProdVelsSave:
     List:
-    - Key: Science
+    - Key:
+        Value: Science
       Value: 0.0001
   ExtraProdVelsPerOneSave:
     List: []
@@ -29,3 +30,4 @@ MonoBehaviour:
     List: []
   ExpAddsSave:
     List: []
+  VitConsRate: 0

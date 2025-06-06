@@ -16,6 +16,7 @@ namespace GameLogic.View.UI.WorldVillPanel
 		[SerializeField] private RectTransform _expandMask;
 		[SerializeField] private GameObject _lightingEdge;
 		[SerializeField] private JobInfoLayout _jobInfoLayout;
+		[SerializeField] private PrecentageBar _vitBar;
 
 		private SmoothOffsetMin _expandMaskSOMin;
 		private SmoothOffsetMax _expandMaskSOMax;
@@ -47,12 +48,13 @@ namespace GameLogic.View.UI.WorldVillPanel
 		}
 		private void Update() {
 			if (_villView == null) return;
+			_vitBar.SetPercentage(_villView.Logic.GetVitPercentage());
 		}
 
 		#region Injection
 		public VillCard InjectVillView(VillViewBase villView) {
 			_villView = villView;
-			_nameText.text = villView.Logic.FirstName + villView.Logic.LastName;
+			_nameText.text = villView.Logic.FirstName + " " + villView.Logic.LastName;
 			_image.sprite = villView.Sprite;
 			return this;
 		}

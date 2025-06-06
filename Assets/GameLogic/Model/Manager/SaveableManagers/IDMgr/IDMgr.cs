@@ -1,12 +1,13 @@
-namespace GameLogic
-{
+using GameLogic.Utilities;
+
+namespace GameLogic {
 	/// <summary>
 	/// <para>ID管理器，用于生成唯一ID</para>
 	/// <para>ID从1开始，每次调用GetID()方法时，返回当前ID并将ID加1</para>
 	/// ID为0表示无效ID
 	/// </summary>
 	public class IDMgr : ISaveable<IDMgrSave>, IMananger {
-		private IDMgr() {}
+		private IDMgr() { }
 		private static readonly IDMgr _inst = new();
 		public static IDMgr Inst => _inst;
 

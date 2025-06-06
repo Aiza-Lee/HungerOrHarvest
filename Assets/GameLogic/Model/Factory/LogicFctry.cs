@@ -11,10 +11,6 @@ namespace GameLogic.Model.Factory {
 
 		protected override void Awake() {
 			base.Awake();
-			PoolSystem.InitObjectPool<MoveToTask>();
-			PoolSystem.InitObjectPool<WorkTask>();
-			PoolSystem.InitObjectPool<SleepTask>();
-			PoolSystem.InitObjectPool<RecoverVitTask>();
 		}
 
 		public LogicFctryConfig Config;
@@ -47,17 +43,6 @@ namespace GameLogic.Model.Factory {
 				VillType.Normal => new NormalVillLogic(),
 				_ => throw new System.NotImplementedException(),
 			};
-		}
-		#endregion
-
-		#region VillTaskRunner
-		public TaskRunner LoadVillTaskRunner(LogicImpler logicImpler, TaskRunnerSave save) {
-			var runner = new TaskRunner(logicImpler);
-			runner.InitFromSave(save);
-			return runner;
-		}
-		public TaskRunner NewVillTaskRunner(LogicImpler logicImpler) {
-			return LoadVillTaskRunner(logicImpler, Config.DefaultVillTaskRunnerSave.Clone());
 		}
 		#endregion
 		#region VillExpHelper
@@ -101,58 +86,6 @@ namespace GameLogic.Model.Factory {
 		}
 		#endregion
 
-		#region Task
-
-		public TaskBase LoadTask(TaskSaveBase save) {
-			var task = NewEmptyTask(save.TaskType);
-			task.InitFromSave(save);
-			return task;
-		}
-
-		public MoveToTask NewMoveToTask(Coord target, MoveToTargetType targetType) {
-			var save = Config.DefaultMoveToTaskSave.Clone() as MoveToTaskSave;
-			save.Target = target;
-			save.TargetType = targetType;
-
-			var task = PoolSystem.PopObj<MoveToTask>();
-			task.InitFromSave(save);
-			return task;
-		}
-		public SleepTask NewSleepTask() {
-			var save = Config.DefaultSleepTaskSave.Clone() as SleepTaskSave;
-
-			var task = PoolSystem.PopObj<SleepTask>();
-			task.InitFromSave(save);
-			return task;
-		}
-		public WorkTask NewWorkTask() {
-			var save = Config.DefaultWorkTaskSave.Clone() as WorkTaskSave;
-
-			var task = PoolSystem.PopObj<WorkTask>();
-			task.InitFromSave(save);
-			return task;
-		}
-		public RecoverVitTask NewRecoverVitTask() {
-			var save = Config.DefaultRecoverVitTaskSave.Clone() as RecoverVitTaskSave;
-
-			var task = PoolSystem.PopObj<RecoverVitTask>();
-			task.InitFromSave(save);
-			return task;
-		}
-
-		private TaskBase NewEmptyTask(TaskType type) {
-			return type switch {
-				TaskType.MoveTo => PoolSystem.PopObj<MoveToTask>(),
-				TaskType.Sleep => PoolSystem.PopObj<SleepTask>(),
-				TaskType.Work => PoolSystem.PopObj<WorkTask>(),
-				TaskType.Eat => PoolSystem.PopObj<RecoverVitTask>(),
-				_ => throw new System.NotImplementedException("没有实现Task的某个类型的创建"),
-			};
-		}
-
-		#endregion
-
-
 		#region Arch
 		/// <summary>
 		/// 根据保存数据创建一个新的Arch，并初始化为保存数据的值
@@ -185,6 +118,7 @@ namespace GameLogic.Model.Factory {
 			return type switch {
 				ArchType.Cottage => new CottageLogic(),
 				ArchType.Ruin => new RuinLogic(),
+				ArchType.HunterCabin => new HunterCabinLogic(),
 				_ => throw new System.NotImplementedException(),
 			};
 		}

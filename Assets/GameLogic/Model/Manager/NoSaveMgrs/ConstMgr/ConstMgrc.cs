@@ -19,8 +19,8 @@ namespace GameLogic.Model.Mgr
 		/// <summary>
 		/// 保证为偶数
 		/// </summary>
-		public static readonly int X_PER_ODR = 24;
-		public static readonly int Y_PER_LYR = 48;
+		public static readonly int X_PER_ODR = 12;
+		public static readonly int Y_PER_LYR = 24;
 
 		/// <summary>
 		/// 总层数上限

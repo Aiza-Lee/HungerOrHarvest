@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GameLogic.Model.Mgr;
+using GameLogic.Utilities;
 using UnityEngine;
 
 namespace GameLogic
@@ -79,7 +80,7 @@ namespace GameLogic
 				return;
 			}
 			save.List.ForEach(
-				(pair) => List.Add(new(Enum.Parse<JobType>(pair.Key), pair.Value))
+				(pair) => List.Add(new(pair.Key.ToEnum().Value, pair.Value))
 			);
 			List.Sort((a, b) => a.Index - b.Index);
 			Full = List.Count == ConstMgr.JOB_TYPE_SIZE;

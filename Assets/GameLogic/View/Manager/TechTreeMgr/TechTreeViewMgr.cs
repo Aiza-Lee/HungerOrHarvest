@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using GameLogic.Utilities;
 using NSFrame;
 using UnityEngine;
 
-namespace GameLogic.View
-{
+namespace GameLogic.View {
 	public sealed class TechTreeViewMgr : MonoSingleton<TechTreeViewMgr>, IMananger, ISaveable<TechTreeMgrViewSave> {
 
 		private readonly Dictionary<ulong, TechNodeViewBase> _nodeViews = new();
@@ -12,7 +12,7 @@ namespace GameLogic.View
 			base.Awake();
 			_nodeViews.Clear();
 			var cnt = transform.childCount;
-			for (int i = 0; i < cnt; ++i) { 
+			for (int i = 0; i < cnt; ++i) {
 				var nodeView = transform.GetChild(i).GetComponent<TechNodeViewBase>();
 				_nodeViews.Add(nodeView.NodeID, nodeView);
 			}

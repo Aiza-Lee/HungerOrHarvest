@@ -18,9 +18,7 @@ MonoBehaviour:
   InherentProdVelsSave:
     List: []
   ExtraProdVelsPerOneSave:
-    List:
-    - Key: Wood
-      Value: 0.01
+    List: []
   InherentConsVelsSave:
     List: []
   ExtraConsVelsPerOneSave:
@@ -29,7 +27,10 @@ MonoBehaviour:
     List: []
   ExpAddsSave:
     List:
-    - Key: Timberjack
+    - Key:
+        Value: Food
       Value: 0.5
-    - Key: Farmer
+    - Key:
+        Value: Wood
       Value: 0.05
+  VitConsRate: 0

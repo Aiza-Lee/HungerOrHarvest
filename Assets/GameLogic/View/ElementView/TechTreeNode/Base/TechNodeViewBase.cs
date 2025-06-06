@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using GameLogic.Utilities;
 using UnityEngine;
 
-namespace GameLogic.View
-{
+namespace GameLogic.View {
 	/// <summary>
 	/// 这里为了方便在unity中编辑科技树，就把model的逻辑和view混在一起了
 	/// </summary>

@@ -1,15 +1,15 @@
+using UnityEngine;
 namespace GameLogic.Model.Element.Vill {
 	[System.Serializable]
 	public class LogicImplerSave {
-		public ulong ID;
+		[HideInInspector] public ulong ID;
 		public string FirstName;
 		public string LastName;
-		public Coord Coord;
-		public TaskRunnerSave TaskRunnerSave;
-		public RepoBuffHelperSave RepoBuffHelperSave;
-		public ExpHelperSave ExpHelperSave;
+		[HideInInspector] public Coord Coord;
+		[HideInInspector] public RepoBuffHelperSave RepoBuffHelperSave;
+		[HideInInspector] public ExpHelperSave ExpHelperSave;
 		public VitHelperSave VitHelperSave;
-		public BondArchHelperSave BondArchHelperSave;
+		[HideInInspector] public BondArchHelperSave BondArchHelperSave;
 
 		public LogicImplerSave Clone() {
 			return new() {
@@ -17,7 +17,6 @@ namespace GameLogic.Model.Element.Vill {
 				FirstName = FirstName,
 				LastName = LastName,
 				Coord = Coord,
-				TaskRunnerSave = TaskRunnerSave.Clone(),
 				RepoBuffHelperSave = RepoBuffHelperSave.Clone(),
 				ExpHelperSave = ExpHelperSave.Clone(),
 				VitHelperSave = VitHelperSave.Clone(),

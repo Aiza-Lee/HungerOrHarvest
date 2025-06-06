@@ -1,15 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
+using GameLogic.Utilities;
 
 namespace GameLogic {
 	[System.Serializable]
 	public class RTListSave<T> {
 		private RTListSave() { }
-		public List<Pair<string, T>> List;
-		public RTListSave(List<RTPair<T>> ori) {
-			List = new();
-			ori.ForEach(
-				(pair) => List.Add(new(pair.RepoType.ToString(), pair.Value))
-			);
+		public List<Pair<EnumStringSave<RepoType>, T>> List = new();
+		public RTListSave(List<RTPair<T>> other) {
+			List = other
+					.Select(pair => new Pair<EnumStringSave<RepoType>, T>(new(pair.RepoType), pair.Value))
+					.ToList();
 		}
 		public RTListSave<T> Clone() {
 			return new() { List = new(List) };

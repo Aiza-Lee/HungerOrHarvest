@@ -57,7 +57,7 @@ MonoBehaviour:
     Value:
       ODR: 2
       LYR: 0
-  - Key: Ruin
+  - Key: HunterCabin
     Value:
       ODR: 1
       LYR: -1
@@ -84,9 +84,12 @@ MonoBehaviour:
   - Science
   StartingRepoSave:
     List:
-    - Key: Wood
+    - Key:
+        Value: Wood
       Value: 100
-    - Key: Food
+    - Key:
+        Value: Food
       Value: 1000
-    - Key: Science
+    - Key:
+        Value: Science
       Value: 100

@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using GameLogic.Model.Element.Arch;
-using NSFrame;
+using GameLogic.Utilities;
 
-namespace GameLogic.Model.Element.Vill
-{
+namespace GameLogic.Model.Element.Vill {
 	public abstract class VillLogicBase : ISaveable<VillSaveBase>, IVillLogic {
 		public abstract VillType VillType { get; }
 
@@ -23,10 +22,9 @@ namespace GameLogic.Model.Element.Vill
 			remove => _vitHelper.OnVitChanged -= value;
 		}
 
-		private TaskRunner _taskRunner => _logicImpler.TaskRunner;
 		private ExpHelper _expHelper => _logicImpler.ExpHelper;
 		private RepoBuffHelper _repoBuffHelper => _logicImpler.RepoBuffHelper;
-		private VitHelper _vitHelper => _logicImpler.VitHelper;
+		private IVitHelper _vitHelper => _logicImpler.VitHelper;
 		private BondArchHelper _bondArchHelper => _logicImpler.BondArchHelper;
 
 		#region IVillLogic
@@ -38,8 +36,7 @@ namespace GameLogic.Model.Element.Vill
 		public ulong BondedWorkArchID => _bondArchHelper.BondedWorkArchID;
 		public bool IsHomeless => _bondArchHelper.IsHomeless;
 		public bool IsWorkless => _bondArchHelper.IsWorkless;
-		public TaskType? CurTaskType => _taskRunner.CurTaskType;
-		public MoveToTargetType? CurMoveToTargetType => _taskRunner.CurMoveToTargetType;
+		public string CurStateDescription => _logicImpler.StateMachine.CurStateDescription;
 
 		public void LogicDestroy() => _logicImpler.LogicDestroy();
 
@@ -57,7 +54,6 @@ namespace GameLogic.Model.Element.Vill
 		protected abstract VillSaveBase GetDerivedSave();
 		public VillSaveBase GetSave() {
 			var save = GetDerivedSave();
-				save.TypeName 		= VillType.ToString();
 				save.LogicImpler	= _logicImpler.GetSave();
 			return save;
 		}

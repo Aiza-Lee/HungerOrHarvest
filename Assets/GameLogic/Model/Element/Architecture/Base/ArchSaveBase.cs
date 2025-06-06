@@ -6,8 +6,7 @@ namespace GameLogic.Model.Element.Arch
 {
 	[System.Serializable]
 	public abstract class ArchSaveBase {
-		public string TypeName;
-		public ArchType ArchType => Enum.Parse<ArchType>(TypeName);
+		abstract public ArchType ArchType { get; }
 		[HideInInspector] public ulong ID;
 		[HideInInspector] public OL OL;
 		[HideInInspector] public int Level;
@@ -19,7 +18,6 @@ namespace GameLogic.Model.Element.Arch
 		protected abstract ArchSaveBase GetDerivedClone();
 		public ArchSaveBase Clone() {
 			var save = GetDerivedClone();
-				save.TypeName 		= TypeName;
 				save.ID 			= ID;
 				save.OL 			= OL;
 				save.Level 			= Level;

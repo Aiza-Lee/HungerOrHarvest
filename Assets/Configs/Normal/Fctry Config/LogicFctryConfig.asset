@@ -17,18 +17,23 @@ MonoBehaviour:
   DefaultVillExpHelperSave:
     JobLevel:
       List: []
-      Full: 0
     JobExps:
       List: []
-      Full: 0
-    ConsBuffs:
+  DefaultVillVitHelperSave:
+    CurVit: 100
+    CurStateName: Normal
+    ConsBuffAdders: []
+    RecoverBuffAdders: []
+  DefaultBondArchHelperSave:
+    HomeID: 0
+    BondedWorkArchID: 0
+  DefaultRepoBuffHelperSave:
+    Adders: []
+    ProdBuffs_F:
       List: []
-      Full: 0
-    ProdBuffs:
+    ConsBuffs_F:
       List: []
-      Full: 0
   DefaultMoveToTaskSave:
-    TypeName: MoveTo
     IsEnded: 0
     Target:
       X: 0
@@ -38,40 +43,41 @@ MonoBehaviour:
     Idx: 0
     TargetType: 0
   DefaultSleepTaskSave:
-    TypeName: Sleep
     IsEnded: 0
-    HomeID: 0
   DefaultWorkTaskSave:
-    TypeName: Work
     IsEnded: 0
-    WorkArchId: 0
+  DefaultRecoverVitTaskSave:
+    IsEnded: 0
   DefaultNormalVill:
-    TypeName: Normal
-    ID: 0
-    FirstName: Bubbler
-    LastName: 
-    Coord:
-      X: 0
-      Y: 0
-    TaskRunner:
-      Tasks: []
-    ExpHelper:
-      JobLevel:
-        List: []
-        Full: 0
-      JobExps:
-        List: []
-        Full: 0
-      ConsBuffs:
-        List: []
-        Full: 0
-      ProdBuffs:
-        List: []
-        Full: 0
-    HomeID: 0
-    AttachedWorkArchID: 0
+    LogicImpler:
+      ID: 0
+      FirstName: "\u540D"
+      LastName: "\u59D3"
+      Coord:
+        X: 0
+        Y: 0
+      TaskRunnerSave:
+        Tasks: []
+      RepoBuffHelperSave:
+        Adders: []
+        ProdBuffs_F:
+          List: []
+        ConsBuffs_F:
+          List: []
+      ExpHelperSave:
+        JobLevel:
+          List: []
+        JobExps:
+          List: []
+      VitHelperSave:
+        CurVit: 100
+        CurStateName: Normal
+        ConsBuffAdders: []
+        RecoverBuffAdders: []
+      BondArchHelperSave:
+        HomeID: 0
+        BondedWorkArchID: 0
   DefaultCottage:
-    TypeName: Cottage
     ID: 0
     OL:
       ODR: 0
@@ -79,14 +85,11 @@ MonoBehaviour:
     Level: 0
     ProdBuffs:
       List: []
-      Full: 0
     ConsBuffs:
       List: []
-      Full: 0
     BondedVillIDs: 
     InVillIDs: 
   DefaultRuin:
-    TypeName: Ruin
     ID: 0
     OL:
       ODR: 0
@@ -94,34 +97,38 @@ MonoBehaviour:
     Level: 0
     ProdBuffs:
       List: []
-      Full: 0
     ConsBuffs:
       List: []
-      Full: 0
+    BondedVillIDs: 
+    InVillIDs: 
+  DefaultHunterCabin:
+    ID: 0
+    OL:
+      ODR: 0
+      LYR: 0
+    Level: 0
+    ProdBuffs:
+      List: []
+    ConsBuffs:
+      List: []
     BondedVillIDs: 
     InVillIDs: 
   DefaultGrassLayerSave:
-    TypeName: Grass
     ID: 0
     LYR: 0
   DefaultSnowLayerSave:
-    TypeName: Snow
     ID: 0
     LYR: 0
   DefaultSeaEndLayerSave:
-    TypeName: SeaEnd
     ID: 0
     LYR: 0
   DefaultSnowMountainEndLayerSave:
-    TypeName: SnowMountainEnd
     ID: 0
     LYR: 0
   DefaultWasteLandLayerSave:
-    TypeName: WasteLand
     ID: 0
     LYR: 0
   DefaultBeachLayerSave:
-    TypeName: Beach
     ID: 0
     LYR: 0
   references:

@@ -12,13 +12,14 @@ namespace GameLogic.View.UI.WorldVillPanel {
 	public class VillExpandJobInfo : MonoBehaviour, IGroupLayoutEle {
 
 		[SerializeField] private TextMeshProUGUI _jobNameText;
-		[SerializeField] private RectTransform _expBarBack;
-		[SerializeField] private RectTransform _expBarInner;
+		// [SerializeField] private RectTransform _expBarBack;
+		// [SerializeField] private RectTransform _expBarInner;
+		[SerializeField] private PrecentageBar _expBar;
 		[SerializeField] private TextMeshProUGUI _lvNumber;
 
 		private readonly float Height = 20f;
 
-		private float ExpBarWidth => _expBarBack.rect.width;
+		// private float ExpBarWidth => _expBarBack.rect.width;
 
 		private JobType _jobType;
 		private VillLogicBase _villLogic;
@@ -31,7 +32,8 @@ namespace GameLogic.View.UI.WorldVillPanel {
 		void Update() {
 			// 更新职业等级和经验条
 			_lvNumber.text = _villLogic.GetJobLevel(_jobType) /* + 1*/ .ToString();
-			_expBarInner.offsetMax = new(-(1f - _villLogic.GetJobExpProportion(_jobType)) * ExpBarWidth, 0);
+			// _expBarInner.offsetMax = new(-(1f - _villLogic.GetJobExpProportion(_jobType)) * ExpBarWidth, 0);
+			_expBar.SetPercentage(_villLogic.GetJobExpProportion(_jobType));
 		}
 
 		#region PublicMethods

@@ -1,3 +1,5 @@
+using GameLogic.Utilities;
+
 namespace GameLogic
 {
 	public sealed class DisasterMgr : ISaveable<DisasterMgrSave>, IMananger {

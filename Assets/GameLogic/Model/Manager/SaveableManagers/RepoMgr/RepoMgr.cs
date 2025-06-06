@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using GameLogic.Utilities;
 using NSFrame;
 
-namespace GameLogic.Model.Mgr
-{
+namespace GameLogic.Model.Mgr {
 	/// <summary>
 	/// 资源管理中心
 	/// </summary>
@@ -107,7 +107,7 @@ namespace GameLogic.Model.Mgr
 			if (cons == null || cons.Count == 0) return true;
 
 			var buff_F = new RTList<float>(fill: true);
-				buff_F.Add(buffs).Add(_globalConsBuffs_F).Change((val) => 1f - val);
+			buff_F.Add(buffs).Add(_globalConsBuffs_F).Change((val) => 1f - val);
 
 			var realCons = cons.Mul_New(buff_F);
 			return TryTickConsImpl(realCons);
@@ -122,7 +122,7 @@ namespace GameLogic.Model.Mgr
 			if (prod == null || prod.Count == 0) return;
 
 			var buff_F = new RTList<float>(fill: true);
-				buff_F.Add(buffs).Add(_globalProdBuffs_F).Change((val) => 1f + val);
+			buff_F.Add(buffs).Add(_globalProdBuffs_F).Change((val) => 1f + val);
 
 			var realProd = prod.Mul_New(buff_F);
 			TickProdImpl(realProd);

@@ -27,6 +27,11 @@ namespace GameLogic.Model.Element.Vill {
 		string LastName { get; }
 
 		/// <summary>
+		/// 村民的当前状态，总结性描述村民的行为和状态
+		/// </summary>
+		string CurStateDescription { get; }
+
+		/// <summary>
 		/// 村民的当前坐标位置
 		/// </summary>
 		Coord Coord { get; }
@@ -50,16 +55,6 @@ namespace GameLogic.Model.Element.Vill {
 		/// 标识村民是否无工作
 		/// </summary>
 		bool IsWorkless { get; }
-
-		/// <summary>
-		/// 村民当前执行的任务类型
-		/// </summary>
-		TaskType? CurTaskType { get; }
-
-		/// <summary>
-		/// 获取当前移动任务的目标类型
-		/// </summary>
-		MoveToTargetType? CurMoveToTargetType { get; }
 
 		#endregion
 
