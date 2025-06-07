@@ -3,45 +3,56 @@ using System.Collections.Generic;
 using GameLogic.Model.Mgr;
 
 namespace GameLogic.Model.Element.Vill {
-    public class LowVitState : StateBase {
-        public override State StaType => State.LowVit;
-        
-        public LowVitState() {
-            Transitions.Add(new(ToWork, State.Work));
-            Transitions.Add(new(ToMove, State.Moving));
-        }
-        
-        public override List<Pair<Func<bool>, State>> Transitions { get; } = new();
+	public class LowVitState : StateBase {
+		public override State StaType => State.LowVit;
 
-        private bool ToWork() {
-            // 判断体力是否恢复到可以工作的水平
-            if (VitHelper.VitPercentage > ConfigMgr.Config.VitConfig.LowVitThreshold) {
-                return true;
-            }
-            return false;
-        }
+		public LowVitState() {
+			Transitions.Add(new(ToWork, State.Work));
+			Transitions.Add(new(ToMoving, State.Moving));
+		}
 
-        private bool ToMove() {
-            // 判断是否需要移动到休息地点
-            return false;
-        }
+		public override List<Pair<Func<bool>, State>> Transitions { get; } = new();
 
-        public override void Execute() {
-            // 实现低体力状态的主要逻辑
-            // 可能包括逐渐恢复体力或消耗资源
-        }
+		/// <summary>
+		/// 缓存一帧内的体力检查结果，避免重复计算。
+		/// </summary>
+		private bool _cachedCheckFood;
+		/// <summary>
+		/// 缓存体力检查结果的有效性标志。
+		/// </summary>
+		private bool _cacheValid = false;
 
-        public override void LogicDestroy() {
-            // 实现清理逻辑
-        }
+		private bool CheckFood() {
+			if (_cacheValid) {
+				return _cachedCheckFood;
+			}
+			_cacheValid = true;
+			var vitDemand = ConfigMgr.Config.VitConfig.RecoverVitThreshold * ConfigMgr.Config.VitConfig.MaxVit - _impler.VitHelper.CurVit;
+			var foodDemand = vitDemand / ConfigMgr.Config.VitConfig.VitPerFood;
+			return _cachedCheckFood = RepoMgr.Inst.CheckRequest(RepoType.Food, foodDemand, _impler.RepoBuffHelper.ConsBuffs_F);
+		}
 
-        public override void OnEnd() {
-            // 实现状态结束时的逻辑
-        }
+		private bool ToWork() => !CheckFood();
+		private bool ToMoving() {
+			if (CheckFood()) {
+				StateMachine.MoveToTarget = MoveToTargetType.Recover;
+				return true;
+			}
+			return false;
+		}
 
-        public override void OnEnter() {
-            // 实现状态进入时的逻辑
-            // 可能需要初始化体力恢复相关的参数
-        }
-    }
+		public override void Execute() {
+			_cacheValid = false;
+		}
+
+		protected override void LogicDestroy_Derived() {
+			_cacheValid = false;
+		}
+
+		public override void OnEnd() {}
+
+		public override void OnEnter() {
+			_cacheValid = false;
+		}
+	}
 }

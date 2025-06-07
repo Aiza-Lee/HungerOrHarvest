@@ -1,0 +1,77 @@
+@startuml "BehaviourTree"
+hide empty members
+
+package "BehaviourTree" {
+	class BehaviourTree {
+		+Root: BehaviourNode
+		+Blackboard: Blackboard
+		.. Method ..
+		+Think(): void
+		+Reset(): void
+	}
+	BehaviourTree o-- BehaviourNode
+	BehaviourTree o-- Blackboard
+
+
+	enum NodeStatus {
+		SUCCESS
+		FAILURE
+		RUNNING
+	}
+
+	abstract class BehaviourNode {
+		+Status: NodeStatus
+		+Parent: BehaviourNode
+		.. Method ..
+		+Execute(): NodeStatus
+		+Reset(): void
+	}
+
+	abstract class CompositeNode extends BehaviourNode {
+		-Children: List<BehaviourNode>
+	}
+
+	class Selector extends CompositeNode {
+		+Execute(): NodeStatus
+	}
+
+	class Sequence extends CompositeNode {
+		+Execute(): NodeStatus
+	}
+
+	abstract class DecoratorNode extends BehaviourNode {
+		-Child: BehaviourNode
+	}
+
+	class Inverter extends DecoratorNode {
+		+Execute(): NodeStatus
+	}
+
+	class Repeater extends DecoratorNode {
+		+RepeatCount: int
+		+Execute(): NodeStatus
+	}
+
+	abstract class LeafNode extends BehaviourNode {
+	}
+
+	class ActionNode extends LeafNode {
+		+action: Action
+		+Execute(): NodeStatus
+	}
+
+	class ConditionNode extends LeafNode {
+		+condition: Func<Blackboard, bool>
+		+Execute(): NodeStatus
+	}
+
+	class Blackboard {
+		-data: Map<String, Object>
+		.. Method ..
+		+GetData(key: String): Object
+		+SetData(key: String, value: Object): void
+		+RemoveData(key: String): void
+	}
+}
+
+@enduml

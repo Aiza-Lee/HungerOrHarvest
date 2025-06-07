@@ -12,7 +12,7 @@ namespace GameLogic.Model.Mgr
 
 		public ulong DAY_TICKS;
 		public ulong NIGHT_TICKS;
-		public float VILL_ONE_MOVE_TICK;
+		public int VILL_ONE_MOVE_TICK;
 		public float NIGHT_TIME_SPEED;
 
 		[Header("村民体力系统配置")]

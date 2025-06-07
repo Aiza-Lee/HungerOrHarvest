@@ -24,10 +24,13 @@ namespace GameLogic.Model.Element.Vill {
 		/// 状态转移判定条件
 		/// </summary>
 		abstract public List<Pair<Func<bool>, State>> Transitions { get; }
+
+		virtual protected void LogicDestroy_Derived() {}
 		/// <summary>
 		/// 销毁对象，返回对象池
 		/// </summary>
-		virtual public void LogicDestroy() {
+		public void LogicDestroy() {
+			LogicDestroy_Derived();
 			PoolSystem.PushObj(GetType(), this);
 		}
 

@@ -34,7 +34,7 @@ namespace GameLogic.Model.Element.Vill {
             // TODO: 实现体力恢复逻辑
         }
 
-        public override void LogicDestroy() {
+        protected override void LogicDestroy_Derived() {
             // 实现清理逻辑
         }
 

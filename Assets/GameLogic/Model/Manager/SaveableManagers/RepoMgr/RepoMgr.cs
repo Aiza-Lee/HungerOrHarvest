@@ -6,7 +6,7 @@ namespace GameLogic.Model.Mgr {
 	/// <summary>
 	/// 资源管理中心
 	/// </summary>
-	public sealed class RepoMgr : ISaveable<RepoMgrSave>, IMananger {
+	public sealed class RepoMgr : ISaveable<RepoMgrSave>, IMananger, IRepoMgr {
 		private RepoMgr() {
 			EventSystem.AddListener((int) ModelEvt.MgrInitAfterMonoMgr, InitAfterMono, EventType.Model);
 		}
@@ -28,21 +28,9 @@ namespace GameLogic.Model.Mgr {
 		private RTList<float> _curTickSum = new(fill: true);
 
 		public RTList<float> Repos_F => _repos_F;
-		/// <summary>
-		/// 实时更新的每日消耗总额
-		/// </summary>
 		public RTList<float> DailyCons_F => _dailyCons_F;
-		/// <summary>
-		/// 实时更新的每日产出总额
-		/// </summary>
 		public RTList<float> DailyProd_F => _dailyProd_F;
-		/// <summary>
-		/// 实时更新的每日净产量
-		/// </summary>
 		public RTList<float> DailyNet_F => _dailyProd_F.Sub_New(_dailyCons_F);
-		/// <summary>
-		/// 解锁的资源种类
-		/// </summary>
 		public RTList<bool> UnlockedRepos_F => _unlockedRepos_F;
 
 		private void InitAfterMono() {
@@ -81,28 +69,36 @@ namespace GameLogic.Model.Mgr {
 
 		#region PublicMethods
 
-		/// <summary>
-		/// 直接添加资源，用于初始化资源、加载存档，不计入每日统计
-		/// </summary>
-		/// <param name="repos"> 添加的资源 </param>
 		public void AddRepoFromSave(RTList<float> repos) {
 			if (repos == null || repos.Count == 0) return;
 			_repos_F.Add(repos);
 		}
 
-		/// <summary>
-		/// 检查当前资源是否满足消耗要求
-		/// </summary>
-		/// <param name="demands"> 消耗要求 </param>
-		public bool CheckRequest(RTList<float> demands) {
-			return _repos_F.BigEnoughThan(demands);
+		public bool CheckRequest(RTList<float> demands, params RTList<float>[] buffs) {
+			if (demands == null || demands.Count == 0) return true;
+
+			var buff_F = new RTList<float>(fill: true);
+			buff_F.Add(buffs).Add(_globalConsBuffs_F).Change((val) => 1f - val);
+
+			var realCons = demands.Mul_New(buff_F);
+			return _repos_F.BigEnoughThan(realCons);
+		}
+		public bool CheckRequest(RepoType repo, float demand, params RTList<float>[] buffs) {
+			if (demand <= 0) return true;
+			// // 检查资源种类是否解锁
+			// if (!_unlockedRepos_F[(int) repo].Value) return false;
+			// 检查资源数量是否满足需求
+			var buff_F = new RTList<float>(fill: true);
+			buff_F.Add(buffs).Add(_globalConsBuffs_F).Change((val) => 1f - val);
+
+			return _repos_F[(int) repo].Value >= demand * buff_F[(int) repo].Value;
 		}
 
-		/// <summary>
-		/// 尝试消耗一些资源，如果资源不足则返回false，否则消耗资源并返回true
-		/// </summary>
-		/// <param name="cons">欲消耗的资源数量</param>
-		/// <param name="buffs">减少消耗buff</param>
+		public bool CheckRequest(RepoType repo, float demand, float buff = 0f) {
+			if (demand <= 0) return true;
+			return _repos_F[(int) repo].Value >= demand * (1f - buff);
+		}
+
 		public bool TryCons(RTList<float> cons, params RTList<float>[] buffs) {
 			if (cons == null || cons.Count == 0) return true;
 
@@ -113,11 +109,6 @@ namespace GameLogic.Model.Mgr {
 			return TryTickConsImpl(realCons);
 		}
 
-		/// <summary>
-		/// 产出资源
-		/// </summary>
-		/// <param name="prod">欲产出的资源</param>
-		/// <param name="buffs">增加产出的buff</param>
 		public void Prod(RTList<float> prod, params RTList<float>[] buffs) {
 			if (prod == null || prod.Count == 0) return;
 
@@ -128,32 +119,11 @@ namespace GameLogic.Model.Mgr {
 			TickProdImpl(realProd);
 		}
 
-		/// <summary>
-		/// 添加全局的减少消耗buff
-		/// </summary>
-		/// <param name="repo">资源种类</param>
-		/// <param name="buff">buff值</param>
 		public void AddConsBuff(RepoType repo, float buff) { _globalConsBuffs_F[(int) repo].Value += buff; }
-		/// <summary>
-		/// 添加全局的减少消耗buff
-		/// </summary>
-		/// <param name="rtPair">资源种类和buff值的键值对</param>
 		public void AddConsBuff(RTPair<float> rtPair) { _globalConsBuffs_F[rtPair.Index].Value += rtPair.Value; }
-		/// <summary>
-		/// 添加全局的增加产出buff
-		/// </summary>
-		/// <param name="repo">资源种类</param>
-		/// <param name="buff">buff值</param>
 		public void AddProdBuff(RepoType repo, float buff) { _globalProdBuffs_F[(int) repo].Value += buff; }
-		/// <summary>
-		/// 添加全局的增加产出buff
-		/// </summary>
-		/// <param name="rtPair">资源种类和buff值的键值对</param>
 		public void AddProdBuff(RTPair<float> rtPair) { _globalProdBuffs_F[rtPair.Index].Value += rtPair.Value; }
-		/// <summary>
-		/// 解锁资源，通过事件中心发布资源解锁事件
-		/// </summary>
-		/// <param name="repo">解锁的资源种类</param>
+
 		public void UnlockRepo(RepoType repo) {
 			_unlockedRepos_F[(int) repo].Value = true;
 			EventSystem.Invoke<RepoType>((int) ModelEvt.UnlockRepo_R_1, repo, EventType.Model);

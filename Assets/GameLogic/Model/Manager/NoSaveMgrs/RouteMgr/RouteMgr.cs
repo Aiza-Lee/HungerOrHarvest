@@ -29,6 +29,7 @@ namespace GameLogic.Model.Mgr {
 
 		/// <summary>
 		/// 获取从start到end的路径，不包含start，包含end
+		/// <para>start和end重合时返回空list</para>
 		/// </summary>
 		public List<Coord> GetRoute(Coord start, Coord end) {
 			if (start.OnSameEdge(end)) {

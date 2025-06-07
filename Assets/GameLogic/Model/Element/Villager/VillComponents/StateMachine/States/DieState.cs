@@ -16,7 +16,7 @@ namespace GameLogic.Model.Element.Vill {
             // 实现死亡状态的主要逻辑
         }
 
-        public override void LogicDestroy() {
+        protected override void LogicDestroy_Derived() {
             // 实现清理逻辑
         }
 
