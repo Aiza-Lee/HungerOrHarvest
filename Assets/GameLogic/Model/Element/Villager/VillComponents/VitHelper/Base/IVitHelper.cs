@@ -10,7 +10,7 @@ namespace GameLogic.Model.Element.Vill
 		/// <summary>
 		/// 当前体力百分比
 		/// </summary>
-		float VitPercentage => CurVit / MaxVit;
+		float CurVitProportion => CurVit / MaxVit;
 		/// <summary>
 		/// 是否处于饥饿状态
 		/// </summary>

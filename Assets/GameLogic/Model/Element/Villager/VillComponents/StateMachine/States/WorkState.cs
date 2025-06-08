@@ -19,7 +19,7 @@ namespace GameLogic.Model.Element.Vill {
 		private bool _enterFailed = false;
 
 		private bool ToLowVit() {
-			if (VitHelper.VitPercentage < ConfigMgr.Config.VitConfig.LowVitThreshold && StateMachine.RecoverChance > 0) {
+			if (VitHelper.CurVitProportion < ConfigMgr.Config.VitConfig.LowVitThreshold && StateMachine.RecoverChance > 0) {
 				StateMachine.RecoverChance--;
 				return true;
 			}

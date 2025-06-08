@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using GameLogic.Model.Mgr;
 using GameLogic.Utilities;
 using NSFrame;
@@ -11,11 +12,12 @@ namespace GameLogic.Model.Element.Arch {
 		public ArchLogicBase() {
 			EventSystem.AddListener((int) ModelEvt.Tick_0, UpdateRepo, EventType.Model);
 		}
+		private List<ulong> InVillIDs { get; set; }
 
 		public OL OL { get; private set; }
 		public ulong ID { get; private set; }
 		public int Level { get; private set; }
-		public List<ulong> InVillIDs { get; private set; }
+		public ReadOnlyCollection<ulong> InVillIDs_RO => InVillIDs.AsReadOnly();
 		public List<ulong> BondedVillIDs { get; private set; }
 		public RTList<float> ConsBuffs_F { get; private set; } = new();
 		public RTList<float> ProdBuffs_F { get; private set; } = new();

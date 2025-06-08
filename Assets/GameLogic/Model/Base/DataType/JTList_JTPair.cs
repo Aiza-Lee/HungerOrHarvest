@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using GameLogic.Model.Mgr;
 using GameLogic.Utilities;
 using UnityEngine;
 
-namespace GameLogic
-{
+namespace GameLogic {
 	/// <summary>
 	/// 深拷贝不能实现 T 类型的深拷贝，需要注意
 	/// </summary>
@@ -29,6 +27,33 @@ namespace GameLogic
 		public List<JTPair<T>> List;
 		[HideInInspector] public bool Full;
 		public int Count => List.Count;
+
+		/// <summary>
+		/// 将每一个值设为默认值(0)
+		/// </summary>
+		public void Clear() {
+			List.ForEach((pair) => pair.Value = default);
+		}
+
+		/// <summary>
+		/// 给定部分值创造一个JTList
+		/// </summary>
+		public JTList(params JTPair<T>[] pairs) {
+			List = new List<JTPair<T>>(pairs);
+			List.Sort((a, b) => a.Index - b.Index);
+			Full = List.Count == ConstMgr.JOB_TYPE_SIZE;
+		}
+
+		/// <summary>
+		/// 创造一个每一个value都是给定值的Full List
+		/// </summary>
+		public JTList(T val) {
+			Full = true;
+			List = new();
+			for (int i = 0; i < ConstMgr.JOB_TYPE_SIZE; ++i) {
+				List.Add(new((JobType) i, val));
+			}
+		}
 
 		public JTList(bool fill = false) {
 			List = new();

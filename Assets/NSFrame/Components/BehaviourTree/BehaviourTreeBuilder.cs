@@ -6,15 +6,16 @@ namespace NSFrame.BehaviourTree {
 	/// 行为树构建器，支持链式API快速搭建行为树结构。
 	/// <para>使用示例：</para>
 	/// <code>
-	/// var builder = new BehaviourTreeBuilder();
-	/// var tree = builder
+	/// var builder<BBT> = new BehaviourTreeBuilder<BBT>();
+	/// var tree = builder<BBT>
+	/// 	.Blackboard(new MyBlackboard())
 	///     .Selector()
 	///         .Sequence()
-	///             .Condition(bb => bb.GetData("HasTarget") != null, blackboard)
+	///             .Condition(bb => bb.GetData("HasTarget") != null)
 	///             .Action(() => NodeStatus.SUCCESS)
 	///         .End()
 	///         .Action(() => NodeStatus.FAILURE)
-	///         .CustomLeaf(new BlackboardConditionNode("Health", v => (int)v > 50, blackboard))
+	///         .CustomLeaf(new BlackboardConditionNode("Health", v => (int)v > 50))
 	///         .Inverter()
 	///             .Action(...)
 	///         .End()
@@ -27,7 +28,7 @@ namespace NSFrame.BehaviourTree {
 	///     .End()
 	///     .Build();
 	/// </code>
-	/// <b>Builder支持：</b>
+	/// <b>Builder<BBT>支持：</b>
 	/// <list type="bullet">
 	/// <item>内置节点类型：Selector、Sequence、ActionNode、ConditionNode、Inverter、Repeater 等，均有专用链式方法。</item>
 	/// <item>自定义叶子节点：通过 <c>CustomLeaf(LeafNode node)</c> 方法支持任意LeafNode派生节点（如 BlackboardConditionNode、WaitNode 等）。</item>
@@ -38,14 +39,36 @@ namespace NSFrame.BehaviourTree {
 	/// <para>行为树每次调用 Think() 时，从根节点递归执行，返回根节点的执行状态（SUCCESS/FAILURE/RUNNING）。
 	/// 可通过 Reset() 重置整棵树的状态。黑板（Blackboard）用于节点间数据共享。</para>
 	/// </summary>
-	public class BehaviourTreeBuilder {
+	public class BehaviourTreeBuilder<BBT> where BBT : IBlackboard {
 		private readonly Stack<BehaviourNode> _nodeStack = new();
 		private BehaviourNode _root;
+		private BBT _blackboard;
+		private Action<BBT> _finalAction;
+
+		/// <summary>
+		/// 设置黑板对象，供行为树节点使用。
+		/// <para>黑板用于存储共享数据，供各个节点访问和修改。</para>
+		/// </summary>
+		/// <param name="blackboard">黑板对象</param>
+		public BehaviourTreeBuilder<BBT> Blackboard(BBT blackboard) {
+			_blackboard = blackboard;
+			return this;
+		}
+
+		/// <summary>
+		/// 设置最终动作，在行为树执行完毕后调用。
+		/// </summary>
+		/// <param name="finalAction"></param>
+		/// <returns></returns>
+		public BehaviourTreeBuilder<BBT> FinalAction(Action<BBT> finalAction) {
+			_finalAction = finalAction;
+			return this;
+		}
 
 		/// <summary>
 		/// 开始一个Selector节点。
 		/// </summary>
-		public BehaviourTreeBuilder Selector() {
+		public BehaviourTreeBuilder<BBT> Selector() {
 			var node = new Selector();
 			AddNode(node);
 			_nodeStack.Push(node);
@@ -55,7 +78,7 @@ namespace NSFrame.BehaviourTree {
 		/// <summary>
 		/// 开始一个Sequence节点。
 		/// </summary>
-		public BehaviourTreeBuilder Sequence() {
+		public BehaviourTreeBuilder<BBT> Sequence() {
 			var node = new Sequence();
 			AddNode(node);
 			_nodeStack.Push(node);
@@ -65,8 +88,8 @@ namespace NSFrame.BehaviourTree {
 		/// <summary>
 		/// 添加一个Action节点。
 		/// </summary>
-		public BehaviourTreeBuilder Action(Func<NodeStatus> action) {
-			var node = new ActionNode(action);
+		public BehaviourTreeBuilder<BBT> Action(Func<BBT, NodeStatus> action) {
+			var node = new ActionNode<BBT>(action, _blackboard);
 			AddNode(node);
 			return this;
 		}
@@ -74,8 +97,8 @@ namespace NSFrame.BehaviourTree {
 		/// <summary>
 		/// 添加一个Condition节点。
 		/// </summary>
-		public BehaviourTreeBuilder Condition(Func<Blackboard, bool> condition, Blackboard blackboard) {
-			var node = new ConditionNode(condition, blackboard);
+		public BehaviourTreeBuilder<BBT> Condition(Func<BBT, bool> condition) {
+			var node = new ConditionNode<BBT>(condition, _blackboard);
 			AddNode(node);
 			return this;
 		}
@@ -84,7 +107,7 @@ namespace NSFrame.BehaviourTree {
 		/// 添加一个自定义叶子节点（仅支持LeafNode派生类型）。
 		/// </summary>
 		/// <param name="node">自定义叶子节点实例</param>
-		public BehaviourTreeBuilder CustomLeaf(LeafNode node) {
+		public BehaviourTreeBuilder<BBT> CustomLeaf(LeafNode<BBT> node) {
 			AddNode(node);
 			return this;
 		}
@@ -94,7 +117,7 @@ namespace NSFrame.BehaviourTree {
 		/// 仅允许添加一个子节点，需配合End()闭合。
 		/// </summary>
 		/// <param name="decorator">自定义装饰节点实例</param>
-		public BehaviourTreeBuilder CustomDecorator(DecoratorNode decorator) {
+		public BehaviourTreeBuilder<BBT> CustomDecorator(DecoratorNode decorator) {
 			AddNode(decorator);
 			_nodeStack.Push(decorator);
 			return this;
@@ -103,7 +126,7 @@ namespace NSFrame.BehaviourTree {
 		/// <summary>
 		/// 添加一个Inverter装饰节点，并将其作为当前节点，支持链式嵌套。需配合End()闭合。
 		/// </summary>
-		public BehaviourTreeBuilder Inverter() {
+		public BehaviourTreeBuilder<BBT> Inverter() {
 			var node = new Inverter();
 			AddNode(node);
 			_nodeStack.Push(node);
@@ -114,7 +137,7 @@ namespace NSFrame.BehaviourTree {
 		/// 添加一个Repeater装饰节点，并将其作为当前节点，支持链式嵌套。需配合End()闭合。
 		/// </summary>
 		/// <param name="repeatCount">重复次数</param>
-		public BehaviourTreeBuilder Repeater(int repeatCount) {
+		public BehaviourTreeBuilder<BBT> Repeater(int repeatCount) {
 			var node = new Repeater { RepeatCount = repeatCount };
 			AddNode(node);
 			_nodeStack.Push(node);
@@ -124,7 +147,7 @@ namespace NSFrame.BehaviourTree {
 		/// <summary>
 		/// 结束当前节点，返回上一级节点。
 		/// </summary>
-		public BehaviourTreeBuilder End() {
+		public BehaviourTreeBuilder<BBT> End() {
 			if (_nodeStack.Count > 0)
 				_nodeStack.Pop();
 			return this;
@@ -133,7 +156,10 @@ namespace NSFrame.BehaviourTree {
 		/// <summary>
 		/// 构建行为树对象。
 		/// </summary>
-		public BehaviourTree Build() {
+		public BehaviourTree<BBT> Build() {
+			if (_blackboard == null) {
+				throw new InvalidOperationException("黑板对象未设置，请调用 Blackboard() 方法设置黑板。");
+			}
 			// 检查所有装饰节点是否有子节点
 			if (_root != null) {
 				var stack = new Stack<BehaviourNode>();
@@ -157,8 +183,10 @@ namespace NSFrame.BehaviourTree {
 						}
 					}
 				}
+			} else {
+				throw new InvalidOperationException("行为树构建失败，根节点未设置。请检查是否调用了 Selector() 或 Sequence() 等方法。");
 			}
-			return new BehaviourTree { Root = _root };
+			return new BehaviourTree<BBT>(_root, _blackboard);
 		}
 
 		private void AddNode(BehaviourNode node) {

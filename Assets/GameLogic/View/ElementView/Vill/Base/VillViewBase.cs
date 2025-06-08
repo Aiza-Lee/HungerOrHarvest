@@ -19,7 +19,7 @@ namespace GameLogic.View
 		private void Awake() {
 			SpriteRenderer = GetComponent<SpriteRenderer>();
 			SmoothMove = GetComponent<SmoothMove>();
-			SmoothMove.Configs[0].Time = ConfigMgr.Config.VILL_ONE_MOVE_TICK * TickTrigger.Inst.TickTime;
+			SmoothMove.Configs[0].Time = ConfigMgr.Config.VILL_ONE_MOVE_TICK_NORMAL * TickTrigger.Inst.TickTime;
 			SpriteRenderer.sortingOrder = ViewConstMgr.VILL_SORTING_ORDER;
 		}
 		private void OnDestroy() {

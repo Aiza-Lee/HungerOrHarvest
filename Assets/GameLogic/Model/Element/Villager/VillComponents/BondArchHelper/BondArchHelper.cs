@@ -22,6 +22,7 @@ namespace GameLogic.Model.Element.Vill {
 			arch.OnArchDestroyed -= OnBondedArchDestroyed;
 			if (arch is CottageLogic) {
 				arch.DisBondVill(_impler.ID);
+				arch.VillLeave(_impler.ID);
 				HomeID = 0;
 				return;
 			}

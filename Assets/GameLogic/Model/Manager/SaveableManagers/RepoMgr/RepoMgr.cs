@@ -59,6 +59,15 @@ namespace GameLogic.Model.Mgr {
 			_curTickSum.Sub(cons);
 			return true;
 		}
+		private bool TryTickConsImpl(RepoType repo, float cons) {
+			if (cons <= 0) return true;
+			if (_repos_F[(int) repo].Value < cons) return false;
+
+			_repos_F[(int) repo].Value -= cons;
+			_dailyCons_F[(int) repo].Value += cons;
+			_curTickSum[(int) repo].Value -= cons;
+			return true;
+		}
 		private void TickProdImpl(RTList<float> prod) {
 			// todo: 处理最大容量问题
 			_repos_F.Add(prod);
@@ -107,6 +116,14 @@ namespace GameLogic.Model.Mgr {
 
 			var realCons = cons.Mul_New(buff_F);
 			return TryTickConsImpl(realCons);
+		}
+		public bool TryCons(RepoType repo, float demand, float buff = 0f) {
+			if (demand <= 0) return true;
+			
+			var realCons = demand * (1f - buff);
+			if (_repos_F[(int) repo].Value < realCons) return false;
+
+			return TryTickConsImpl(repo, realCons);
 		}
 
 		public void Prod(RTList<float> prod, params RTList<float>[] buffs) {

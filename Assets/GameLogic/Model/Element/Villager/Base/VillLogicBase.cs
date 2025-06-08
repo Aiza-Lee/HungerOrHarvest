@@ -47,7 +47,7 @@ namespace GameLogic.Model.Element.Vill {
 		public List<JobType> GetSortedJobLevels() => _expHelper.GetSortedJobLevels();
 		public float GetJobExpProportion(JobType jobType) => _expHelper.GetJobExpProportion(jobType);
 		public int GetJobLevel(JobType jobType) => _expHelper.GetJobLevel(jobType);
-		public float GetVitPercentage() => _vitHelper.VitPercentage;
+		public float GetVitPercentage() => _vitHelper.CurVitProportion;
 		#endregion
 
 		#region ISaveable

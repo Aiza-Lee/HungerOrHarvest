@@ -20,7 +20,7 @@ namespace GameLogic.Model.Element.Vill {
 
         private bool ToLowVit() {
             // 判断是否因为某些原因进入低体力状态
-            if (VitHelper.VitPercentage < ConfigMgr.Config.VitConfig.LowVitThreshold) {
+            if (VitHelper.CurVitProportion < ConfigMgr.Config.VitConfig.LowVitThreshold) {
                 return true;
             }
             return false;

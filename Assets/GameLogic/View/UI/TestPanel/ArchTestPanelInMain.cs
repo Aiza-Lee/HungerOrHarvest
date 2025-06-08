@@ -78,7 +78,7 @@ namespace GameLogic.View.Test
 					_sb.Append($"Type: {arch.ArchType}".PadRight(_archFormat[2]));
 
 					var cnt = 0;
-					foreach (var vill in arch.InVillIDs) {
+					foreach (var vill in arch.InVillIDs_RO) {
 						if (cnt == 0) {
 							_sb.AppendLine().Append("    ");
 							++cnt;

@@ -4,7 +4,7 @@ namespace NSFrame.BehaviourTree {
 	/// <summary>
 	/// 黑板类，行为树数据共享区。
 	/// </summary>
-	public class Blackboard {
+	public class Blackboard : IBlackboard {
 		/// <summary>
 		/// 存储数据的字典。
 		/// </summary>
@@ -33,21 +33,16 @@ namespace NSFrame.BehaviourTree {
 			return default;
 		}
 
-		/// <summary>
-		/// 设置数据。
-		/// </summary>
-		/// <param name="key">数据键名</param>
-		/// <param name="value">要设置的对象</param>
 		public void SetData(string key, object value) {
 			_datas[key] = value;
 		}
 
-		/// <summary>
-		/// 移除数据。
-		/// </summary>
-		/// <param name="key">要移除的数据键名</param>
 		public void RemoveData(string key) {
 			_datas.Remove(key);
+		}
+
+		public void Clear() {
+			_datas.Clear();
 		}
 	}
 }

@@ -58,6 +58,14 @@ namespace GameLogic.Model.Mgr {
 		bool TryCons(RTList<float> cons, params RTList<float>[] buffs);
 
 		/// <summary>
+		/// 尝试消耗一种资源，如果资源不足则返回false，否则消耗资源并返回true
+		/// </summary>
+		/// <param name="repo">资源种类</param>
+		/// <param name="cons">需求量</param>
+		/// <param name="buff">减少消耗的buff</param>
+		bool TryCons(RepoType repo, float cons, float buff = 0f);
+
+		/// <summary>
 		/// 产出资源
 		/// </summary>
 		/// <param name="prod">欲产出的资源</param>

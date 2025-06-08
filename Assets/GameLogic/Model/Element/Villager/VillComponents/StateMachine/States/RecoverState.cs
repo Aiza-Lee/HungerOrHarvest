@@ -15,7 +15,7 @@ namespace GameLogic.Model.Element.Vill {
 
         private bool ToWork() {
             // 判断是否恢复足够可以工作
-            if (VitHelper.VitPercentage > 0.5f) { // 使用一个临时的恢复阈值
+            if (VitHelper.CurVitProportion > 0.5f) { // 使用一个临时的恢复阈值
                 return true;
             }
             return false;
@@ -23,7 +23,7 @@ namespace GameLogic.Model.Element.Vill {
 
         private bool ToLowVit() {
             // 判断是否恢复失败进入低体力状态
-            if (VitHelper.VitPercentage < ConfigMgr.Config.VitConfig.LowVitThreshold) {
+            if (VitHelper.CurVitProportion < ConfigMgr.Config.VitConfig.LowVitThreshold) {
                 return true;
             }
             return false;

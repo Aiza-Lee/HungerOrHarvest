@@ -23,7 +23,7 @@ namespace GameLogic.Model.Element.Vill {
 		/// 移动状态的计时器，用于控制移动的速率。
 		/// </summary>
 		private int _moveTick;
-		private readonly int MOVE_INTERVAL = ConfigMgr.Config.VILL_ONE_MOVE_TICK;
+		private readonly int MOVE_INTERVAL = ConfigMgr.Config.VILL_ONE_MOVE_TICK_NORMAL;
 
 		private bool ToArrive() {
 			if (_impler.Coord == StateMachine.MoveTargetCoord) {
