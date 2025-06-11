@@ -36,7 +36,7 @@ namespace GameLogic.Model.Element.Vill {
 		public ulong BondedWorkArchID => _bondArchHelper.BondedWorkArchID;
 		public bool IsHomeless => _bondArchHelper.IsHomeless;
 		public bool IsWorkless => _bondArchHelper.IsWorkless;
-		public string CurStateDescription => _logicImpler.StateMachine.CurStateDescription;
+		public string CurStateDescription => _logicImpler.BehaviourHelper.CurStateDescription;
 
 		public void LogicDestroy() => _logicImpler.LogicDestroy();
 

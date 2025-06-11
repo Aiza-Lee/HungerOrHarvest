@@ -9,8 +9,11 @@ namespace GameLogic.Model.Element.Vill {
 	/// 包含了与逻辑实现相关的各种帮助器，并且可以存储移动路线、恢复状态、死亡状态等信息。
 	/// </summary>
 	public class MyBlackboard : IBlackboard, ISaveable<MyBlackBoardSave> {
-
+		public MyBlackboard(LogicImpler impler) {
+			Impler = impler;
+		}
 		public LogicImpler Impler { get; }
+
 		public IVitHelper VitHelper => Impler.VitHelper;
 		public IBondArchHelper BondArchHelper => Impler.BondArchHelper;
 		public IExpHelper ExpHelper => Impler.ExpHelper;
@@ -62,18 +65,40 @@ namespace GameLogic.Model.Element.Vill {
 		public float TickDyingVitCons => ConfigMgr.Config.VitConfig.TickDyingVitCons;
 		#endregion
 
-		public MyBlackboard(LogicImpler impler) {
-			Impler = impler;
-		}
 
-		public void Clear() {
-		}
+		public void Clear() { }
 
 		public MyBlackBoardSave GetSave() {
-			throw new System.NotImplementedException();
+			return new() {
+				MoveRoute = MoveRoute,
+				CurMoveIndex = CurMoveIndex,
+				LastMoveTime = LastMoveTime,
+
+				RecoverChance = RecoverChance,
+				RecoverMode = RecoverMode,
+
+				IsDying = IsDying,
+				Die = Die,
+
+				LastTickHomeID = LastTickHomeID,
+				LastTickBondedWorkArchID = LastTickBondedWorkArchID,
+				LastTickInDay = LastTickInDay
+			};
 		}
 		public void InitFromSave(MyBlackBoardSave save) {
-			throw new System.NotImplementedException();
+			MoveRoute = save.MoveRoute ?? new List<Coord>();
+			CurMoveIndex = save.CurMoveIndex;
+			LastMoveTime = save.LastMoveTime;
+
+			RecoverChance = save.RecoverChance;
+			RecoverMode = save.RecoverMode;
+
+			IsDying = save.IsDying;
+			Die = save.Die;
+
+			LastTickHomeID = save.LastTickHomeID;
+			LastTickBondedWorkArchID = save.LastTickBondedWorkArchID;
+			LastTickInDay = save.LastTickInDay;
 		}
 	}
 }

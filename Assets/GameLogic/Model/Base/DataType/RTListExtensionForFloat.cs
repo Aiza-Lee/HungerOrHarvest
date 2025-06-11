@@ -46,9 +46,9 @@ namespace GameLogic
 			return self.Clone().Change(func);
 		}
 		public static RTList<float> Change(this RTList<float> self, Func<float, float> func) {
-			foreach (var item in self.List) {
-				self[item.Index].Value = func(item.Value);
-			}
+			self.List.ForEach(item => {
+				item.Value = func(item.Value);
+			});
 			return self;
 		}
 		/// <summary>

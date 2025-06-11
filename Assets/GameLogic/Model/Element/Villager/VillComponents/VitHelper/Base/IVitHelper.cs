@@ -14,7 +14,7 @@ namespace GameLogic.Model.Element.Vill
 		/// <summary>
 		/// 是否处于饥饿状态
 		/// </summary>
-		bool IsHungry => CurVit < ConfigMgr.Config.VitConfig.LowVitThreshold;
+		bool IsHungry => CurVitProportion < ConfigMgr.Config.VitConfig.LowVitThreshold;
 
 		/// <summary>
 		/// 减少vit消耗的buff

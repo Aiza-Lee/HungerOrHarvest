@@ -45,9 +45,9 @@ namespace GameLogic {
 			return self.Clone().Change(func);
 		}
 		public static JTList<float> Change(this JTList<float> self, Func<float, float> func) {
-			foreach (var item in self.List) {
-				self[item.Index].Value = func(item.Value);
-			}
+			self.List.ForEach(item => {
+				item.Value = func(item.Value);
+			});
 			return self;
 		}
 		public static JTList<float> Mul_New(this JTList<float> self, JTList<float> other_F) {

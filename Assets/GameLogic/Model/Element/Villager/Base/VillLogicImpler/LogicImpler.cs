@@ -2,6 +2,7 @@ using System;
 using GameLogic.Model.Factory;
 using GameLogic.Utilities;
 using NSFrame;
+using NSFrame.BehaviourTree;
 
 namespace GameLogic.Model.Element.Vill {
 	/// <summary>
@@ -14,13 +15,18 @@ namespace GameLogic.Model.Element.Vill {
 			EventSystem.AddListener((int) ModelEvt.Tick_0, InvokeTickUpdate, EventType.Model);
 			EventSystem.AddListener((int) ModelEvt.DayStart_0, InvokeOnDayStart, EventType.Model);
 			EventSystem.AddListener((int) ModelEvt.NightStart_0, InvokeOnNightStart, EventType.Model);
+			BehaviourHelper = BehaviourHelperFactory.CreateBehaviourHelper(this);
+			ExpHelper = LogicFctry.Inst.NewVillExpHelper(this);
+			RepoBuffHelper = LogicFctry.Inst.NewVillRepoBuffHelper(this);
+			VitHelper = LogicFctry.Inst.NewVillVitHelper(this);
+			BondArchHelper = LogicFctry.Inst.NewBondArchHelper(this);
 		}
 
-		public ExpHelper ExpHelper { get; private set; }
-		public RepoBuffHelper RepoBuffHelper { get; private set; }
-		public BondArchHelper BondArchHelper { get; private set; }
-		public VitHelper VitHelper { get; private set; }
-		public IStateMachine StateMachine { get; private set; }
+		public BehaviourHelper BehaviourHelper { get; }
+		public ExpHelper ExpHelper { get; }
+		public RepoBuffHelper RepoBuffHelper { get; }
+		public BondArchHelper BondArchHelper { get; }
+		public VitHelper VitHelper { get; }
 
 		public event Action TickUpdate;
 		public event Action OnNightStart;
@@ -66,7 +72,9 @@ namespace GameLogic.Model.Element.Vill {
 				Coord = Coord,
 				ExpHelperSave = ExpHelper.GetSave(),
 				VitHelperSave = VitHelper.GetSave(),
-				BondArchHelperSave = BondArchHelper.GetSave()
+				BondArchHelperSave = BondArchHelper.GetSave(),
+				RepoBuffHelperSave = RepoBuffHelper.GetSave(),
+				BehaviourHelperSave = BehaviourHelper.GetSave()
 			};
 		}
 		public void InitFromSave(LogicImplerSave save) {
@@ -74,10 +82,11 @@ namespace GameLogic.Model.Element.Vill {
 			FirstName = save.FirstName;
 			LastName = save.LastName;
 			Coord = save.Coord;
-			ExpHelper = LogicFctry.Inst.LoadVillExpHelper(this, save.ExpHelperSave);
-			RepoBuffHelper = LogicFctry.Inst.LoadVillRepoBuffHelper(this, save.RepoBuffHelperSave);
-			VitHelper = LogicFctry.Inst.LoadVillVitHelper(this, save.VitHelperSave);
-			BondArchHelper = LogicFctry.Inst.LoadBondArchHelper(this, save.BondArchHelperSave);
+			BehaviourHelper.InitFromSave(save.BehaviourHelperSave);
+			ExpHelper.InitFromSave(save.ExpHelperSave);
+			RepoBuffHelper.InitFromSave(save.RepoBuffHelperSave);
+			VitHelper.InitFromSave(save.VitHelperSave);
+			BondArchHelper.InitFromSave(save.BondArchHelperSave);
 		}
 		#endregion
 	}

@@ -9,6 +9,7 @@ namespace GameLogic.Model.Element.Vill {
 		[HideInInspector] public RepoBuffHelperSave RepoBuffHelperSave;
 		[HideInInspector] public ExpHelperSave ExpHelperSave;
 		public VitHelperSave VitHelperSave;
+		public BehaviourHelperSave BehaviourHelperSave;
 		[HideInInspector] public BondArchHelperSave BondArchHelperSave;
 
 		public LogicImplerSave Clone() {
@@ -20,7 +21,8 @@ namespace GameLogic.Model.Element.Vill {
 				RepoBuffHelperSave = RepoBuffHelperSave.Clone(),
 				ExpHelperSave = ExpHelperSave.Clone(),
 				VitHelperSave = VitHelperSave.Clone(),
-				BondArchHelperSave = BondArchHelperSave.Clone()
+				BondArchHelperSave = BondArchHelperSave.Clone(),
+				BehaviourHelperSave = BehaviourHelperSave.Clone()
 			};
 		}
 	}

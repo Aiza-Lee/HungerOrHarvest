@@ -18,7 +18,10 @@ MonoBehaviour:
   InherentProdVelsSave:
     List: []
   ExtraProdVelsPerOneSave:
-    List: []
+    List:
+    - Key:
+        Value: Food
+      Value: 0.02
   InherentConsVelsSave:
     List: []
   ExtraConsVelsPerOneSave:
@@ -28,6 +31,6 @@ MonoBehaviour:
   ExpAddsSave:
     List:
     - Key:
-        Value: Food
+        Value: Hunter
       Value: 0.01
   VitConsRate: 0.05

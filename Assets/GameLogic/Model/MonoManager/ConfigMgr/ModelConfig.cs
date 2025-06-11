@@ -7,7 +7,7 @@ namespace GameLogic.Model.Mgr
 	/// <summary>
 	/// Model层的配置文件总和，包含了所有Model层需要的配置信息
 	/// </summary>
-	[CreateAssetMenu(fileName = "ConstConfig", menuName = "HungerOrHarvest/Config/ConstConfig")]
+	[CreateAssetMenu(fileName = "ModelConfig", menuName = "HungerOrHarvest/Config/ModelConfig")]
 	public class ModelConfig : ScriptableObject {
 
 		public ulong DAY_TICKS;

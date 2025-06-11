@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DAY_TICKS: 5000
   NIGHT_TICKS: 4000
-  VILL_ONE_MOVE_TICK: 10
+  VILL_ONE_MOVE_TICK_NORMAL: 10
+  VILL_ONE_MOVE_TICK_DYING: 50
   NIGHT_TIME_SPEED: 90
   _vitConfig: {fileID: 11400000, guid: 213b7e1ddddf7044f95d47fa6050cef7, type: 2}
   JobConfigs:
   - {fileID: 11400000, guid: 6bd4c7cf2db66534ab385b4570afafdc, type: 2}
   - {fileID: 11400000, guid: 9eeec722603cf884aa4ad83faba99f97, type: 2}
+  - {fileID: 11400000, guid: 327fe56f922bbf3418d769dc43082c85, type: 2}
   ArchConfigs:
   - {fileID: 11400000, guid: 1cb451dec55ae6647b4c5325dd2b097b, type: 2}
   - {fileID: 11400000, guid: 9e02b216ea707b34588f32012c49328d, type: 2}

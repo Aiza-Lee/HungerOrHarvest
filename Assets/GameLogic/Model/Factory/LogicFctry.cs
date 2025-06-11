@@ -45,44 +45,32 @@ namespace GameLogic.Model.Factory {
 			};
 		}
 		#endregion
-		#region VillExpHelper
-		public ExpHelper LoadVillExpHelper(LogicImpler logicImpler, ExpHelperSave save) {
-			var helper = new ExpHelper(logicImpler);
-			helper.InitFromSave(save);
-			return helper;
-		}
+			#region VillExpHelper
 		public ExpHelper NewVillExpHelper(LogicImpler logicImpler) {
-			return LoadVillExpHelper(logicImpler, Config.DefaultVillExpHelperSave.Clone());
+			var helper = new ExpHelper(logicImpler);
+			helper.InitFromSave(Config.DefaultVillExpHelperSave.Clone());
+			return helper;
 		}
 		#endregion
 		#region VillVitHelper
-		public VitHelper LoadVillVitHelper(LogicImpler logicImpler, VitHelperSave save) {
-			var helper = new VitHelper(logicImpler);
-			helper.InitFromSave(save);
-			return helper;
-		}
 		public VitHelper NewVillVitHelper(LogicImpler logicImpler) {
-			return LoadVillVitHelper(logicImpler, Config.DefaultVillVitHelperSave.Clone());
+			var helper = new VitHelper(logicImpler);
+			helper.InitFromSave(Config.DefaultVillVitHelperSave.Clone());
+			return helper;
 		}
 		#endregion
 		#region BondArchHelper
-		public BondArchHelper LoadBondArchHelper(LogicImpler logicImpler, BondArchHelperSave save) {
-			var helper = new BondArchHelper(logicImpler);
-			helper.InitFromSave(save);
-			return helper;
-		}
 		public BondArchHelper NewBondArchHelper(LogicImpler logicImpler) {
-			return LoadBondArchHelper(logicImpler, Config.DefaultBondArchHelperSave.Clone());
+			var helper = new BondArchHelper(logicImpler);
+			helper.InitFromSave(Config.DefaultBondArchHelperSave.Clone());
+			return helper;
 		}
 		#endregion
 		#region RepoBuffHelper
-		public RepoBuffHelper LoadVillRepoBuffHelper(LogicImpler logicImpler, RepoBuffHelperSave save) {
-			var helper = new RepoBuffHelper(logicImpler);
-			helper.InitFromSave(save);
-			return helper;
-		}
 		public RepoBuffHelper NewVillRepoBuffHelper(LogicImpler logicImpler) { 
-			return LoadVillRepoBuffHelper(logicImpler, Config.DefaultRepoBuffHelperSave.Clone());
+			var helper = new RepoBuffHelper(logicImpler);
+			helper.InitFromSave(Config.DefaultRepoBuffHelperSave.Clone());
+			return helper;
 		}
 		#endregion
 
