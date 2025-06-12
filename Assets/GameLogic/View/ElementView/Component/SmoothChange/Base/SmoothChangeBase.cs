@@ -61,10 +61,17 @@ namespace GameLogic.View
 				_curModID = 0;
 				_running = false;
 
-				_stopCallback?.Invoke();
-				_stopCallback = null;
-				_doneCallback?.Invoke();
-				_doneCallback = null;
+				// 这里可能需要再回调中修改stopCallBack的值，就不做延后处理了，在这里用个临时变量搞一下
+				if (_stopCallback != null) {
+					var _tmpStopCallback = new Action(_stopCallback);
+					_stopCallback = null;
+					_tmpStopCallback?.Invoke();
+				}
+				if (_doneCallback != null) {
+					var _tmpDoneCallback = new Action(_doneCallback);
+					_doneCallback = null;
+					_tmpDoneCallback?.Invoke();
+				}
 			}
 		}
 		private void OnInterprete() {
