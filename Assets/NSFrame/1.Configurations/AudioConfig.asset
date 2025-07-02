@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AudioConfig
   m_EditorClassIdentifier: 
   SFXAudioSourcePrefab: {fileID: 5357904335451603249, guid: 1bd80fd0fb8e0c748a9902b5c990898b, type: 3}
-  _globalVolume: 0.643
-  _bgmVolume: 0.827
-  _sfxVolume: 0.474
+  _globalVolume: 1
+  _bgmVolume: 1
+  _sfxVolume: 1
   _muteBGM: 0
   _muteSFX: 0
   BGMAudioClips: []
