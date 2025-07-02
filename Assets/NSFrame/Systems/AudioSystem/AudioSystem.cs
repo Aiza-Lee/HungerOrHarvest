@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NSFrame
-{
+namespace NSFrame {
 	public static class AudioSystem {
 		private static readonly AudioConfig _config;
-		private static readonly Dictionary<string, AudioClip> _bgmClipsDic;
-		private static readonly Dictionary<string, AudioClip> _sfxClipsDic;
+		private static readonly Dictionary<string, AudioClip> _bgmClips;
+		private static readonly Dictionary<string, AudioClip> _sfxClips;
 		private static readonly AudioSource _bgmPlayer;
 		private static readonly Transform _audioRoot, _sfxRoot;
 		static AudioSystem() {
 			_config = NSFrameRoot.Inst.GetConfig<AudioConfig>();
-			_bgmClipsDic = new();
-			_sfxClipsDic = new();
-			foreach (var pair in _config.BGMAudioClips) _bgmClipsDic.Add(pair.Key, pair.Value);
-			foreach (var pair in _config.SFXAuidoClips) _sfxClipsDic.Add(pair.Key, pair.Value);
+			_bgmClips = new();
+			_sfxClips = new();
+			foreach (var pair in _config.BGMAudioClips) _bgmClips.Add(pair.Key, pair.Value);
+			foreach (var pair in _config.SFXAuidoClips) _sfxClips.Add(pair.Key, pair.Value);
 			GameObject audioRoot = new("Audio Root");
 			_audioRoot = audioRoot.transform;
 			_audioRoot.SetParent(NSFrameRoot.Inst.transform);
@@ -38,7 +37,7 @@ namespace NSFrame
 			MuteSFX = _config._muteSFX;
 		}
 
-		public static float GlobalVolume { 
+		public static float GlobalVolume {
 			get => _config._globalVolume;
 			set {
 				if (value.IsApproximatelyEqual(_config._globalVolume)) return;
@@ -64,7 +63,7 @@ namespace NSFrame
 		private static void OnBGMVolumeChanged() {
 			_bgmPlayer.volume = GlobalVolume * BGMVolume;
 		}
-	
+
 		public static bool MuteBGM {
 			get => _config._muteBGM;
 			set {
@@ -82,11 +81,11 @@ namespace NSFrame
 		}
 
 		public static void PlayBGM(string clipName, bool isloop = true) {
-			if (!_bgmClipsDic.ContainsKey(clipName)) {
+			if (!_bgmClips.ContainsKey(clipName)) {
 				Debug.LogError($"NS: No BGM named \"{clipName}\".");
 				return;
 			}
-			_bgmPlayer.clip = _bgmClipsDic[clipName];
+			_bgmPlayer.clip = _bgmClips[clipName];
 			_bgmPlayer.loop = isloop;
 			_bgmPlayer.volume = GlobalVolume * BGMVolume;
 			_bgmPlayer.Play();
@@ -108,13 +107,13 @@ namespace NSFrame
 		}
 
 		public static void PlaySFX(string clipName) {
-			if (!_sfxClipsDic.ContainsKey(clipName)) {
+			if (!_sfxClips.ContainsKey(clipName)) {
 				Debug.LogError($"NS: No SFX named \"{clipName}\".");
 				return;
 			}
 			if (MuteSFX) return;
 			AudioSource player = PoolSystem.PopGO<AudioSource>(_config.SFXAudioSourcePrefab, _sfxRoot);
-			player.clip = _sfxClipsDic[clipName];
+			player.clip = _sfxClips[clipName];
 			player.volume = GlobalVolume * SFXVolume;
 			player.loop = false;
 			player.Play();

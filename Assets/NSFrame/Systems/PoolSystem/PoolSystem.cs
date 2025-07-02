@@ -8,8 +8,6 @@ namespace NSFrame {
 		private static readonly Dictionary<Type, IObjectPool> _objectPoolDic;
 		private static readonly Transform _poolRootTransform;
 
-		// note: 不太清楚这样写是否会出问题，按理来说可能会调用这个静态的地方都发生在整个程序集编译完成过后，所以在这里new一个GameObject应该没啥问题
-		// note: 这样可以省去使用事件或者延迟初始化，但是一定要保证在播放游戏之前“不要动这里面任何东西”，与编辑模式相关的都应该卸载Editor文件夹下
 		static PoolSystem() {
 			_prefabPoolDic = new();
 			_objectPoolDic = new();

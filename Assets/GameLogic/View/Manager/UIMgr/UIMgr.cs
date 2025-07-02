@@ -4,8 +4,7 @@ using System.Linq;
 using NSFrame;
 using UnityEngine;
 
-namespace GameLogic.View
-{
+namespace GameLogic.View {
 	/// <summary>
 	/// <para> 所有的 *单例UI* 需要在编辑器中的这个单例处注册，这个类负责开始时触发所有类从而触发 NSFrame 的注册 </para>
 	/// 同时也时统一触发 *单例UI* 面板的接口
@@ -18,7 +17,7 @@ namespace GameLogic.View
 
 		protected override void Awake() {
 			base.Awake();
-			foreach (var panel in _RegisteredPanels) { 
+			foreach (var panel in _RegisteredPanels) {
 				panel.gameObject.SetActive(true);
 				_panelDict[panel.GetType()] = panel;
 			}
@@ -29,11 +28,11 @@ namespace GameLogic.View
 		}
 
 		private void Update() {
-			#if UNITY_EDITOR
-				if (Input.GetKeyDown(KeyCode.Tab) && Input.GetKey(KeyCode.LeftControl)) {
-					TogglePanelImpl<Test.MainTestPanel>();
-				}
-			#endif
+#if UNITY_EDITOR
+			if (Input.GetKeyDown(KeyCode.Tab) && Input.GetKey(KeyCode.LeftControl)) {
+				TogglePanelImpl<Test.MainTestPanel>();
+			}
+#endif
 		}
 		private T TogglePanelImpl<T>() where T : PanelBase {
 			var type = typeof(T);
@@ -53,7 +52,7 @@ namespace GameLogic.View
 		public T TogglePanel<T>() where T : PanelBase {
 			return TogglePanelImpl<T>();
 		}
-		public void FindPanel<T>(out T panel) where T : PanelBase { 
+		public void FindPanel<T>(out T panel) where T : PanelBase {
 			panel = _panelDict[typeof(T)] as T;
 		}
 		public T FindPanel<T>() where T : PanelBase {

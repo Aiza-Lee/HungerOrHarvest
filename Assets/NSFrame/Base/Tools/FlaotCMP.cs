@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NSFrame {
 	public static class FlaotUtilities {
-		const float EPS = 1e-2f;
+		const float EPS = 1e-5f;
 		public static bool IsApproximatelyEqual(this float a, float b, float eps = EPS) {
 			return Math.Abs(a - b) < eps;
 		}

@@ -8279,6 +8279,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8210667163194412414, guid: 03dacd5cce5779540bf24ec0f24d8fc2, type: 3}
+      propertyPath: _configs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210667163194412414, guid: 03dacd5cce5779540bf24ec0f24d8fc2, type: 3}
+      propertyPath: '_configs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0119aceb280b3ef439a854d3637e8abe, type: 2}
+    - target: {fileID: 8210667163194412414, guid: 03dacd5cce5779540bf24ec0f24d8fc2, type: 3}
+      propertyPath: '_configs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ca24641f055cd0f44a783aefdc134df6, type: 2}
+    - target: {fileID: 8210667163194412414, guid: 03dacd5cce5779540bf24ec0f24d8fc2, type: 3}
+      propertyPath: '_configs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c8feebf06752cf74a97299e8c1d5dada, type: 2}
     - target: {fileID: 8859108000239942443, guid: 03dacd5cce5779540bf24ec0f24d8fc2, type: 3}
       propertyPath: m_Name
       value: NSFrameRoot

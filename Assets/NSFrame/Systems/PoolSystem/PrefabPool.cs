@@ -40,9 +40,7 @@ namespace NSFrame {
 				childGO.name = _prefab.name;
 			}
 			childGO.transform.SetParent(father);
-			if (father != null) 
-				childGO.transform.SetParent(father);
-			else
+			if (father == null)
 				SceneManager.MoveGameObjectToScene(childGO, SceneManager.GetActiveScene());
 			childGO.SetActive(true);
 			return childGO;

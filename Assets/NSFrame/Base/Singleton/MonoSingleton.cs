@@ -3,7 +3,7 @@ using UnityEngine;
 namespace NSFrame {
 	public abstract class MonoSingleton<T> : MonoBehaviour 
 	where T : MonoSingleton<T> {
-		public static T Inst { get; private set; }
+		public static T Inst { get; set; }
 
 		protected virtual void Awake() {
 			if (Inst != null && Inst != this) {
