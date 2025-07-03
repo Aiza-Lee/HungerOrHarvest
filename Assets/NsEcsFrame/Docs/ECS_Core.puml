@@ -1,0 +1,151 @@
+@startuml ECS核心架构
+
+' ECS核心架构图
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FEFEFE
+skinparam handwritten false
+skinparam shadowing false
+skinparam classFontStyle bold
+skinparam packageStyle frame
+skinparam linetype ortho
+
+package "Core" {
+	class World {
+		+EntityManager entityManager
+		+ComponentManager componentManager
+		+SystemManager systemManager
+		+EventBus eventBus
+		+CreateEntity(): Entity
+		+DestroyEntity(entityId: EntityId)
+		+Update(deltaTime: float)
+	}
+
+	class Entity {
+		+EntityId id
+		+bool isEnabled
+		+T AddComponent<T>(): T
+		+bool RemoveComponent<T>()
+		+T GetComponent<T>(): T
+		+bool HasComponent<T>(): bool
+		+bool IsValid(): bool
+	}
+
+	class EntityId {
+		+uint id
+		+uint version
+		+bool IsValid(): bool
+		+Equals(other: EntityId): bool
+	}
+
+	class ComponentManager {
+		+RegisterComponentType<T>()
+		+AddComponent<T>(entity: EntityId, component: T): T
+		+RemoveComponent<T>(entity: EntityId): bool
+		+GetComponent<T>(entity: EntityId): T
+		+HasComponent<T>(entity: EntityId): bool
+	}
+
+	class SystemManager {
+		+RegisterSystem<T>(): T
+		+SetSystemEnabled<T>(enabled: bool)
+		+GetSystem<T>(): T
+		+UpdateSystems(deltaTime: float)
+	}
+
+	interface IComponent {
+	}
+
+	interface ISystem {
+		+OnCreate()
+		+OnDestroy()
+		+OnUpdate(deltaTime: float)
+	}
+
+	class QueryBuilder {
+		+WithAll<T1, T2, ...>(): QueryBuilder
+		+WithAny<T1, T2, ...>(): QueryBuilder
+		+Without<T1, T2, ...>(): QueryBuilder
+		+Build(): EntityQuery
+	}
+
+	class EntityQuery {
+		+ForEach(Action<Entity> action)
+		+ForEach<T>(Action<Entity, T> action)
+		+ForEach<T1, T2>(Action<Entity, T1, T2> action)
+		+GetEntities(): Entity[]
+	}
+
+	class EventBus {
+		+Subscribe<T>(handler: Action<T>): EventSubscription
+		+Unsubscribe(subscription: EventSubscription)
+		+Publish<T>(eventData: T)
+	}
+
+	World *-- EntityManager
+	World *-- ComponentManager
+	World *-- SystemManager
+	World *-- EventBus
+
+	Entity -- EntityId
+	ComponentManager -- IComponent
+	SystemManager -- ISystem
+	World -- QueryBuilder
+	QueryBuilder -- EntityQuery
+}
+
+package "Components" {
+	class TransformComponent {
+		+Vector3 position
+		+Quaternion rotation
+		+Vector3 scale
+	}
+
+	class TagComponent {
+		+string tag
+		+string name
+	}
+
+	class ResourceRefComponent {
+		+string resourceId
+		+ResourceType resourceType
+	}
+
+	class RelationshipComponent {
+		+EntityId parent
+		+EntityId[] children
+		+AddChild(entityId: EntityId)
+		+RemoveChild(entityId: EntityId)
+	}
+}
+
+package "Systems" {
+	class RenderSystem {
+		-EntityQuery renderableEntities
+		+OnUpdate(deltaTime: float)
+		-RenderEntity(entity: Entity)
+	}
+
+	class TransformSystem {
+		-EntityQuery transformEntities
+		+OnUpdate(deltaTime: float)
+		-UpdateWorldTransform(entity: Entity)
+	}
+
+	class ResourceSystem {
+		-Dictionary<string, Object> resources
+		+LoadResource<T>(id: string): T
+		+UnloadResource(id: string)
+		+GetResource<T>(id: string): T
+	}
+}
+
+IComponent <|.. TransformComponent
+IComponent <|.. TagComponent
+IComponent <|.. ResourceRefComponent
+IComponent <|.. RelationshipComponent
+
+ISystem <|.. RenderSystem
+ISystem <|.. TransformSystem
+ISystem <|.. ResourceSystem
+
+@enduml

@@ -1,0 +1,189 @@
+@startuml ECS游戏组件与系统
+
+' ECS游戏特定组件与系统类图
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FEFEFE
+skinparam handwritten false
+skinparam shadowing false
+skinparam classFontStyle bold
+skinparam packageStyle frame
+skinparam linetype ortho
+
+package "GameComponents" {
+	interface IComponent {
+	}
+
+	class VillagerComponent {
+		+string name
+		+float health
+		+float hunger
+		+VillagerState state
+		+VillagerStats stats
+		+VillagerNeeds needs
+	}
+
+	class BuildingComponent {
+		+BuildingType type
+		+int level
+		+int maxOccupants
+		+bool isConstructed
+		+float constructionProgress
+		+BuildingStats stats
+	}
+
+	class InventoryComponent {
+		+Dictionary<ResourceType, float> resources
+		+float maxCapacity
+		+bool AddResource(type: ResourceType, amount: float): bool
+		+bool RemoveResource(type: ResourceType, amount: float): bool
+		+float GetResourceAmount(type: ResourceType): float
+	}
+
+	class ProductionComponent {
+		+ResourceType[] outputs
+		+float[] productionRates
+		+float productionTimer
+		+bool isProducing
+		+CalculateProduction(deltaTime: float): Dictionary<ResourceType, float>
+	}
+
+	class ConsumptionComponent {
+		+ResourceType[] inputs
+		+float[] consumptionRates
+		+bool canConsume
+		+CalculateConsumption(deltaTime: float): Dictionary<ResourceType, float>
+	}
+
+	class BondComponent {
+		+EntityId homeBuilding
+		+EntityId workBuilding
+		+List<EntityId> bondedVillagers
+		+bool IsBondedToHome(entityId: EntityId): bool
+		+bool IsBondedToWork(entityId: EntityId): bool
+	}
+
+	class AIComponent {
+		+BehaviorTree behaviorTree
+		+Blackboard blackboard
+		+TaskQueue tasks
+		+string currentState
+	}
+
+	enum VillagerState {
+		Idle
+		Working
+		Sleeping
+		Eating
+		Traveling
+	}
+
+	enum BuildingType {
+		House
+		Farm
+		Mine
+		Workshop
+		Storage
+	}
+}
+
+package "GameSystems" {
+	interface ISystem {
+		+OnUpdate(deltaTime: float)
+	}
+
+	class VillagerSystem {
+		-EntityQuery villagers
+		+OnUpdate(deltaTime: float)
+		-UpdateVillagerStates(deltaTime: float)
+		-HandleVillagerNeeds(entity: Entity, component: VillagerComponent)
+	}
+
+	class BuildingSystem {
+		-EntityQuery buildings
+		+OnUpdate(deltaTime: float)
+		-UpdateConstruction(deltaTime: float)
+		-CalculateBuildingStats(entity: Entity)
+		-HandleBuildingEffects(entity: Entity)
+	}
+
+	class ProductionSystem {
+		-EntityQuery producers
+		+OnUpdate(deltaTime: float)
+		-ProcessProduction(deltaTime: float)
+		-TransferResources(producer: Entity, output: Dictionary<ResourceType, float>)
+	}
+
+	class ConsumptionSystem {
+		-EntityQuery consumers
+		+OnUpdate(deltaTime: float)
+		-ProcessConsumption(deltaTime: float)
+		-AcquireResources(consumer: Entity, input: Dictionary<ResourceType, float>): bool
+	}
+
+	class BondSystem {
+		-EntityQuery bondableEntities
+		+OnUpdate(deltaTime: float)
+		+BondVillagerToBuilding(villager: Entity, building: Entity, bondType: BondType): bool
+		+UnbondVillager(villager: Entity, bondType: BondType): bool
+	}
+
+	class AISystem {
+		-EntityQuery aiEntities
+		+OnUpdate(deltaTime: float)
+		-UpdateBehaviorTrees(deltaTime: float)
+		-ProcessTasks(entity: Entity, aiComponent: AIComponent)
+	}
+}
+
+package "GameEvents" {
+	class ResourceChangedEvent {
+		+Entity entity
+		+ResourceType resourceType
+		+float oldAmount
+		+float newAmount
+	}
+
+	class VillagerStateChangedEvent {
+		+Entity entity
+		+VillagerState oldState
+		+VillagerState newState
+	}
+
+	class BuildingConstructedEvent {
+		+Entity entity
+		+BuildingType buildingType
+	}
+
+	class BondChangedEvent {
+		+Entity villager
+		+Entity building
+		+BondType bondType
+		+bool isBonding
+	}
+
+	enum BondType {
+		Home
+		Work
+	}
+}
+
+IComponent <|.. VillagerComponent
+IComponent <|.. BuildingComponent
+IComponent <|.. InventoryComponent
+IComponent <|.. ProductionComponent
+IComponent <|.. ConsumptionComponent
+IComponent <|.. BondComponent
+IComponent <|.. AIComponent
+
+ISystem <|.. VillagerSystem
+ISystem <|.. BuildingSystem
+ISystem <|.. ProductionSystem
+ISystem <|.. ConsumptionSystem
+ISystem <|.. BondSystem
+ISystem <|.. AISystem
+
+VillagerComponent -- VillagerState
+BuildingComponent -- BuildingType
+BondChangedEvent -- BondType
+
+@enduml

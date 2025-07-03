@@ -1,0 +1,124 @@
+@startuml ECS与Unity集成
+
+' ECS与Unity集成类图
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FEFEFE
+skinparam handwritten false
+skinparam shadowing false
+skinparam classFontStyle bold
+skinparam packageStyle frame
+skinparam linetype ortho
+
+package "Unity Integration" {
+	class WorldBehaviour {
+		+World world
+		+bool autoCreateSystems
+		+bool isPaused
+		+Awake()
+		+Start()
+		+Update()
+		+OnDestroy()
+	}
+
+	class EntityBehaviour {
+		+Entity entity
+		+bool autoCreateEntity
+		+Awake()
+		+OnEnable()
+		+OnDisable()
+		+OnDestroy()
+		+GetComponent<T>(): T
+		+AddComponent<T>(): T
+		+RemoveComponent<T>(): bool
+	}
+
+	class SystemBehaviour {
+		+World targetWorld
+		+bool isEnabled
+		+RegisterSystem<T>(): T
+		+GetSystem<T>(): T
+	}
+
+	class ComponentAuthoring {
+		+World targetWorld
+		+Entity targetEntity
+		+OnValidate()
+		+WriteToEntity()
+		+ReadFromEntity()
+	}
+
+	class TransformComponentAuthoring {
+		+Vector3 position
+		+Vector3 rotation
+		+Vector3 scale
+		+bool syncWithTransform
+		+WriteToEntity()
+		+ReadFromEntity()
+	}
+
+	class ResourceLoaderBehaviour {
+		+World targetWorld
+		+Dictionary<string, UnityEngine.Object> loadedResources
+		+List<ResourceReference> preloadResources
+		+LoadResource<T>(id: string): T
+		+UnloadResource(id: string)
+		+PreloadResources()
+	}
+
+	class ECSSceneManager {
+		+static ECSSceneManager instance
+		+SerializeWorldToJson(): string
+		+DeserializeWorldFromJson(json: string)
+		+LoadScene(sceneName: string)
+		+SaveScene()
+	}
+
+	class Unity2ECSBridge {
+		+static World GetWorld(worldName: string): World
+		+static Entity GetEntity(gameObject: GameObject): Entity
+		+static GameObject GetGameObject(entity: Entity): GameObject
+		+static void SyncTransformToEntity(transform: Transform, entity: Entity)
+		+static void SyncEntityToTransform(entity: Entity, transform: Transform)
+	}
+}
+
+package "Core" {
+	class World {
+		+EntityManager entityManager
+		+ComponentManager componentManager
+		+SystemManager systemManager
+		+EventBus eventBus
+		+CreateEntity(): Entity
+		+DestroyEntity(entityId: EntityId)
+		+Update(deltaTime: float)
+	}
+
+	class Entity {
+		+EntityId id
+		+bool isEnabled
+		+T AddComponent<T>(): T
+		+bool RemoveComponent<T>()
+		+T GetComponent<T>(): T
+		+bool HasComponent<T>(): bool
+		+bool IsValid(): bool
+	}
+
+	interface ISystem {
+		+OnCreate()
+		+OnDestroy()
+		+OnUpdate(deltaTime: float)
+	}
+
+	interface IComponent {
+	}
+}
+
+WorldBehaviour *-- World
+EntityBehaviour *-- Entity
+SystemBehaviour -- ISystem
+ComponentAuthoring -- IComponent
+TransformComponentAuthoring --|> ComponentAuthoring
+Unity2ECSBridge -- World
+Unity2ECSBridge -- Entity
+
+@enduml
