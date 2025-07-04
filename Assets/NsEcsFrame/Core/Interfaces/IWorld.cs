@@ -66,10 +66,16 @@ namespace NsEcsFrame.Core {
 		int EntityCount { get; }
 
 		/// <summary>
-		/// 更新世界，调用所有System的更新方法
+		/// 逻辑更新世界，调用所有System的逻辑更新方法
+		/// </summary>
+		/// <param name="deltaTime"></param>
+		void LogicUpdate(float deltaTime);
+
+		/// <summary>
+		/// 渲染更新世界，调用所有System的更新方法
 		/// </summary>
 		/// <param name="deltaTime">时间增量</param>
-		void Update(float deltaTime);
+		void RenderUpdate(float deltaTime);
 
 		/// <summary>
 		/// 销毁世界，清理所有资源

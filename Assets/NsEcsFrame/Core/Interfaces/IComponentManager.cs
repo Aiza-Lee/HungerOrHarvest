@@ -82,7 +82,7 @@ namespace NsEcsFrame.Core {
 		IReadOnlyCollection<EntityId> GetEntitiesWith<T>() where T : class, IComponent;
 
 		/// <summary>
-		/// 获取拥有特定Component类型的所有Entity（通过Type参数）
+		/// 获取拥有特定Component类型的所有EntityId（通过Type参数）
 		/// </summary>
 		/// <param name="componentType">Component类型</param>
 		/// <returns>EntityID集合</returns>

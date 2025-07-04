@@ -14,63 +14,76 @@ namespace NsEcsFrame.Utils {
 
         public int Count => _count;
 
-        public void Add(uint id, T value) {
-            int intId = (int)id;
-            int pageIdx = intId / PageSize;
-            int offset = intId % PageSize;
-            EnsureSparsePage(pageIdx);
-            int[] page = _sparsePages[pageIdx];
-            if (Contains(id)) return;
-            page[offset] = _dense.Count + 1; // +1 表示有效，0为未用
-            _denseIds.Add(intId);
-            _dense.Add(value);
-            _count++;
-        }
+		/// <summary>
+		/// 添加一个元素到稀疏集中，ID必须是唯一的。
+		/// </summary>
+		/// <param name="value">添加的元素</param>
+		public void Add(uint id, T value) {
+			int intId = (int) id;
+			int pageIdx = intId / PageSize;
+			int offset = intId % PageSize;
+			EnsureSparsePage(pageIdx);
+			int[] page = _sparsePages[pageIdx];
+			if (Contains(id)) return;
+			page[offset] = _dense.Count + 1; // +1 表示有效，0为未用
+			_denseIds.Add(intId);
+			_dense.Add(value);
+			_count++;
+		}
 
-        public bool Remove(uint id) {
-            int intId = (int)id;
-            int pageIdx = intId / PageSize;
-            int offset = intId % PageSize;
-            if (pageIdx >= _sparsePages.Count) return false;
-            int[] page = _sparsePages[pageIdx];
-            int denseIndex = page[offset] - 1;
-            if (denseIndex < 0 || denseIndex >= _count || _denseIds[denseIndex] != intId) return false;
-            int last = _count - 1;
-            if (denseIndex != last) {
-                int lastId = _denseIds[last];
-                _dense[denseIndex] = _dense[last];
-                _denseIds[denseIndex] = lastId;
-                int lastPageIdx = lastId / PageSize;
-                int lastOffset = lastId % PageSize;
-                _sparsePages[lastPageIdx][lastOffset] = denseIndex + 1;
-            }
-            _dense.RemoveAt(last);
-            _denseIds.RemoveAt(last);
-            page[offset] = 0;
-            _count--;
-            return true;
-        }
+		/// <summary>
+		/// 从稀疏集中移除指定ID的元素。
+		/// </summary>
+		public bool Remove(uint id) {
+			int intId = (int) id;
+			int pageIdx = intId / PageSize;
+			int offset = intId % PageSize;
+			if (pageIdx >= _sparsePages.Count) return false;
+			int[] page = _sparsePages[pageIdx];
+			int denseIndex = page[offset] - 1;
+			if (denseIndex < 0 || denseIndex >= _count || _denseIds[denseIndex] != intId) return false;
+			int last = _count - 1;
+			if (denseIndex != last) {
+				int lastId = _denseIds[last];
+				_dense[denseIndex] = _dense[last];
+				_denseIds[denseIndex] = lastId;
+				int lastPageIdx = lastId / PageSize;
+				int lastOffset = lastId % PageSize;
+				_sparsePages[lastPageIdx][lastOffset] = denseIndex + 1;
+			}
+			_dense.RemoveAt(last);
+			_denseIds.RemoveAt(last);
+			page[offset] = 0;
+			_count--;
+			return true;
+		}
 
-        public bool Contains(uint id) {
-            int intId = (int)id;
-            int pageIdx = intId / PageSize;
-            int offset = intId % PageSize;
-            if (pageIdx >= _sparsePages.Count) return false;
-            int[] page = _sparsePages[pageIdx];
-            int denseIndex = page[offset] - 1;
-            return denseIndex >= 0 && denseIndex < _count && _denseIds[denseIndex] == intId;
-        }
+		/// <summary>
+		/// 检查稀疏集中是否包含指定ID的元素。
+		/// </summary>
+		public bool Contains(uint id) {
+			int intId = (int) id;
+			int pageIdx = intId / PageSize;
+			int offset = intId % PageSize;
+			if (pageIdx >= _sparsePages.Count) return false;
+			int[] page = _sparsePages[pageIdx];
+			int denseIndex = page[offset] - 1;
+			return denseIndex >= 0 && denseIndex < _count && _denseIds[denseIndex] == intId;
+		}
 
-        public T Get(uint id) {
-            int intId = (int)id;
-            int pageIdx = intId / PageSize;
-            int offset = intId % PageSize;
-            if (pageIdx >= _sparsePages.Count) return null;
-            int[] page = _sparsePages[pageIdx];
-            int denseIndex = page[offset] - 1;
-            if (denseIndex < 0 || denseIndex >= _count || _denseIds[denseIndex] != intId) return null;
-            return _dense[denseIndex];
-        }
+		/// <summary>
+		/// 获取指定ID的元素，如果不存在则返回null。
+		/// </summary>
+		public T Get(uint id) {
+			int intId = (int) id;
+			int pageIdx = intId / PageSize;
+			int offset = intId % PageSize;
+			if (pageIdx >= _sparsePages.Count) return null;
+			int[] page = _sparsePages[pageIdx];
+			int denseIndex = page[offset] - 1;
+			if (denseIndex < 0 || denseIndex >= _count || _denseIds[denseIndex] != intId) return null;
+			return _dense[denseIndex];
+		}
 
         /// <summary>
         /// 清空所有内容，重置稀疏集

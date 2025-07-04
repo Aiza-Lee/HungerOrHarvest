@@ -64,7 +64,7 @@ namespace NsEcsFrame.Core {
 			}
 		}
 
-		public void UpdateSystems(float deltaTime) {
+		public void LogicUpdate(float deltaTime) {
 			if (_needsOrdering) {
 				// 根据优先级排序系统
 				_orderedSystems.Sort((a, b) => a.Priority.CompareTo(b.Priority));
@@ -73,7 +73,21 @@ namespace NsEcsFrame.Core {
 
 			foreach (var system in _orderedSystems) {
 				if (system.Enabled) {
-					system.OnUpdate(deltaTime);
+					system.OnLogicUpdate(deltaTime);
+				}
+			}
+		}
+
+		public void RenderUpdate(float deltaTime) {
+			if (_needsOrdering) {
+				// 根据优先级排序系统
+				_orderedSystems.Sort((a, b) => a.Priority.CompareTo(b.Priority));
+				_needsOrdering = false;
+			}
+
+			foreach (var system in _orderedSystems) {
+				if (system.Enabled) {
+					system.OnRenderUpdate(deltaTime);
 				}
 			}
 		}

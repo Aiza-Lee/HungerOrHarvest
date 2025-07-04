@@ -16,7 +16,6 @@ namespace NsEcsFrame.Core {
 		public T AddComponent<T>(EntityId entityID) where T : class, IComponent, new() {
 			return AddComponent(entityID, new T());
 		}
-
 		public T AddComponent<T>(EntityId entityID, T component) where T : class, IComponent {
 			Type type = typeof(T);
 
@@ -71,15 +70,8 @@ namespace NsEcsFrame.Core {
 		}
 
 		public bool HasComponent<T>(EntityId entityId) where T : class, IComponent {
-			Type type = typeof(T);
-
-			if (!_componentStorages.TryGetValue(type, out var storage)) {
-				return false;
-			}
-
-			return storage.HasComponent(entityId);
+			return HasComponent(entityId, typeof(T));
 		}
-
 		public bool HasComponent(EntityId entityId, Type componentType) {
 			if (!_componentStorages.TryGetValue(componentType, out var storage)) {
 				return false;

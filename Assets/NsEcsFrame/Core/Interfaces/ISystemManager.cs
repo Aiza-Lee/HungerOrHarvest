@@ -32,10 +32,14 @@ namespace NsEcsFrame.Core {
 		void SetSystemEnabled<T>(bool enabled) where T : class, ISystem;
 
 		/// <summary>
-		/// 更新所有启用的System
+		/// 触发所有启用的System的LogicUpdate
 		/// </summary>
-		/// <param name="deltaTime">时间增量</param>
-		void UpdateSystems(float deltaTime);
+		void LogicUpdate(float deltaTime);
+
+		/// <summary>
+		/// 触发所有启用的System的RenderUpdate
+		/// </summary>
+		void RenderUpdate(float deltaTime);
 
 		/// <summary>
 		/// 销毁所有System

@@ -4,6 +4,11 @@ namespace NsEcsFrame.Core {
 	/// </summary>
 	public interface ISystem {
 		/// <summary>
+		/// 初始化系统
+		/// </summary>
+		void Initialize(IWorld world);
+
+		/// <summary>
 		/// 当系统被创建时调用
 		/// </summary>
 		void OnCreate();
@@ -14,9 +19,14 @@ namespace NsEcsFrame.Core {
 		void OnDestroy();
 
 		/// <summary>
+		/// 逻辑更新调用，通常用于处理游戏逻辑
+		/// </summary>
+		void OnLogicUpdate(float deltaTime);
+
+		/// <summary>
 		/// 每帧更新调用
 		/// </summary>
-		void OnUpdate(float deltaTime);
+		void OnRenderUpdate(float deltaTime);
 
 		/// <summary>
 		/// 系统优先级，数字越小优先级越高

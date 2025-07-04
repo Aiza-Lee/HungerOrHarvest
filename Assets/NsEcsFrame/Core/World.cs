@@ -9,7 +9,7 @@ namespace NsEcsFrame.Core {
 		private readonly IComponentManager _componentManager;
 		private readonly ISystemManager _systemManager;
 		private readonly IEventBus _eventBus;
-		private readonly SparseSet<Entity> _entities = new();
+		private readonly SparseSet<Entity> _aliveEntities = new();
 		private readonly Stack<uint> _recycledIds = new();
 		private uint _nextEntityId = 1; // 0 保留为无效ID
 		private readonly Dictionary<EntityId, uint> _entityVersions = new();
@@ -55,7 +55,7 @@ namespace NsEcsFrame.Core {
 			_entityVersions[entityId] = version;
 
 			Entity entity = new(this, entityId, _componentManager);
-			_entities.Add(entityId.ID, entity);
+			_aliveEntities.Add(entityId.ID, entity);
 
 			if (EnableDebugLogs) {
 				Debug.Log($"[{Name}] Created entity: {entityId}");
@@ -65,7 +65,7 @@ namespace NsEcsFrame.Core {
 		}
 
 		public void DestroyEntity(EntityId entityId) {
-			if (!_entities.Contains(entityId.ID)) {
+			if (!_aliveEntities.Contains(entityId.ID)) {
 				if (EnableDebugLogs) {
 					Debug.LogWarning($"[{Name}] Trying to destroy non-existent entity: {entityId}");
 				}
@@ -74,10 +74,8 @@ namespace NsEcsFrame.Core {
 
 			// 清除所有组件
 			_componentManager.RemoveAllComponents(entityId);
-
 			// 从活跃实体字典中移除
-			_entities.Remove(entityId.ID);
-
+			_aliveEntities.Remove(entityId.ID);
 			// 回收ID
 			_recycledIds.Push(entityId.ID);
 
@@ -86,30 +84,20 @@ namespace NsEcsFrame.Core {
 			}
 		}
 
-		public bool IsEntityAlive(EntityId entityId) {
-			return _entities.Contains(entityId.ID);
-		}
+		public bool IsEntityAlive(EntityId entityId) => _aliveEntities.Contains(entityId.ID);
+		public Entity GetEntity(EntityId entityId) => _aliveEntities.Get(entityId.ID);
+		public IReadOnlyCollection<Entity> GetAllEntities() => _aliveEntities.ToList();
+		public int EntityCount => _aliveEntities.Count;
 
-		public Entity GetEntity(EntityId entityId) {
-			return _entities.Get(entityId.ID);
-		}
-
-		public IReadOnlyCollection<Entity> GetAllEntities() {
-			return _entities.ToList();
-		}
-
-		public int EntityCount => _entities.Count;
-
-		public void Update(float deltaTime) {
-			_systemManager.UpdateSystems(deltaTime);
-		}
+		public void RenderUpdate(float deltaTime) =>_systemManager.RenderUpdate(deltaTime);
+		public void LogicUpdate(float deltaTime) => _systemManager.LogicUpdate(deltaTime);
 
 		public void Destroy() {
 			// 销毁所有系统
 			_systemManager.DestroyAllSystems();
 
 			// 销毁所有实体
-			foreach (var entity in _entities.ToList()) {
+			foreach (var entity in _aliveEntities.ToList()) {
 				DestroyEntity(entity.EntityId);
 			}
 
@@ -121,9 +109,7 @@ namespace NsEcsFrame.Core {
 			}
 		}
 
-		public EntityQueryBuilder CreateQueryBuilder() {
-			return new EntityQueryBuilder(this);
-		}
+		public EntityQueryBuilder CreateQueryBuilder() => new(this);
 
 		/// <summary>
 		/// 执行实体查询
@@ -133,66 +119,55 @@ namespace NsEcsFrame.Core {
 		/// <param name="withoutTypes">不能包含的组件类型</param>
 		/// <returns>查询结果</returns>
 		internal EntityQuery Query(List<Type> withAllTypes, List<Type> withAnyTypes, List<Type> withoutTypes) {
-			var resultEntities = new List<Entity>();
+			var result = new List<Entity>();
 
 			// 如果没有任何筛选条件，返回所有实体
 			if (withAllTypes.Count == 0 && withAnyTypes.Count == 0 && withoutTypes.Count == 0) {
-				foreach (var entity in _entities) {
-					resultEntities.Add(entity);
-				}
-				return new EntityQuery(this, resultEntities);
+				result.AddRange(_aliveEntities);
+				return new EntityQuery(this, result);
 			}
 
 			// 如果有必须包含的组件类型，先获取包含第一个类型的实体
 			if (withAllTypes.Count > 0) {
 				var firstType = withAllTypes[0];
-				var entities = _componentManager.GetEntitiesWith(firstType);
+				var entityIds = _componentManager.GetEntitiesWith(firstType);
 
-				foreach (var entityId in entities) {
-					var entity = _entities.Get(entityId.ID);
-					if (entity != null) {
-						bool includeEntity = true;
-
+				foreach (var eId in entityIds) {
+					if (_aliveEntities.TryGetValue(eId.ID, out var entity)) {
+						bool hasAllComp = true;
 						// 检查其他必须包含的组件类型
 						for (int i = 1; i < withAllTypes.Count; i++) {
-							if (!_componentManager.HasComponent(entityId, withAllTypes[i])) {
-								includeEntity = false;
+							if (!_componentManager.HasComponent(eId, withAllTypes[i])) {
+								hasAllComp = false;
 								break;
 							}
 						}
-
-						if (includeEntity) {
-							resultEntities.Add(entity);
+						if (hasAllComp) {
+							result.Add(entity);
 						}
 					}
 				}
 			} else if (withAnyTypes.Count > 0) {
-				// 如果没有必须包含的组件类型，但有至少包含一种的组件类型
-				HashSet<EntityId> entityIds = new();
+				HashSet<EntityId> legalEIds = new();
 
 				foreach (var type in withAnyTypes) {
 					var entities = _componentManager.GetEntitiesWith(type);
-					foreach (var entityId in entities) {
-						entityIds.Add(entityId);
-					}
+					legalEIds.UnionWith(entities);
 				}
 
-				foreach (var entityId in entityIds) {
-					var entity = _entities.Get(entityId.ID);
-					if (entity != null) {
-						resultEntities.Add(entity);
+				foreach (var eId in legalEIds) {
+					if (_aliveEntities.TryGetValue(eId.ID, out var entity)) {
+						result.Add(entity);
 					}
 				}
 			} else {
 				// 如果只有不能包含的组件类型，从所有实体开始筛选
-				foreach (var entity in _entities) {
-					resultEntities.Add(entity);
-				}
+				result.AddRange(_aliveEntities);
 			}
 
 			// 过滤不能包含的组件类型
 			if (withoutTypes.Count > 0) {
-				resultEntities.RemoveAll(entity => {
+				result.RemoveAll(entity => {
 					foreach (var type in withoutTypes) {
 						if (_componentManager.HasComponent(entity.EntityId, type)) {
 							return true;
@@ -202,7 +177,7 @@ namespace NsEcsFrame.Core {
 				});
 			}
 
-			return new EntityQuery(this, resultEntities);
+			return new EntityQuery(this, result);
 		}
 	}
 }
