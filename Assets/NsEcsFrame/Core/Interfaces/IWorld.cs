@@ -87,5 +87,31 @@ namespace NsEcsFrame.Core {
 		/// </summary>
 		/// <returns>查询构建器</returns>
 		EntityQueryBuilder CreateQueryBuilder();
+
+		/// <summary>
+		/// 添加/覆盖单例组件
+		/// </summary>
+		void InsertResource<T>(T resource) where T : IResource;
+
+		/// <summary>
+		/// 删除单例组件
+		/// </summary>
+		bool RemoveResource<T>() where T : IResource;
+
+		/// <summary>
+		/// 获取单例组件
+		/// </summary>
+		T GetResource<T>() where T : IResource;
+
+		/// <summary>
+		/// 尝试获取单例组件,
+		/// 如果不存在则返回false，resource为null
+		/// </summary>
+		bool TryGetResource<T>(out T resource) where T : IResource;
+
+		/// <summary>
+		/// 检查是否存在单例组件
+		/// </summary>
+		bool HasResource<T>() where T : IResource;
 	}
 }

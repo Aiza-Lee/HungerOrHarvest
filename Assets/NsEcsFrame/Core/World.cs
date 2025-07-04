@@ -13,6 +13,7 @@ namespace NsEcsFrame.Core {
 		private readonly Stack<uint> _recycledIds = new();
 		private uint _nextEntityId = 1; // 0 保留为无效ID
 		private readonly Dictionary<EntityId, uint> _entityVersions = new();
+		private readonly Dictionary<Type, IResource> _resources = new();
 
 		public string Name { get; }
 		public bool EnableDebugLogs { get; set; } = false;
@@ -63,7 +64,6 @@ namespace NsEcsFrame.Core {
 
 			return entity;
 		}
-
 		public void DestroyEntity(EntityId entityId) {
 			if (!_aliveEntities.Contains(entityId.ID)) {
 				if (EnableDebugLogs) {
@@ -71,7 +71,6 @@ namespace NsEcsFrame.Core {
 				}
 				return;
 			}
-
 			// 清除所有组件
 			_componentManager.RemoveAllComponents(entityId);
 			// 从活跃实体字典中移除
@@ -95,18 +94,45 @@ namespace NsEcsFrame.Core {
 		public void Destroy() {
 			// 销毁所有系统
 			_systemManager.DestroyAllSystems();
-
 			// 销毁所有实体
 			foreach (var entity in _aliveEntities.ToList()) {
 				DestroyEntity(entity.EntityId);
 			}
-
 			// 清理事件总线
 			_eventBus.Clear();
-
+			
 			if (EnableDebugLogs) {
 				Debug.Log($"[{Name}] World destroyed");
 			}
+		}
+
+		public void InsertResource<T>(T resource) where T : IResource {
+			var type = typeof(T);
+			_resources[type] = resource;
+		}
+		public T GetResource<T>() where T : IResource {
+			var type = typeof(T);
+			if (_resources.TryGetValue(type, out var res) && res is T typedRes) {
+				return typedRes;
+			}
+			throw new KeyNotFoundException($"Resource of type {type.Name} not found in world {Name}");
+		}
+		public bool TryGetResource<T>(out T resource) where T : IResource {
+			var type = typeof(T);
+			if (_resources.TryGetValue(type, out var res) && res is T typedRes) {
+				resource = typedRes;
+				return true;
+			}
+			resource = default;
+			return false;
+		}
+		public bool HasResource<T>() where T : IResource {
+			var type = typeof(T);
+			return _resources.ContainsKey(type);
+		}
+		public bool RemoveResource<T>() where T : IResource {
+			var type = typeof(T);
+			return _resources.Remove(type);
 		}
 
 		public EntityQueryBuilder CreateQueryBuilder() => new(this);
