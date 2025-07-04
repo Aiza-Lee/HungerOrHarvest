@@ -57,7 +57,7 @@ namespace GameLogic.Common.Components {
 					new(Mathf.CeilToInt(tmp), LYR),
 				};
 			}
-			throw new System.Exception();
+			throw new Exception($"Coord {this} is not on a valid OL");			
 		}
 		public readonly int DistanceTo(Coord other) {
 			return Mathf.Abs(X - other.X) + Mathf.Abs(Y - other.Y);
@@ -88,8 +88,8 @@ namespace GameLogic.Common.Components {
 
 		public static bool operator ==(Coord lhv, Coord rhv) => lhv.X == rhv.X && lhv.Y == rhv.Y;
 		public static bool operator !=(Coord lhv, Coord rhv) => lhv.X != rhv.X || lhv.Y != rhv.Y;
-		public static Coord operator +(Coord lhv, Coord rhv) => new Coord(lhv.X + rhv.X, lhv.Y + rhv.Y);
-		public static Coord operator -(Coord lhv, Coord rhv) => new Coord(lhv.X - rhv.X, lhv.Y - rhv.Y);
+		public static Coord operator +(Coord lhv, Coord rhv) => new(lhv.X + rhv.X, lhv.Y + rhv.Y);
+		public static Coord operator -(Coord lhv, Coord rhv) => new(lhv.X - rhv.X, lhv.Y - rhv.Y);
 		public override readonly bool Equals(object obj) {
 			if (obj is Coord ol) {
 				return ol.X == X && ol.Y == Y;

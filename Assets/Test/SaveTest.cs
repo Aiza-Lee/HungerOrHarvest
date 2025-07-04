@@ -1,26 +1,17 @@
 using UnityEngine;
 using NSFrame;
 using GameLogic.Common.DataTypes;
+using GameLogic.Common.Components;
 
 namespace Test {
 	public class SaveTest : MonoBehaviour {
 		private void Start() {
 			var saveinfo = SaveSystem.CreateSaveFile("TestSave");
 
-			var pair = new EtPair<RepoType, float>(RepoType.Wood, 100f);
-			saveinfo.SaveObject(pair);
-			var savedPair = saveinfo.LoadObject<EtPair<RepoType, float>>();
-			Debug.Log($"Saved Pair: {savedPair.EnumType} - {savedPair.Value}");
-
-			var etList = new EtList<RepoType, float>(true);
-			saveinfo.SaveObject(etList);
-			var savedList = saveinfo.LoadObject<EtList<RepoType, float>>();
-			Debug.Log($"Saved EtList: {savedList}");
-
-			var recur = new Recur();
-			saveinfo.SaveObject(recur);
-			var savedRecur = saveinfo.LoadObject<Recur>();
-			Debug.Log($"Saved Recur: {savedRecur.Exps}");
+			var coord = new Coord(1, 2);
+			saveinfo.SaveObject(coord);
+			var savedCoord = saveinfo.LoadObject<Coord>();
+			Debug.Log($"Saved Coord: {savedCoord}");
 		}
 	}
 	public class Recur {

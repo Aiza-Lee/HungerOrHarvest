@@ -106,11 +106,11 @@ namespace NSFrame {
 				SaveObject(saveInfo, obj);
 		}
 
-		public static T LoadObject<T>(SaveInfo saveInfo, string fileName) where T : class {
+		public static T LoadObject<T>(SaveInfo saveInfo, string fileName) {
 			T obj = LoadFromFile<T>(SAVE_DIR.AddPath(saveInfo.DirName).AddPath(fileName));
 			return obj;
 		}
-		public static T LoadObject<T>(SaveInfo saveInfo) where T : class {
+		public static T LoadObject<T>(SaveInfo saveInfo) {
 			return LoadObject<T>(saveInfo, typeof(T).Name);
 		}
 
@@ -127,10 +127,10 @@ namespace NSFrame {
 
 		#region 全局数据
 
-		public static T LoadSetting<T>(string fileName) where T : class {
+		public static T LoadSetting<T>(string fileName) {
 			return LoadFromFile<T>(SETTING_DIR.AddPath(fileName));
 		}
-		public static T LoadSetting<T>() where T : class {
+		public static T LoadSetting<T>() {
 			return LoadSetting<T>(typeof(T).Name);
 		}
 		public static void SaveSetting(object obj, string fileName) {
@@ -159,14 +159,14 @@ namespace NSFrame {
 				Debug.LogError($"SaveSystem: SaveToFile failed: {ex.Message}\n{ex.StackTrace}");
 			}
 		}
-		private static T LoadFromFile<T>(string path) where T : class {
+		private static T LoadFromFile<T>(string path) {
 			path += SAVE_EXTENSION;
-			if (!File.Exists(path)) return null;
+			if (!File.Exists(path)) return default;
 			try {
 				return Serializer.Deserialize<T>(File.ReadAllText(path));
 			} catch (Exception ex) {
 				Debug.LogError($"SaveSystem: LoadFromFile<{typeof(T).Name}> failed: {ex.Message}\n{ex.StackTrace}");
-				return null;
+				return default;
 			}
 		}
 		private static object LoadFromFile(string path, Type type) {

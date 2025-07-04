@@ -12,7 +12,7 @@ namespace NSFrame
 		}
 
 
-		public static T LoadObject<T>(this SaveInfo si) where T : class {
+		public static T LoadObject<T>(this SaveInfo si) {
 			return SaveSystem.LoadObject<T>(si);
 		}
 		public static object LoadObject(this SaveInfo si, Type type) {
