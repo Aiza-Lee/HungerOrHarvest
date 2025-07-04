@@ -199,15 +199,18 @@ namespace NSFrame {
 	/// Newtonsoft.Json 序列化策略实现
 	/// </summary>
 	public class NewtonsoftSerializationStrategy : ISerializationStrategy {
+		private static readonly JsonSerializerSettings Settings = new() {
+			TypeNameHandling = TypeNameHandling.Auto
+		};
 		public string Serialize(object obj, bool prettyPrint = false) {
 			var formatting = prettyPrint ? Formatting.Indented : Formatting.None;
-			return JsonConvert.SerializeObject(obj, formatting);
+			return JsonConvert.SerializeObject(obj, formatting, Settings);
 		}
 		public T Deserialize<T>(string json) {
-			return JsonConvert.DeserializeObject<T>(json);
+			return JsonConvert.DeserializeObject<T>(json, Settings);
 		}
 		public object Deserialize(string json, Type type) {
-			return JsonConvert.DeserializeObject(json, type);
+			return JsonConvert.DeserializeObject(json, type, Settings);
 		}
 	}
 }
