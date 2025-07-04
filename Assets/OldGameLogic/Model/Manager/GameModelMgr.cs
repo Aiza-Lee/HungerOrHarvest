@@ -14,7 +14,6 @@ namespace OldGameLogic.Model.Mgr
 
 		private void Start() {
 			_Mgrs = new() {
-				MapMgr.Inst,
 				DisasterMgr.Inst,
 				IDMgr.Inst,
 				LogicTimeMgr.Inst,

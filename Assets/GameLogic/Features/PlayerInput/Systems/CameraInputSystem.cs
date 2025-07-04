@@ -12,14 +12,11 @@ namespace GameLogic.Features.PlayerInput {
 		}
 
 		public void OnCreate() {}
-
 		public void OnDestroy() {}
-
 		public void OnLogicUpdate(float _) {}
 
 		public void OnRenderUpdate(float deltaTime) {
 			var cameraInput = _world.GetResource<CameraInputResource>();
-			
 		}
 	}
 }

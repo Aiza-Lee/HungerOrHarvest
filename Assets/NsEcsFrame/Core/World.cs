@@ -106,18 +106,18 @@ namespace NsEcsFrame.Core {
 			}
 		}
 
-		public void InsertResource<T>(T resource) where T : IResource {
+		public void InsertResource<T>(T resource) where T : class, IResource {
 			var type = typeof(T);
 			_resources[type] = resource;
 		}
-		public T GetResource<T>() where T : IResource {
+		public T GetResource<T>() where T : class, IResource {
 			var type = typeof(T);
 			if (_resources.TryGetValue(type, out var res) && res is T typedRes) {
 				return typedRes;
 			}
 			throw new KeyNotFoundException($"Resource of type {type.Name} not found in world {Name}");
 		}
-		public bool TryGetResource<T>(out T resource) where T : IResource {
+		public bool TryGetResource<T>(out T resource) where T : class, IResource {
 			var type = typeof(T);
 			if (_resources.TryGetValue(type, out var res) && res is T typedRes) {
 				resource = typedRes;
@@ -126,11 +126,11 @@ namespace NsEcsFrame.Core {
 			resource = default;
 			return false;
 		}
-		public bool HasResource<T>() where T : IResource {
+		public bool HasResource<T>() where T : class, IResource {
 			var type = typeof(T);
 			return _resources.ContainsKey(type);
 		}
-		public bool RemoveResource<T>() where T : IResource {
+		public bool RemoveResource<T>() where T : class, IResource {
 			var type = typeof(T);
 			return _resources.Remove(type);
 		}

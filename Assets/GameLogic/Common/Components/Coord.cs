@@ -9,8 +9,7 @@ namespace GameLogic.Common.Components {
 	/// 逻辑世界最小坐标
 	/// <para>方向:面向地图从上往下看，X正方向为从左到右（→），Y正方向为从下到上（↑）</para>
 	/// </summary>
-	[Serializable]
-	public struct Coord : IComponent, IEquatable<Coord> {
+	public class Coord : IComponent, IEquatable<Coord> {
 		public int X;
 		public int Y;
 
@@ -23,13 +22,13 @@ namespace GameLogic.Common.Components {
 			X += x;
 			Y += y;
 		}
-		public readonly bool IsOL() {
+		public bool IsOL() {
 			return X % ConstMgr.X_PER_ODR == 0 && Y % ConstMgr.Y_PER_LYR == 0;
 		}
-		public readonly bool IsOnLayer() {
+		public bool IsOnLayer() {
 			return Y % ConstMgr.Y_PER_LYR == 0;
 		}
-		public readonly List<OL> GetNeighborOLs() {
+		public List<OL> GetNeighborOLs() {
 			var rX = X % ConstMgr.X_PER_ODR;
 			var rY = Y % ConstMgr.Y_PER_LYR;
 			if (rX == 0 && rY == 0) {
@@ -59,13 +58,13 @@ namespace GameLogic.Common.Components {
 			}
 			throw new Exception($"Coord {this} is not on a valid OL");			
 		}
-		public readonly int DistanceTo(Coord other) {
+		public int DistanceTo(Coord other) {
 			return Mathf.Abs(X - other.X) + Mathf.Abs(Y - other.Y);
 		}
-		public readonly int Distance(OL ol) {
+		public int Distance(OL ol) {
 			return DistanceTo(ol.ToCoord());
 		}
-		public readonly bool OnSameEdge(Coord other) {
+		public bool OnSameEdge(Coord other) {
 			if (X == other.X && X % ConstMgr.X_PER_ODR == 0) {
 				var dis = Mathf.Abs(Y - other.Y);
 				return dis < ConstMgr.Y_PER_LYR || (dis == ConstMgr.Y_PER_LYR && Mathf.Max(Y, other.Y) / ConstMgr.Y_PER_LYR % 2 == 0);
@@ -75,7 +74,7 @@ namespace GameLogic.Common.Components {
 			}
 			return false;
 		}
-		public readonly Coord DirectionTo(Coord other) {
+		public Coord DirectionTo(Coord other) {
 			var dX = other.X - X;
 			var dY = other.Y - Y;
 			if (dX != 0 && dY != 0) {
@@ -90,15 +89,15 @@ namespace GameLogic.Common.Components {
 		public static bool operator !=(Coord lhv, Coord rhv) => lhv.X != rhv.X || lhv.Y != rhv.Y;
 		public static Coord operator +(Coord lhv, Coord rhv) => new(lhv.X + rhv.X, lhv.Y + rhv.Y);
 		public static Coord operator -(Coord lhv, Coord rhv) => new(lhv.X - rhv.X, lhv.Y - rhv.Y);
-		public override readonly bool Equals(object obj) {
+		public override bool Equals(object obj) {
 			if (obj is Coord ol) {
 				return ol.X == X && ol.Y == Y;
 			} else {
 				return false;
 			}
 		}
-		public override readonly int GetHashCode() => HashCode.Combine(X, Y);
-		public override readonly string ToString() => $"({X}, {Y})";
-		public readonly bool Equals(Coord other) => X == other.X && Y == other.Y;
+		public override int GetHashCode() => HashCode.Combine(X, Y);
+		public override string ToString() => $"({X}, {Y})";
+		public bool Equals(Coord other) => X == other.X && Y == other.Y;
 	}
 }
