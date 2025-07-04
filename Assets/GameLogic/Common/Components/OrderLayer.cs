@@ -10,7 +10,7 @@ namespace GameLogic.Common.Components {
 	/// <para>方向:面向地图从上往下看，ODR正方向为从左到右（→），LYR正方向为从下到上（↑）</para>
 	/// <para>规定(ODR+LYR)为偶数的坐标可以放置建筑</para>
 	/// </summary>
-	[System.Serializable]
+	[Serializable]
 	public struct OL : IEquatable<OL>, IComponent {
 		public int ODR;
 		public int LYR;
