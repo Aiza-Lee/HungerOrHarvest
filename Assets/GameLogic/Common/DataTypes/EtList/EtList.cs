@@ -6,10 +6,11 @@ namespace GameLogic.Common.DataTypes {
 	public class EtPair<E, T>
 	where E : Enum
 	where T : struct {
-		public E EnumType { get; private set; }
+		public E EnumType { get; set; }
 		public T Value { get; set; }
 		public int Index => Convert.ToInt32(EnumType);
 
+		public EtPair() : this(default, default) { }
 		public EtPair(E enumType, T value) {
 			EnumType = enumType;
 			Value = value;
@@ -27,6 +28,7 @@ namespace GameLogic.Common.DataTypes {
 	where E : Enum
 	where T : struct {
 		private static int Elength { get; } = Enum.GetValues(typeof(E)).Length;
+		public EtList() : base() { Full = false; }
 		public EtList(bool fillAll = false) : base() {
 			Full = fillAll;
 			if (fillAll) {
