@@ -1,22 +1,26 @@
 using System;
 
 namespace NSFrame {
-	[Serializable]
-	public class SaveInfo {
-		/// <summary>
-		/// 存档的随机文件夹名称(唯一，也许吧，重复概率极小，重复了再说吧qwq)
-		/// </summary>
-		public string DirName;
-		public string SaveName;
-		public string CreateTime;
-		public string LastUpdateTime;
-		public SaveInfo(string _dirName, string _saveName, string _createTime) {
-			DirName = _dirName;
-			SaveName = _saveName;
-			CreateTime = _createTime;
-		}
-		public void Update(string updateTime) {
-			LastUpdateTime = updateTime;
-		}
-	}
+    [Serializable]
+    public class SaveInfo {
+        /// <summary>存档的唯一文件夹名称</summary>
+        public string DirName { get; private set; }
+        public string SaveName;
+        public string CreateTime { get; private set; }
+        public string LastUpdateTime { get; private set; }
+
+        public SaveInfo(string dirName, string saveName, string createTime) {
+            DirName = dirName;
+            SaveName = saveName;
+            CreateTime = createTime;
+            LastUpdateTime = createTime;
+        }
+
+        public void Update(string updateTime) {
+            LastUpdateTime = updateTime;
+        }
+
+        public override string ToString() =>
+            $"SaveInfo(Name={SaveName}, Dir={DirName}, Created={CreateTime}, Updated={LastUpdateTime})";
+    }
 }
