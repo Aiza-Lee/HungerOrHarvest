@@ -134,12 +134,5 @@ namespace GameLogic.Common.Render {
 			}
 		}
 
-		public void CopyFrom(IResource other) {
-			if (other is ChangeCurveResource otherRes) {
-				PresetCurves = new Dictionary<ChangeCurveType, Func<float, float>>(otherRes.PresetCurves);
-			} else {
-				throw new ArgumentException($"Cannot copy from {other.GetType()} to {GetType()}");
-			}
-		}
 	}
 }

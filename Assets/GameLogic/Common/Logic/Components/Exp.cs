@@ -8,9 +8,5 @@ namespace GameLogic.Common.Logic {
 			Exp = exp;
 			Level = level;
 		}
-
-		public void CopyFrom(IComponent other) {
-			throw new System.NotImplementedException();
-		}
 	}
 }

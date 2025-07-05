@@ -90,17 +90,6 @@ namespace GameLogic.Common.Render {
 	[Serializable]
 	public class SmoothChangeStatComponent : IComponent {
 		public List<SmoothChangeInfo> SmoothChangeInfos;
-
-		public void CopyFrom(IComponent other) {
-			if (other is SmoothChangeStatComponent otherComp) {
-				SmoothChangeInfos = new List<SmoothChangeInfo>(otherComp.SmoothChangeInfos.Count);
-				foreach (var info in otherComp.SmoothChangeInfos) {
-					SmoothChangeInfos.Add(new SmoothChangeInfo(info));
-				}
-			} else {
-				throw new ArgumentException("Cannot copy from non-SmoothChangeStatComp component");
-			}
-		}
 	}
 
 	/// <summary>

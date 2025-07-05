@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using GameLogic.Common.Logic;
 using NsEcsFrame.Core;
 using UnityEngine;
 
@@ -99,14 +98,5 @@ namespace GameLogic.Common.Logic {
 		public override int GetHashCode() => HashCode.Combine(X, Y);
 		public override string ToString() => $"({X}, {Y})";
 		public bool Equals(Coord other) => X == other.X && Y == other.Y;
-
-		public void CopyFrom(IComponent other) {
-			if (other is Coord otherCoord) {
-				X = otherCoord.X;
-				Y = otherCoord.Y;
-			} else {
-				throw new InvalidCastException("Cannot copy from a component of different type.");
-			}
-		}
 	}
 }

@@ -1,8 +1,7 @@
-using GameLogic.Resources.MainCamera;
 using NsEcsFrame.Core;
 using UnityEngine;
 
-namespace GameLogic.Features.PlayerInput {
+namespace GameLogic.Features.MainCamera {
 	public class CameraInputSystem : ISystem {
 		private IWorld _world;
 		public int Priority => -1;
@@ -13,9 +12,9 @@ namespace GameLogic.Features.PlayerInput {
 			Enabled = true;
 		}
 
-		public void OnCreate() {}
-		public void OnDestroy() {}
-		public void OnLogicUpdate(float _) {}
+		public void OnCreate() { }
+		public void OnDestroy() { }
+		public void OnLogicUpdate(float _) { }
 
 		public void OnRenderUpdate(float deltaTime) {
 			var cameraInput = _world.GetResource<CameraInputResource>();
@@ -24,10 +23,17 @@ namespace GameLogic.Features.PlayerInput {
 			cameraInput.CameraMoveForward = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
 			cameraInput.CameraMoveBackward = Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow);
 
-			cameraInput.CameraSizeTo1 = Input.GetKeyDown(KeyCode.F1);
-			cameraInput.CameraSizeTo2 = Input.GetKeyDown(KeyCode.F2);
-			cameraInput.CameraSizeTo3 = Input.GetKeyDown(KeyCode.F3);
-			cameraInput.CameraSizeTo4 = Input.GetKeyDown(KeyCode.F4);
+			if (Input.GetKeyDown(KeyCode.F1)) {
+				cameraInput.TargetCameraSizeIndex = 0;
+			} else if (Input.GetKeyDown(KeyCode.F2)) {
+				cameraInput.TargetCameraSizeIndex = 1;
+			} else if (Input.GetKeyDown(KeyCode.F3)) {
+				cameraInput.TargetCameraSizeIndex = 2;
+			} else if (Input.GetKeyDown(KeyCode.F4)) {
+				cameraInput.TargetCameraSizeIndex = 3;
+			} else {
+				cameraInput.TargetCameraSizeIndex = -1;
+			}
 		}
 	}
 }

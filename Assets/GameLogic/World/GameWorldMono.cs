@@ -33,7 +33,7 @@ namespace GameLogic.World {
 			entity.AddComponent(new SmoothChangeStatComponent() {
 				SmoothChangeInfos = new System.Collections.Generic.List<SmoothChangeInfo> { smoothChangeInfo }
 			});
-			TestMono.Init(entity);
+			TestMono.SetEntity(entity);
 
 
 		}

@@ -1,9 +1,11 @@
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
-using UnityEngine;
 
 namespace GameLogic.Common.Render {
+	/// <summary>
+	/// 负责将实体的 TransformComponent 同步到 Unity 的 Transform。
+	/// </summary>
 	public class TransformSyncSystem : ISystem {
 		public int Priority => 20;
 		public bool Enabled { get; set; }
@@ -15,11 +17,11 @@ namespace GameLogic.Common.Render {
 			Enabled = true;
 		}
 
-		public void OnCreate() {}
+		public void OnCreate() { }
 
-		public void OnDestroy() {}
+		public void OnDestroy() { }
 
-		public void OnLogicUpdate(float _) {}
+		public void OnLogicUpdate(float _) { }
 
 		public void OnRenderUpdate(float _) {
 			var query = _world.CreateQueryBuilder()

@@ -15,7 +15,7 @@ namespace NsEcsFrame.Unity {
 
 		[SerializeField][SerializeReference] private List<IComponent> _components = new();
 
-		public void Init(Entity entity) {
+		public void SetEntity(Entity entity) {
 			_entityId = entity.ID;
 			_entityMap[_entityId] = this;
 			_components.Clear();

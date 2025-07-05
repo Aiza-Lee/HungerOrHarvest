@@ -52,14 +52,5 @@ namespace GameLogic.Common.Logic {
 		public override int GetHashCode() => HashCode.Combine(ODR, LYR);
 		public override string ToString() => $"[{ODR}, {LYR}]";
 		public bool Equals(OL other) => ODR == other.ODR && LYR == other.LYR;
-
-		public void CopyFrom(IComponent other) {
-			if (other is OL otherOL) {
-				ODR = otherOL.ODR;
-				LYR = otherOL.LYR;
-			} else {
-				throw new InvalidCastException("Cannot copy from a component of different type.");
-			}
-		}
 	}
 }
