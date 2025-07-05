@@ -24,6 +24,7 @@ namespace NsEcsFrame.Core {
 			}
 
 			var system = new T();
+			system.Initialize(_world);
 			_systems[type] = system;
 			_orderedSystems.Add(system);
 			_needsOrdering = true;

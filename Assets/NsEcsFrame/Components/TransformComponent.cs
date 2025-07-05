@@ -13,6 +13,8 @@ namespace NsEcsFrame.Components {
 		/// <summary>本地缩放</summary>
 		public Vector3 LocalScale;
 
+		public bool IsDirty = true; // 脏标记，初始为true，首次同步
+
 		public TransformComponent() {
 			LocalPosition = Vector3.zero;
 			LocalRotation = Quaternion.identity;
@@ -85,5 +87,8 @@ namespace NsEcsFrame.Components {
 		}
 
 		public static TransformComponent FromTransform(Transform transform) => new TransformComponent(transform);
+
+		public void MarkDirty() => IsDirty = true;
+		public void ClearDirty() => IsDirty = false;
 	}
 }

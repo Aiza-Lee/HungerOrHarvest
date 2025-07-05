@@ -18,6 +18,8 @@ namespace NsEcsFrame.Components {
 		/// <summary>锚点相对位置</summary>
 		public Vector2 AnchoredPosition;
 
+		public bool IsDirty = true; // 脏标记
+
 		public RectTransformComponent() {
 			AnchorMin = Vector2.zero;
 			AnchorMax = Vector2.one;
@@ -67,6 +69,9 @@ namespace NsEcsFrame.Components {
 				throw new System.InvalidCastException("Cannot copy from a component of different type.");
 			}
 		}
+
+		public void MarkDirty() => IsDirty = true;
+		public void ClearDirty() => IsDirty = false;
 
 		public override string ToString() {
 			return $"AnchorMin={AnchorMin}, AnchorMax={AnchorMax}, OffsetMin={OffsetMin}, OffsetMax={OffsetMax}, Pivot={Pivot}, SizeDelta={SizeDelta}, AnchoredPosition={AnchoredPosition}";

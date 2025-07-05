@@ -96,7 +96,7 @@ namespace NsEcsFrame.Core {
 			_systemManager.DestroyAllSystems();
 			// 销毁所有实体
 			foreach (var entity in _aliveEntities.ToList()) {
-				DestroyEntity(entity.EntityId);
+				DestroyEntity(entity.ID);
 			}
 			// 清理事件总线
 			_eventBus.Clear();
@@ -195,7 +195,7 @@ namespace NsEcsFrame.Core {
 			if (withoutTypes.Count > 0) {
 				result.RemoveAll(entity => {
 					foreach (var type in withoutTypes) {
-						if (_componentManager.HasComponent(entity.EntityId, type)) {
+						if (_componentManager.HasComponent(entity.ID, type)) {
 							return true;
 						}
 					}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameLogic.Common.Render {
 	public class SmoothChangeSystem : ISystem {
-		public int Priority => throw new System.NotImplementedException();
+		public int Priority => 10;
 
 		public bool Enabled { get; set; }
 
@@ -21,11 +21,11 @@ namespace GameLogic.Common.Render {
 
 		public void OnLogicUpdate(float deltaTime) {
 			var query = _world.CreateQueryBuilder()
-							.WithAll<SmoothChangeStatComp>()
+							.WithAll<SmoothChangeStatComponent>()
 							.Build();
 			var curveRes = _world.GetResource<ChangeCurveResource>();
 			query.ForEach(e => {
-				var changInfos = e.GetComponent<SmoothChangeStatComp>().SmoothChangeInfos;
+				var changInfos = e.GetComponent<SmoothChangeStatComponent>().SmoothChangeInfos;
 				changInfos?.ForEach(info => {
 					if (!info.IsLogicTime) return;
 					if (!info.IsChanging) return;
@@ -35,22 +35,34 @@ namespace GameLogic.Common.Render {
 					var newValue = info.StartValue + (info.TargetValue - info.StartValue) * percent;
 					switch (info.ChangeTargetType) {
 						case ChangeTargetType.Transform_Position:
-							e.GetComponent<TransformComponent>().LocalPosition = newValue.Vector3Value;
+							var tComp = e.GetComponent<TransformComponent>();
+							tComp.LocalPosition = newValue.Vector3Value;
+							tComp.MarkDirty();
 							break;
 						case ChangeTargetType.Transform_Rotation:
-							e.GetComponent<TransformComponent>().LocalRotation = Quaternion.Euler(newValue.Vector3Value);
+							tComp = e.GetComponent<TransformComponent>();
+							tComp.LocalRotation = Quaternion.Euler(newValue.Vector3Value);
+							tComp.MarkDirty();
 							break;
 						case ChangeTargetType.Transform_Scale:
-							e.GetComponent<TransformComponent>().LocalScale = newValue.Vector3Value;
+							tComp = e.GetComponent<TransformComponent>();
+							tComp.LocalScale = newValue.Vector3Value;
+							tComp.MarkDirty();
 							break;
 						case ChangeTargetType.Renderer_Alpha:
-							e.GetComponent<SpriteRendererComponent>().Alpha = newValue.FloatValue;
+							var sComp = e.GetComponent<SpriteRendererComponent>();
+							sComp.Alpha = newValue.FloatValue;
+							sComp.MarkDirty();
 							break;
 						case ChangeTargetType.RectTransform_OffsetMin:
-							e.GetComponent<RectTransformComponent>().OffsetMin = newValue.Vector2Value;
+							var rComp = e.GetComponent<RectTransformComponent>();
+							rComp.OffsetMin = newValue.Vector2Value;
+							rComp.MarkDirty();
 							break;
 						case ChangeTargetType.RectTransform_OffsetMax:
-							e.GetComponent<RectTransformComponent>().OffsetMax = newValue.Vector2Value;
+							rComp = e.GetComponent<RectTransformComponent>();
+							rComp.OffsetMax = newValue.Vector2Value;
+							rComp.MarkDirty();
 							break;
 					}
 					if (info.ElapsedTime >= info.TotalTime) {
@@ -63,11 +75,11 @@ namespace GameLogic.Common.Render {
 
 		public void OnRenderUpdate(float deltaTime) {
 			var query = _world.CreateQueryBuilder()
-							.WithAll<SmoothChangeStatComp>()
+							.WithAll<SmoothChangeStatComponent>()
 							.Build();
 			var curveRes = _world.GetResource<ChangeCurveResource>();
 			query.ForEach(e => {
-				var changInfos = e.GetComponent<SmoothChangeStatComp>().SmoothChangeInfos;
+				var changInfos = e.GetComponent<SmoothChangeStatComponent>().SmoothChangeInfos;
 				changInfos?.ForEach(info => {
 					if (info.IsLogicTime) return;
 					if (!info.IsChanging) return;
@@ -77,22 +89,34 @@ namespace GameLogic.Common.Render {
 					var newValue = info.StartValue + (info.TargetValue - info.StartValue) * percent;
 					switch (info.ChangeTargetType) {
 						case ChangeTargetType.Transform_Position:
-							e.GetComponent<TransformComponent>().LocalPosition = newValue.Vector3Value;
+							var tComp = e.GetComponent<TransformComponent>();
+							tComp.LocalPosition = newValue.Vector3Value;
+							tComp.MarkDirty();
 							break;
 						case ChangeTargetType.Transform_Rotation:
-							e.GetComponent<TransformComponent>().LocalRotation = Quaternion.Euler(newValue.Vector3Value);
+							tComp = e.GetComponent<TransformComponent>();
+							tComp.LocalRotation = Quaternion.Euler(newValue.Vector3Value);
+							tComp.MarkDirty();
 							break;
 						case ChangeTargetType.Transform_Scale:
-							e.GetComponent<TransformComponent>().LocalScale = newValue.Vector3Value;
+							tComp = e.GetComponent<TransformComponent>();
+							tComp.LocalScale = newValue.Vector3Value;
+							tComp.MarkDirty();
 							break;
 						case ChangeTargetType.Renderer_Alpha:
-							e.GetComponent<SpriteRendererComponent>().Alpha = newValue.FloatValue;
+							var sComp = e.GetComponent<SpriteRendererComponent>();
+							sComp.Alpha = newValue.FloatValue;
+							sComp.MarkDirty();
 							break;
 						case ChangeTargetType.RectTransform_OffsetMin:
-							e.GetComponent<RectTransformComponent>().OffsetMin = newValue.Vector2Value;
+							var rComp = e.GetComponent<RectTransformComponent>();
+							rComp.OffsetMin = newValue.Vector2Value;
+							rComp.MarkDirty();
 							break;
 						case ChangeTargetType.RectTransform_OffsetMax:
-							e.GetComponent<RectTransformComponent>().OffsetMax = newValue.Vector2Value;
+							rComp = e.GetComponent<RectTransformComponent>();
+							rComp.OffsetMax = newValue.Vector2Value;
+							rComp.MarkDirty();
 							break;
 					}
 					if (info.ElapsedTime >= info.TotalTime) {

@@ -88,11 +88,11 @@ namespace GameLogic.Common.Render {
 	/// 平滑变化的状态
 	/// </summary>
 	[Serializable]
-	public class SmoothChangeStatComp : IComponent {
+	public class SmoothChangeStatComponent : IComponent {
 		public List<SmoothChangeInfo> SmoothChangeInfos;
 
 		public void CopyFrom(IComponent other) {
-			if (other is SmoothChangeStatComp otherComp) {
+			if (other is SmoothChangeStatComponent otherComp) {
 				SmoothChangeInfos = new List<SmoothChangeInfo>(otherComp.SmoothChangeInfos.Count);
 				foreach (var info in otherComp.SmoothChangeInfos) {
 					SmoothChangeInfos.Add(new SmoothChangeInfo(info));

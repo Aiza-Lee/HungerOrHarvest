@@ -1,4 +1,5 @@
 using GameLogic.Common.Render;
+using GameLogic.Test;
 using NsEcsFrame.Components;
 using NsEcsFrame.Unity;
 using UnityEngine;
@@ -8,7 +9,10 @@ namespace GameLogic.World {
 
 		protected override void RegisterSystems() {
 			World.SystemManager.RegisterSystem<SmoothChangeSystem>();
+			World.SystemManager.RegisterSystem<TransformSyncSystem>();
 		}
+
+		public MoveEntityMono TestMono;
 
 		void Start() {
 			World.InsertResource(new ChangeCurveResource());
@@ -26,11 +30,11 @@ namespace GameLogic.World {
 				IsLogicTime = true,
 				IsChanging = false,
 			};
-			entity.AddComponent(new SmoothChangeStatComp() {
+			entity.AddComponent(new SmoothChangeStatComponent() {
 				SmoothChangeInfos = new System.Collections.Generic.List<SmoothChangeInfo> { smoothChangeInfo }
 			});
+			TestMono.Init(entity);
 
-			
 
 		}
 	}

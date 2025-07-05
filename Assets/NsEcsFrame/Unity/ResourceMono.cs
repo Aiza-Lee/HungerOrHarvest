@@ -15,9 +15,5 @@ namespace NsEcsFrame.Unity {
 			}
 			WorldBehaviour.MainWorld.InsertResource(_resource);
 		}
-
-		void OnValidate() {
-			WorldBehaviour.MainWorld?.GetResource<T>()?.CopyFrom(_resource);
-		}
 	}
 }

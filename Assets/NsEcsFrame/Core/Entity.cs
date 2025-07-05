@@ -8,7 +8,7 @@ namespace NsEcsFrame.Core {
 		/// <summary>
 		/// 实体唯一标识符
 		/// </summary>
-		public EntityId EntityId { get; }
+		public EntityId ID { get; }
 
 		/// <summary>
 		/// 实体是否启用
@@ -22,7 +22,7 @@ namespace NsEcsFrame.Core {
 
 		internal Entity(World world, EntityId id, IComponentManager componentManager) {
 			World = world;
-			EntityId = id;
+			ID = id;
 			_componentManager = componentManager;
 		}
 
@@ -32,7 +32,7 @@ namespace NsEcsFrame.Core {
 		/// <typeparam name="T">组件类型</typeparam>
 		/// <returns>添加的组件</returns>
 		public T AddComponent<T>() where T : class, IComponent, new() {
-			return _componentManager.AddComponent<T>(EntityId);
+			return _componentManager.AddComponent<T>(ID);
 		}
 
 		/// <summary>
@@ -42,7 +42,7 @@ namespace NsEcsFrame.Core {
 		/// <param name="component">组件实例</param>
 		/// <returns>添加的组件</returns>
 		public T AddComponent<T>(T component) where T : class, IComponent {
-			return _componentManager.AddComponent(EntityId, component);
+			return _componentManager.AddComponent(ID, component);
 		}
 
 		/// <summary>
@@ -51,7 +51,7 @@ namespace NsEcsFrame.Core {
 		/// <typeparam name="T">组件类型</typeparam>
 		/// <returns>是否成功移除</returns>
 		public bool RemoveComponent<T>() where T : class, IComponent {
-			return _componentManager.RemoveComponent<T>(EntityId);
+			return _componentManager.RemoveComponent<T>(ID);
 		}
 
 		/// <summary>
@@ -60,7 +60,7 @@ namespace NsEcsFrame.Core {
 		/// <typeparam name="T">组件类型</typeparam>
 		/// <returns>组件实例，如果不存在则返回null</returns>
 		public T GetComponent<T>() where T : class, IComponent {
-			return _componentManager.GetComponent<T>(EntityId);
+			return _componentManager.GetComponent<T>(ID);
 		}
 
 		/// <summary>
@@ -69,7 +69,7 @@ namespace NsEcsFrame.Core {
 		/// <typeparam name="T">组件类型</typeparam>
 		/// <returns>是否包含该组件</returns>
 		public bool HasComponent<T>() where T : class, IComponent {
-			return _componentManager.HasComponent<T>(EntityId);
+			return _componentManager.HasComponent<T>(ID);
 		}
 
 		/// <summary>
@@ -77,18 +77,18 @@ namespace NsEcsFrame.Core {
 		/// </summary>
 		/// <returns>实体是否有效</returns>
 		public bool IsValid() {
-			return EntityId.IsValid() && World.IsEntityAlive(EntityId);
+			return ID.IsValid() && World.IsEntityAlive(ID);
 		}
 
 		/// <summary>
 		/// 销毁实体
 		/// </summary>
 		public void Destroy() {
-			World.DestroyEntity(EntityId);
+			World.DestroyEntity(ID);
 		}
 
 		public override string ToString() {
-			return $"Entity({EntityId})";
+			return $"Entity({ID})";
 		}
 	}
 }
