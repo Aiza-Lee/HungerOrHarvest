@@ -69,10 +69,10 @@ namespace GameLogic.Common.Render {
 		/// <summary>弹跳缓入缓出，两头弹跳</summary>
 		BounceInOut
 	}
-	public class ChangeCurveRes : IResource {
+	public class ChangeCurveResource : IResource {
 		public Dictionary<ChangeCurveType, Func<float, float>> PresetCurves;
 
-		public ChangeCurveRes() {
+		public ChangeCurveResource() {
 			PresetCurves = new Dictionary<ChangeCurveType, Func<float, float>> {
 				{ ChangeCurveType.Directive,   t => 1f },
 
@@ -135,7 +135,7 @@ namespace GameLogic.Common.Render {
 		}
 
 		public void CopyFrom(IResource other) {
-			if (other is ChangeCurveRes otherRes) {
+			if (other is ChangeCurveResource otherRes) {
 				PresetCurves = new Dictionary<ChangeCurveType, Func<float, float>>(otherRes.PresetCurves);
 			} else {
 				throw new ArgumentException($"Cannot copy from {other.GetType()} to {GetType()}");

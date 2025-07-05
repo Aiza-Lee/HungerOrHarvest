@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using NsEcsFrame.Core;
 
 namespace NsEcsFrame.Components {

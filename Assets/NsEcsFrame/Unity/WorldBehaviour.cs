@@ -43,7 +43,7 @@ namespace NsEcsFrame.Unity {
 		}
 
 		void Update() {
-			World?.SystemManager.RenderUpdate(Time.deltaTime);
+			World?.SystemManager.RenderUpdate(Time.unscaledDeltaTime);
 		}
 		void FixedUpdate() {
 			World?.SystemManager.LogicUpdate(Time.fixedDeltaTime);

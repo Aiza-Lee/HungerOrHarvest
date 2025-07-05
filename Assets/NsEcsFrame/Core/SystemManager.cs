@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace NsEcsFrame.Core {
 	public class SystemManager : ISystemManager {
@@ -12,11 +13,14 @@ namespace NsEcsFrame.Core {
 			_world = world;
 		}
 
-		public T RegisterSystem<T>() where T : class, ISystem, new() {
+		public ISystemManager RegisterSystem<T>() where T : class, ISystem, new() {
 			Type type = typeof(T);
 
-			if (_systems.TryGetValue(type, out var existingSystem)) {
-				return (T) existingSystem;
+			if (_systems.ContainsKey(type)) {
+				if (_world.EnableDebugLogs) {
+					Debug.Log($"System {type.Name} is already registered.");
+				}
+				return this;
 			}
 
 			var system = new T();
@@ -25,17 +29,21 @@ namespace NsEcsFrame.Core {
 			_needsOrdering = true;
 
 			system.OnCreate();
-
-			return system;
+			if (_world.EnableDebugLogs) {
+				Debug.Log($"System {type.Name} registered successfully.");
+			}
+			return this;
 		}
 
-		public T RegisterSystem<T>(T system) where T : class, ISystem {
+		public ISystemManager RegisterSystem<T>(T system) where T : class, ISystem {
 			Type type = typeof(T);
 
 			if (_systems.TryGetValue(type, out var existingSystem)) {
-				// 如果已存在，先销毁现有系统
 				existingSystem.OnDestroy();
 				_orderedSystems.Remove(existingSystem);
+				if (_world.EnableDebugLogs) {
+					Debug.Log($"System {type.Name} is being replaced.");
+				}
 			}
 
 			_systems[type] = system;
@@ -43,8 +51,10 @@ namespace NsEcsFrame.Core {
 			_needsOrdering = true;
 
 			system.OnCreate();
-
-			return system;
+			if (_world.EnableDebugLogs) {
+				Debug.Log($"System {type.Name} registered successfully.");
+			}
+			return this;
 		}
 
 		public T GetSystem<T>() where T : class, ISystem {
@@ -53,7 +63,9 @@ namespace NsEcsFrame.Core {
 			if (_systems.TryGetValue(type, out var system)) {
 				return (T) system;
 			}
-
+			if (_world.EnableDebugLogs) {
+				Debug.LogError($"System {type.Name} is not registered.");
+			}
 			return null;
 		}
 
@@ -61,12 +73,14 @@ namespace NsEcsFrame.Core {
 			var system = GetSystem<T>();
 			if (system != null) {
 				system.Enabled = enabled;
+				if (_world.EnableDebugLogs) {
+					Debug.Log($"System {typeof(T).Name} enabled state set to {enabled}.");
+				}
 			}
 		}
 
 		public void LogicUpdate(float deltaTime) {
 			if (_needsOrdering) {
-				// 根据优先级排序系统
 				_orderedSystems.Sort((a, b) => a.Priority.CompareTo(b.Priority));
 				_needsOrdering = false;
 			}
@@ -80,7 +94,6 @@ namespace NsEcsFrame.Core {
 
 		public void RenderUpdate(float deltaTime) {
 			if (_needsOrdering) {
-				// 根据优先级排序系统
 				_orderedSystems.Sort((a, b) => a.Priority.CompareTo(b.Priority));
 				_needsOrdering = false;
 			}

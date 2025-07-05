@@ -7,16 +7,16 @@ namespace NsEcsFrame.Core {
 		/// 注册System
 		/// </summary>
 		/// <typeparam name="T">System类型</typeparam>
-		/// <returns>注册的System实例</returns>
-		T RegisterSystem<T>() where T : class, ISystem, new();
+		/// <returns>ISystemManager，支持链式调用</returns>
+		ISystemManager RegisterSystem<T>() where T : class, ISystem, new();
 
 		/// <summary>
 		/// 注册System
 		/// </summary>
 		/// <typeparam name="T">System类型</typeparam>
 		/// <param name="system">System实例</param>
-		/// <returns>注册的System实例</returns>
-		T RegisterSystem<T>(T system) where T : class, ISystem;
+		/// <returns>ISystemManager，支持链式调用</returns>
+		ISystemManager RegisterSystem<T>(T system) where T : class, ISystem;
 
 		/// <summary>
 		/// 获取指定类型的System
