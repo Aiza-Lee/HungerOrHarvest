@@ -1,3 +1,5 @@
 namespace NsEcsFrame.Core {
-	public interface IResource {}
+	public interface IResource {
+		void CopyFrom(IResource other);
+	}
 }
