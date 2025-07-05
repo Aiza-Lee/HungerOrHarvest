@@ -56,5 +56,15 @@ namespace NsEcsFrame.Components {
 			transform.rotation = Rotation;
 			transform.localScale = Scale;
 		}
+
+		public void CopyFrom(IComponent other) {
+			if (other is TransformComponent otherTransform) {
+				Position = otherTransform.Position;
+				Rotation = otherTransform.Rotation;
+				Scale = otherTransform.Scale;
+			} else {
+				throw new System.InvalidCastException("Cannot copy from a component of different type.");
+			}
+		}
 	}
 }

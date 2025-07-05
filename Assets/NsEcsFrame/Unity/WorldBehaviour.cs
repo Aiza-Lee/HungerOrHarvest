@@ -21,7 +21,7 @@ namespace NsEcsFrame.Unity {
 		/// <summary>
 		/// 是否启用调试日志
 		/// </summary>
-		[SerializeField] private bool _enableDebugLogs = false;
+		[SerializeField] private bool _enableDebugLogs = true;
 
 		/// <summary>
 		/// Ecs World引用

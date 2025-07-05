@@ -87,5 +87,19 @@ namespace NsEcsFrame.Core {
 		/// <param name="componentType">Component类型</param>
 		/// <returns>EntityID集合</returns>
 		IReadOnlyCollection<EntityId> GetEntitiesWith(Type componentType);
+
+		/// <summary>
+		/// 获取所有指定类型的Component实例集合
+		/// </summary>
+		/// <typeparam name="T">Component类型</typeparam>
+		/// <returns>Component实例集合</returns>
+		IReadOnlyCollection<T> GetAllComponents<T>() where T : class, IComponent;
+
+		/// <summary>
+		/// 获取所有指定类型的Component实例集合（通过Type参数）
+		/// </summary>
+		/// <param name="componentType">Component类型</param>
+		/// <returns>Component实例集合</returns>
+		IReadOnlyCollection<IComponent> GetAllComponents(Type componentType);
 	}
 }

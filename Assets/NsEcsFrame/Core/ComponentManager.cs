@@ -116,6 +116,27 @@ namespace NsEcsFrame.Core {
 			return storage.GetEntities();
 		}
 
+		public IReadOnlyCollection<T> GetAllComponents<T>() where T : class, IComponent {
+			Type type = typeof(T);
+			if (!_componentStorages.TryGetValue(type, out var storage)) {
+				return Array.Empty<T>();
+			}
+			if (storage is ComponentStorage<T> typedStorage) {
+				return typedStorage.GetAllComponents();
+			}
+			return Array.Empty<T>();
+		}
+
+		public IReadOnlyCollection<IComponent> GetAllComponents(Type componentType) {
+			if (!_componentStorages.TryGetValue(componentType, out var storage)) {
+				return Array.Empty<IComponent>();
+			}
+			if (storage is IComponentStorageWithAll withAll) {
+				return withAll.GetAllComponents();
+			}
+			return Array.Empty<IComponent>();
+		}
+
 		/// <summary>
 		/// Component存储接口
 		/// </summary>
@@ -138,11 +159,15 @@ namespace NsEcsFrame.Core {
 			IReadOnlyCollection<EntityId> GetEntities();
 		}
 
+		private interface IComponentStorageWithAll {
+			IReadOnlyCollection<IComponent> GetAllComponents();
+		}
+
 		/// <summary>
 		/// 泛型Component存储实现
 		/// </summary>
 		/// <typeparam name="T">存储的Component的类型</typeparam>
-		private class ComponentStorage<T> : IComponentStorage where T : class, IComponent {
+		private class ComponentStorage<T> : IComponentStorage, IComponentStorageWithAll where T : class, IComponent {
 			private readonly Dictionary<EntityId, T> _components = new();
 
 			public void AddComponent(EntityId entityId, T component) {
@@ -164,6 +189,13 @@ namespace NsEcsFrame.Core {
 
 			public IReadOnlyCollection<EntityId> GetEntities() {
 				return _components.Keys;
+			}
+
+			public IReadOnlyCollection<T> GetAllComponents() {
+				return _components.Values;
+			}
+			IReadOnlyCollection<IComponent> IComponentStorageWithAll.GetAllComponents() {
+				return new List<IComponent>(_components.Values);
 			}
 		}
 	}

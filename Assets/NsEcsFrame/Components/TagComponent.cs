@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NsEcsFrame.Core;
 
 namespace NsEcsFrame.Components {
@@ -29,6 +30,15 @@ namespace NsEcsFrame.Components {
 		public TagComponent(string tag, string name) {
 			Tag = tag;
 			Name = name;
+		}
+
+		public void CopyFrom(IComponent other) {
+			if (other is TagComponent otherTag) {
+				Tag = otherTag.Tag;
+				Name = otherTag.Name;
+			} else {
+				throw new System.InvalidCastException("Cannot copy from a component of different type.");
+			}
 		}
 	}
 }
