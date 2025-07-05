@@ -40,6 +40,7 @@ namespace NsEcsFrame.Unity {
 			}
 
 			RegisterSystems();
+			RegisterResources();
 		}
 
 		void Update() {
@@ -64,5 +65,9 @@ namespace NsEcsFrame.Unity {
 		/// 注册核心系统
 		/// </summary>
 		protected abstract void RegisterSystems();
+		/// <summary>
+		/// 注册资源
+		/// </summary>
+		protected abstract void RegisterResources();
 	}
 }
