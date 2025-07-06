@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace OldGameLogic.View
 {
-	[CreateAssetMenu(fileName = "ViewConstConfig", menuName = "HungerOrHarvest/Config/View/ViewConstConfig")]
+	// [CreateAssetMenu(fileName = "ViewConstConfig", menuName = "HungerOrHarvest/Config/View/ViewConstConfig")]
 	public class ViewConstConfig : ScriptableObject {
 
 		public float CAMERA_MOVE_SPEED;

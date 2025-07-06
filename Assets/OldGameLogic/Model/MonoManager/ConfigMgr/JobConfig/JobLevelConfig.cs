@@ -3,7 +3,7 @@ using UnityEngine;
 namespace OldGameLogic.Model.Mgr
 {
 	
-	[CreateAssetMenu(fileName = "JobLevelConfig_x", menuName = "HungerOrHarvest/Config/Job/Level")]
+	// [CreateAssetMenu(fileName = "JobLevelConfig_x", menuName = "HungerOrHarvest/Config/Job/Level")]
 	public class JobLevelConfig : ScriptableObject {
 		[Header("等级")] public int Level;
 		[Header("升到下一级所需经验")] public float LevelUpDemand;

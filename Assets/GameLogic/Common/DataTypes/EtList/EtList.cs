@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace GameLogic.Common.DataTypes {
+	[Serializable]
 	public class EtPair<E, T>
 	where E : Enum
 	where T : struct {
-		public E EnumType { get; set; }
-		public T Value { get; set; }
+		[JsonProperty] public E EnumType;
+		[JsonProperty] public T Value;
 		public int Index => Convert.ToInt32(EnumType);
 
 		public EtPair() : this(default, default) { }
@@ -24,6 +26,7 @@ namespace GameLogic.Common.DataTypes {
 		public override string ToString() => $"{EnumType}: {Value}";
 	}
 
+	[Serializable]
 	public class EtList<E, T> : List<EtPair<E, T>>
 	where E : Enum
 	where T : struct {
@@ -54,7 +57,7 @@ namespace GameLogic.Common.DataTypes {
 			Full = Count == Elength;
 		}
 
-		public bool Full { get; private set; }
+		[JsonProperty] public bool Full { get; private set; }
 
 
 		public override string ToString() {

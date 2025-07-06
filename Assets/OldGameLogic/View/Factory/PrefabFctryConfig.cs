@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OldGameLogic.View
 {
-	[CreateAssetMenu(fileName = "PrefabFctryConfig", menuName = "HungerOrHarvest/Config/View/PrefabFctryConfig")]
+	// [CreateAssetMenu(fileName = "PrefabFctryConfig", menuName = "HungerOrHarvest/Config/View/PrefabFctryConfig")]
 	public class PrefabFctryConfig : ScriptableObject {
 		[SerializeField] private List<Pair<string, GameObject>> VillPrefabs;
 		[SerializeField] private List<Pair<string, GameObject>> ArchPrefabs;

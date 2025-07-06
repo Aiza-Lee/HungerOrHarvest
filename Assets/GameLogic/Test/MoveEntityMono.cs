@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using GameLogic.Common.Render;
+using GameLogic.Common.View;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;

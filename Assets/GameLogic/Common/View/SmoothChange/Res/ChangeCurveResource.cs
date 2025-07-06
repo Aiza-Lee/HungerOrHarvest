@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using NsEcsFrame.Core;
 
-namespace GameLogic.Common.Render {
+namespace GameLogic.Common.View {
 	public enum ChangeCurveType {
 		/// <summary>直接跳转到目标值</summary>
 		Directive,

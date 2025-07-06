@@ -1,4 +1,4 @@
-using GameLogic.Common.Render;
+using GameLogic.Common.View;
 using GameLogic.Test;
 using NsEcsFrame.Components;
 using NsEcsFrame.Unity;
@@ -8,8 +8,12 @@ namespace GameLogic.World {
 	public class GameWorldMono : WorldBehaviour {
 
 		protected override void RegisterSystems() {
-			World.SystemManager.RegisterSystem<SmoothChangeSystem>();
-			World.SystemManager.RegisterSystem<TransformSyncSystem>();
+			World.SystemManager
+				.RegisterSystem<SmoothChangeSystem>()
+				.RegisterSystem<TransformSyncSystem>();
+		}
+		protected override void RegisterResources() {
+			World.InsertResource(new ChangeCurveResource());
 		}
 
 		public MoveEntityMono TestMono;
@@ -28,7 +32,6 @@ namespace GameLogic.World {
 				TargetValue = new SmoothValue(new Vector3(5, 0, 0)),
 				TotalTime = 2f,
 				IsLogicTime = true,
-				IsChanging = false,
 			};
 			entity.AddComponent(new SmoothChangeStatComponent() {
 				SmoothChangeInfos = new System.Collections.Generic.List<SmoothChangeInfo> { smoothChangeInfo }

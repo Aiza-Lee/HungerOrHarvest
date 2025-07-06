@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace OldGameLogic.Model.Mgr 
 {
-	[CreateAssetMenu(fileName = "VitalityConfig", menuName = "HungerOrHarvest/Config/Vill/Vitality")]
+	// [CreateAssetMenu(fileName = "VitalityConfig", menuName = "HungerOrHarvest/Config/Vill/Vitality")]
 	public class VitConfig : ScriptableObject {
 	[Header("体力阈值配置")]
 		// [Range(0.05f, 0.15f)]

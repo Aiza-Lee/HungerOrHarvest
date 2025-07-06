@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace OldGameLogic.Controller
 {
-	[CreateAssetMenu(fileName = "PreSetWorldConfig", menuName = "HungerOrHarvest/Config/Preset World")]
+	// [CreateAssetMenu(fileName = "PreSetWorldConfig", menuName = "HungerOrHarvest/Config/Preset World")]
 	public class PreSetConfig : ScriptableObject {
 		[Space][Space] [Header("正方向层类型(包括0)")] public List<string> PosLayers;
 		[Space][Space] [Header("负方向层类型")] public List<string> NegLayers;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OldGameLogic.Model.Mgr
 {
-	[CreateAssetMenu(fileName = "JobConfig", menuName = "HungerOrHarvest/Config/Job/Job")]
+	// [CreateAssetMenu(fileName = "JobConfig", menuName = "HungerOrHarvest/Config/Job/Job")]
 	public class JobConfig : ScriptableObject {
 		[Header("类型名称(区分大小写)")] public string TypeName;
 		private JobType? _jobType = null;

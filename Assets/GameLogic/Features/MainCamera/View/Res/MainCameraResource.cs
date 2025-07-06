@@ -7,6 +7,6 @@ namespace GameLogic.Features.MainCamera {
 	public class MainCameraResource : IResource {
 		public float Size;
 		public float MoveSpeed;
-		public EntityId? FocusEntityId;
+		public EntityId FocusEntityId;
 	}
 }

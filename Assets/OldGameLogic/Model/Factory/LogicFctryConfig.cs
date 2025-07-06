@@ -8,7 +8,7 @@ namespace OldGameLogic.Model.Factory
 	/// <summary>
 	/// 逻辑层工厂配置，用于配置逻辑层工厂创建实例的默认值
 	/// </summary>
-	[CreateAssetMenu(fileName = "LogicFctryConfig", menuName = "HungerOrHarvest/Config/Fctry/Logic Fctry")]
+	// [CreateAssetMenu(fileName = "LogicFctryConfig", menuName = "HungerOrHarvest/Config/Fctry/Logic Fctry")]
 	public class LogicFctryConfig : ScriptableObject {
 
 
