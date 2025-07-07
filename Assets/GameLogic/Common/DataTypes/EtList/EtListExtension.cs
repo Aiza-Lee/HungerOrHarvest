@@ -8,6 +8,11 @@ namespace GameLogic.Common.DataTypes {
 		where T : struct {
 			return new EtList<E, T>(pairs);
 		}
+		public static ReadOnlyEtList<E, T> AsReadOnly<E, T>(this EtList<E, T> etList)
+		where E : Enum
+		where T : struct {
+			return new ReadOnlyEtList<E, T>(etList);
+		}
 
 		public static EtList<E, T> Change<E, T>(this EtList<E, T> self, Func<T, T> func)
 		where E : Enum
@@ -23,12 +28,14 @@ namespace GameLogic.Common.DataTypes {
 			return new EtList<E, T>(self).Change(func);
 		}
 
-		public static bool BiggerThan<E, T>(this EtList<E, T> self_F, EtList<E, T> other)
+		public static bool BiggerThan<E, T>(this EtList<E, T> self_F, params IEnumerable<EtPair<E, T>>[] others)
 		where E : Enum
 		where T : struct, IComparable<T> {
-			foreach (var pr in other) {
-				if (self_F[pr.Index].CompareTo(pr.Value) <= 0) {
-					return false;
+			foreach (var other in others) {
+				foreach (var pr in other) {
+					if (self_F[pr.Index].CompareTo(pr.Value) <= 0) {
+						return false;
+					}
 				}
 			}
 			return true;
@@ -37,58 +44,58 @@ namespace GameLogic.Common.DataTypes {
 	
 	// 为 float 类型特化的扩展方法
 	public static class EtListFloatExtension {
-		public static EtList<E, float> Sub<E>(this EtList<E, float> self_F, params EtList<E, float>[] others)
+		public static EtList<E, float> Sub<E>(this EtList<E, float> self_F, params IEnumerable<EtPair<E, float>>[] others)
 		where E : Enum {
 			foreach (var other in others) {
-				other.ForEach(pr => {
+				foreach (var pr in other) {
 					self_F[pr.Index] = self_F[pr.Index] - pr.Value;
-				});
+				}
 			}
 			return self_F;
 		}
-		public static EtList<E, float> Sub_New<E>(this EtList<E, float> self_F, params EtList<E, float>[] others)
+		public static EtList<E, float> Sub_New<E>(this EtList<E, float> self_F, params IEnumerable<EtPair<E, float>>[] others)
 		where E : Enum {
 			return new EtList<E, float>(self_F).Sub(others);
 		}
 
-		public static EtList<E, float> Add<E>(this EtList<E, float> self_F, params EtList<E, float>[] others)
+		public static EtList<E, float> Add<E>(this EtList<E, float> self_F, params IEnumerable<EtPair<E, float>>[] others)
 		where E : Enum {
 			foreach (var other in others) {
-				other.ForEach(pr => {
+				foreach (var pr in other) {
 					self_F[pr.Index] = self_F[pr.Index] + pr.Value;
-				});
+				}
 			}
 			return self_F;
 		}
-		public static EtList<E, float> Add_New<E>(this EtList<E, float> self_F, params EtList<E, float>[] others)
+		public static EtList<E, float> Add_New<E>(this EtList<E, float> self_F, params IEnumerable<EtPair<E, float>>[] others)
 		where E : Enum {
 			return new EtList<E, float>(self_F).Add(others);
 		}
 
-		public static EtList<E, float> Mul<E>(this EtList<E, float> self_F, params EtList<E, float>[] others)
+		public static EtList<E, float> Mul<E>(this EtList<E, float> self_F, params IEnumerable<EtPair<E, float>>[] others)
 		where E : Enum {
 			foreach (var other in others) {
-				other.ForEach(pr => {
+				foreach (var pr in other) {
 					self_F[pr.Index] = self_F[pr.Index] * pr.Value;
-				});
+				}
 			}
 			return self_F;
 		}
-		public static EtList<E, float> Mul_New<E>(this EtList<E, float> self_F, params EtList<E, float>[] others)
+		public static EtList<E, float> Mul_New<E>(this EtList<E, float> self_F, params IEnumerable<EtPair<E, float>>[] others)
 		where E : Enum {
 			return new EtList<E, float>(self_F).Mul(others);
 		}
 
-		public static EtList<E, float> Div<E>(this EtList<E, float> self_F, params EtList<E, float>[] others)
+		public static EtList<E, float> Div<E>(this EtList<E, float> self_F, params IEnumerable<EtPair<E, float>>[] others)
 		where E : Enum {
 			foreach (var other in others) {
-				other.ForEach(pr => {
+				foreach (var pr in other) {
 					self_F[pr.Index] = self_F[pr.Index] / pr.Value;
-				});
+				}
 			}
 			return self_F;
 		}
-		public static EtList<E, float> Div_New<E>(this EtList<E, float> self_F, params EtList<E, float>[] others)
+		public static EtList<E, float> Div_New<E>(this EtList<E, float> self_F, params IEnumerable<EtPair<E, float>>[] others)
 		where E : Enum {
 			return new EtList<E, float>(self_F).Div(others);
 		}
@@ -96,58 +103,58 @@ namespace GameLogic.Common.DataTypes {
 	
 	// 为 int 类型特化的扩展方法
 	public static class EtListIntExtension {
-		public static EtList<E, int> Sub<E>(this EtList<E, int> self_F, params EtList<E, int>[] others)
+		public static EtList<E, int> Sub<E>(this EtList<E, int> self_F, params IEnumerable<EtPair<E, int>>[] others)
 		where E : Enum {
 			foreach (var other in others) {
-				other.ForEach(pr => {
+				foreach (var pr in other) {
 					self_F[pr.Index] = self_F[pr.Index] - pr.Value;
-				});
+				}
 			}
 			return self_F;
 		}
-		public static EtList<E, int> Sub_New<E>(this EtList<E, int> self_F, params EtList<E, int>[] others)
+		public static EtList<E, int> Sub_New<E>(this EtList<E, int> self_F, params IEnumerable<EtPair<E, int>>[] others)
 		where E : Enum {
 			return new EtList<E, int>(self_F).Sub(others);
 		}
 
-		public static EtList<E, int> Add<E>(this EtList<E, int> self_F, params EtList<E, int>[] others)
+		public static EtList<E, int> Add<E>(this EtList<E, int> self_F, params IEnumerable<EtPair<E, int>>[] others)
 		where E : Enum {
 			foreach (var other in others) {
-				other.ForEach(pr => {
+				foreach (var pr in other) {
 					self_F[pr.Index] = self_F[pr.Index] + pr.Value;
-				});
+				}
 			}
 			return self_F;
 		}
-		public static EtList<E, int> Add_New<E>(this EtList<E, int> self_F, params EtList<E, int>[] others)
+		public static EtList<E, int> Add_New<E>(this EtList<E, int> self_F, params IEnumerable<EtPair<E, int>>[] others)
 		where E : Enum {
 			return new EtList<E, int>(self_F).Add(others);
 		}
 
-		public static EtList<E, int> Mul<E>(this EtList<E, int> self_F, params EtList<E, int>[] others)
+		public static EtList<E, int> Mul<E>(this EtList<E, int> self_F, params IEnumerable<EtPair<E, int>>[] others)
 		where E : Enum {
 			foreach (var other in others) {
-				other.ForEach(pr => {
+				foreach (var pr in other) {
 					self_F[pr.Index] = self_F[pr.Index] * pr.Value;
-				});
+				}
 			}
 			return self_F;
 		}
-		public static EtList<E, int> Mul_New<E>(this EtList<E, int> self_F, params EtList<E, int>[] others)
+		public static EtList<E, int> Mul_New<E>(this EtList<E, int> self_F, params IEnumerable<EtPair<E, int>>[] others)
 		where E : Enum {
 			return new EtList<E, int>(self_F).Mul(others);
 		}
 
-		public static EtList<E, int> Div<E>(this EtList<E, int> self_F, params EtList<E, int>[] others)
+		public static EtList<E, int> Div<E>(this EtList<E, int> self_F, params IEnumerable<EtPair<E, int>>[] others)
 		where E : Enum {
 			foreach (var other in others) {
-				other.ForEach(pr => {
+				foreach (var pr in other) {
 					self_F[pr.Index] = self_F[pr.Index] / pr.Value;
-				});
+				}
 			}
 			return self_F;
 		}
-		public static EtList<E, int> Div_New<E>(this EtList<E, int> self_F, params EtList<E, int>[] others)
+		public static EtList<E, int> Div_New<E>(this EtList<E, int> self_F, params IEnumerable<EtPair<E, int>>[] others)
 		where E : Enum {
 			return new EtList<E, int>(self_F).Div(others);
 		}

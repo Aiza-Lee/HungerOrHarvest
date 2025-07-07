@@ -14,7 +14,6 @@ namespace GameLogic.Features.Vill {
 		[Header("体力配置")] public VitConfig VitConfig;
 		[Header("随机游走横向半径(相对于已解锁的地块,计量单位是ORD)")] public int SpareOrdRadius;
 		[Header("动画")] public Animator Animator;
-		public EtList<RepoType, float> ConstructCost;
 	}
 
 	[CreateAssetMenu(fileName = "VitalityConfig", menuName = "HungerOrHarvest/Config/Vill/VitConfig")]

@@ -38,7 +38,7 @@ namespace GameLogic.Common.DataTypes {
 			Full = fillAll;
 			if (fillAll) {
 				foreach (E enumType in Enum.GetValues(typeof(E))) {
-					_items.Add(new EtPair<E, T>(enumType));
+					Items.Add(new EtPair<E, T>(enumType));
 				}
 				SortSelf();
 			}
@@ -48,23 +48,25 @@ namespace GameLogic.Common.DataTypes {
 		/// </summary>
 		public EtList(T value) : base() {
 			foreach (E enumType in Enum.GetValues(typeof(E))) {
-				_items.Add(new EtPair<E, T>(enumType, value));
+				Items.Add(new EtPair<E, T>(enumType, value));
 			}
 			SortSelf();
 			Full = true;
 		}
 		public EtList(IEnumerable<EtPair<E, T>> pairs) : base() {
-			_items.AddRange(
+			Items.AddRange(
 				pairs.Select(pair => new EtPair<E, T>(pair))
 					 .OrderBy(pair => pair.EnumType)
 			);
-			SortSelf();
-			Full = _items.Count == Elength;
+			if (Items.Count == Elength) {
+				SortSelf();
+				Full = Items.Count == Elength;
+			}
 		}
 
-		[JsonProperty][SerializeField] private List<EtPair<E, T>> _items = new();
+		[JsonProperty] public List<EtPair<E, T>> Items = new();
 		[JsonProperty] public bool Full { get; private set; }
-		
+
 		public override string ToString() {
 			return string.Join(", ", this);
 		}
@@ -72,13 +74,13 @@ namespace GameLogic.Common.DataTypes {
 		private void EnsureIndexValid(int index) {
 			if (!Full) {
 				throw new InvalidOperationException("EtList is not fully initialized.");
-			} else if (index < 0 || index >= _items.Count) {
+			} else if (index < 0 || index >= Items.Count) {
 				throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
 			}
 		}
 
 		public IEnumerator<EtPair<E, T>> GetEnumerator() {
-			return _items.GetEnumerator();
+			return Items.GetEnumerator();
 		}
 		IEnumerator IEnumerable.GetEnumerator() {
 			return GetEnumerator();
@@ -87,22 +89,26 @@ namespace GameLogic.Common.DataTypes {
 		public T this[int index] {
 			get {
 				EnsureIndexValid(index);
-				return _items[index].Value;
+				return Items[index].Value;
 			}
 			set {
 				EnsureIndexValid(index);
-				_items[index].Value = value;
+				Items[index].Value = value;
 			}
 		}
 		public void ForEach(Action<EtPair<E, T>> action) {
 			if (action == null) throw new ArgumentNullException(nameof(action));
-			for (int i = 0; i < _items.Count; i++) {
-				action(_items[i]);
+			for (int i = 0; i < Items.Count; i++) {
+				action(Items[i]);
 			}
 		}
 		public void SortSelf() {
-			_items.Sort((a, b) => a.EnumType.CompareTo(b.EnumType));
+			Items.Sort((a, b) => a.EnumType.CompareTo(b.EnumType));
 		}
-
+		public void Fill(T value) {
+			for (int i = 0; i < Items.Count; i++) {
+				Items[i].Value = value;
+			}
+		}
 	}
 }
