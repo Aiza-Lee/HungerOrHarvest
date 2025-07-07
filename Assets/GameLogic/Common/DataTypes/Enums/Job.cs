@@ -3,8 +3,8 @@ using Unity.Plastic.Newtonsoft.Json;
 namespace GameLogic.Common.DataTypes {
 	[JsonConverter(typeof(Unity.Plastic.Newtonsoft.Json.Converters.StringEnumConverter))]
 	public enum JobType {
-		Farmer,
-		Timberjack,
-		Hunter,
+		Farmer = 0,
+		Timberjack = 1,
+		Hunter = 2,
 	}
 }
