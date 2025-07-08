@@ -29,7 +29,7 @@ namespace GameLogic.Common.Logic {
 
 		public static readonly float VX_MX_RATE = 0.4f;         // view的X轴与model的X轴的比例
 		public static readonly float VZ_MY_RATE = 0.4f;         // view的Z轴与model的Y轴的比例
-		public static float DEFAULT_Y = 0f;            // view的Y轴的默认值（地平线的高度）
+		public static float DEFAULT_Y = 0f;            			// view的Y轴的默认值（地平线的高度）
 		public static float LayerGap => Y_PER_LYR * VZ_MY_RATE;
 
 		static ConstMgr() {
