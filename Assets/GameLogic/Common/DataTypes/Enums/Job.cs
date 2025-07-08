@@ -6,5 +6,8 @@ namespace GameLogic.Common.DataTypes {
 		Farmer = 0,
 		Timberjack = 1,
 		Hunter = 2,
+		Fisher = 3,
+		Miner = 4,
+		Blacksmith = 5,
 	}
 }
