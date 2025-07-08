@@ -15,5 +15,7 @@ namespace NsEcsFrame.Unity {
 			}
 			WorldBehaviour.MainWorld.InsertResource(_resource);
 		}
+
+		protected virtual void OnValidate() { }
 	}
 }
