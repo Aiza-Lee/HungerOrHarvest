@@ -9,12 +9,4 @@ namespace GameLogic.Features.Vill {
 	public class NormalVillConfig : VillConfigBase {
 		public override VillType VillType => VillType.Normal;
 	}
-
-	[CreateAssetMenu(
-		fileName = "NormalVillArtConfig",
-		menuName = "HungerOrHarvest/Config/VillArt/NormalArt",
-		order = (int) VillType.Normal * 2)]
-	public class NormalVillArtConfig : VillArtConfigBase {
-		public override VillType VillType => VillType.Normal;
-	}
 }

@@ -63,6 +63,7 @@ namespace GameLogic.Features.Vill {
 		abstract public VillType VillType { get; }
 		[Tooltip("World中展示的精灵")] public Sprite WorldSprite;
 		[Tooltip("Map中在地图上展示的精灵")] public Sprite MapSprite;
-		[Tooltip("建筑动画控制器")] public Animator Animator;
+		[Tooltip("村民动画控制器")] public Animator Animator;
+		[Tooltip("村民预制体")] public GameObject Prefab;
 	}
 }

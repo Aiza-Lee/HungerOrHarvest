@@ -91,7 +91,7 @@ namespace NsEcsFrame.Core {
 		/// <summary>
 		/// 添加/覆盖单例组件
 		/// </summary>
-		void InsertResource<T>(T resource) where T : class, IResource;
+		IWorld InsertResource<T>(T resource) where T : class, IResource;
 
 		/// <summary>
 		/// 删除单例组件

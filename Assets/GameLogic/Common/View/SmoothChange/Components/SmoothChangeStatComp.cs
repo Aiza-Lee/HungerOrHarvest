@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using NsEcsFrame.Core;
 using NSFrame;
+using UnityEditor;
 using UnityEngine;
 
 namespace GameLogic.Common.View {
@@ -117,7 +118,6 @@ namespace GameLogic.Common.View {
 			ChangeTargetType targetType,
 			ChangeCurveType curveType,
 			float totalTime,
-			object startValue,
 			object targetValue
 		) {
 			var info = PoolSystem.PopObj<SmoothChangeInfo>();
@@ -126,9 +126,35 @@ namespace GameLogic.Common.View {
 			info.ChangeCurveType = curveType;
 			info.TotalTime = totalTime;
 			info.ElapsedTime = 0f;
-			info.StartValue = new(startValue);
+			info.Started = false;
 			info.TargetValue = new(targetValue);
 			SmoothChangeInfos.Add(info);
+		}
+
+		/// <summary>
+		/// 移除指定类型的平滑变化信息
+		/// </summary>
+		public void RemoveChangeOfType(ChangeTargetType targetType) {
+			for (int i = SmoothChangeInfos.Count - 1; i >= 0; i--) {
+				if (SmoothChangeInfos[i].ChangeTargetType == targetType) {
+					var info = SmoothChangeInfos[i];
+					SmoothChangeInfos.RemoveAt(i);
+					PoolSystem.PushObj(info);
+				}
+			}
+		}
+
+		/// <summary>
+		/// 清除已完成的平滑变化信息
+		/// </summary>
+		public void ClearOveredInfos() {
+			for (int i = SmoothChangeInfos.Count - 1; i >= 0; i--) {
+				var info = SmoothChangeInfos[i];
+				if (info.ElapsedTime >= info.TotalTime) {
+					SmoothChangeInfos.RemoveAt(i);
+					PoolSystem.PushObj(info);
+				}
+			}
 		}
 	}
 
@@ -137,36 +163,20 @@ namespace GameLogic.Common.View {
 	/// </summary>
 	[Serializable]
 	public class SmoothChangeInfo : IPooledObject {
-		static SmoothChangeInfo() {
+		[RuntimeInitializeOnLoadMethod]
+		static void InitPool() {
 			PoolSystem.InitObjectPool<SmoothChangeInfo>();
 		}
-		public bool IsLogicTime;
-		public ChangeTargetType ChangeTargetType;
-		public ChangeCurveType ChangeCurveType;
-		public float TotalTime;
-		public float ElapsedTime;
+		public bool IsLogicTime = true;
+		public ChangeTargetType ChangeTargetType = ChangeTargetType.Transform_Position;
+		public ChangeCurveType ChangeCurveType = ChangeCurveType.Linear;
+		public float TotalTime = 1f;
+		public float ElapsedTime = 0f;
+
+		public bool Started = false;
 
 		public SmoothValue StartValue;
 		public SmoothValue TargetValue;
-
-		public SmoothChangeInfo() {
-			IsLogicTime = true;
-			ChangeTargetType = ChangeTargetType.Transform_Position;
-			ChangeCurveType = ChangeCurveType.Linear;
-			TotalTime = 1f;
-			ElapsedTime = 0f;
-			StartValue = new SmoothValue(Vector3.zero);
-			TargetValue = new SmoothValue(Vector3.zero);
-		}
-		public SmoothChangeInfo(SmoothChangeInfo other) {
-			IsLogicTime = other.IsLogicTime;
-			ChangeTargetType = other.ChangeTargetType;
-			ChangeCurveType = other.ChangeCurveType;
-			TotalTime = other.TotalTime;
-			ElapsedTime = other.ElapsedTime;
-			StartValue = other.StartValue;
-			TargetValue = other.TargetValue;
-		}
 
 		public void CleanBeforePush() { }
 		public void InitAfterPop() { }

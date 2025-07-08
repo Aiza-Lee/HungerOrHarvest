@@ -9,18 +9,4 @@ namespace GameLogic.Features.Job {
 	public class BlacksmithJobConfig : JobConfigBase {
 		public override JobType JobType => JobType.Blacksmith;
 	}
-
-	[CreateAssetMenu(
-		fileName = "BlacksmithJobLevelConfig",
-		menuName = "HungerOrHarvest/Config/Job/BlacksmithLevel",
-		order = (int) JobType.Blacksmith * 2 + 1)]
-	public class BlacksmithJobLevelConfig : JobLevelConfigBase { }
-
-	[CreateAssetMenu(
-		fileName = "BlacksmithJobArtConfig",
-		menuName = "HungerOrHarvest/Config/JobArt/BlacksmithArt",
-		order = (int) JobType.Blacksmith * 2)]
-	public class BlacksmithJobArtConfig : JobArtConfigBase {
-		public override JobType JobType => JobType.Blacksmith;
-	}
 }

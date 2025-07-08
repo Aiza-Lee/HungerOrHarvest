@@ -7,7 +7,7 @@ using UnityEngine;
 namespace GameLogic.Common.View {
 	/// <summary>
 	/// 平滑变化RectTransformComponent、TransformComponent、SpriteRendererComponent等组件的属性。
-	/// <para>该系统会根据SmoothChangeStatComponent中的信息，平滑地改变目标</para>
+	/// <para>该系统会消耗SmoothChangeStatComponent中的信息，平滑地改变目标</para>
 	/// </summary>
 	public class SmoothChangeSystem : ISystem {
 		public int Priority => 10;
@@ -30,11 +30,25 @@ namespace GameLogic.Common.View {
 					.Build();
 			var curveRes = _world.GetResource<ChangeCurveResource>();
 			query.ForEach(e => {
-				var changInfos = e.GetComponent<SmoothChangeStatComponent>().SmoothChangeInfos;
+				var statComp = e.GetComponent<SmoothChangeStatComponent>();
+				var changInfos = statComp.SmoothChangeInfos;
 				if (changInfos == null) return;
-				var toRemove = new List<SmoothChangeInfo>();
 				changInfos.ForEach(info => {
 					if (info.IsLogicTime != isLogicTime) return;
+					if (!info.Started) {
+						info.Started = true;
+						info.ElapsedTime = 0f;
+						// 根据ChangeTargetType获取初始值
+						info.StartValue = info.ChangeTargetType switch {
+							ChangeTargetType.Transform_Position => new SmoothValue(e.GetComponent<TransformComponent>().LocalPosition),
+							ChangeTargetType.Transform_Rotation => new SmoothValue(e.GetComponent<TransformComponent>().LocalRotation.eulerAngles),
+							ChangeTargetType.Transform_Scale => new SmoothValue(e.GetComponent<TransformComponent>().LocalScale),
+							ChangeTargetType.Renderer_Alpha => new SmoothValue(e.GetComponent<SpriteRendererComponent>().Alpha),
+							ChangeTargetType.RectTransform_OffsetMin => new SmoothValue(e.GetComponent<RectTransformComponent>().OffsetMin),
+							ChangeTargetType.RectTransform_OffsetMax => new SmoothValue(e.GetComponent<RectTransformComponent>().OffsetMax),
+							_ => throw new System.ArgumentOutOfRangeException()
+						};
+					}
 					info.ElapsedTime += deltaTime;
 					var progress = Mathf.Clamp01(info.ElapsedTime / info.TotalTime);
 					var percent = curveRes.PresetCurves[info.ChangeCurveType](progress);
@@ -71,14 +85,8 @@ namespace GameLogic.Common.View {
 							rComp.MarkDirty();
 							break;
 					}
-					if (info.ElapsedTime >= info.TotalTime) {
-						toRemove.Add(info);
-					}
 				});
-				toRemove.ForEach(info => {
-					changInfos.Remove(info);
-					PoolSystem.PushObj(info);
-				});
+				statComp.ClearOveredInfos();
 			});
 		}
 

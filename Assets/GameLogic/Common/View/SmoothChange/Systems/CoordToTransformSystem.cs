@@ -2,11 +2,11 @@ using GameLogic.Common.Logic;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Common.View {
 	/// <summary>
-	/// 负责将村民的Coord转换到对应的TransformComponent上。
+	/// 负责将Coord直接转换到对应的TransformComponent上。
 	/// </summary>
-	public class VillCoordToTransSystem : ISystem {
+	public class CoordToTransformSystem : ISystem {
 		public int Priority => 100;
 		public bool Enabled { get; set; }
 

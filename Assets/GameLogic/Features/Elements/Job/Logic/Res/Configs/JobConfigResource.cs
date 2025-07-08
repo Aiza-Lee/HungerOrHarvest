@@ -41,7 +41,7 @@ namespace GameLogic.Features.Job {
 	}
 	public abstract class JobLevelConfigBase : ScriptableObject {
 		[Tooltip("等级")] public int Level;
-		[Tooltip("升级所需经验值")] public float LevelExpDemand;
+		[Tooltip("升到下一级所需经验值（升级会扣除所需经验值）")] public float NextLevelExpDemand;
 		[Tooltip("消耗减免的增量")] public ReadOnlyEtList<RepoType, float> RepoConsBuffSave;
 		[Tooltip("产出增益的增量")] public ReadOnlyEtList<RepoType, float> RepoProdBuffSave;
 	}

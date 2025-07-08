@@ -64,6 +64,19 @@ namespace GameLogic.Common.DataTypes {
 			}
 		}
 
+		/// <summary>
+		/// 检查EtList是否已填充所有枚举类型的值为default
+		/// </summary>
+		public bool IsDefault() {
+			if (!Full) return false;
+			for (int i = 0; i < Items.Count; i++) {
+				if (!EqualityComparer<T>.Default.Equals(Items[i].Value, default)) {
+					return false;
+				}
+			}
+			return true;
+		}
+
 		[JsonProperty] public List<EtPair<E, T>> Items = new();
 		[JsonProperty] public bool Full { get; private set; }
 
@@ -95,6 +108,10 @@ namespace GameLogic.Common.DataTypes {
 				EnsureIndexValid(index);
 				Items[index].Value = value;
 			}
+		}
+		public T this[E enumType] {
+			get => this[Convert.ToInt32(enumType)];
+			set => this[Convert.ToInt32(enumType)] = value;
 		}
 		public void ForEach(Action<EtPair<E, T>> action) {
 			if (action == null) throw new ArgumentNullException(nameof(action));

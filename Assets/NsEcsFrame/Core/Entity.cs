@@ -31,8 +31,9 @@ namespace NsEcsFrame.Core {
 		/// </summary>
 		/// <typeparam name="T">组件类型</typeparam>
 		/// <returns>添加的组件</returns>
-		public T AddComponent<T>() where T : class, IComponent, new() {
-			return _componentManager.AddComponent<T>(ID);
+		public Entity AddComponent<T>() where T : class, IComponent, new() {
+			_componentManager.AddComponent<T>(ID);
+			return this;
 		}
 
 		/// <summary>
@@ -41,8 +42,9 @@ namespace NsEcsFrame.Core {
 		/// <typeparam name="T">组件类型</typeparam>
 		/// <param name="component">组件实例</param>
 		/// <returns>添加的组件</returns>
-		public T AddComponent<T>(T component) where T : class, IComponent {
-			return _componentManager.AddComponent(ID, component);
+		public Entity AddComponent<T>(T component) where T : class, IComponent {
+			_componentManager.AddComponent(ID, component);
+			return this;
 		}
 
 		/// <summary>

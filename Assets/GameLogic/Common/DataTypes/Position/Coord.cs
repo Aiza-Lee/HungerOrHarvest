@@ -8,6 +8,7 @@ namespace GameLogic.Common.DataTypes {
 	/// 逻辑世界最小坐标
 	/// <para>方向:面向地图从上往下看，X正方向为从左到右（→），Y正方向为从下到上（↑）</para>
 	/// </summary>
+	[Serializable]
 	public struct Coord : IEquatable<Coord> {
 		public int X;
 		public int Y;

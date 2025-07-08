@@ -9,18 +9,4 @@ namespace GameLogic.Features.Arch {
 	public class RuinArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.Ruin;
 	}
-
-	[CreateAssetMenu(
-		fileName = "RuinArchLevelConfig", 
-		menuName = "HungerOrHarvest/Config/Arch/RuinLevel", 
-		order = (int) ArchType.Ruin * 2 + 1)]
-	public class RuinArchLevelConfig : ArchLevelConfigBase { }
-	
-	[CreateAssetMenu(
-		fileName = "RuinArchArtConfig", 
-		menuName = "HungerOrHarvest/Config/ArchArt/RuinArt", 
-		order = (int) ArchType.Ruin * 2)]
-	public class RuinArchArtConfig : ArchArtConfigBase {
-		public override ArchType ArchType => ArchType.Ruin;
-	}
 }

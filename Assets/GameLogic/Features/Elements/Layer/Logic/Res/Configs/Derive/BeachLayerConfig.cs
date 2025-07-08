@@ -9,12 +9,4 @@ namespace GameLogic.Features.Layer {
 	public class BeachLayerConfig : LayerConfigBase {
 		public override LayerType LayerType => LayerType.Beach;
 	}
-
-	[CreateAssetMenu(
-		fileName = "BeachLayerArtConfig",
-		menuName = "HungerOrHarvest/Config/LayerArt/BeachArt",
-		order = (int) LayerType.Beach * 2)]
-	public class BeachLayerArtConfig : LayerArtConfigBase {
-		public override LayerType LayerType => LayerType.Beach;
-	}
 }

@@ -9,18 +9,4 @@ namespace GameLogic.Features.Arch {
 	public class CarpenterWorkshopArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.CarpenterWorkshop;
 	}
-
-	[CreateAssetMenu(
-		fileName = "CarpenterWorkshopArchLevelConfig",
-		menuName = "HungerOrHarvest/Config/Arch/CarpenterWorkshopLevel",
-		order = (int) ArchType.CarpenterWorkshop * 2 + 1)]
-	public class CarpenterWorkshopArchLevelConfig : ArchLevelConfigBase { }
-
-	[CreateAssetMenu(
-		fileName = "CarpenterWorkshopArchArtConfig",
-		menuName = "HungerOrHarvest/Config/ArchArt/CarpenterWorkshopArt",
-		order = (int) ArchType.CarpenterWorkshop * 2)]
-	public class CarpenterWorkshopArchArtConfig : ArchArtConfigBase {
-		public override ArchType ArchType => ArchType.CarpenterWorkshop;
-	}
 }

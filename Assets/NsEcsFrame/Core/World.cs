@@ -106,9 +106,10 @@ namespace NsEcsFrame.Core {
 			}
 		}
 
-		public void InsertResource<T>(T resource) where T : class, IResource {
+		public IWorld InsertResource<T>(T resource) where T : class, IResource {
 			var type = typeof(T);
 			_resources[type] = resource;
+			return this;
 		}
 		public T GetResource<T>() where T : class, IResource {
 			var type = typeof(T);

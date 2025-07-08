@@ -9,18 +9,4 @@ namespace GameLogic.Features.Arch {
 	public class StoneMineArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.StoneMine;
 	}
-
-	[CreateAssetMenu(
-		fileName = "StoneMineArchLevelConfig", 
-		menuName = "HungerOrHarvest/Config/Arch/StoneMineLevel", 
-		order = (int) ArchType.StoneMine * 2 + 1)]
-	public class StoneMineArchLevelConfig : ArchLevelConfigBase { }
-	
-	[CreateAssetMenu(
-		fileName = "StoneMineArchArtConfig", 
-		menuName = "HungerOrHarvest/Config/ArchArt/StoneMineArt", 
-		order = (int) ArchType.StoneMine * 2)]
-	public class StoneMineArchArtConfig : ArchArtConfigBase {
-		public override ArchType ArchType => ArchType.StoneMine;
-	}
 }
