@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic.Common.DataTypes {
 
+	[Serializable]
 	public class ReadOnlyEtList<E, T> : IEnumerable<EtPair<E, T>>
 	where E : System.Enum
 	where T : struct {

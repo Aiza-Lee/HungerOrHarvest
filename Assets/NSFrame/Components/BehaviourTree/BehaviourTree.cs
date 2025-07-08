@@ -6,8 +6,9 @@ namespace NSFrame.BehaviourTree {
 	/// <para>
 	/// <b>使用BehaviourTreeBuilder构建行为树：</b>
 	/// <code>
-	/// var builder = new BehaviourTreeBuilder();
+	/// var builder = new BehaviourTreeBuilder&lt;BBT&gt;();
 	/// var tree = builder
+	/// 	.Blackboard(new MyBlackboard())
 	///     .Selector()
 	///         .Sequence()
 	///             .Condition(bb => bb.GetData("HasTarget") != null, blackboard)
@@ -27,7 +28,7 @@ namespace NSFrame.BehaviourTree {
 	///     .End()
 	///     .Build();
 	/// </code>
-	/// <b>Builder支持：</b>
+	/// <b>Builder&lt;BBT&gt;支持：</b>
 	/// <list type="bullet">
 	/// <item>内置节点类型：Selector、Sequence、ActionNode、ConditionNode、Inverter、Repeater 等，均有专用链式方法。</item>
 	/// <item>自定义叶子节点：通过 <c>CustomLeaf(LeafNode node)</c> 方法支持任意LeafNode派生节点（如 BlackboardConditionNode、WaitNode 等）。</item>
@@ -49,12 +50,9 @@ namespace NSFrame.BehaviourTree {
 		/// </summary>
 		private readonly BBT _blackboard;
 
-		private readonly Action<BBT> _finalAction;
-
-		public BehaviourTree(BehaviourNode root, BBT blackboard, Action<BBT> finalAction = null) {
+		public BehaviourTree(BehaviourNode root, BBT blackboard) {
 			_root = root ?? throw new ArgumentNullException(nameof(root), "行为树的根节点不能为空。");
 			_blackboard = blackboard ?? throw new ArgumentNullException(nameof(blackboard), "黑板对象不能为空。");
-			_finalAction = finalAction;
 		}
 
 		/// <summary>
@@ -63,7 +61,6 @@ namespace NSFrame.BehaviourTree {
 		/// <returns>根节点的执行状态（SUCCESS/FAILURE/RUNNING）</returns>
 		public NodeStatus? Think() {
 			var result = _root?.Execute();
-			_finalAction?.Invoke(_blackboard);
 			return result;
 		}
 		/// <summary>

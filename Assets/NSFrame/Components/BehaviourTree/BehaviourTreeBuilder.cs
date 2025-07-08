@@ -6,8 +6,8 @@ namespace NSFrame.BehaviourTree {
 	/// 行为树构建器，支持链式API快速搭建行为树结构。
 	/// <para>使用示例：</para>
 	/// <code>
-	/// var builder<BBT> = new BehaviourTreeBuilder<BBT>();
-	/// var tree = builder<BBT>
+	/// var builder&lt;BBT&gt; = new BehaviourTreeBuilder&lt;BBT&gt;();
+	/// var tree = builder&lt;BBT&gt;
 	/// 	.Blackboard(new MyBlackboard())
 	///     .Selector()
 	///         .Sequence()
@@ -28,7 +28,7 @@ namespace NSFrame.BehaviourTree {
 	///     .End()
 	///     .Build();
 	/// </code>
-	/// <b>Builder<BBT>支持：</b>
+	/// <b>Builder&lt;BBT&gt;支持：</b>
 	/// <list type="bullet">
 	/// <item>内置节点类型：Selector、Sequence、ActionNode、ConditionNode、Inverter、Repeater 等，均有专用链式方法。</item>
 	/// <item>自定义叶子节点：通过 <c>CustomLeaf(LeafNode node)</c> 方法支持任意LeafNode派生节点（如 BlackboardConditionNode、WaitNode 等）。</item>
@@ -43,7 +43,6 @@ namespace NSFrame.BehaviourTree {
 		private readonly Stack<BehaviourNode> _nodeStack = new();
 		private BehaviourNode _root;
 		private BBT _blackboard;
-		private Action<BBT> _finalAction;
 
 		/// <summary>
 		/// 设置黑板对象，供行为树节点使用。
@@ -52,16 +51,6 @@ namespace NSFrame.BehaviourTree {
 		/// <param name="blackboard">黑板对象</param>
 		public BehaviourTreeBuilder<BBT> Blackboard(BBT blackboard) {
 			_blackboard = blackboard;
-			return this;
-		}
-
-		/// <summary>
-		/// 设置最终动作，在行为树执行完毕后调用。
-		/// </summary>
-		/// <param name="finalAction"></param>
-		/// <returns></returns>
-		public BehaviourTreeBuilder<BBT> FinalAction(Action<BBT> finalAction) {
-			_finalAction = finalAction;
 			return this;
 		}
 

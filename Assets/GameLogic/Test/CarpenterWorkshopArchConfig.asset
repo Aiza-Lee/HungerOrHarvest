@@ -9,9 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0456e461a64c9cb4bb7f763a2a177a69, type: 3}
-  m_Name: NormalVillConfig
+  m_Script: {fileID: 11500000, guid: 2994521eaef48bb41a673ef265cb93a3, type: 3}
+  m_Name: CarpenterWorkshopArchConfig
   m_EditorClassIdentifier: 
-  VitConfig: {fileID: 11400000, guid: 31746224521aa9c4084e4b1a16a3d97b, type: 2}
-  SpareOrdRadius: 0
+  Name: 
+  ConstructTime: 0
+  ConstructCost:
+    _items: []
+  DeconstructRate: 0
+  RepairRate: 0
   Animator: {fileID: 0}
+  LevelConfigs: []

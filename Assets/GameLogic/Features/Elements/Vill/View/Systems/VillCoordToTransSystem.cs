@@ -1,3 +1,5 @@
+using GameLogic.Common.Logic;
+using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Vill {
@@ -17,7 +19,19 @@ namespace GameLogic.Features.Vill {
 
 		public void OnCreate() { }
 		public void OnDestroy() { }
-		public void OnLogicUpdate(float _) { }
+		public void OnLogicUpdate(float _) {
+			var entities = _world.CreateQueryBuilder()
+								.WithAll<CoordComponent, TransformComponent>()
+								.Build();
+			entities.ForEach(entity => {
+				var coordComp = entity.GetComponent<CoordComponent>();
+				if (!coordComp.IsDirty) return;
+				var transComp = entity.GetComponent<TransformComponent>();
+				transComp.LocalPosition = coordComp.Coord.ToVec3DefaultY();
+				transComp.IsDirty = true;
+				coordComp.IsDirty = false;
+			});
+		}
 		public void OnRenderUpdate(float _) {}
 	} 
 }

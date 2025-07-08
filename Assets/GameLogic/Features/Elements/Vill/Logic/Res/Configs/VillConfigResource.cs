@@ -7,6 +7,16 @@ namespace GameLogic.Features.Vill {
 	[System.Serializable]
 	public class VillConfigResource : IResource {
 		[SerializeReference] public List<VillConfigBase> Configs = new();
+		private Dictionary<VillType, VillConfigBase> _configs;
+		public VillConfigBase GetConfig(VillType villType) {
+			if (_configs == null) {
+				_configs = new Dictionary<VillType, VillConfigBase>();
+				foreach (var c in Configs) {
+					_configs[c.VillType] = c;
+				}
+			}
+			return _configs.TryGetValue(villType, out var config) ? config : null;
+		}
 	}
 
 	public abstract class VillConfigBase : ScriptableObject {

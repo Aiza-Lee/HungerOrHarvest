@@ -3,9 +3,9 @@ using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Repo {
 	/// <summary>
-	/// SystemName 负责...（请补充描述）
+	/// TryProdSystem 处理尝试生产的逻辑。
 	/// </summary>
-	public class SystemName : ISystem {
+	public class TryProdSystem : ISystem {
 		public int Priority => 100;
 		public bool Enabled { get; set; }
 

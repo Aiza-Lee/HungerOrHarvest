@@ -2,6 +2,9 @@ using NsEcsFrame.Core;
 using UnityEngine;
 
 namespace GameLogic.Features.MainCamera {
+	/// <summary>
+	/// 记录摄像机输入的资源类
+	/// </summary>
 	public class CameraInputSystem : ISystem {
 		private IWorld _world;
 		public int Priority => -1;
