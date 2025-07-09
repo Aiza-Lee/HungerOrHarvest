@@ -24,8 +24,6 @@ namespace GameLogic.Features.TickCounter {
 			cnterRes.TodayTickCount++;
 			cnterRes.TickCount++;
 
-			cnterRes.IsTodayLastTick = cnterRes.TodayTickCount == config.DAY_TICKS + config.NIGHT_TICKS;
-
 			if (cnterRes.TodayTickCount == config.DAY_TICKS + config.NIGHT_TICKS + 1) {
 				cnterRes.TodayTickCount = 1;
 				cnterRes.DayCount++;
@@ -34,6 +32,11 @@ namespace GameLogic.Features.TickCounter {
 			cnterRes.IsDay = cnterRes.TodayTickCount <= config.DAY_TICKS;
 			cnterRes.DayProcess = (float) cnterRes.TodayTickCount / config.DAY_TICKS;
 			cnterRes.NightProcess = (float) (cnterRes.TodayTickCount - config.DAY_TICKS) / config.NIGHT_TICKS;
+
+			cnterRes.IsDayFirstTick = cnterRes.TodayTickCount == 1;
+			cnterRes.IsNightFirstTick = cnterRes.TodayTickCount == config.DAY_TICKS + 1;
+			cnterRes.IsDayLastTick = cnterRes.TodayTickCount == config.DAY_TICKS;
+			cnterRes.IsNightLastTick = cnterRes.TodayTickCount == config.DAY_TICKS + config.NIGHT_TICKS;
 		}
 		public void OnRenderUpdate(float _) { }
 	}

@@ -3,7 +3,7 @@ using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Repo {
 	/// <summary>
-	/// TryProdSystem 处理尝试生产的逻辑。
+	/// TryProdSystem 处理"尝试生产Res"的逻辑。
 	/// </summary>
 	public class TryProdSystem : ISystem {
 		public int Priority => 100;
@@ -21,8 +21,8 @@ namespace GameLogic.Features.Repo {
 		public void OnLogicUpdate(float _) {
 			var dailyCnter = _world.GetResource<DailyRepoCounterResource>();
 			var repoStat = _world.GetResource<RepoStatResource>();
-			var tryProds = _world.GetResource<TryProdInfoResource>();
-			tryProds.TryProdInfos.ForEach(info => {
+			var tryProdInfos = _world.GetResource<TryProdInfoResource>().TryProdInfos;
+			tryProdInfos.ForEach(info => {
 				var cons = info.Cons;
 				var prod = info.Prod;
 				if (repoStat.Repos_F.BiggerThan(cons)) {
@@ -33,6 +33,7 @@ namespace GameLogic.Features.Repo {
 					info.Succeed = true;
 				}
 			});
+			tryProdInfos.Clear();
 		}
 		public void OnRenderUpdate(float _) { }
 	} 

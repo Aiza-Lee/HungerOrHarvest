@@ -10,10 +10,5 @@ namespace GameLogic.Features.Repo {
 		public bool Succeed;
 		public EtList<RepoType, float> Cons;
 		public EtList<RepoType, float> Prod;
-		public TryProdInfo(EtList<RepoType, float> cons, EtList<RepoType, float> prod) {
-			Succeed = false;
-			Cons = cons;
-			Prod = prod;
-		}
 	}
 }

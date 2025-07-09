@@ -14,6 +14,9 @@ namespace GameLogic.Features.TickCounter {
 		public float DayProcess;
 		public float NightProcess;
 
-		public bool IsTodayLastTick;
+		public bool IsDayLastTick;
+		public bool IsNightLastTick;
+		public bool IsDayFirstTick;
+		public bool IsNightFirstTick;
 	}
 }
