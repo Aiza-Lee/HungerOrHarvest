@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2832856577866590289}
   - component: {fileID: 4895102564632101707}
+  - component: {fileID: 6076936161364950326}
   m_Layer: 8
   m_Name: HunterCabin
   m_TagString: Untagged
@@ -87,6 +88,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6076936161364950326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118420102723132381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee6ab8fc5aebf642a6d1c8a8ffe956a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &7038028475888663524
 GameObject:
   m_ObjectHideFlags: 0

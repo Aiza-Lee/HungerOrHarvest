@@ -1,4 +1,3 @@
-using GameLogic.Common.DataTypes;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Vill {

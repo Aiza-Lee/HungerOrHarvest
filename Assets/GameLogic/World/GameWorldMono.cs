@@ -1,5 +1,5 @@
 using GameLogic.Common.View;
-using GameLogic.Features.VillGenerator;
+using GameLogic.Features.Generator;
 using NsEcsFrame.Unity;
 
 namespace GameLogic.World {
@@ -23,7 +23,7 @@ namespace GameLogic.World {
 			var villGe = World.GetResource<VillGeneratorResource>();
 			villGe.VillGenerateInfos.Clear();
 			villGe.VillGenerateInfos.Add(new() {
-				VillStat = new(),
+				VillVitalityState = new(),
 				Coord = new(0, 0),
 				VillIdentity = new() { FirstName = "村民", LastName = "一号", Type = Common.DataTypes.VillType.Normal },
 				VillJobExp = new()

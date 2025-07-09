@@ -3,7 +3,7 @@ using NsEcsFrame.Core;
 
 namespace GameLogic.Common.View {
 	/// <summary>
-	/// CoordToSmoothChangeStatSystem 负责处理SmoothedCoordComponent的转换逻辑。
+	/// CoordToSmoothChangeStatSystem 负责处理SmoothedCoordComponent 到 SmoothChangeStat 的转换逻辑。
 	/// </summary>
 	public class CoordToSmoothChangeStatSystem : ISystem {
 		public int Priority => 100;

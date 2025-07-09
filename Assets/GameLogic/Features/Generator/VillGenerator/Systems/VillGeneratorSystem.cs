@@ -2,10 +2,9 @@ using GameLogic.Common.View;
 using GameLogic.Features.Vill;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
-using NsEcsFrame.Unity;
 using UnityEngine;
 
-namespace GameLogic.Features.VillGenerator {
+namespace GameLogic.Features.Generator {
 	/// <summary>
 	/// 负责生成村民
 	/// </summary>
@@ -28,16 +27,17 @@ namespace GameLogic.Features.VillGenerator {
 			foreach (var gInfo in gInfos) {
 				GenerateVill(gInfo);
 			}
-			gInfos.Clear();
 		}
 		public void OnRenderUpdate(float _) { }
 
 		private void GenerateVill(VillGenerateInfo gInfo) {
 			var vill = _world.CreateEntity();
-			vill.AddComponent<SmoothedCoordComponent>(new SmoothedCoordComponent { Coord = gInfo.Coord })
+			vill.AddComponent<SmoothedCoordComponent>(
+					new() { Coord = gInfo.Coord, ChangeCurveType = ChangeCurveType.Linear, IsDirty = true }
+				)
+				.AddComponent<SmoothChangeStatComponent>()
 				.AddComponent<TransformComponent>()
 				.AddComponent<SpriteRendererComponent>()
-				.AddComponent<SmoothChangeStatComponent>()
 				.AddComponent<AddJobExpComponent>()
 				.AddComponent<BondToArchComponent>()
 				.AddComponent<JobExpComponent>(gInfo.VillJobExp)
@@ -45,7 +45,7 @@ namespace GameLogic.Features.VillGenerator {
 				.AddComponent<VillBehaviourTreeComponent>()
 				.AddComponent<VillIdentityComponent>(gInfo.VillIdentity)
 				.AddComponent<VillMoveComponent>()
-				.AddComponent<VillStatComponent>(gInfo.VillStat);
+				.AddComponent<VillVitalityComponent>(gInfo.VillVitalityState);
 			var type = gInfo.VillIdentity.Type;
 			var ac = _world.GetResource<VillConfigResource>().GetArtConfig(type);
 			var go = GameObject.Instantiate(ac.Prefab);

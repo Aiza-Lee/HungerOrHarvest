@@ -14,11 +14,11 @@ namespace GameLogic.Features.Vill {
 		[Header("体力恢复配置")]
 		[Tooltip("每单位食物恢复的体力量")] public float VitPerFood = 0.5f;
 		[Tooltip("默认最大体力值")] public float MaxVit = 100f;
-		[Tooltip("每Tick消耗食物")] public float TickFoodCons = 0.1f;
+		[Tooltip("每Tick消耗食物")] public float FoodConsPerTickWhenRecover = 0.1f;
 		[Tooltip("每日恢复体力的次数")] public int RecoverChancePerDay = 1;
 
 		[Header("体力消耗配置")]
-		[Tooltip("白天状态下每Tick体力消耗，默认一直消耗")] public float TickDayVitCons = 0.01f;
-		[Tooltip("Dying状态下的每Tick体力消耗")] public float TickDyingVitCons = 0.05f;
+		[Tooltip("白天状态下每Tick体力消耗，默认一直消耗")] public float DayVitConsPerTick = 0.01f;
+		[Tooltip("Dying状态下的每Tick体力消耗")] public float DyingVitConsPerTick = 0.05f;
 	}
 }
