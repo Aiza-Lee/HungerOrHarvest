@@ -1,5 +1,9 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
+using GameLogic.Common.Logic;
+using GameLogic.Common.View;
+using NsEcsFrame.Components;
+using NsEcsFrame.Core;
 using UnityEngine;
 
 namespace GameLogic.Features.Layer {
@@ -33,6 +37,21 @@ namespace GameLogic.Features.Layer {
 
 	public abstract class LayerConfigBase : ScriptableObject {
 		public abstract LayerType LayerType { get; }
+
+		public Entity GetDefaultEntity(IWorld world) {
+			var entity = world.CreateEntity();
+			entity
+				.AddComponent<GidComponent>()
+				.AddComponent<LayerIdentityComponent>(new() { LayerType = LayerType })
+				.AddComponent<TransformComponent>()
+				.AddComponent<SpriteRendererComponent>()
+				.AddComponent<CoordComponent>()
+				.AddComponent<OLComponent>();
+			AddDerivedComponents(entity);
+			return entity;
+		}
+		protected abstract void AddDerivedComponents(Entity entity);
+
 		public string LayerName;
 		public string LayerDescription;
 	}

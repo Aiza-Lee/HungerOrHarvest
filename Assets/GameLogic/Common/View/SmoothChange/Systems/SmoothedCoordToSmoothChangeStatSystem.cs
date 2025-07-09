@@ -3,10 +3,10 @@ using NsEcsFrame.Core;
 
 namespace GameLogic.Common.View {
 	/// <summary>
-	/// CoordToSmoothChangeStatSystem 负责处理SmoothedCoordComponent 到 SmoothChangeStat 的转换逻辑。
+	/// SmoothedCoordToSmoothChangeStatSystem 负责处理SmoothedCoordComponent 到 SmoothChangeStat 的转换逻辑。
 	/// </summary>
-	public class CoordToSmoothChangeStatSystem : ISystem {
-		public int Priority => 100;
+	public class SmoothedCoordToSmoothChangeStatSystem : ISystem {
+		public int Priority => 1000;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;
@@ -32,7 +32,6 @@ namespace GameLogic.Common.View {
 					coordComp.TotalTime,
 					coordComp.Coord.ToVec3DefaultY()
 				);
-				coordComp.IsDirty = false;
 			});
 		}
 		public void OnRenderUpdate(float _) { }

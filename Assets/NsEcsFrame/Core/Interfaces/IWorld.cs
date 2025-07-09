@@ -55,6 +55,11 @@ namespace NsEcsFrame.Core {
 		Entity GetEntity(EntityId entityId);
 
 		/// <summary>
+		/// 移除所有实体
+		/// </summary>
+		void DestroyAllEntities();
+
+		/// <summary>
 		/// 获取所有实体
 		/// </summary>
 		/// <returns>实体集合</returns>

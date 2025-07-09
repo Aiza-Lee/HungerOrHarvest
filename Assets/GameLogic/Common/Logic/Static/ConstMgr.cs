@@ -32,6 +32,8 @@ namespace GameLogic.Common.Logic {
 		public static float DEFAULT_Y = 0f;            			// view的Y轴的默认值（地平线的高度）
 		public static float LayerGap => Y_PER_LYR * VZ_MY_RATE;
 
+		public static readonly uint Speedx1TicksPerSecond = 50; // 1倍速每秒的Tick数
+
 		static ConstMgr() {
 			ARCH_TYPE_SIZE = GetEnumSize<ArchType>();
 			JOB_TYPE_SIZE = GetEnumSize<JobType>();

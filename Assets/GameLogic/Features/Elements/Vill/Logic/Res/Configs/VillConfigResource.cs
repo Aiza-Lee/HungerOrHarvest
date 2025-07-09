@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
+using GameLogic.Common.Logic;
+using GameLogic.Common.View;
+using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
 
@@ -34,8 +37,36 @@ namespace GameLogic.Features.Vill {
 
 	public abstract class VillConfigBase : ScriptableObject {
 		abstract public VillType VillType { get; }
+
+		public Entity GetDefaultEntity(IWorld world) {
+			var entity = world.CreateEntity();
+			entity
+				.AddComponent<GidComponent>()
+				.AddComponent<VillIdentityComponent>(new() { Type = VillType })
+				.AddComponent<SmoothedCoordComponent>(
+				new() {
+					ChangeCurveType = ChangeCurveType.Linear,
+					TotalTime = (float) TicksPerCoord / ConstMgr.Speedx1TicksPerSecond
+				})
+				.AddComponent<SmoothChangeStatComponent>()
+				.AddComponent<TransformComponent>()
+				.AddComponent<SpriteRendererComponent>()
+				.AddComponent<AddJobExpComponent>()
+				.AddComponent<VillBehaviourTreeComponent>()
+				.AddComponent<VillMoveComponent>()
+				.AddComponent<BondToArchComponent>()
+				.AddComponent<JobExpComponent>()
+				.AddComponent<RoutePlanComponent>()
+				.AddComponent<VillVitalityComponent>()
+			;
+			AddDerivedComponents(entity);
+			return entity;
+		}
+		protected abstract void AddDerivedComponents(Entity entity);
+
 		[Tooltip("体力配置")] public VitConfig VitConfig;
-		[Tooltip("随机游走横向半径(相对于已解锁的地块,计量单位是ORD)")] public int SpareOrdRadius;
+		[Tooltip("随机游走横向半径(相对于已解锁的地块,计量单位是ORD)")] public uint SpareOrdRadius;
+		[Tooltip("走过每个Coord所需要的Tick数量")] public uint TicksPerCoord;
 	}
 
 	public abstract class VillArtConfigBase : ScriptableObject {

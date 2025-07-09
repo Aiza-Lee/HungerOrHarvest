@@ -83,6 +83,21 @@ namespace NsEcsFrame.Core {
 			}
 		}
 
+		public void DestroyAllEntities() {
+			// 销毁所有实体
+			foreach (var entity in _aliveEntities.ToList()) {
+				DestroyEntity(entity.ID);
+			}
+			// 清空回收ID栈
+			_recycledIds.Clear();
+			// 重置下一个ID
+			_nextEntityId = 1;
+
+			if (EnableDebugLogs) {
+				Debug.Log($"[{Name}] All entities destroyed");
+			}
+		}
+
 		public bool IsEntityAlive(EntityId entityId) => _aliveEntities.Contains(entityId.ID);
 		public Entity GetEntity(EntityId entityId) => _aliveEntities.Get(entityId.ID);
 		public IReadOnlyCollection<Entity> GetAllEntities() => _aliveEntities.ToList();

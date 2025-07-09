@@ -2,7 +2,6 @@ using NsEcsFrame.Core;
 
 namespace GameLogic.Features.TickCounter {
 	/// <summary>
-	/// 负责记录Tick，在一切逻辑类之前触发
 	/// <para> Tick计数逻辑：表示当前世界正在经历第几个Tick，每天从1开始 </para>
 	/// </summary>
 	public class TickCounterSystem : ISystem {

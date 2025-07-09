@@ -1,4 +1,5 @@
 using GameLogic.Common.DataTypes;
+using NsEcsFrame.Core;
 using UnityEngine;
 
 namespace GameLogic.Features.Arch {
@@ -8,5 +9,8 @@ namespace GameLogic.Features.Arch {
 		order = (int) ArchType.StoneMine * 2)]
 	public class StoneMineArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.StoneMine;
+
+		protected override void AddDerivedComponents(Entity entity) {
+		}
 	}
 }

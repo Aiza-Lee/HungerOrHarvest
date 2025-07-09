@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace NsEcsFrame.Core {
 	/// <summary>
 	/// 实体类，作为组件的容器
@@ -30,7 +32,6 @@ namespace NsEcsFrame.Core {
 		/// 添加组件
 		/// </summary>
 		/// <typeparam name="T">组件类型</typeparam>
-		/// <returns>添加的组件</returns>
 		public Entity AddComponent<T>() where T : class, IComponent, new() {
 			_componentManager.AddComponent<T>(ID);
 			return this;
@@ -41,8 +42,16 @@ namespace NsEcsFrame.Core {
 		/// </summary>
 		/// <typeparam name="T">组件类型</typeparam>
 		/// <param name="component">组件实例</param>
-		/// <returns>添加的组件</returns>
 		public Entity AddComponent<T>(T component) where T : class, IComponent {
+			_componentManager.AddComponent(ID, component);
+			return this;
+		}
+
+		/// <summary>
+		/// 添加组件
+		/// </summary>
+		/// <param name="component">组件对象</param>
+		public Entity AddComponent(IComponent component) {
 			_componentManager.AddComponent(ID, component);
 			return this;
 		}
@@ -80,6 +89,14 @@ namespace NsEcsFrame.Core {
 		/// <returns>实体是否有效</returns>
 		public bool IsValid() {
 			return ID.IsValid() && World.IsEntityAlive(ID);
+		}
+
+		/// <summary>
+		/// 获取所有组件
+		/// </summary>
+		/// <returns></returns>
+		public IReadOnlyCollection<IComponent> GetAllComponents() {
+			return _componentManager.GetAllComponents(ID);
 		}
 
 		/// <summary>

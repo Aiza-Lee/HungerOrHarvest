@@ -6,8 +6,8 @@ namespace GameLogic.Features.TickSpeed {
 	/// 统计村庄的时间信息
 	/// </summary>
 	public class TickSpeedResource : IResource {
-		[Tooltip("一倍速对应每秒50逻辑帧")] public float TickSpeed = 1f;
-		public bool IsPaused = false;
+		[Tooltip("一倍速对应每秒50Ticks")] public float TickSpeed = 1f;
+		public bool IsPaused = true;
 
 		public bool IsDirty = false;
 	}

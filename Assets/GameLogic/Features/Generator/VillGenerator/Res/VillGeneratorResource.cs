@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
-using GameLogic.Features.Vill;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Generator {
@@ -9,14 +8,11 @@ namespace GameLogic.Features.Generator {
 	/// </summary>
 	[System.Serializable]
 	public class VillGeneratorResource : IResource {
-		public List<VillGenerateInfo> VillGenerateInfos = new();
+		public List<VillGenerateData> VillDatas = new();
 	}
 
-	[System.Serializable]
-	public class VillGenerateInfo {
-		public VillVitalityComponent VillVitalityState;
-		public VillIdentityComponent VillIdentity;
+	public class VillGenerateData {
+		public VillType Type;
 		public Coord Coord;
-		public JobExpComponent VillJobExp;
 	}
 }

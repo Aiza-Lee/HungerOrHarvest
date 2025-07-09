@@ -1,4 +1,5 @@
 using GameLogic.Common.DataTypes;
+using NsEcsFrame.Core;
 using UnityEngine;
 
 namespace GameLogic.Features.Arch {
@@ -8,5 +9,8 @@ namespace GameLogic.Features.Arch {
 		order = (int) ArchType.Ruin * 2)]
 	public class RuinArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.Ruin;
+
+		protected override void AddDerivedComponents(Entity entity) {
+		}
 	}
 }

@@ -6,7 +6,7 @@ namespace GameLogic.Features.TickSpeed {
 	/// 处理游戏Tick速度的系统
 	/// </summary>
 	public class TickSpeedSystem : ISystem {
-		public int Priority => 0;
+		public int Priority => 1000;
 		public bool Enabled { get; set; }
 		private IWorld _world;
 		public void Initialize(IWorld world) {

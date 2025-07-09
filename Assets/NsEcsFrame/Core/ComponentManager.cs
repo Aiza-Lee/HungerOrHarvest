@@ -137,6 +137,16 @@ namespace NsEcsFrame.Core {
 			return Array.Empty<IComponent>();
 		}
 
+		public IReadOnlyCollection<IComponent> GetAllComponents(EntityId ID) {
+			var components = new List<IComponent>();
+			foreach (var storage in _componentStorages.Values) {
+				if (storage.HasComponent(ID)) {
+					components.Add(storage.GetComponent(ID));
+				}
+			}
+			return components;
+		}
+
 		/// <summary>
 		/// Component存储接口
 		/// </summary>

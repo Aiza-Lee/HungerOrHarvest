@@ -1,4 +1,5 @@
 using GameLogic.Common.DataTypes;
+using NsEcsFrame.Core;
 using UnityEngine;
 
 namespace GameLogic.Features.Arch {
@@ -8,5 +9,8 @@ namespace GameLogic.Features.Arch {
 		order = (int) ArchType.CopperMine * 2)]
 	public class CopperMineArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.CopperMine;
+
+		protected override void AddDerivedComponents(Entity entity) {
+		}
 	}
 }

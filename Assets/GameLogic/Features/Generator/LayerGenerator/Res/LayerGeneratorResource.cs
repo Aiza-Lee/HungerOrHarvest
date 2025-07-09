@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
-using GameLogic.Features.Layer;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Generator {
@@ -9,12 +8,11 @@ namespace GameLogic.Features.Generator {
 	/// </summary>
 	[System.Serializable]
 	public class LayerGeneratorResource : IResource {
-		public List<LayerGenerateInfo> LayerGenerateInfos = new();
+		public List<LayerGenerateData> LayerDatas = new();
 	}
 	
-	[System.Serializable]
-	public class LayerGenerateInfo {
-		public LayerIdentityComponent LayerIdentity;
-		public Coord Coord;
+	public class LayerGenerateData {
+		public LayerType Type;
+		public OL OL;
 	}
 }

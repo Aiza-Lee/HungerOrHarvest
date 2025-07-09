@@ -1,6 +1,7 @@
+using GameLogic.Common.Logic;
 using GameLogic.Common.View;
 using GameLogic.Features.Vill;
-using NsEcsFrame.Components;
+using GameLogic.World;
 using NsEcsFrame.Core;
 using UnityEngine;
 
@@ -22,33 +23,30 @@ namespace GameLogic.Features.Generator {
 		public void OnCreate() { }
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) {
-			var gInfos = _world.GetResource<VillGeneratorResource>().VillGenerateInfos;
-			if (gInfos.Count == 0) return;
-			foreach (var gInfo in gInfos) {
-				GenerateVill(gInfo);
+			var datas = _world.GetResource<VillGeneratorResource>().VillDatas;
+			if (datas.Count == 0) return;
+			foreach (var data in datas) {
+				GenerateVill(data);
 			}
 		}
 		public void OnRenderUpdate(float _) { }
 
-		private void GenerateVill(VillGenerateInfo gInfo) {
-			var vill = _world.CreateEntity();
-			vill.AddComponent<SmoothedCoordComponent>(
-					new() { Coord = gInfo.Coord, ChangeCurveType = ChangeCurveType.Linear, IsDirty = true }
-				)
-				.AddComponent<SmoothChangeStatComponent>()
-				.AddComponent<TransformComponent>()
-				.AddComponent<SpriteRendererComponent>()
-				.AddComponent<AddJobExpComponent>()
-				.AddComponent<BondToArchComponent>()
-				.AddComponent<JobExpComponent>(gInfo.VillJobExp)
-				.AddComponent<RoutePlanComponent>()
-				.AddComponent<VillBehaviourTreeComponent>()
-				.AddComponent<VillIdentityComponent>(gInfo.VillIdentity)
-				.AddComponent<VillMoveComponent>()
-				.AddComponent<VillVitalityComponent>(gInfo.VillVitalityState);
-			var type = gInfo.VillIdentity.Type;
-			var ac = _world.GetResource<VillConfigResource>().GetArtConfig(type);
-			var go = GameObject.Instantiate(ac.Prefab);
+		private void GenerateVill(VillGenerateData data) {
+			var configRes = _world.GetResource<VillConfigResource>();
+			var type = data.Type;
+			var config = configRes.GetConfig(type);
+			var vill = config.GetDefaultEntity(_world);
+
+			var coordComp = vill.GetComponent<SmoothedCoordComponent>();
+			coordComp.Coord = data.Coord;
+			coordComp.IsDirty = true;
+
+			var gidComp = vill.GetComponent<GidComponent>();
+			gidComp.Gid = GidMgr.Inst.GetGid();
+			GameWorldMono.GidToEntityId[gidComp.Gid] = vill.ID;
+
+			var artConfig = configRes.GetArtConfig(type);			
+			var go = GameObject.Instantiate(artConfig.Prefab);
 			go.GetComponent<VillEntityMono>().SetEntity(vill);
 		}
 	}

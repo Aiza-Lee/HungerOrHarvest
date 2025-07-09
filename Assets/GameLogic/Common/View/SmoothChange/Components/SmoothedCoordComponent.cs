@@ -11,7 +11,7 @@ namespace GameLogic.Common.View {
 	public class SmoothedCoordComponent : IComponent {
 		public Coord Coord;
 		public ChangeCurveType ChangeCurveType;
-		public float TotalTime;
-		public bool IsDirty;
+		public float TotalTime = 0f;
+		public bool IsDirty = true;
 	}
 }

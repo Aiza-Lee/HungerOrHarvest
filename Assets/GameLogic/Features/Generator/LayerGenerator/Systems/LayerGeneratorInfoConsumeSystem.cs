@@ -19,7 +19,7 @@ namespace GameLogic.Features.Generator {
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) {
 			var geRes = _world.GetResource<LayerGeneratorResource>();
-			geRes.LayerGenerateInfos.Clear();
+			geRes.LayerDatas.Clear();
 		}
 		public void OnRenderUpdate(float _) { }
 	} 

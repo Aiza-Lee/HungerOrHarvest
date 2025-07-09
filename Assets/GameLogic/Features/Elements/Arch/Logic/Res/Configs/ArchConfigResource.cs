@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
+using GameLogic.Common.Logic;
+using GameLogic.Common.View;
+using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
 
@@ -35,6 +38,22 @@ namespace GameLogic.Features.Arch {
 
 	public abstract class ArchConfigBase : ScriptableObject {
 		abstract public ArchType ArchType { get; }
+
+		public Entity GetDefaultEntity(IWorld world) {
+			var entity = world.CreateEntity();
+			entity
+				.AddComponent<GidComponent>()
+				.AddComponent<TransformComponent>()
+				.AddComponent<SpriteRendererComponent>()
+				.AddComponent<CoordComponent>()
+				.AddComponent<OLComponent>()
+				.AddComponent<ArchIdentityComponent>(new ArchIdentityComponent() { ArchType = ArchType })
+				.AddComponent<BondToVillComponent>()
+				.AddComponent<VillContainerComponent>();
+			AddDerivedComponents(entity);
+			return entity;
+		}
+		protected abstract void AddDerivedComponents(Entity entity);
 
 		[Tooltip("建筑名称")] public string Name;
 		[Tooltip("建造所需时间（Tick）")] public int ConstructTicks;

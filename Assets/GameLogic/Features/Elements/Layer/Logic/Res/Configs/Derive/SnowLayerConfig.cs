@@ -1,4 +1,5 @@
 using GameLogic.Common.DataTypes;
+using NsEcsFrame.Core;
 using UnityEngine;
 
 namespace GameLogic.Features.Layer {
@@ -8,5 +9,8 @@ namespace GameLogic.Features.Layer {
 		order = (int) LayerType.Snow * 2)]
 	public class SnowLayerConfig : LayerConfigBase {
 		public override LayerType LayerType => LayerType.Snow;
+
+		protected override void AddDerivedComponents(Entity entity) {
+		}
 	}
 }

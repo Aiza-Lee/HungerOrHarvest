@@ -1,4 +1,3 @@
-using GameLogic.Features.Generator;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Generator {
@@ -20,7 +19,7 @@ namespace GameLogic.Features.Generator {
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) {
 			var geRes = _world.GetResource<VillGeneratorResource>();
-			geRes.VillGenerateInfos.Clear();
+			geRes.VillDatas.Clear();
 		}
 		public void OnRenderUpdate(float _) { }
 	} 

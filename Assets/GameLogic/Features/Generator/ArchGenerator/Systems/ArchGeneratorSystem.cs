@@ -1,6 +1,6 @@
-using GameLogic.Common.View;
+using GameLogic.Common.Logic;
 using GameLogic.Features.Arch;
-using NsEcsFrame.Components;
+using GameLogic.World;
 using NsEcsFrame.Core;
 using UnityEngine;
 
@@ -22,29 +22,33 @@ namespace GameLogic.Features.Generator {
 		public void OnCreate() { }
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) {
-			var gInfos = _world.GetResource<ArchGeneratorResource>().ArchGenerateInfos;
-			if (gInfos.Count == 0) return;
+			var datas = _world.GetResource<ArchGeneratorResource>().ArchDatas;
+			if (datas.Count == 0) return;
 
-			foreach (var gInfo in gInfos) {
-				GenerateArch(gInfo);
+			foreach (var data in datas) {
+				GenerateArch(data);
 			}
-			gInfos.Clear();
+			datas.Clear();
 		}
 		public void OnRenderUpdate(float _) { }
 
-		private void GenerateArch(ArchGenerateInfo gInfo) {
-			var arch = _world.CreateEntity();
-			arch.AddComponent<TransformComponent>()
-				.AddComponent<SpriteRendererComponent>()
-				.AddComponent<SmoothedCoordComponent>(
-					new() { Coord = gInfo.Coord, ChangeCurveType = ChangeCurveType.Directive, IsDirty = true }
-				)
-				.AddComponent<SmoothChangeStatComponent>()
-				.AddComponent<ArchIdentityComponent>(gInfo.ArchIdentity);
-			var type = gInfo.ArchIdentity.ArchType;
+		private void GenerateArch(ArchGenerateData data) {
+			var type = data.Type;
+			var config = _world.GetResource<ArchConfigResource>().GetConfig(type);
+			var entity = config.GetDefaultEntity(_world);
+
+			var olComp = entity.GetComponent<OLComponent>();
+			olComp.OL = data.OL;
+			olComp.IsDirty = true;
+
+			var gidComp = entity.GetComponent<GidComponent>();
+			gidComp.Gid = GidMgr.Inst.GetGid();
+			GameWorldMono.GidToEntityId[gidComp.Gid] = entity.ID;
+
 			var ac = _world.GetResource<ArchConfigResource>().GetArtConfig(type);
 			var go = GameObject.Instantiate(ac.Prefab);
-			go.GetComponent<ArchEntityMono>().SetEntity(arch);
+			go.GetComponent<ArchEntityMono>().SetEntity(entity);
 		}
+
 	} 
 }

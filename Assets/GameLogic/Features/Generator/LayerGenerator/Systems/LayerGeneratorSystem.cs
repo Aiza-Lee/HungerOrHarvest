@@ -1,6 +1,6 @@
-using GameLogic.Common.View;
+using GameLogic.Common.Logic;
 using GameLogic.Features.Layer;
-using NsEcsFrame.Components;
+using GameLogic.World;
 using NsEcsFrame.Core;
 using UnityEngine;
 
@@ -22,31 +22,33 @@ namespace GameLogic.Features.Generator {
 		public void OnCreate() { }
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) {
-			var gInfos = _world.GetResource<LayerGeneratorResource>().LayerGenerateInfos;
-			if (gInfos.Count == 0) return;
+			var datas = _world.GetResource<LayerGeneratorResource>().LayerDatas;
+			if (datas.Count == 0) return;
 
-			foreach (var gInfo in gInfos) {
-				GenerateLayer(gInfo);
+			foreach (var data in datas) {
+				GenerateLayer(data);
 			}
-			gInfos.Clear();
+			datas.Clear();
 		}
 
-		private void GenerateLayer(LayerGenerateInfo gInfo) {
-			var layer = _world.CreateEntity();
-			layer.AddComponent<TransformComponent>()
-				 .AddComponent<SpriteRendererComponent>()
-				 .AddComponent<SmoothedCoordComponent>(
-					new() { Coord = gInfo.Coord, ChangeCurveType = ChangeCurveType.Directive, IsDirty = true }
-				 )
-				 .AddComponent<SmoothChangeStatComponent>()
-				 .AddComponent<LayerIdentityComponent>(gInfo.LayerIdentity)
-			;
-			var type = gInfo.LayerIdentity.LayerType;
+		private void GenerateLayer(LayerGenerateData data) {
+			var type = data.Type;
+			var config = _world.GetResource<LayerConfigResource>().GetConfig(type);
+			var layer = config.GetDefaultEntity(_world);
+
+			var olComp = layer.GetComponent<OLComponent>();
+			olComp.OL = data.OL;
+			olComp.IsDirty = true;
+
+			var gidComp = layer.GetComponent<GidComponent>();
+			gidComp.Gid = GidMgr.Inst.GetGid();
+			GameWorldMono.GidToEntityId[gidComp.Gid] = layer.ID;
+
 			var ac = _world.GetResource<LayerConfigResource>().GetArtConfig(type);
 			var go = GameObject.Instantiate(ac.Prefab);
 			go.GetComponent<LayerEntityMono>().SetEntity(layer);
 		}
 
 		public void OnRenderUpdate(float _) { }
-	} 
+	}
 }

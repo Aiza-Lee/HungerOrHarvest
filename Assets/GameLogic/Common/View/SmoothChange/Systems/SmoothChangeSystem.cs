@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
-using NSFrame;
 using UnityEngine;
 
 namespace GameLogic.Common.View {
@@ -10,7 +8,7 @@ namespace GameLogic.Common.View {
 	/// <para>该系统会消耗SmoothChangeStatComponent中的信息，平滑地改变目标</para>
 	/// </summary>
 	public class SmoothChangeSystem : ISystem {
-		public int Priority => 10;
+		public int Priority => 2000;
 
 		public bool Enabled { get; set; }
 
@@ -32,7 +30,7 @@ namespace GameLogic.Common.View {
 			query.ForEach(e => {
 				var statComp = e.GetComponent<SmoothChangeStatComponent>();
 				var changInfos = statComp.SmoothChangeInfos;
-				if (changInfos == null) return;
+				if (changInfos.Count == 0) return;
 				changInfos.ForEach(info => {
 					if (info.IsLogicTime != isLogicTime) return;
 					if (!info.Started) {
@@ -50,7 +48,7 @@ namespace GameLogic.Common.View {
 						};
 					}
 					info.ElapsedTime += deltaTime;
-					var progress = Mathf.Clamp01(info.ElapsedTime / info.TotalTime);
+					var progress = info.TotalTime >= 0f ? Mathf.Clamp01(info.ElapsedTime / info.TotalTime) : 1f;
 					var percent = curveRes.PresetCurves[info.ChangeCurveType](progress);
 					var newValue = info.StartValue + (info.TargetValue - info.StartValue) * percent;
 					switch (info.ChangeTargetType) {

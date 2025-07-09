@@ -19,7 +19,7 @@ namespace GameLogic.Features.Generator {
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) {
 			var geRes = _world.GetResource<ArchGeneratorResource>();
-			geRes.ArchGenerateInfos.Clear();
+			geRes.ArchDatas.Clear();
 		}
 		public void OnRenderUpdate(float _) { }
 	} 

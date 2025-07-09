@@ -1,4 +1,5 @@
 using GameLogic.Common.DataTypes;
+using NsEcsFrame.Core;
 using UnityEngine;
 
 namespace GameLogic.Features.Layer {
@@ -8,5 +9,8 @@ namespace GameLogic.Features.Layer {
 		order = (int) LayerType.Grass * 2)]
 	public class GrassLayerConfig : LayerConfigBase {
 		public override LayerType LayerType => LayerType.Grass;
+
+		protected override void AddDerivedComponents(Entity entity) {
+		}
 	}
 }

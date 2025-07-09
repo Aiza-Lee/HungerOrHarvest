@@ -20,14 +20,10 @@ namespace OldGameLogic.View
 		}
 
 		public void SaveGame() {
-			SaveSystem.SaveObjects( _saveInfo,
-				TechTreeViewMgr.Inst.GetSave()
-			);
 		}
 
 		public void LoadGame() {
 			ClearAllMgrs();
-			TechTreeViewMgr.Inst.InitFromSave(SaveSystem.LoadObject<TechTreeMgrViewSave>(_saveInfo));
 		}
 
 		public void ClearAllMgrs() {

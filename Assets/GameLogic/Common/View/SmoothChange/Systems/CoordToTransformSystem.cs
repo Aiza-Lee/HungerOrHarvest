@@ -7,7 +7,7 @@ namespace GameLogic.Common.View {
 	/// 负责将Coord直接转换到对应的TransformComponent上。
 	/// </summary>
 	public class CoordToTransformSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 2000;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;
@@ -29,7 +29,6 @@ namespace GameLogic.Common.View {
 				var transComp = entity.GetComponent<TransformComponent>();
 				transComp.LocalPosition = coordComp.Coord.ToVec3DefaultY();
 				transComp.IsDirty = true;
-				coordComp.IsDirty = false;
 			});
 		}
 		public void OnRenderUpdate(float _) {}
