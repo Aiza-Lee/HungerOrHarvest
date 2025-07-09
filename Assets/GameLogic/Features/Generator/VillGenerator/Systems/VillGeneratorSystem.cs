@@ -10,7 +10,7 @@ namespace GameLogic.Features.Generator {
 	/// 负责生成村民
 	/// </summary>
 	public class VillGeneratorSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 500;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;
@@ -25,9 +25,11 @@ namespace GameLogic.Features.Generator {
 		public void OnLogicUpdate(float _) {
 			var datas = _world.GetResource<VillGeneratorResource>().VillDatas;
 			if (datas.Count == 0) return;
+			
 			foreach (var data in datas) {
 				GenerateVill(data);
 			}
+			datas.Clear();
 		}
 		public void OnRenderUpdate(float _) { }
 
@@ -44,10 +46,12 @@ namespace GameLogic.Features.Generator {
 			var gidComp = vill.GetComponent<GidComponent>();
 			gidComp.Gid = GidMgr.Inst.GetGid();
 			GameWorldMono.GidToEntity[gidComp.Gid] = vill;
+		var artConfig = configRes.GetArtConfig(type);			
+		var go = GameObject.Instantiate(artConfig.Prefab);
+		go.GetComponent<VillEntityMono>().SetEntity(vill);
 
-			var artConfig = configRes.GetArtConfig(type);			
-			var go = GameObject.Instantiate(artConfig.Prefab);
-			go.GetComponent<VillEntityMono>().SetEntity(vill);
-		}
+		var eventEntity = _world.CreateEntity();
+		eventEntity.AddComponent(new VillGeneratedEventComp() { VillGid = gidComp.Gid });
+	}
 	}
 }

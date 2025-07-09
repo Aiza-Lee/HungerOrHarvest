@@ -8,7 +8,7 @@ namespace GameLogic.Features.Repo {
 	/// TryProdSystem 处理"尝试生产Res"的逻辑。
 	/// </summary>
 	public class TryProdSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 1000;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

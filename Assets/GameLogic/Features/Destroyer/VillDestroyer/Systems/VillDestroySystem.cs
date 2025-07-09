@@ -8,7 +8,7 @@ namespace GameLogic.Features.Destroyer {
 	/// VillDestroyerSystem 负责销毁村民实体
 	/// </summary>
 	public class VillDestroyerSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 500;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

@@ -9,7 +9,7 @@ namespace GameLogic.Features.Generator {
 	/// LayerGeneratorSystem 负责生成层的实体。
 	/// </summary>
 	public class LayerGeneratorSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 500;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;
@@ -43,11 +43,13 @@ namespace GameLogic.Features.Generator {
 			var gidComp = layer.GetComponent<GidComponent>();
 			gidComp.Gid = GidMgr.Inst.GetGid();
 			GameWorldMono.GidToEntity[gidComp.Gid] = layer;
+		var ac = _world.GetResource<LayerConfigResource>().GetArtConfig(type);
+		var go = GameObject.Instantiate(ac.Prefab);
+		go.GetComponent<LayerEntityMono>().SetEntity(layer);
 
-			var ac = _world.GetResource<LayerConfigResource>().GetArtConfig(type);
-			var go = GameObject.Instantiate(ac.Prefab);
-			go.GetComponent<LayerEntityMono>().SetEntity(layer);
-		}
+		var eventEntity = _world.CreateEntity();
+		eventEntity.AddComponent(new LayerGeneratedEventComp() { LayerGid = gidComp.Gid });
+	}
 
 		public void OnRenderUpdate(float _) { }
 	}

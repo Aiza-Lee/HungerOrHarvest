@@ -7,7 +7,7 @@ namespace GameLogic.Features.SaveLoadData {
 	/// DayEndAutoSaveSystem 负责在每个游戏日结束时自动保存游戏数据。
 	/// </summary>
 	public class DayEndAutoSaveSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 300;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

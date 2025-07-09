@@ -5,7 +5,7 @@ namespace GameLogic.Features.Vill {
 	/// VillAiSystem 负责处理村民的 AI 行为逻辑。
 	/// </summary>
 	public class VillAiSystem : ISystem {
-		public int Priority => 120;
+		public int Priority => 800;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

@@ -1,3 +1,4 @@
+using GameLogic.Common.Logic;
 using NsEcsFrame.Core;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace GameLogic.Features.TickSpeed {
 	/// 处理游戏Tick速度的系统
 	/// </summary>
 	public class TickSpeedSystem : ISystem {
-		public int Priority => 1000;
+		public int Priority => 0;
 		public bool Enabled { get; set; }
 		private IWorld _world;
 		public void Initialize(IWorld world) {
@@ -24,7 +25,7 @@ namespace GameLogic.Features.TickSpeed {
 				if (speedRes.IsPaused) {
 					Time.fixedDeltaTime = 0f;
 				} else {
-					Time.fixedDeltaTime = 0.02f * speedRes.TickSpeed;
+					Time.fixedDeltaTime = 1f / ConstMgr.Speedx1TicksPerSecond * speedRes.TickSpeed;
 				}
 				if (_world.EnableDebugLogs) {
 					Debug.Log($"TickSpeedSystem: TickSpeed changed to {speedRes.TickSpeed}, IsPaused: {speedRes.IsPaused}");

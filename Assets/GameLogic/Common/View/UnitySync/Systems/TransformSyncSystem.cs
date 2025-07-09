@@ -7,7 +7,7 @@ namespace GameLogic.Common.View {
 	/// 负责将实体的 TransformComponent 实时同步到 Unity 的 Transform。
 	/// </summary>
 	public class TransformSyncSystem : ISystem {
-		public int Priority => 20;
+		public int Priority => 20000;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

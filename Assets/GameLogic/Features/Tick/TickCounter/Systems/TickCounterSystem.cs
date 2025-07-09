@@ -5,7 +5,7 @@ namespace GameLogic.Features.TickCounter {
 	/// <para> Tick计数逻辑：表示当前世界正在经历第几个Tick，每天从1开始 </para>
 	/// </summary>
 	public class TickCounterSystem : ISystem {
-		public int Priority => -1;
+		public int Priority => 0;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

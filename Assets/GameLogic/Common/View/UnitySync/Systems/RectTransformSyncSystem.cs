@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameLogic.Common.View {
 	public class RectTransformSyncSystem : ISystem {
-		public int Priority => 1000;
+		public int Priority => 20000;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

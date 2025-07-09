@@ -9,7 +9,7 @@ namespace GameLogic.Features.Generator {
 	/// ArchGeneratorSystem 负责生成建筑。
 	/// </summary>
 	public class ArchGeneratorSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 500;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;
@@ -48,6 +48,9 @@ namespace GameLogic.Features.Generator {
 			var ac = _world.GetResource<ArchConfigResource>().GetArtConfig(type);
 			var go = GameObject.Instantiate(ac.Prefab);
 			go.GetComponent<ArchEntityMono>().SetEntity(entity);
+
+			var eventEntity = _world.CreateEntity();
+			eventEntity.AddComponent(new ArchGeneratedEventComp() { ArchGid = gidComp.Gid });
 		}
 
 	} 

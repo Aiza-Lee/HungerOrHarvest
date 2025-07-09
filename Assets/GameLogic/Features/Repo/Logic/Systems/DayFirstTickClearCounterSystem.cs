@@ -6,7 +6,7 @@ namespace GameLogic.Features.Repo {
 	/// DayFirstTickClearCounterSystem 负责在每个游戏日开始时清除每日生产和消耗的计数。
 	/// </summary>
 	public class DayFirstTickClearCounterSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 10;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

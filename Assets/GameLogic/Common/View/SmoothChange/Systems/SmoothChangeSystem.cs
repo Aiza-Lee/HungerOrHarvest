@@ -8,7 +8,7 @@ namespace GameLogic.Common.View {
 	/// <para>该系统会消耗SmoothChangeStatComponent中的信息，平滑地改变目标</para>
 	/// </summary>
 	public class SmoothChangeSystem : ISystem {
-		public int Priority => 2000;
+		public int Priority => 19000;
 
 		public bool Enabled { get; set; }
 
@@ -22,7 +22,9 @@ namespace GameLogic.Common.View {
 		public void OnCreate() { }
 		public void OnDestroy() { }
 
-		private void ProcessSmoothChange(float deltaTime, bool isLogicTime) {
+		public void OnLogicUpdate(float _) { }
+
+		public void OnRenderUpdate(float _) {
 			var query = _world.CreateQueryBuilder()
 					.WithAll<SmoothChangeStatComponent>()
 					.Build();
@@ -32,7 +34,6 @@ namespace GameLogic.Common.View {
 				var changInfos = statComp.SmoothChangeInfos;
 				if (changInfos.Count == 0) return;
 				changInfos.ForEach(info => {
-					if (info.IsLogicTime != isLogicTime) return;
 					if (!info.Started) {
 						info.Started = true;
 						info.ElapsedTime = 0f;
@@ -47,7 +48,7 @@ namespace GameLogic.Common.View {
 							_ => throw new System.ArgumentOutOfRangeException()
 						};
 					}
-					info.ElapsedTime += deltaTime;
+					info.ElapsedTime += info.IsLogicTime ? Time.deltaTime : Time.unscaledDeltaTime;
 					var progress = info.TotalTime >= 0f ? Mathf.Clamp01(info.ElapsedTime / info.TotalTime) : 1f;
 					var percent = curveRes.PresetCurves[info.ChangeCurveType](progress);
 					var newValue = info.StartValue + (info.TargetValue - info.StartValue) * percent;
@@ -86,14 +87,6 @@ namespace GameLogic.Common.View {
 				});
 				statComp.ClearOveredInfos();
 			});
-		}
-
-		public void OnLogicUpdate(float deltaTime) {
-			ProcessSmoothChange(deltaTime, true);
-		}
-
-		public void OnRenderUpdate(float deltaTime) {
-			ProcessSmoothChange(deltaTime, false);
 		}
 	}
 }

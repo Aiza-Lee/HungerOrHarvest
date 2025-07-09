@@ -7,7 +7,7 @@ namespace GameLogic.Features.Destroyer {
 	/// ArchDestroyerSystem 负责销毁建筑实体。
 	/// </summary>
 	public class ArchDestroyerSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 500;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

@@ -3,7 +3,7 @@ using NsEcsFrame.Unity;
 
 namespace GameLogic.Common.View {
 	public class SpriteRendererSyncSystem : ISystem {
-		public int Priority => 1000;
+		public int Priority => 20000;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

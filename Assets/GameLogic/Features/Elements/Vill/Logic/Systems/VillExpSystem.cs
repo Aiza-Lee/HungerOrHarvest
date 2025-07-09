@@ -7,7 +7,7 @@ namespace GameLogic.Features.Elements.Vill {
 	/// VillExpSystem 处理村民的工作经验和等级提升逻辑。负责处理jobExpComponent中添加过的工作经验，并根据经验值更新JobExpComponent中的工作等级。
 	/// </summary>
 	public class VillExpSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 1500;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

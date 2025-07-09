@@ -7,7 +7,7 @@ namespace GameLogic.Features.MainCamera {
 	/// </summary>
 	public class CameraInputSystem : ISystem {
 		private IWorld _world;
-		public int Priority => -1;
+		public int Priority => 0;
 		public bool Enabled { get; set; }
 
 		public void Initialize(IWorld world) {

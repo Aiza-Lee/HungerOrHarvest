@@ -7,7 +7,7 @@ namespace GameLogic.Features.Destroyer {
 	/// LayerDestroyerSystem 负责销毁Layer实体。
 	/// </summary>
 	public class LayerDestroyerSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 500;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

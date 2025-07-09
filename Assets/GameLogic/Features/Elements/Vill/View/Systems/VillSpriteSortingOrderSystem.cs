@@ -8,7 +8,7 @@ namespace GameLogic.Features.Vill {
 	/// VillSpriteSoringOrderSystem 负责在smoothedCoord变化时更新精灵的sortingOrder(依赖于Coord的dirty状态)。
 	/// </summary>
 	public class VillSpriteSoringOrderSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 2000;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;
