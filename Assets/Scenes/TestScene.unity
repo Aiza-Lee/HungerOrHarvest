@@ -370,8 +370,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1977988667}
   - component: {fileID: 1977988666}
+  - component: {fileID: 1977988670}
+  - component: {fileID: 1977988669}
+  - component: {fileID: 1977988668}
   m_Layer: 0
-  m_Name: Vill Config Res
+  m_Name: Element Config Res
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -411,6 +414,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1977988668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977988664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4214c2d4e37fdd43954a70b0597a29d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resource:
+    DefaultConfig: {fileID: 0}
+    DefaultArtConfig: {fileID: 0}
+    Configs: []
+    ArtConfigs: []
+--- !u!114 &1977988669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977988664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac2e86914cd86548b6d63b0c9881639, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1977988670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977988664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b53959b489449fe4da55f1c0ef0ac3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resource:
+    DefaultConfig: {fileID: 0}
+    DefaultArtConfig: {fileID: 0}
+    Configs: []
+    ArtConfigs: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

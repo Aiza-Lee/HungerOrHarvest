@@ -4,6 +4,7 @@ using NsEcsFrame.Core;
 using UnityEngine;
 
 namespace GameLogic.Features.Job {
+	[System.Serializable]
 	public class JobConfigResource : IResource {
 		[SerializeReference][SerializeField][Tooltip("没有找到配置时的默认配置")] private JobConfigBase DefaultConfig;
 		[SerializeReference][SerializeField][Tooltip("没有找到配置时的默认配置")] private JobArtConfigBase DefaultArtConfig;
@@ -39,6 +40,7 @@ namespace GameLogic.Features.Job {
 		public string JobDescription;
 		[Tooltip("职业等级配置")] public List<JobLevelConfigBase> LevelConfigs;
 	}
+
 	public abstract class JobLevelConfigBase : ScriptableObject {
 		[Tooltip("等级")] public int Level;
 		[Tooltip("升到下一级所需经验值（升级会扣除所需经验值）")] public float NextLevelExpDemand;
