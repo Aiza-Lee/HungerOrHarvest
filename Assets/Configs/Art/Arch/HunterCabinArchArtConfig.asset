@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b8f05789d9dfe488bb41edbdc4d211, type: 3}
+  m_Name: HunterCabinArchArtConfig
+  m_EditorClassIdentifier: 
+  WorldSprite: {fileID: 432433280968166315, guid: 4b5d484e73f5b4d41bc8c3d37249d113, type: 3}
+  MapSprite: {fileID: 432433280968166315, guid: 4b5d484e73f5b4d41bc8c3d37249d113, type: 3}
+  Animator: {fileID: 0}
+  Prefab: {fileID: 118420102723132381, guid: c51174b012327ff4f84ac38b55bf3314, type: 3}

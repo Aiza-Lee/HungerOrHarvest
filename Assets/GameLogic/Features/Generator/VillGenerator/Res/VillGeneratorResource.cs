@@ -15,11 +15,5 @@ namespace GameLogic.Features.VillGenerator {
 		public VillIdentityComponent VillIdentity;
 		public Coord Coord;
 		public JobExpComponent VillJobExp;
-		// public VillGenerateInfo(VillStatComponent villStat, VillIdentityComponent villIdentity, Coord coord, JobExpComponent villJobExp) {
-		// 	VillStat = villStat;
-		// 	VillIdentity = villIdentity;
-		// 	Coord = coord;
-		// 	VillJobExp = villJobExp;
-		// }
 	}
 }

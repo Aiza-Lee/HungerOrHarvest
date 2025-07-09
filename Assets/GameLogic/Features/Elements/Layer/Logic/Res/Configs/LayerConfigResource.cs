@@ -36,9 +36,10 @@ namespace GameLogic.Features.Layer {
 		public string LayerName;
 		public string LayerDescription;
 	}
-	
+
 	public abstract class LayerArtConfigBase : ScriptableObject {
 		public abstract LayerType LayerType { get; }
 		[Tooltip("Layer精灵")] public Sprite Sprite;
+		[Tooltip("预制体对象")] public GameObject Prefab;
 	}
 }
