@@ -43,7 +43,7 @@ namespace GameLogic.Features.Generator {
 
 			var gidComp = vill.GetComponent<GidComponent>();
 			gidComp.Gid = GidMgr.Inst.GetGid();
-			GameWorldMono.GidToEntityId[gidComp.Gid] = vill.ID;
+			GameWorldMono.GidToEntity[gidComp.Gid] = vill;
 
 			var artConfig = configRes.GetArtConfig(type);			
 			var go = GameObject.Instantiate(artConfig.Prefab);

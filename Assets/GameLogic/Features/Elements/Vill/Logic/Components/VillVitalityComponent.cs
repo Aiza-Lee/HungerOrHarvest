@@ -7,7 +7,10 @@ namespace GameLogic.Features.Vill {
 	public class VillVitalityComponent : IComponent {
 		public float Vit;
 		public int RecoverChances;
-		public bool IsDying;
-		public bool Die;
+		public bool IsDying = false;
+		public bool Die = false;
+		public bool AtRecoverMode = false;
+
+		public bool IsDirty = true;
 	}
 }

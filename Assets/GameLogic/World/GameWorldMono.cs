@@ -18,7 +18,7 @@ using NsEcsFrame.Unity;
 
 namespace GameLogic.World {
 	public class GameWorldMono : WorldBehaviour {
-		public static Dictionary<ulong, EntityId> GidToEntityId = new();
+		public static Dictionary<ulong, Entity> GidToEntity = new();
 
 		protected override void RegisterSystems() {
 			World.SystemManager

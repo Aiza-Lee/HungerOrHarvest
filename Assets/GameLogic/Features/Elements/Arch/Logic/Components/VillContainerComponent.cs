@@ -7,6 +7,7 @@ namespace GameLogic.Features.Arch {
 	/// 记录包含了哪些村民的组件
 	/// </summary>
 	public class VillContainerComponent : IComponent {
-		public List<Guid> Vills = new();
+		public List<ulong> VillGids = new();
+		public bool IsDirty = true;
 	}
 }

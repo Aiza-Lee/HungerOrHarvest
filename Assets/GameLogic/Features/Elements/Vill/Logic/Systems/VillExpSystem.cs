@@ -1,11 +1,10 @@
-using GameLogic.Common.DataTypes;
 using GameLogic.Features.Job;
 using GameLogic.Features.Vill;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Elements.Vill {
 	/// <summary>
-	/// VillExpSystem 处理村民的工作经验和等级提升逻辑。负责处理AddJobExpComponent中添加的工作经验，并根据经验值更新JobExpComponent中的工作等级。
+	/// VillExpSystem 处理村民的工作经验和等级提升逻辑。负责处理jobExpComponent中添加过的工作经验，并根据经验值更新JobExpComponent中的工作等级。
 	/// </summary>
 	public class VillExpSystem : ISystem {
 		public int Priority => 100;
@@ -24,12 +23,8 @@ namespace GameLogic.Features.Elements.Vill {
 			var entities = _world.CreateQueryBuilder().WithAll<VillIdentityComponent>().Build();
 			var jobConfigRes = _world.GetResource<JobConfigResource>();
 			entities.ForEach(e => {
-				var addExpComp = e.GetComponent<AddJobExpComponent>();
-				if (addExpComp.JobExpsToAdd_F.IsDefault()) return;
 				var expComp = e.GetComponent<JobExpComponent>();
-				expComp.JobExps_F.Add(addExpComp.JobExpsToAdd_F);
-				expComp.IsDirty = true;
-				addExpComp.JobExpsToAdd_F.Change(v => 0f);
+				if (!expComp.IsDirty) return;
 				expComp.JobLevels_F.ForEach(jobLevel => {
 					var jobConfig = jobConfigRes.GetConfig(jobLevel.EnumType);
 					var levelUpDemand = jobConfig.LevelConfigs[jobLevel.Value].NextLevelExpDemand;

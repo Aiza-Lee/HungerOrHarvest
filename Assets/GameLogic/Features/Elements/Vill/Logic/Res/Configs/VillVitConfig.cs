@@ -8,7 +8,7 @@ namespace GameLogic.Features.Vill {
 		[Tooltip("低体力阈值")] public float LowVitThreshold = 0.2f; // 默认20%
 		[Tooltip("体力恢复阈值")] public float RecoverVitThreshold = 0.6f; // 默认60%
 
-		[Header("体力对效率的影响")]
+		[Header("体力影响")]
 		[Tooltip("体力低于饥饿阈值时的生产效率损失")] public float HungryProdLoss = 0.5f;
 
 		[Header("体力恢复配置")]

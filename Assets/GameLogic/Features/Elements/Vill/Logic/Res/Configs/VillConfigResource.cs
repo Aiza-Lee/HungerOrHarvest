@@ -51,13 +51,12 @@ namespace GameLogic.Features.Vill {
 				.AddComponent<SmoothChangeStatComponent>()
 				.AddComponent<TransformComponent>()
 				.AddComponent<SpriteRendererComponent>()
-				.AddComponent<AddJobExpComponent>()
-				.AddComponent<VillBehaviourTreeComponent>()
+				.AddComponent<VillBehaviourTreeComponent>(new(entity))
 				.AddComponent<VillMoveComponent>()
 				.AddComponent<BondToArchComponent>()
 				.AddComponent<JobExpComponent>()
 				.AddComponent<RoutePlanComponent>()
-				.AddComponent<VillVitalityComponent>()
+				.AddComponent<VillVitalityComponent>(new() { RecoverChances = VitConfig.RecoverChancePerDay })
 			;
 			AddDerivedComponents(entity);
 			return entity;

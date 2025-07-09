@@ -7,8 +7,10 @@ namespace GameLogic.Features.Repo {
 		public List<TryProdInfo> TryProdInfos = new();
 	}
 	public class TryProdInfo {
-		public bool Succeed;
+		public ulong VillGid;
 		public EtList<RepoType, float> Cons;
 		public EtList<RepoType, float> Prod;
+		public EtList<JobType, float> ExpAdd;
+		public float VitCost;
 	}
 }

@@ -70,7 +70,7 @@ namespace GameLogic.Features.Arch {
 		[Tooltip("固有产出")] public ReadOnlyEtList<RepoType, float> SelfProdPerTick;
 		[Tooltip("额外产出/每人")] public ReadOnlyEtList<RepoType, float> ExtraProdPerOnePerTick;
 		[Tooltip("固有消耗")] public ReadOnlyEtList<RepoType, float> SelfConsPerTick;
-		[Tooltip("额外消耗/每人")] public ReadOnlyEtList<RepoType, float> ExtraRepoConsPerOnePerTick;
+		[Tooltip("额外消耗/每人")] public ReadOnlyEtList<RepoType, float> ExtraConsPerOnePerTick;
 		[Tooltip("存储量增量")] public ReadOnlyEtList<RepoType, float> AddRepoVolume;
 		[Tooltip("职业经验的增量")] public ReadOnlyEtList<JobType, float> AddExpPerTick;
 		[Tooltip("体力消耗速率")] public float VitConsPerTick;

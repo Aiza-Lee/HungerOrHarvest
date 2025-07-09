@@ -1,4 +1,6 @@
 using GameLogic.Common.DataTypes;
+using GameLogic.Features.Vill;
+using GameLogic.World;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Repo {
@@ -30,7 +32,13 @@ namespace GameLogic.Features.Repo {
 					repoStat.Repos_F.Add(prod);
 					dailyCnter.DailyProdSum_F.Add(prod);
 					dailyCnter.DailyConsSum_F.Add(cons);
-					info.Succeed = true;
+					var villEntity = GameWorldMono.GidToEntity[info.VillGid];
+					var jobExp = villEntity.GetComponent<JobExpComponent>();
+					jobExp.JobExps_F.Add(info.ExpAdd);
+					jobExp.IsDirty = true;
+					var vitComp = villEntity.GetComponent<VillVitalityComponent>();
+					vitComp.Vit -= info.VitCost;
+					vitComp.IsDirty = true;
 				}
 			});
 			tryProdInfos.Clear();

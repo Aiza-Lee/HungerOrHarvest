@@ -26,5 +26,9 @@ namespace GameLogic.Common.DataTypes {
 		IEnumerator IEnumerable.GetEnumerator() {
 			return GetEnumerator();
 		}
+
+		public EtList<E, T> ToNewEtList() {
+			return new EtList<E, T>(_items);
+		}
 	}
 }

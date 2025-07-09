@@ -1,3 +1,4 @@
+using GameLogic.World;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
 using UnityEngine;
@@ -22,7 +23,8 @@ namespace GameLogic.Features.Destroyer {
 		public void OnLogicUpdate(float _) {
 			var res = _world.GetResource<VillDestroyResource>();
 			var toDestroy = res.VillToDestroy;
-			foreach (var entityId in toDestroy) {
+			foreach (var gid in toDestroy) {
+				var entityId = GameWorldMono.GidToEntity[gid].ID;
 				var go = EntityMono.GetByEntityId(entityId);
 				if (go != null) {
 					GameObject.Destroy(go);
