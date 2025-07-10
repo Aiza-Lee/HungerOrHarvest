@@ -22,7 +22,7 @@ namespace GameLogic.Common.DataTypes {
 			return new(ODR + odr, LYR + lyr);
 		}
 		public readonly Coord ToCoord() {
-			return new(ODR * ConstMgr.X_PER_ODR, LYR * ConstMgr.Y_PER_LYR);
+			return new(ODR * ConstMgr.CX_PER_ODR, LYR * ConstMgr.CY_PER_LYR);
 		}
 		public readonly List<OL> GetNeighbors() {
 			return new() {

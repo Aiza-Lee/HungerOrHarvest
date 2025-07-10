@@ -70,12 +70,12 @@ namespace GameLogic.Features.MainCamera {
 
 			if (input.MoveForwardKeyDown) {
 				MonoService.Inst.StartCoroutine(LockMoveCoro(config.DefaultForwardPositionChangeInfo.TotalTime));
-				var target = new SmoothValue(curPos + ConstMgr.Y_PER_LYR * ConstMgr.VZ_MY_RATE * Vector3.forward);
+				var target = new SmoothValue(curPos + ConstMgr.LayerGap * Vector3.forward);
 				var info = PoolSystem.PopObj<SmoothChangeInfo>().InitFrom(config.DefaultForwardPositionChangeInfo, target);
 				smoothStat.AddNewChange(info);
 			} else if (input.MoveBackwardKeyDown) {
 				MonoService.Inst.StartCoroutine(LockMoveCoro(config.DefaultBackwardPositionChangeInfo.TotalTime));
-				var target = new SmoothValue(curPos + ConstMgr.Y_PER_LYR * ConstMgr.VZ_MY_RATE * Vector3.back);
+				var target = new SmoothValue(curPos + ConstMgr.LayerGap * Vector3.back);
 				var info = PoolSystem.PopObj<SmoothChangeInfo>().InitFrom(config.DefaultBackwardPositionChangeInfo, target);
 				smoothStat.AddNewChange(info);
 			}

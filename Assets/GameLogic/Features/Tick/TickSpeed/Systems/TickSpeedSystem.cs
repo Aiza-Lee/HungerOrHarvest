@@ -25,7 +25,7 @@ namespace GameLogic.Features.TickSpeed {
 				if (speedRes.IsPaused) {
 					Time.fixedDeltaTime = 0f;
 				} else {
-					Time.fixedDeltaTime = 1f / ConstMgr.Speedx1TicksPerSecond * speedRes.TickSpeed;
+					Time.fixedDeltaTime = 1f / ConstMgr.SPEEDx1_TICKS_PER_SECOND * speedRes.TickSpeed;
 				}
 				if (_world.EnableDebugLogs) {
 					Debug.Log($"TickSpeedSystem: TickSpeed changed to {speedRes.TickSpeed}, IsPaused: {speedRes.IsPaused}");

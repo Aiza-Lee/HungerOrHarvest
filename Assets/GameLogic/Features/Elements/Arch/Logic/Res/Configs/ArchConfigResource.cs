@@ -3,6 +3,7 @@ using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Common.View;
+using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -50,7 +51,9 @@ namespace GameLogic.Features.Arch {
 				.AddComponent<OLComponent>()
 				.AddComponent<ArchIdentityComponent>(new ArchIdentityComponent() { ArchType = ArchType })
 				.AddComponent<BondToVillComponent>()
-				.AddComponent<VillContainerComponent>();
+				.AddComponent<VillContainerComponent>()
+				.AddComponent<SavedEntityComponent>()
+			;
 			AddDerivedComponents(entity);
 			return entity;
 		}

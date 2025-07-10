@@ -47,7 +47,7 @@ namespace GameLogic.Features.Vill {
 				.AddComponent<SmoothedCoordComponent>(
 				new() {
 					ChangeCurveType = ChangeCurveType.Linear,
-					TotalTime = (float) TicksPerCoord / ConstMgr.Speedx1TicksPerSecond
+					TotalTime = (float) TicksPerCoord / ConstMgr.SPEEDx1_TICKS_PER_SECOND
 				})
 				.AddComponent<SmoothChangeStatComponent>()
 				.AddComponent<TransformComponent>()

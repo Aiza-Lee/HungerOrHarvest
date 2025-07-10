@@ -22,19 +22,19 @@ namespace GameLogic.Common.DataTypes {
 			X += x;
 			Y += y;
 		}
-		public readonly bool IsOL() => X % ConstMgr.X_PER_ODR == 0 && Y % ConstMgr.Y_PER_LYR == 0;
-		public readonly bool IsOnLayer() => Y % ConstMgr.Y_PER_LYR == 0;
+		public readonly bool IsOL() => X % ConstMgr.CX_PER_ODR == 0 && Y % ConstMgr.CY_PER_LYR == 0;
+		public readonly bool IsOnLayer() => Y % ConstMgr.CY_PER_LYR == 0;
 		
 		public readonly List<OL> GetNeighborOLs() {
-			var rX = X % ConstMgr.X_PER_ODR;
-			var rY = Y % ConstMgr.Y_PER_LYR;
+			var rX = X % ConstMgr.CX_PER_ODR;
+			var rY = Y % ConstMgr.CY_PER_LYR;
 			if (rX == 0 && rY == 0) {
-				var ol = new OL(X / ConstMgr.X_PER_ODR, Y / ConstMgr.Y_PER_LYR);
+				var ol = new OL(X / ConstMgr.CX_PER_ODR, Y / ConstMgr.CY_PER_LYR);
 				return ol.GetNeighbors();
 			}
 			if (rX == 0) {
-				var ORD = X / ConstMgr.X_PER_ODR;
-				var tmp = 1f * Y / ConstMgr.Y_PER_LYR;
+				var ORD = X / ConstMgr.CX_PER_ODR;
+				var tmp = 1f * Y / ConstMgr.CY_PER_LYR;
 				// y 方向更大的
 				var upper = new OL(ORD, Mathf.CeilToInt(tmp));
 				// y 方向更小的
@@ -46,8 +46,8 @@ namespace GameLogic.Common.DataTypes {
 				}
 			}
 			if (rY == 0) {
-				var LYR = Y / ConstMgr.Y_PER_LYR;
-				var tmp = 1f * X / ConstMgr.X_PER_ODR;
+				var LYR = Y / ConstMgr.CY_PER_LYR;
+				var tmp = 1f * X / ConstMgr.CX_PER_ODR;
 				return new() {
 					new(Mathf.FloorToInt(tmp), LYR),
 					new(Mathf.CeilToInt(tmp), LYR),
@@ -62,12 +62,12 @@ namespace GameLogic.Common.DataTypes {
 			return DistanceTo(ol.ToCoord());
 		}
 		public readonly bool OnSameEdge(Coord other) {
-			if (X == other.X && X % ConstMgr.X_PER_ODR == 0) {
+			if (X == other.X && X % ConstMgr.CX_PER_ODR == 0) {
 				var dis = Mathf.Abs(Y - other.Y);
-				return dis < ConstMgr.Y_PER_LYR || (dis == ConstMgr.Y_PER_LYR && Mathf.Max(Y, other.Y) / ConstMgr.Y_PER_LYR % 2 == 0);
+				return dis < ConstMgr.CY_PER_LYR || (dis == ConstMgr.CY_PER_LYR && Mathf.Max(Y, other.Y) / ConstMgr.CY_PER_LYR % 2 == 0);
 			}
-			if (Y == other.Y && Y % ConstMgr.Y_PER_LYR == 0) {
-				return Mathf.Abs(X - other.X) <= ConstMgr.X_PER_ODR;
+			if (Y == other.Y && Y % ConstMgr.CY_PER_LYR == 0) {
+				return Mathf.Abs(X - other.X) <= ConstMgr.CX_PER_ODR;
 			}
 			return false;
 		}
