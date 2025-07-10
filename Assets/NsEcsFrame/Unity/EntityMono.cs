@@ -5,8 +5,11 @@ using System.Collections.Generic;
 namespace NsEcsFrame.Unity {
 	/// <summary>
 	/// EntityMono 是一个抽象类，用于在Unity中表示一个实体（Entity）的MonoBehaviour。
-	/// <para> 核心功能是暴露entity的component于inspector </para>
-	/// <para> 在派生类中也可以实现entity在场景中的视觉效果 </para>
+	/// <para> 核心功能是: </para>
+	/// <para> <list type="bullet">
+	/// <item> 在运行时暴露entity的component于inspector </item>
+	/// <item> 通过EntityId来获取EntityMono的实例,然后获取对应的unity组件并实现在场景中做出玩家可视的变化 </item>
+	/// </list> </para>
 	/// </summary>
 	public abstract class EntityMono : MonoBehaviour {
 		private static readonly Dictionary<EntityId, EntityMono> _entityMap = new();

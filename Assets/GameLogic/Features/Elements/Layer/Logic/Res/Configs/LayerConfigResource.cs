@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
+using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Common.View;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;

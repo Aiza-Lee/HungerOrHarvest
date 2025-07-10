@@ -1,3 +1,4 @@
+using GameLogic.Common.UnityComponentsBridge;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace GameLogic.Common.View {
 				var statComp = e.GetComponent<SmoothChangeStatComponent>();
 				var changInfos = statComp.SmoothChangeInfos;
 				if (changInfos.Count == 0) return;
-				changInfos.ForEach(info => {
+				foreach (var info in changInfos.Values) {
 					if (!info.Started) {
 						info.Started = true;
 						info.ElapsedTime = 0f;
@@ -45,6 +46,8 @@ namespace GameLogic.Common.View {
 							ChangeTargetType.Renderer_Alpha => new SmoothValue(e.GetComponent<SpriteRendererComponent>().Alpha),
 							ChangeTargetType.RectTransform_OffsetMin => new SmoothValue(e.GetComponent<RectTransformComponent>().OffsetMin),
 							ChangeTargetType.RectTransform_OffsetMax => new SmoothValue(e.GetComponent<RectTransformComponent>().OffsetMax),
+							ChangeTargetType.Camera_Size => new SmoothValue(e.GetComponent<CameraComponent>().FeildOfView),
+							ChangeTargetType.AudioSource_Volume => new SmoothValue(e.GetComponent<AudioSourceComponent>().Volume),
 							_ => throw new System.ArgumentOutOfRangeException()
 						};
 					}
@@ -52,41 +55,37 @@ namespace GameLogic.Common.View {
 					var progress = info.TotalTime >= 0f ? Mathf.Clamp01(info.ElapsedTime / info.TotalTime) : 1f;
 					var percent = curveRes.PresetCurves[info.ChangeCurveType](progress);
 					var newValue = info.StartValue + (info.TargetValue - info.StartValue) * percent;
-					switch (info.ChangeTargetType) {
-						case ChangeTargetType.Transform_Position:
-							var tComp = e.GetComponent<TransformComponent>();
-							tComp.LocalPosition = newValue.Vector3Value;
-							tComp.MarkDirty();
-							break;
-						case ChangeTargetType.Transform_Rotation:
-							tComp = e.GetComponent<TransformComponent>();
-							tComp.LocalRotation = Quaternion.Euler(newValue.Vector3Value);
-							tComp.MarkDirty();
-							break;
-						case ChangeTargetType.Transform_Scale:
-							tComp = e.GetComponent<TransformComponent>();
-							tComp.LocalScale = newValue.Vector3Value;
-							tComp.MarkDirty();
-							break;
-						case ChangeTargetType.Renderer_Alpha:
-							var sComp = e.GetComponent<SpriteRendererComponent>();
-							sComp.Alpha = newValue.FloatValue;
-							sComp.MarkDirty();
-							break;
-						case ChangeTargetType.RectTransform_OffsetMin:
-							var rComp = e.GetComponent<RectTransformComponent>();
-							rComp.OffsetMin = newValue.Vector2Value;
-							rComp.MarkDirty();
-							break;
-						case ChangeTargetType.RectTransform_OffsetMax:
-							rComp = e.GetComponent<RectTransformComponent>();
-							rComp.OffsetMax = newValue.Vector2Value;
-							rComp.MarkDirty();
-							break;
-					}
-				});
+					ApplyChange(e, info, newValue);
+				}
 				statComp.ClearOveredInfos();
 			});
+		}
+
+		private void ApplyChange(Entity e, SmoothChangeInfo info, SmoothValue newValue) {
+			switch (info.ChangeTargetType) {
+				case ChangeTargetType.Transform_Position:
+					UpdateComp<TransformComponent>(e, t => t.LocalPosition = newValue.Vector3Value); break;
+				case ChangeTargetType.Transform_Rotation:
+					UpdateComp<TransformComponent>(e, t => t.LocalRotation = Quaternion.Euler(newValue.Vector3Value)); break;
+				case ChangeTargetType.Transform_Scale:
+					UpdateComp<TransformComponent>(e, t => t.LocalScale = newValue.Vector3Value); break;
+				case ChangeTargetType.Renderer_Alpha:
+					UpdateComp<SpriteRendererComponent>(e, s => s.Alpha = newValue.FloatValue); break;
+				case ChangeTargetType.RectTransform_OffsetMin:
+					UpdateComp<RectTransformComponent>(e, r => r.OffsetMin = newValue.Vector2Value); break;
+				case ChangeTargetType.RectTransform_OffsetMax:
+					UpdateComp<RectTransformComponent>(e, r => r.OffsetMax = newValue.Vector2Value); break;
+				case ChangeTargetType.Camera_Size:
+					UpdateComp<CameraComponent>(e, c => c.FeildOfView = newValue.FloatValue); break;
+				case ChangeTargetType.AudioSource_Volume:
+					UpdateComp<AudioSourceComponent>(e, a => a.Volume = newValue.FloatValue); break;
+			}
+		}
+
+		private void UpdateComp<T>(Entity e, System.Action<T> updateAction) where T : class, IComponent, IDirtyMarker {
+			var comp = e.GetComponent<T>();
+			updateAction(comp);
+			comp.MarkDirty();
 		}
 	}
 }

@@ -5,7 +5,7 @@ namespace NsEcsFrame.Components {
 	/// <summary>
 	/// 变换组件，仅存储本地位置、旋转和缩放数据
 	/// </summary>
-	public class TransformComponent : IComponent {
+	public class TransformComponent : IComponent, IDirtyMarker {
 		/// <summary>本地位置</summary>
 		public Vector3 LocalPosition;
 		/// <summary>本地旋转</summary>
@@ -13,7 +13,7 @@ namespace NsEcsFrame.Components {
 		/// <summary>本地缩放</summary>
 		public Vector3 LocalScale;
 
-		public bool IsDirty = true; // 脏标记，初始为true，首次同步
+		public bool Dirty = true;
 
 		public TransformComponent() {
 			LocalPosition = Vector3.zero;
@@ -88,7 +88,8 @@ namespace NsEcsFrame.Components {
 
 		public static TransformComponent FromTransform(Transform transform) => new TransformComponent(transform);
 
-		public void MarkDirty() => IsDirty = true;
-		public void ClearDirty() => IsDirty = false;
+		public void MarkDirty() => Dirty = true;
+		public void ClearDirty() => Dirty = false;
+		public bool IsDirty() => Dirty;
 	}
 }

@@ -1,3 +1,4 @@
+using GameLogic.Common.UnityComponentsBridge;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
 
@@ -16,13 +17,13 @@ namespace GameLogic.Common.View {
 		public void OnCreate() { }
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) { }
-		public void OnRenderUpdate(float deltaTime) {
+		public void OnRenderUpdate(float _) {
 			var query = _world.CreateQueryBuilder()
 				.WithAll<SpriteRendererComponent>()
 				.Build();
 			query.ForEach(e => {
 				var spriteRendererComp = e.GetComponent<SpriteRendererComponent>();
-				if (!spriteRendererComp.IsDirty) return;
+				if (!spriteRendererComp.Dirty) return;
 				var go = EntityMono.GetByEntityId(e.ID);
 				spriteRendererComp.ApplyToSpriteRenderer(go.GetComponent<UnityEngine.SpriteRenderer>());
 				spriteRendererComp.ClearDirty();

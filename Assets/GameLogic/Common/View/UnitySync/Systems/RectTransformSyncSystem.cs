@@ -18,13 +18,13 @@ namespace GameLogic.Common.View {
 		public void OnCreate() {}
 		public void OnDestroy() {}
 		public void OnLogicUpdate(float _) {}
-		public void OnRenderUpdate(float deltaTime) {
+		public void OnRenderUpdate(float _) {
 			var query = _world.CreateQueryBuilder()
 				.WithAll<RectTransformComponent>()
 				.Build();
 			query.ForEach(e => {
 				var rectTransComp = e.GetComponent<RectTransformComponent>();
-				if (!rectTransComp.IsDirty) return;
+				if (!rectTransComp.IsDirty()) return;
 				var go = EntityMono.GetByEntityId(e.ID);
 				rectTransComp.ApplyToRectTransform(go.GetComponent<RectTransform>());
 				rectTransComp.ClearDirty();

@@ -1,3 +1,4 @@
+using GameLogic.Common.Logic;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
 using UnityEngine;
@@ -23,6 +24,11 @@ namespace GameLogic.Features.Destroyer {
 			var res = _world.GetResource<LayerDestroyResource>();
 			var toDestroy = res.LayerToDestroy;
 			foreach (var entityId in toDestroy) {
+				var gid = _world.GetEntity(entityId).GetComponent<GidComponent>().Gid;
+				// 创建删除事件实体
+				var eventEntity = _world.CreateEntity();
+				eventEntity.AddComponent(new LayerDestroyedEventComp() { LayerGid = gid });
+				
 				var go = EntityMono.GetByEntityId(entityId);
 				if (go != null) {
 					GameObject.Destroy(go);

@@ -28,7 +28,7 @@ namespace GameLogic.Common.View {
 				if (!coordComp.IsDirty) return;
 				var transComp = entity.GetComponent<TransformComponent>();
 				transComp.LocalPosition = coordComp.Coord.ToVec3DefaultY();
-				transComp.IsDirty = true;
+				transComp.Dirty = true;
 			});
 		}
 		public void OnRenderUpdate(float _) {}

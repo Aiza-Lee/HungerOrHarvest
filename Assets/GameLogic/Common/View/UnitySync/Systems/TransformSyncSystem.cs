@@ -31,7 +31,7 @@ namespace GameLogic.Common.View {
 			query.ForEach(e => {
 				var transComp = e.GetComponent<TransformComponent>();
 				// Debug.Log($"TransformSyncSystem: Processing entity {e.ID} with TransformComponent");
-				if (!transComp.IsDirty) return;
+				if (!transComp.Dirty) return;
 				var go = EntityMono.GetByEntityId(e.ID);
 				transComp.ApplyToTransform(go.transform);
 				transComp.ClearDirty();

@@ -1,4 +1,4 @@
-using GameLogic.Common.View;
+using GameLogic.Common.UnityComponentsBridge;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
 using UnityEngine;
@@ -27,7 +27,7 @@ namespace GameLogic.Features.Vill {
 								.Build();
 			entities.ForEach(entity => {
 				var srComp = entity.GetComponent<SpriteRendererComponent>();
-				if (!srComp.IsDirty) return;
+				if (!srComp.Dirty) return;
 				if (!EntityMono.GetByEntityId(entity.ID).TryGetComponent<SpriteRenderer>(out var sr)) return;
 				srComp.ApplyToSpriteRenderer(sr);
 				srComp.ClearDirty();

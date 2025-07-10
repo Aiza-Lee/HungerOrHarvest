@@ -2,7 +2,7 @@ using UnityEngine;
 using NsEcsFrame.Core;
 
 namespace NsEcsFrame.Components {
-	public class RectTransformComponent : IComponent {
+	public class RectTransformComponent : IComponent, IDirtyMarker {
 		/// <summary>锚点最小值</summary>
 		public Vector2 AnchorMin;
 		/// <summary>锚点最大值</summary>
@@ -18,7 +18,7 @@ namespace NsEcsFrame.Components {
 		/// <summary>锚点相对位置</summary>
 		public Vector2 AnchoredPosition;
 
-		public bool IsDirty = true; // 脏标记
+		public bool Dirty = true;
 
 		public RectTransformComponent() {
 			AnchorMin = Vector2.zero;
@@ -70,8 +70,9 @@ namespace NsEcsFrame.Components {
 			}
 		}
 
-		public void MarkDirty() => IsDirty = true;
-		public void ClearDirty() => IsDirty = false;
+		public void MarkDirty() => Dirty = true;
+		public void ClearDirty() => Dirty = false;
+		public bool IsDirty() => Dirty;
 
 		public override string ToString() {
 			return $"AnchorMin={AnchorMin}, AnchorMax={AnchorMax}, OffsetMin={OffsetMin}, OffsetMax={OffsetMax}, Pivot={Pivot}, SizeDelta={SizeDelta}, AnchoredPosition={AnchoredPosition}";

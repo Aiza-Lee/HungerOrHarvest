@@ -9,7 +9,7 @@ namespace GameLogic.Features.Generator {
 	/// LayerGeneratorSystem 负责生成层的实体。
 	/// </summary>
 	public class LayerGeneratorSystem : ISystem {
-		public int Priority => 500;
+		public int Priority => 100;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

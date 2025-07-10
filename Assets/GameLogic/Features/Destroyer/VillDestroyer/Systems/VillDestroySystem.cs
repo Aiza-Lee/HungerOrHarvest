@@ -24,6 +24,10 @@ namespace GameLogic.Features.Destroyer {
 			var res = _world.GetResource<VillDestroyResource>();
 			var toDestroy = res.VillToDestroy;
 			foreach (var gid in toDestroy) {
+				// 创建删除事件实体
+				var eventEntity = _world.CreateEntity();
+				eventEntity.AddComponent(new VillDestroyedEventComp() { DestroyedVillGid = gid });
+				
 				var entityId = GameWorldMono.GidToEntity[gid].ID;
 				var go = EntityMono.GetByEntityId(entityId);
 				if (go != null) {

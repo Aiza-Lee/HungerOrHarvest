@@ -8,7 +8,9 @@ namespace GameLogic.Features.SaveLoadData {
 		public EntitiesSaveData(IWorld world) {
 			var entities = world.GetAllEntities();
 			foreach (var entity in entities) {
-				Entities.Add(new(entity));
+				if (entity.HasComponent<SavedEntityComponent>()) {
+					Entities.Add(new(entity));
+				}
 			}
 		}
 	}

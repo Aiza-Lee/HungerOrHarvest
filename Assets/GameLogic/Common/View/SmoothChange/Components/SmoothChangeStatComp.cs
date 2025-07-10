@@ -16,11 +16,13 @@ namespace GameLogic.Common.View {
 		Renderer_Alpha,
 		RectTransform_OffsetMin,
 		RectTransform_OffsetMax,
+		Camera_Size,
+		AudioSource_Volume,
 	}
-	public enum SmoothValueType { Float, Vector2, Vector3 }
 
 	[Serializable]
 	public struct SmoothValue {
+		public enum SmoothValueType { Float, Vector2, Vector3 }
 		public SmoothValueType ValueType;
 		public float FloatValue;
 		public Vector2 Vector2Value;
@@ -106,11 +108,12 @@ namespace GameLogic.Common.View {
 		public static SmoothValue operator *(float scalar, SmoothValue a) => a * scalar;
 	}
 	/// <summary>
-	/// 平滑变化的状态
+	/// 平滑变化的状态，对于某个该变量，同时只能有一个平滑变化信息存在。
 	/// </summary>
 	[Serializable]
 	public class SmoothChangeStatComponent : IComponent {
-		public List<SmoothChangeInfo> SmoothChangeInfos = new();
+		// public List<SmoothChangeInfo> SmoothChangeInfos = new();
+		public Dictionary<ChangeTargetType, SmoothChangeInfo> SmoothChangeInfos = new();
 
 		public void AddNewChange(
 			bool isLogicTime,
@@ -127,19 +130,26 @@ namespace GameLogic.Common.View {
 			info.ElapsedTime = 0f;
 			info.Started = false;
 			info.TargetValue = new(targetValue);
-			SmoothChangeInfos.Add(info);
+
+			AddNewChange(info);
+		}
+
+		public void AddNewChange(SmoothChangeInfo info) {
+			if (SmoothChangeInfos.TryGetValue(info.ChangeTargetType, out var existingInfo)) {
+				// Debug.LogWarning($"SmoothChangeStatComponent: {info.ChangeTargetType} already has a change info, replacing it.");
+				SmoothChangeInfos.Remove(info.ChangeTargetType);
+				PoolSystem.PushObj(existingInfo);
+			}
+			SmoothChangeInfos.Add(info.ChangeTargetType, info);
 		}
 
 		/// <summary>
 		/// 移除指定类型的平滑变化信息
 		/// </summary>
 		public void RemoveChangeOfType(ChangeTargetType targetType) {
-			for (int i = SmoothChangeInfos.Count - 1; i >= 0; i--) {
-				if (SmoothChangeInfos[i].ChangeTargetType == targetType) {
-					var info = SmoothChangeInfos[i];
-					SmoothChangeInfos.RemoveAt(i);
-					PoolSystem.PushObj(info);
-				}
+			if (SmoothChangeInfos.TryGetValue(targetType, out var info)) {
+				SmoothChangeInfos.Remove(targetType);
+				PoolSystem.PushObj(info);
 			}
 		}
 
@@ -147,10 +157,16 @@ namespace GameLogic.Common.View {
 		/// 清除已完成的平滑变化信息
 		/// </summary>
 		public void ClearOveredInfos() {
-			for (int i = SmoothChangeInfos.Count - 1; i >= 0; i--) {
-				var info = SmoothChangeInfos[i];
-				if (info.ElapsedTime >= info.TotalTime) {
-					SmoothChangeInfos.RemoveAt(i);
+			var keysToRemove = new List<ChangeTargetType>();
+			foreach (var kvp in SmoothChangeInfos) {
+				if (kvp.Value.ElapsedTime >= kvp.Value.TotalTime) {
+					keysToRemove.Add(kvp.Key);
+				}
+			}
+
+			foreach (var key in keysToRemove) {
+				if (SmoothChangeInfos.TryGetValue(key, out var info)) {
+					SmoothChangeInfos.Remove(key);
 					PoolSystem.PushObj(info);
 				}
 			}
@@ -166,6 +182,17 @@ namespace GameLogic.Common.View {
 		static void InitPool() {
 			PoolSystem.InitObjectPool<SmoothChangeInfo>();
 		}
+		public static SmoothChangeInfo NewDirectInfo(ChangeTargetType targetType, SmoothValue target) {
+			var info = PoolSystem.PopObj<SmoothChangeInfo>();
+			info.IsLogicTime = false;
+			info.ChangeTargetType = targetType;
+			info.ChangeCurveType = ChangeCurveType.Directive;
+			info.TotalTime = 0f;
+			info.ElapsedTime = 0f;
+			info.Started = false;
+			info.TargetValue = target;
+			return info;
+		}
 		public bool IsLogicTime = true;
 		public ChangeTargetType ChangeTargetType = ChangeTargetType.Transform_Position;
 		public ChangeCurveType ChangeCurveType = ChangeCurveType.Linear;
@@ -177,6 +204,20 @@ namespace GameLogic.Common.View {
 		public SmoothValue StartValue;
 		public SmoothValue TargetValue;
 
+		/// <summary>
+		/// 初始化平滑变化信息
+		/// </summary>
+		public SmoothChangeInfo InitFrom(SmoothChangeInfo other, SmoothValue targetValue) {
+			IsLogicTime = other.IsLogicTime;
+			ChangeTargetType = other.ChangeTargetType;
+			ChangeCurveType = other.ChangeCurveType;
+			TotalTime = other.TotalTime;
+
+			ElapsedTime = 0f;
+			Started = false;
+			TargetValue = targetValue;
+			return this;
+		}
 		public void CleanBeforePush() { }
 		public void InitAfterPop() { }
 	}
