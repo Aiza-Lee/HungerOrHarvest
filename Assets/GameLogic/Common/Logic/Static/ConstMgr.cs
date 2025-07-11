@@ -11,18 +11,31 @@ namespace GameLogic.Common.Logic {
 		public static readonly int REPO_TYPE_SIZE;
 		public static readonly int VILL_TYPE_SIZE;
 
-		/// <summary>每层的容量上限，单位为OL</summary>
-		public static readonly int LAYER_CAPACITY = 50;
 		/// <summary>每Order对应Coord的X轴长度</summary>
 		public static readonly int CX_PER_ODR = 12;
 		/// <summary>每Layer对应Coord的Y轴长度</summary>
 		public static readonly int CY_PER_LYR = 24;
-		/// <summary>最大层编号，单位为OL</summary>
+
+		/// <summary>最大Order，单位为OL</summary>
+		public static readonly int MAX_ORDER = 50;
+		/// <summary>最小Order，单位为OL</summary>
+		public static readonly int MIN_ORDER = 0;
+		/// <summary>中间Order，单位为OL</summary>
+		public static readonly int MIDDLE_ORDER = (MAX_ORDER + MIN_ORDER) / 2;
+
+		/// <summary>最大Layer，单位为OL</summary>
 		public static readonly int MAX_LAYER = 20;
-		/// <summary>中间层编号，单位为OL</summary>
-		public static readonly int MIDDLE_LAYER = 10;
-		/// <summary>最小层编号，单位为OL</summary>
+		/// <summary>最小Layer，单位为OL</summary>
 		public static readonly int MIN_LAYER = 0;
+		/// <summary>中间Layer，单位为OL</summary>
+		public static readonly int MIDDLE_LAYER = (MAX_LAYER + MIN_LAYER) / 2;
+
+		/// <summary>世界中心点，单位为OL</summary>
+		public static readonly OL WORLD_CENTER_OL = new(MIDDLE_ORDER, MIDDLE_LAYER);
+		/// <summary>世界中心点，单位为Coord</summary>
+		public static readonly Coord WORLD_CENTER_COORD = WORLD_CENTER_OL.ToCoord();
+		/// <summary>世界中心点，单位为Unity世界坐标系的Vec3</summary>
+		public static readonly Vector3 WORLD_CENTER_VEC3 = WORLD_CENTER_OL.ToVec3DefaultY();
 
 		public static readonly int MAX_SORTING_ORDER = 1000;
 		public static readonly int FRONT_SORTING_ORDER = 5;
@@ -65,6 +78,18 @@ namespace GameLogic.Common.Logic {
 				coord.X * ConstMgr.UX_PER_CX,
 				ConstMgr.DEFAULT_Y,
 				coord.Y * ConstMgr.UZ_PER_CY);
+		}
+		public static Vector3 ToVec3(this OL ol, float y) {
+			return new Vector3(
+				ConstMgr.UX_PER_CX * ConstMgr.CX_PER_ODR * ol.ODR,
+				y,
+				ConstMgr.UZ_PER_CY * ConstMgr.CY_PER_LYR * ol.LYR);
+		}
+		public static Vector3 ToVec3DefaultY(this OL ol) {
+			return new Vector3(
+				ConstMgr.UX_PER_CX * ConstMgr.CX_PER_ODR * ol.ODR,
+				ConstMgr.DEFAULT_Y,
+				ConstMgr.UZ_PER_CY * ConstMgr.CY_PER_LYR * ol.LYR);
 		}
 	}
 }
