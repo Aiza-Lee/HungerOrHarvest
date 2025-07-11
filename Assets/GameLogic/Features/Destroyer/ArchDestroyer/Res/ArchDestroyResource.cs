@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameLogic.Features.ClearWorld;
 using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Core;
 
@@ -6,7 +7,7 @@ namespace GameLogic.Features.Destroyer {
 	/// <summary>
 	/// 代表建筑销毁的资源
 	/// </summary>
-	public class ArchDestroyResource : IResource, ISaveableResource {
+	public class ArchDestroyResource : IResource, ISaveableResource, IWorldClearRespondable {
 		public List<ulong> ArchToDestroyGid = new();
 
 		public void Load(IEnumerable<object> loadedData) {
@@ -17,6 +18,10 @@ namespace GameLogic.Features.Destroyer {
 					break;
 				}
 			}
+		}
+
+		public void RespondWorldClear() {
+			ArchToDestroyGid.Clear();
 		}
 	}
 }

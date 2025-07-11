@@ -8,7 +8,7 @@ namespace NsEcsFrame.Core {
 		/// <summary>
 		/// 世界的名称
 		/// </summary>
-		string Name { get; }
+		string Name { get; set; }
 
 		/// <summary>
 		/// 是否启用调试日志

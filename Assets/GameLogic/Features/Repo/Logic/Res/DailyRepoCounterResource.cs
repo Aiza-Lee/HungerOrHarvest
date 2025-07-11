@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
+using GameLogic.Features.ClearWorld;
 using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Repo {
-	public class DailyRepoCounterResource : IResource, ISaveableResource {
+	public class DailyRepoCounterResource : IResource, ISaveableResource, IWorldClearRespondable {
 		public EtList<RepoType, float> DailyProdSum_F = new(fillAll: true);
 		public EtList<RepoType, float> DailyConsSum_F = new(fillAll: true);
 
@@ -16,6 +17,11 @@ namespace GameLogic.Features.Repo {
 					break;
 				}
 			}
+		}
+
+		public void RespondWorldClear() {
+			DailyProdSum_F.Fill(0f);
+			DailyConsSum_F.Fill(0f);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
+using GameLogic.Features.ClearWorld;
 using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Core;
 
@@ -9,7 +10,7 @@ namespace GameLogic.Features.Repo {
 	/// 包括资源库的解锁状态、当前资源量和最大资源量等
 	/// </summary>
 	[System.Serializable]
-	public class RepoStatResource : IResource, ISaveableResource {
+	public class RepoStatResource : IResource, ISaveableResource, IWorldClearRespondable {
 		public EtList<RepoType, bool> Unlocked = new(fillAll: true);
 		public EtList<RepoType, float> Repos_F = new(fillAll: true);
 		public EtList<RepoType, float> RepoMax_F = new(fillAll: true);
@@ -23,6 +24,12 @@ namespace GameLogic.Features.Repo {
 					break;
 				}
 			}
+		}
+
+		public void RespondWorldClear() {
+			Unlocked.Fill(false);
+			Repos_F.Fill(0f);
+			RepoMax_F.Fill(0f);
 		}
 	}
 }

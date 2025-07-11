@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameLogic.Features.ClearWorld;
 using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Core;
 
@@ -6,7 +7,7 @@ namespace GameLogic.Features.TickCounter {
 	/// <summary>
 	/// 统计村庄的时间信息
 	/// </summary>
-	public class TickCounterResource : IResource, ISaveableResource {
+	public class TickCounterResource : IResource, ISaveableResource, IWorldClearRespondable {
 		public uint TodayTickCount = 0;
 		/// <summary> 从游戏开始运行后到现在的Tick总和 </summary>
 		public ulong TickCount = 0;
@@ -37,6 +38,19 @@ namespace GameLogic.Features.TickCounter {
 					break;
 				}
 			}
+		}
+
+		public void RespondWorldClear() {
+			TodayTickCount = 0;
+			TickCount = 0;
+			DayCount = 0;
+			IsDay = false;
+			DayProcess = 0f;
+			NightProcess = 0f;
+			IsDayLastTick = false;
+			IsNightLastTick = false;
+			IsDayFirstTick = false;
+			IsNightFirstTick = false;
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace NsEcsFrame.Core {
 		private readonly Dictionary<EntityId, uint> _entityVersions = new();
 		private readonly Dictionary<Type, IResource> _resources = new();
 
-		public string Name { get; }
+		public string Name { get; set; }
 		public bool EnableDebugLogs { get; set; } = false;
 
 		public IComponentManager ComponentManager => _componentManager;

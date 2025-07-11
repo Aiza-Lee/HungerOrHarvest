@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
+using GameLogic.Features.ClearWorld;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Generator {
@@ -7,8 +8,12 @@ namespace GameLogic.Features.Generator {
 	/// 代表Layer 生成/销毁的Res
 	/// </summary>
 	[System.Serializable]
-	public class LayerGeneratorResource : IResource {
+	public class LayerGeneratorResource : IResource, IWorldClearRespondable {
 		public List<LayerGenerateData> LayerDatas = new();
+
+		public void RespondWorldClear() {
+			LayerDatas.Clear();
+		}
 	}
 	
 	public class LayerGenerateData {

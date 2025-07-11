@@ -20,9 +20,11 @@ namespace GameLogic.Features.NewWorldCreator {
 		public void OnLogicUpdate(float _) {
 			var info = _world.GetResource<NewWorldInfoResource>().NewWorldInfo;
 			if (info == null) return;
-			var saveInfo = info.SaveInfo;
 			var baseInfo = info.BaseInfo;
 			var worldName = info.WorldName;
+			ClearWorld.ClearWorldAPI.Clear();
+			_world.Name = worldName;
+			
 		}
 		public void OnRenderUpdate(float _) { }
 	} 

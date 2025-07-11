@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
+using GameLogic.Features.ClearWorld;
 using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Repo {
-	public class TryProdInfoResource : IResource, ISaveableResource {
+	public class TryProdInfoResource : IResource, ISaveableResource, IWorldClearRespondable {
 		public List<TryProdInfo> TryProdInfos = new();
 
 		public void Load(IEnumerable<object> loadedData) {
@@ -14,6 +15,10 @@ namespace GameLogic.Features.Repo {
 					break;
 				}
 			}
+		}
+
+		public void RespondWorldClear() {
+			TryProdInfos.Clear();
 		}
 	}
 	public class TryProdInfo {
