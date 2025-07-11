@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NsEcsFrame.Core;
+using NsEcsFrame.Unity;
 using NSFrame;
 using UnityEngine;
 
@@ -22,29 +23,40 @@ namespace GameLogic.Common.View {
 
 	[Serializable]
 	public struct SmoothValue {
-		public enum SmoothValueType { Float, Vector2, Vector3 }
+		public enum SmoothValueType { Float, Vector2, Vector3, Quaternion }
 		public SmoothValueType ValueType;
 		public float FloatValue;
-		public Vector2 Vector2Value;
-		public Vector3 Vector3Value;
+		public SimpleVector2 Vector2Value;
+		public SimpleVector3 Vector3Value;
+		public SimpleQuaternion QuaternionValue;
 
 		public SmoothValue(float value) {
 			ValueType = SmoothValueType.Float;
 			FloatValue = value;
 			Vector2Value = default;
 			Vector3Value = default;
+			QuaternionValue = default;
 		}
 		public SmoothValue(Vector2 value) {
 			ValueType = SmoothValueType.Vector2;
 			FloatValue = default;
 			Vector2Value = value;
 			Vector3Value = default;
+			QuaternionValue = default;
 		}
 		public SmoothValue(Vector3 value) {
 			ValueType = SmoothValueType.Vector3;
 			FloatValue = default;
 			Vector2Value = default;
 			Vector3Value = value;
+			QuaternionValue = default;
+		}
+		public SmoothValue(Quaternion value) {
+			ValueType = SmoothValueType.Quaternion;
+			FloatValue = default;
+			Vector2Value = default;
+			Vector3Value = default;
+			QuaternionValue = value;
 		}
 		public SmoothValue(object value) {
 			if (value is float f) {
@@ -52,16 +64,25 @@ namespace GameLogic.Common.View {
 				FloatValue = f;
 				Vector2Value = default;
 				Vector3Value = default;
+				QuaternionValue = default;
 			} else if (value is Vector2 v2) {
 				ValueType = SmoothValueType.Vector2;
 				FloatValue = default;
 				Vector2Value = v2;
 				Vector3Value = default;
+				QuaternionValue = default;
 			} else if (value is Vector3 v3) {
 				ValueType = SmoothValueType.Vector3;
 				FloatValue = default;
 				Vector2Value = default;
 				Vector3Value = v3;
+				QuaternionValue = default;
+			} else if (value is Quaternion q) {
+				ValueType = SmoothValueType.Quaternion;
+				FloatValue = default;
+				Vector2Value = default;
+				Vector3Value = default;
+				QuaternionValue = q;
 			} else {
 				throw new ArgumentException("Unsupported SmoothValue type");
 			}

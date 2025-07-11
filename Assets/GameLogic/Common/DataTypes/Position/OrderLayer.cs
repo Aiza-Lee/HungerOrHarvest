@@ -9,6 +9,7 @@ namespace GameLogic.Common.DataTypes {
 	/// <para>方向:面向地图从上往下看，ODR正方向为从左到右（→），LYR正方向为从下到上（↑）</para>
 	/// <para>规定(ODR+LYR)为偶数的坐标可以放置建筑</para>
 	/// </summary>
+	[Serializable]
 	public struct OL : IEquatable<OL> {
 		public int ODR;
 		public int LYR;
@@ -38,6 +39,9 @@ namespace GameLogic.Common.DataTypes {
 			return Mathf.Abs(ODR + LYR) % 2 == 0;
 		}
 		#endregion
+
+		public static OL operator +(OL lhv, OL rhv) => new(lhv.ODR + rhv.ODR, lhv.LYR + rhv.LYR);
+		public static OL operator -(OL lhv, OL rhv) => new(lhv.ODR - rhv.ODR, lhv.LYR - rhv.LYR);
 
 		public static bool operator ==(OL lhv, OL rhv) => lhv.ODR == rhv.ODR && lhv.LYR == rhv.LYR;
 		public static bool operator !=(OL lhv, OL rhv) => lhv.ODR != rhv.ODR || lhv.LYR != rhv.LYR;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using NsEcsFrame.Core;
+using NsEcsFrame.Unity;
 
 namespace NsEcsFrame.Components {
 	/// <summary>
@@ -7,11 +8,11 @@ namespace NsEcsFrame.Components {
 	/// </summary>
 	public class TransformComponent : IComponent, IDirtyMarker {
 		/// <summary>本地位置</summary>
-		public Vector3 LocalPosition;
+		public SimpleVector3 LocalPosition;
 		/// <summary>本地旋转</summary>
-		public Quaternion LocalRotation;
+		public SimpleQuaternion LocalRotation;
 		/// <summary>本地缩放</summary>
-		public Vector3 LocalScale;
+		public SimpleVector3 LocalScale;
 
 		public bool Dirty = true;
 

@@ -7,7 +7,7 @@ namespace GameLogic.Features.TickSpeed {
 	/// 处理游戏Tick速度的系统
 	/// </summary>
 	public class TickSpeedSystem : ISystem {
-		public int Priority => 0;
+		public int Priority => 10100;
 		public bool Enabled { get; set; }
 		private IWorld _world;
 		public void Initialize(IWorld world) {
@@ -18,20 +18,22 @@ namespace GameLogic.Features.TickSpeed {
 		public void OnCreate() { }
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) {
+		}
+		public void OnRenderUpdate(float _) {
 			var speedRes = _world.GetResource<TickSpeedResource>();
 			if (speedRes.IsDirty) {
 				speedRes.IsDirty = false;
-				Time.timeScale = speedRes.IsPaused ? 0f : speedRes.TickSpeed;
 				if (speedRes.IsPaused) {
-					Time.fixedDeltaTime = 0f;
+					Time.fixedDeltaTime = float.MaxValue / 2f;
+					Time.timeScale = 0f;
 				} else {
-					Time.fixedDeltaTime = 1f / ConstMgr.SPEEDx1_TICKS_PER_SECOND * speedRes.TickSpeed;
+					Time.fixedDeltaTime = 1f / ConstMgr.SPEEDx1_TICKS_PER_SECOND / speedRes.TickSpeed;
+					Time.timeScale = speedRes.TickSpeed;
 				}
 				if (_world.EnableDebugLogs) {
 					Debug.Log($"TickSpeedSystem: TickSpeed changed to {speedRes.TickSpeed}, IsPaused: {speedRes.IsPaused}");
 				}
 			}
 		}
-		public void OnRenderUpdate(float _) { }
 	} 
 }

@@ -1,8 +1,24 @@
+using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
+using GameLogic.Features.ClearWorld;
+using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Arch {
-	public class UnlockedArchResource : IResource {
-		public EtList<ArchType, bool> UnlockedArchs;
+	public class UnlockedArchResource : IResource, ISaveableResource, IWorldClearRespondable {
+		public EtList<ArchType, bool> Unlocked_F = new(fillAll: true);
+
+		public void Load(IEnumerable<object> loadedData) {
+			foreach (var data in loadedData) {
+				if (data is UnlockedArchResource res) {
+					Unlocked_F = res.Unlocked_F;
+					break;
+				}
+			}
+		}
+
+		public void RespondWorldClear() {
+			Unlocked_F.Fill(false);
+		}
 	}
 }

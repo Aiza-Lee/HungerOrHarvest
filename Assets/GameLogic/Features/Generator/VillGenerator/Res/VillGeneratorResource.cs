@@ -18,6 +18,6 @@ namespace GameLogic.Features.Generator {
 
 	public class VillGenerateData {
 		public VillType Type;
-		public Coord Coord;
+		public OL OL;
 	}
 }

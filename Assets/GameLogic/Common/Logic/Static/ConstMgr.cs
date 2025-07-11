@@ -12,47 +12,47 @@ namespace GameLogic.Common.Logic {
 		public static readonly int VILL_TYPE_SIZE;
 
 		/// <summary>每Order对应Coord的X轴长度</summary>
-		public static readonly int CX_PER_ODR = 12;
+		public const int CX_PER_ODR = 12;
 		/// <summary>每Layer对应Coord的Y轴长度</summary>
-		public static readonly int CY_PER_LYR = 24;
+		public const int CY_PER_LYR = 24;
 
 		/// <summary>最大Order，单位为OL</summary>
-		public static readonly int MAX_ORDER = 50;
+		public const int MAX_ORDER = 60;
 		/// <summary>最小Order，单位为OL</summary>
-		public static readonly int MIN_ORDER = 0;
-		/// <summary>中间Order，单位为OL</summary>
-		public static readonly int MIDDLE_ORDER = (MAX_ORDER + MIN_ORDER) / 2;
+		public const int MIN_ORDER = 0;
+		/// <summary>中间Order，单位为OL，保证为偶数</summary>
+		public const int MIDDLE_ORDER = 30;
 
 		/// <summary>最大Layer，单位为OL</summary>
-		public static readonly int MAX_LAYER = 20;
+		public const int MAX_LAYER = 20;
 		/// <summary>最小Layer，单位为OL</summary>
-		public static readonly int MIN_LAYER = 0;
-		/// <summary>中间Layer，单位为OL</summary>
-		public static readonly int MIDDLE_LAYER = (MAX_LAYER + MIN_LAYER) / 2;
+		public const int MIN_LAYER = 0;
+		/// <summary>中间Layer，单位为OL，保证为偶数</summary>
+		public const int MIDDLE_LAYER = 10;
 
-		/// <summary>世界中心点，单位为OL</summary>
+		/// <summary>世界中心点，单位为OL，保证OL都是偶数</summary>
 		public static readonly OL WORLD_CENTER_OL = new(MIDDLE_ORDER, MIDDLE_LAYER);
 		/// <summary>世界中心点，单位为Coord</summary>
 		public static readonly Coord WORLD_CENTER_COORD = WORLD_CENTER_OL.ToCoord();
 		/// <summary>世界中心点，单位为Unity世界坐标系的Vec3</summary>
 		public static readonly Vector3 WORLD_CENTER_VEC3 = WORLD_CENTER_OL.ToVec3DefaultY();
 
-		public static readonly int MAX_SORTING_ORDER = 1000;
-		public static readonly int FRONT_SORTING_ORDER = 5;
-		public static readonly int VILL_SORTING_ORDER = 4;
-		public static readonly int ARCH_SORTING_ORDER = 3;
-		public static readonly int EARTH_SORTING_ORDER = 2;
-		public static readonly int BACK_SORTING_ORDER = 1;
+		public const int MAX_SORTING_ORDER = 1000;
+		public const int FRONT_SORTING_ORDER = 5;
+		public const int VILL_SORTING_ORDER = 4;
+		public const int ARCH_SORTING_ORDER = 3;
+		public const int EARTH_SORTING_ORDER = 2;
+		public const int BACK_SORTING_ORDER = 1;
 
 		/// <summary>单位Coord的X，在Unity世界坐标系中X轴的长度</summary>
-		public static readonly float UX_PER_CX = 0.4f;
+		public const float UX_PER_CX = 0.4f;
 		/// <summary>单位Coord的Y，在Unity世界坐标系中Z轴的长度</summary>
-		public static readonly float UZ_PER_CY = 0.4f;
+		public const float UZ_PER_CY = 0.4f;
 		/// <summary>地平线的高度，单位为Unity世界坐标系的Y轴</summary>
 		public static float DEFAULT_Y = 0f;
 		public static float LayerGap => CY_PER_LYR * UZ_PER_CY;
 		/// <summary>1倍速下每秒的Tick数</summary>
-		public static readonly uint SPEEDx1_TICKS_PER_SECOND = 50;
+		public const uint SPEEDx1_TICKS_PER_SECOND = 50;
 
 		static ConstMgr() {
 			ARCH_TYPE_SIZE = GetEnumSize<ArchType>();

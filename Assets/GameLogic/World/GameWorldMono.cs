@@ -12,6 +12,7 @@ using GameLogic.Features.MainCamera;
 using GameLogic.Features.NewWorldCreator;
 using GameLogic.Features.Repo;
 using GameLogic.Features.SaveLoadData;
+using GameLogic.Features.SpeedControl;
 using GameLogic.Features.TickCounter;
 using GameLogic.Features.TickSpeed;
 using GameLogic.Features.Vill;
@@ -24,9 +25,16 @@ namespace GameLogic.World {
 
 		protected override void RegisterSystems() {
 			World.SystemManager
+				/* NewWorldCreator */
+				.RegisterSystem<NewWorldCreatorSystem>()
+
 				/* Tick */
 				.RegisterSystem<TickSpeedSystem>()
 				.RegisterSystem<TickCounterSystem>()
+
+				/* SpeedControl */
+				.RegisterSystem<SpeedControlInputSystem>()
+				.RegisterSystem<SpeedControlSystem>()
 
 				/* SaveLoadGame */
 				.RegisterSystem<LoadGameCmdSystem>()
@@ -82,6 +90,10 @@ namespace GameLogic.World {
 				.InsertResource(new TickCounterResource())
 				.InsertResource(new TickConfigResource())
 
+				/* SpeedControlInput */
+				.InsertResource(new SpeedControlInputResource())
+				.InsertResource(new SpeedControlConfigResource())
+
 				/* Repo */
 				.InsertResource(new RepoStatResource())
 				.InsertResource(new TryProdInfoResource())
@@ -94,6 +106,7 @@ namespace GameLogic.World {
 				/* Element */
 				.InsertResource(new VillConfigResource())
 				.InsertResource(new ArchConfigResource())
+				.InsertResource(new UnlockedArchResource())
 				.InsertResource(new LayerConfigResource())
 				.InsertResource(new JobConfigResource())
 
@@ -102,6 +115,7 @@ namespace GameLogic.World {
 				.InsertResource(new ArchDestroyResource())
 
 				/* SaveLoadGame */
+				.InsertResource(new SaveInfoResource())
 				.InsertResource(new LoadGameCmdResource())
 
 				/* NewWorldCreator */

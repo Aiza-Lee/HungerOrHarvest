@@ -11,14 +11,14 @@ namespace GameLogic.Features.Repo {
 	/// </summary>
 	[System.Serializable]
 	public class RepoStatResource : IResource, ISaveableResource, IWorldClearRespondable {
-		public EtList<RepoType, bool> Unlocked = new(fillAll: true);
+		public EtList<RepoType, bool> Unlocked_F = new(fillAll: true);
 		public EtList<RepoType, float> Repos_F = new(fillAll: true);
 		public EtList<RepoType, float> RepoMax_F = new(fillAll: true);
 
 		public void Load(IEnumerable<object> loadedData) {
 			foreach (var data in loadedData) {
 				if (data is RepoStatResource repoStat) {
-					Unlocked = repoStat.Unlocked;
+					Unlocked_F = repoStat.Unlocked_F;
 					Repos_F = repoStat.Repos_F;
 					RepoMax_F = repoStat.RepoMax_F;
 					break;
@@ -27,7 +27,7 @@ namespace GameLogic.Features.Repo {
 		}
 
 		public void RespondWorldClear() {
-			Unlocked.Fill(false);
+			Unlocked_F.Fill(false);
 			Repos_F.Fill(0f);
 			RepoMax_F.Fill(0f);
 		}

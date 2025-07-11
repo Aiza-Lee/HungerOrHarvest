@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.NewWorldCreator {
+	[System.Serializable]
 	public class RandomWorldConfigResource : IResource {
 		public List<RandomWorldBaseInfo> RandomWorldBaseInfos = new();
 

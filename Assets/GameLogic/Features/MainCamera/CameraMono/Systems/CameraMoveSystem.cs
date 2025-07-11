@@ -4,6 +4,7 @@ using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Common.View;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
+using NsEcsFrame.Unity;
 using NSFrame;
 using UnityEngine;
 

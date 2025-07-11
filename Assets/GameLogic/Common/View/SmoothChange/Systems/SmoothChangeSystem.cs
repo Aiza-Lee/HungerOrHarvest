@@ -41,9 +41,9 @@ namespace GameLogic.Common.View {
 						// 根据ChangeTargetType获取初始值
 						info.StartValue = info.ChangeTargetType switch {
 							ChangeTargetType.Transform_Position => new SmoothValue(e.GetComponent<TransformComponent>().LocalPosition),
-							ChangeTargetType.Transform_Rotation => new SmoothValue(e.GetComponent<TransformComponent>().LocalRotation.eulerAngles),
+							ChangeTargetType.Transform_Rotation => new SmoothValue(e.GetComponent<TransformComponent>().LocalRotation),
 							ChangeTargetType.Transform_Scale => new SmoothValue(e.GetComponent<TransformComponent>().LocalScale),
-							ChangeTargetType.Renderer_Alpha => new SmoothValue(e.GetComponent<SpriteRendererComponent>().Alpha),
+							ChangeTargetType.Renderer_Alpha => new SmoothValue(e.GetComponent<SpriteRendererComponent>().Color.a),
 							ChangeTargetType.RectTransform_OffsetMin => new SmoothValue(e.GetComponent<RectTransformComponent>().OffsetMin),
 							ChangeTargetType.RectTransform_OffsetMax => new SmoothValue(e.GetComponent<RectTransformComponent>().OffsetMax),
 							ChangeTargetType.Camera_Size => new SmoothValue(e.GetComponent<CameraComponent>().FeildOfView),
@@ -70,7 +70,7 @@ namespace GameLogic.Common.View {
 				case ChangeTargetType.Transform_Scale:
 					UpdateComp<TransformComponent>(e, t => t.LocalScale = newValue.Vector3Value); break;
 				case ChangeTargetType.Renderer_Alpha:
-					UpdateComp<SpriteRendererComponent>(e, s => s.Alpha = newValue.FloatValue); break;
+					UpdateComp<SpriteRendererComponent>(e, s => s.Color.ModifyAlpha(newValue.FloatValue)); break;
 				case ChangeTargetType.RectTransform_OffsetMin:
 					UpdateComp<RectTransformComponent>(e, r => r.OffsetMin = newValue.Vector2Value); break;
 				case ChangeTargetType.RectTransform_OffsetMax:

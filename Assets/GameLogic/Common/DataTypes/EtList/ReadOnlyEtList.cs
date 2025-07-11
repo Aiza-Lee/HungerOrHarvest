@@ -7,7 +7,7 @@ namespace GameLogic.Common.DataTypes {
 
 	[Serializable]
 	public class ReadOnlyEtList<E, T> : IEnumerable<EtPair<E, T>>
-	where E : System.Enum
+	where E : Enum
 	where T : struct {
 		[SerializeField] private List<EtPair<E, T>> _items;
 		public bool Full { get; private set; } = false;

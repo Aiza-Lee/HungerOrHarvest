@@ -1,22 +1,23 @@
 using UnityEngine;
 using NsEcsFrame.Core;
+using NsEcsFrame.Unity;
 
 namespace NsEcsFrame.Components {
 	public class RectTransformComponent : IComponent, IDirtyMarker {
 		/// <summary>锚点最小值</summary>
-		public Vector2 AnchorMin;
+		public SimpleVector2 AnchorMin;
 		/// <summary>锚点最大值</summary>
-		public Vector2 AnchorMax;
+		public SimpleVector2 AnchorMax;
 		/// <summary>左下偏移</summary>
-		public Vector2 OffsetMin;
+		public SimpleVector2 OffsetMin;
 		/// <summary>右上偏移</summary>
-		public Vector2 OffsetMax;
+		public SimpleVector2 OffsetMax;
 		/// <summary>中心点</summary>
-		public Vector2 Pivot;
+		public SimpleVector2 Pivot;
 		/// <summary>尺寸</summary>
-		public Vector2 SizeDelta;
+		public SimpleVector2 SizeDelta;
 		/// <summary>锚点相对位置</summary>
-		public Vector2 AnchoredPosition;
+		public SimpleVector2 AnchoredPosition;
 
 		public bool Dirty = true;
 

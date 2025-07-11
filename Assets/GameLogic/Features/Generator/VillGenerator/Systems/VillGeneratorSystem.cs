@@ -40,7 +40,7 @@ namespace GameLogic.Features.Generator {
 			var vill = config.GetDefaultEntity(_world);
 
 			var coordComp = vill.GetComponent<SmoothedCoordComponent>();
-			coordComp.Coord = data.Coord;
+			coordComp.Coord = data.OL.ToCoord();
 			coordComp.IsDirty = true;
 
 			var gidComp = vill.GetComponent<GidComponent>();

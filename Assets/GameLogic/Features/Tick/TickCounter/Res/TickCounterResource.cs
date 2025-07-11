@@ -7,6 +7,7 @@ namespace GameLogic.Features.TickCounter {
 	/// <summary>
 	/// 统计村庄的时间信息
 	/// </summary>
+	[System.Serializable]
 	public class TickCounterResource : IResource, ISaveableResource, IWorldClearRespondable {
 		public uint TodayTickCount = 0;
 		/// <summary> 从游戏开始运行后到现在的Tick总和 </summary>
