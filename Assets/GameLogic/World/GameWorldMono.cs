@@ -9,6 +9,7 @@ using GameLogic.Features.Generator;
 using GameLogic.Features.Job;
 using GameLogic.Features.Layer;
 using GameLogic.Features.MainCamera;
+using GameLogic.Features.NewWorldCreator;
 using GameLogic.Features.Repo;
 using GameLogic.Features.SaveLoadData;
 using GameLogic.Features.TickCounter;
@@ -23,87 +24,90 @@ namespace GameLogic.World {
 
 		protected override void RegisterSystems() {
 			World.SystemManager
+				/* Tick */
 				.RegisterSystem<TickSpeedSystem>()
 				.RegisterSystem<TickCounterSystem>()
+
+				/* SaveLoadGame */
 				.RegisterSystem<LoadGameCmdSystem>()
 				.RegisterSystem<DayEndAutoSaveSystem>()
+
+				/* Repo */
 				.RegisterSystem<DayFirstTickClearCounterSystem>()
 				.RegisterSystem<TryProdSystem>()
+
+				/* MainCamera */
 				.RegisterSystem<CameraInputSystem>()
+				.RegisterSystem<CameraMoveSystem>()
+
+				/* Generator */
 				.RegisterSystem<ArchGeneratorSystem>()
 				.RegisterSystem<LayerGeneratorSystem>()
 				.RegisterSystem<VillGeneratorSystem>()
+
+				/* Vill */
 				.RegisterSystem<VillExpSystem>()
 				.RegisterSystem<VillAiSystem>()
 				.RegisterSystem<VillSpriteSoringOrderSystem>()
+
+				/* Destroy */
 				.RegisterSystem<ArchDestroyerSystem>()
 				.RegisterSystem<VillDestroyerSystem>()
-				.RegisterSystem<CoordToTransformSystem>()
-				.RegisterSystem<SmoothChangeSystem>()
+
+				/* Common */
 				.RegisterSystem<SmoothedCoordToSmoothChangeStatSystem>()
+				.RegisterSystem<SmoothChangeSystem>()
+				.RegisterSystem<CoordToTransformSystem>()
+				.RegisterSystem<OLToCoordSystem>()
+
+				/* Sync */
 				.RegisterSystem<CameraSyncSystem>()
-				.RegisterSystem<CameraMoveSystem>()
 				.RegisterSystem<RectTransformSyncSystem>()
 				.RegisterSystem<SpriteRendererSyncSystem>()
 				.RegisterSystem<TransformSyncSystem>()
-				.RegisterSystem<OLToCoordSystem>()
 			;
 		}
 		protected override void RegisterResources() {
 			World
+				/* Common */
 				.InsertResource(new ChangeCurveResource())
+
+				/* Generator */
 				.InsertResource(new VillGeneratorResource())
 				.InsertResource(new LayerGeneratorResource())
 				.InsertResource(new ArchGeneratorResource())
+
+				/* Tick */
 				.InsertResource(new TickSpeedResource())
 				.InsertResource(new TickCounterResource())
 				.InsertResource(new TickConfigResource())
+
+				/* Repo */
 				.InsertResource(new RepoStatResource())
 				.InsertResource(new TryProdInfoResource())
 				.InsertResource(new DailyRepoCounterResource())
+
+				/* MainCamera */
 				.InsertResource(new CameraInputResource())
 				.InsertResource(new CameraConfigResource())
+
+				/* Element */
 				.InsertResource(new VillConfigResource())
 				.InsertResource(new ArchConfigResource())
 				.InsertResource(new LayerConfigResource())
 				.InsertResource(new JobConfigResource())
+
+				/* Destroy */
 				.InsertResource(new VillDestroyResource())
 				.InsertResource(new ArchDestroyResource())
+
+				/* SaveLoadGame */
 				.InsertResource(new LoadGameCmdResource())
+
+				/* NewWorldCreator */
+				.InsertResource(new RandomWorldConfigResource())
+				.InsertResource(new NewWorldInfoResource())
 			;
 		}
-
-		public void ClearWorld() {
-
-			WorldClearRegistry.Inst.RespondWorldClear();
-
-			var systems = World.SystemManager.GetAllSystems();
-			foreach (var system in systems) {
-				if (system is IWorldClearRespondable respondable) {
-					respondable.RespondWorldClear();
-				}
-			}
-
-			var reses = World.GetAllResources();
-			foreach (var res in reses) {
-				if (res is IWorldClearRespondable respondable) {
-					respondable.RespondWorldClear();
-				}
-			}
-
-			var entities = World.GetAllEntities();
-			foreach (var entity in entities) {
-				if (!entity.HasComponent<IgnoreWorldClearComponent>()) {
-					if (entity.HasComponent<GidComponent>()) {
-						var gid = entity.GetComponent<GidComponent>().Gid;
-						if (GidToEntity.ContainsKey(gid)) {
-							GidToEntity.Remove(gid);
-						}
-					}
-					World.DestroyEntity(entity.ID);
-				}
-			}
-		}
-
 	}
 }

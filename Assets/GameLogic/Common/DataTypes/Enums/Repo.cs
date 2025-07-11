@@ -7,7 +7,6 @@ namespace GameLogic.Common.DataTypes {
 		Water = 2,
 		Iron = 3,
 		Meat = 4,
-		Villager = 5,
 		Science = 6,
 	}
 }

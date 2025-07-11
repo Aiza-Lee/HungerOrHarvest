@@ -16,3 +16,9 @@ public interface IWorldClearRespondable {
 // 清楚entity时，如果有gidComp，记得清除gid
 public class IgnoreWorldClearCompnent : IComponent {}
 ```
+
+## 使用方法
+
+静态类`ClearWorldCommand`提供了清空世界的功能。
+
+其中有一个`Clear()`方法，调用这个方法即可清空世界。

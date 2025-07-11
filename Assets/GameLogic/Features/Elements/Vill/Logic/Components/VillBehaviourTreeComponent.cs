@@ -1,5 +1,6 @@
 using GameLogic.Common.Logic;
 using GameLogic.Common.View;
+using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Core;
 using NSFrame.BehaviourTree;
 
@@ -7,7 +8,7 @@ namespace GameLogic.Features.Vill {
 	/// <summary>
 	/// VillBehaviourTreeComponent 用于存储村民的行为树对象
 	/// </summary>
-	public class VillBehaviourTreeComponent : IComponent {
+	public class VillBehaviourTreeComponent : IComponent, ISaveIgnoreComponent {
 		public BehaviourTree<VillAiBlackboard> BehaviourTree { get; set; }
 		public VillBehaviourTreeComponent(Entity entity) {
 			BehaviourTree = BehaviourTreeFactory.CreateVillBehaviourTree(new(entity));

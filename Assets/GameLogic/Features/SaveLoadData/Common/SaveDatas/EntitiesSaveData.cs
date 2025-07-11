@@ -20,6 +20,7 @@ namespace GameLogic.Features.SaveLoadData {
 		public EntitySaveData(Entity entity) {
 			var comps = entity.GetAllComponents();
 			foreach (var comp in comps) {
+				if (comp is ISaveIgnoreComponent) continue; // 跳过不需要保存的组件
 				Components.Add(comp);
 			}
 		}

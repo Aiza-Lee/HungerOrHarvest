@@ -22,9 +22,7 @@ namespace GameLogic.Features.SaveLoadData {
 		public void OnLogicUpdate(float _) {
 			var tickCounter = _world.GetResource<TickCounterResource>();
 			if (!tickCounter.IsDayLastTick) return;
-			var saveInfo = _world.GetResource<SaveInfoResource>().SaveInfo;
-			var gameSaveData = new GameSaveData(_world);
-			SaveSystem.SaveObject(saveInfo, gameSaveData);
+			SaveGameAPI.Save(true);
 		}
 		public void OnRenderUpdate(float _) { }
 	} 

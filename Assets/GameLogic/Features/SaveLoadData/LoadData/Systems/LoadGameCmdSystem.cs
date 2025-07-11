@@ -1,4 +1,5 @@
 using GameLogic.Common.Logic;
+using GameLogic.Features.ClearWorld;
 using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
@@ -26,14 +27,19 @@ namespace GameLogic.Features.SaveLoadData {
 			if (!loadCmd.LoadGameCommand) return;
 			loadCmd.LoadGameCommand = false;
 			var saveInfo = _world.GetResource<SaveInfoResource>().SaveInfo;
-			var gameData = SaveSystem.LoadObject<GameSaveData>(saveInfo);
+			var gameData = saveInfo.LoadObject<GameSaveData>();
 
-			_world.DestroyAllEntities();
+			ClearWorldAPI.Clear();
 			GidMgr.Inst = gameData.GidMgr;
-			gameData.SavedResources.ForEach(res => _world.InsertResource(res));
+			var reses = _world.GetAllResources();
+			foreach (var res in reses) {
+				if (res is ISaveableResource saveableRes) {
+					saveableRes.Load(gameData.SavedResources);
+				}
+			}
 
-			var entitiesData = gameData.EntitiesSaveData;
-			entitiesData.Entities.ForEach(entityData => {
+			var entitiesData = gameData.EntitiesSaveData.Entities;
+			entitiesData.ForEach(entityData => {
 				var entity = _world.CreateEntity();
 				entityData.Components.ForEach(comp => {
 					entity.AddComponent(comp);

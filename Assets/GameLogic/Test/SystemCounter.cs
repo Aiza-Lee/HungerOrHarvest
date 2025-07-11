@@ -15,7 +15,7 @@ namespace GameLogic.Test {
 			}
 		}
 
-		[InitializeOnLoadMethod]
+		// [InitializeOnLoadMethod]
 		public static void CountSystems() {
 			var systemType = typeof(ISystem);
 			var assembly = typeof(SystemCounter).Assembly;
