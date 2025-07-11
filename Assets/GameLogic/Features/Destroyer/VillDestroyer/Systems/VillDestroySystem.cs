@@ -1,7 +1,7 @@
+using GameLogic.Features.Arch;
+using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
-using NsEcsFrame.Unity;
-using UnityEngine;
 
 namespace GameLogic.Features.Destroyer {
 	/// <summary>
@@ -24,19 +24,33 @@ namespace GameLogic.Features.Destroyer {
 			var res = _world.GetResource<VillDestroyResource>();
 			var toDestroy = res.VillToDestroy;
 			foreach (var gid in toDestroy) {
+				var entity = GameWorldMono.GidToEntity[gid];
+
 				// 创建删除事件实体
 				var eventEntity = _world.CreateEntity();
 				eventEntity.AddComponent(new VillDestroyedEventComp() { DestroyedVillGid = gid });
-				
-				var entityId = GameWorldMono.GidToEntity[gid].ID;
-				var go = EntityMono.GetByEntityId(entityId);
-				if (go != null) {
-					GameObject.Destroy(go);
-				}
-				_world.DestroyEntity(entityId);
+
+				// 解除和建筑的绑定
+				ClearBond(entity, gid);
+
+				EntityDestroyUtil.DestroyEntity(entity.ID);
 			}
 			toDestroy.Clear();
 		}
 		public void OnRenderUpdate(float _) { }
+
+		private void ClearBond(Entity entity, ulong gid) {
+			var archBond = entity.GetComponent<BondToArchComponent>();
+			if (archBond.HomeArchGid != 0) {
+				var arch = GameWorldMono.GidToEntity[archBond.HomeArchGid];
+				var bondVills = arch.GetComponent<BondToVillComponent>();
+				bondVills.BondedVillGids.Remove(gid);
+			}
+			if (archBond.WorkArchGid != 0) {
+				var arch = GameWorldMono.GidToEntity[archBond.WorkArchGid];
+				var bondVills = arch.GetComponent<BondToVillComponent>();
+				bondVills.BondedVillGids.Remove(gid);
+			}
+		}
 	} 
 }

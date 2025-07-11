@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using GameLogic.Common.Logic;
 using GameLogic.Common.View;
 using GameLogic.Features.Arch;
+using GameLogic.Features.ClearWorld;
 using GameLogic.Features.Destroyer;
 using GameLogic.Features.Elements.Vill;
 using GameLogic.Features.Generator;
@@ -36,7 +37,6 @@ namespace GameLogic.World {
 				.RegisterSystem<VillAiSystem>()
 				.RegisterSystem<VillSpriteSoringOrderSystem>()
 				.RegisterSystem<ArchDestroyerSystem>()
-				.RegisterSystem<LayerDestroyerSystem>()
 				.RegisterSystem<VillDestroyerSystem>()
 				.RegisterSystem<CoordToTransformSystem>()
 				.RegisterSystem<SmoothChangeSystem>()
@@ -68,12 +68,42 @@ namespace GameLogic.World {
 				.InsertResource(new LayerConfigResource())
 				.InsertResource(new JobConfigResource())
 				.InsertResource(new VillDestroyResource())
-				.InsertResource(new LayerDestroyResource())
 				.InsertResource(new ArchDestroyResource())
 				.InsertResource(new LoadGameCmdResource())
 			;
 		}
 
-		
+		public void ClearWorld() {
+
+			WorldClearRegistry.Inst.RespondWorldClear();
+
+			var systems = World.SystemManager.GetAllSystems();
+			foreach (var system in systems) {
+				if (system is IWorldClearRespondable respondable) {
+					respondable.RespondWorldClear();
+				}
+			}
+
+			var reses = World.GetAllResources();
+			foreach (var res in reses) {
+				if (res is IWorldClearRespondable respondable) {
+					respondable.RespondWorldClear();
+				}
+			}
+
+			var entities = World.GetAllEntities();
+			foreach (var entity in entities) {
+				if (!entity.HasComponent<IgnoreWorldClearComponent>()) {
+					if (entity.HasComponent<GidComponent>()) {
+						var gid = entity.GetComponent<GidComponent>().Gid;
+						if (GidToEntity.ContainsKey(gid)) {
+							GidToEntity.Remove(gid);
+						}
+					}
+					World.DestroyEntity(entity.ID);
+				}
+			}
+		}
+
 	}
 }

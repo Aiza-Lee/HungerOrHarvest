@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace NsEcsFrame.Core {
 	/// <summary>
 	/// System管理器，负责System的注册、排序和更新
@@ -23,6 +25,11 @@ namespace NsEcsFrame.Core {
 		/// </summary>
 		/// <typeparam name="T">System类型</typeparam>
 		T GetSystem<T>() where T : class, ISystem;
+
+		/// <summary>
+		/// 获取所有已注册的System对象
+		/// </summary>
+		IEnumerable<ISystem> GetAllSystems();
 
 		/// <summary>
 		/// 设置System的启用状态

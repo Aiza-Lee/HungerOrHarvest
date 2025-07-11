@@ -103,7 +103,7 @@ namespace NsEcsFrame.Core {
 		public IReadOnlyCollection<Entity> GetAllEntities() => _aliveEntities.ToList();
 		public int EntityCount => _aliveEntities.Count;
 
-		public void RenderUpdate(float deltaTime) =>_systemManager.RenderUpdate(deltaTime);
+		public void RenderUpdate(float deltaTime) => _systemManager.RenderUpdate(deltaTime);
 		public void LogicUpdate(float deltaTime) => _systemManager.LogicUpdate(deltaTime);
 
 		public void Destroy() {
@@ -115,7 +115,7 @@ namespace NsEcsFrame.Core {
 			}
 			// 清理事件总线
 			_eventBus.Clear();
-			
+
 			if (EnableDebugLogs) {
 				Debug.Log($"[{Name}] World destroyed");
 			}
@@ -149,6 +149,9 @@ namespace NsEcsFrame.Core {
 		public bool RemoveResource<T>() where T : class, IResource {
 			var type = typeof(T);
 			return _resources.Remove(type);
+		}
+		public IEnumerable<IResource> GetAllResources() {
+			return _resources.Values;
 		}
 
 		public EntityQueryBuilder CreateQueryBuilder() => new(this);

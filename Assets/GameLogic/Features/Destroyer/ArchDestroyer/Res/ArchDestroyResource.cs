@@ -6,6 +6,6 @@ namespace GameLogic.Features.Destroyer {
 	/// 代表建筑销毁的资源
 	/// </summary>
 	public class ArchDestroyResource : IResource {
-		public List<EntityId> ArchToDestroy = new();
+		public List<ulong> ArchToDestroyGid = new();
 	}
 }

@@ -9,6 +9,7 @@ namespace NsEcsFrame.Unity {
 	/// <para> <list type="bullet">
 	/// <item> 在运行时暴露entity的component于inspector </item>
 	/// <item> 通过EntityId来获取EntityMono的实例,然后获取对应的unity组件并实现在场景中做出玩家可视的变化 </item>
+	/// <item> 在Gameobject被Destroy的时候自动移除管理的映射 </item>
 	/// </list> </para>
 	/// </summary>
 	public abstract class EntityMono : MonoBehaviour {

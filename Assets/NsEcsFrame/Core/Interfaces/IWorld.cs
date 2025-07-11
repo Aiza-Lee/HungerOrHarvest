@@ -118,5 +118,10 @@ namespace NsEcsFrame.Core {
 		/// 检查是否存在单例组件
 		/// </summary>
 		bool HasResource<T>() where T : class, IResource;
+
+		/// <summary>
+		/// 获取所有已注册的单例组件（Resource）对象
+		/// </summary>
+		IEnumerable<IResource> GetAllResources();
 	}
 }

@@ -114,5 +114,9 @@ namespace NsEcsFrame.Core {
 			_systems.Clear();
 			_orderedSystems.Clear();
 		}
+
+		public IEnumerable<ISystem> GetAllSystems() {
+			return _orderedSystems.AsReadOnly();
+		}
 	}
 }
