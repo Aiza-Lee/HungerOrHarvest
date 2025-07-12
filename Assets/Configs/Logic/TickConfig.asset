@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DAY_TICKS: 5000
   NIGHT_TICKS: 3000
-  NIGHT_TIME_SPEED: 20
+  NIGHT_TIME_SPEED: 10

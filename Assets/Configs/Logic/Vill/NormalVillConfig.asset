@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VitConfig: {fileID: 11400000, guid: 31746224521aa9c4084e4b1a16a3d97b, type: 2}
   SpareOrdRadius: 2
-  TicksPerCoord: 20
+  TicksPerCoord: 8

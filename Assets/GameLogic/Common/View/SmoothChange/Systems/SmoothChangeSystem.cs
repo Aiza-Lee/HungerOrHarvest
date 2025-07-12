@@ -54,7 +54,7 @@ namespace GameLogic.Common.View {
 				return;
 			}
 			comp.ElapsedTime += comp.UseLogicTime ? Time.deltaTime : Time.unscaledDeltaTime;
-			if (comp.ElapsedTime.IsApproximatelyEqual(comp.TotalTime, 1E-05f)) {
+			if (comp.ElapsedTime >= comp.TotalTime) {
 				comp.ElapsedTime = comp.TotalTime;
 				comp.Started = false;
 			}

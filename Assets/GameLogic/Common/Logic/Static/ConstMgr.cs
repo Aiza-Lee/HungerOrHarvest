@@ -66,12 +66,17 @@ namespace GameLogic.Common.Logic {
 		public static float DEFAULT_Y = 0f;
 		public static float LayerGap => CY_PER_LYR * UZ_PER_CY;
 		/// <summary>1倍速下每秒的Tick数</summary>
-		public const uint SPEEDx1_TICKS_PER_SECOND = 50;
+		public const uint SPEEDx1_TICKS_PER_SECOND = 20;
 
 		public const float DEFAULT_CAMERA_HEIGHT = 1.5f;
 
 		/// <summary>  村庄边界的宽度，单位为OL。主要用于界定村民的随机移动范围。</summary>
 		public const int DEFAULT_WORLD_EDGE_WIDTH = 2;
+
+		[RuntimeInitializeOnLoadMethod]
+		static void SetFixedDeltaTime() {
+			Time.fixedDeltaTime = 1f / SPEEDx1_TICKS_PER_SECOND;
+		}
 
 		static ConstMgr() {
 			ARCH_TYPE_SIZE = GetEnumSize<ArchType>();

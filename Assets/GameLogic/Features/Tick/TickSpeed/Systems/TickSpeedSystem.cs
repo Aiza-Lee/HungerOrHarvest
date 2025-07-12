@@ -27,7 +27,8 @@ namespace GameLogic.Features.TickSpeed {
 					Time.fixedDeltaTime = float.MaxValue / 2f;
 					Time.timeScale = 0f;
 				} else {
-					Time.fixedDeltaTime = 1f / ConstMgr.SPEEDx1_TICKS_PER_SECOND / speedRes.TickSpeed;
+					Time.fixedDeltaTime = 1f / ConstMgr.SPEEDx1_TICKS_PER_SECOND;
+					// Time.fixedDeltaTime = 1f / ConstMgr.SPEEDx1_TICKS_PER_SECOND / speedRes.TickSpeed;
 					Time.timeScale = speedRes.TickSpeed;
 				}
 				if (_world.EnableDebugLogs) {
