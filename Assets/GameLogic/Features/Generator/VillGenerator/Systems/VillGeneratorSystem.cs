@@ -1,5 +1,5 @@
 using GameLogic.Common.Logic;
-using GameLogic.Common.View;
+using GameLogic.Features.SaveLoadData;
 using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
@@ -52,7 +52,10 @@ namespace GameLogic.Features.Generator {
 			go.GetComponent<VillEntityMono>().SetEntity(vill);
 
 			var eventEntity = _world.CreateEntity();
-			eventEntity.AddComponent(new VillGeneratedEventComp_Logic() { VillGid = gidComp.Gid });
+			eventEntity
+				.AddComponent(new VillGeneratedEventComp_Logic() { VillGid = gidComp.Gid })
+				.AddComponent<SavedEntityComponent>()
+			;
 		}
 	}
 }

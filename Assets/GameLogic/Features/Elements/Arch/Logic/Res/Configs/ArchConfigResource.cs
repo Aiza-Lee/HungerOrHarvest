@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
-using GameLogic.Common.View;
 using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
@@ -47,7 +46,6 @@ namespace GameLogic.Features.Arch {
 				.AddComponent<GidComponent>()
 				.AddComponent<TransformComponent>()
 				.AddComponent<SpriteRendererComponent>()
-				.AddComponent<CoordComponent>()
 				.AddComponent<OLComponent>()
 				.AddComponent<ArchIdentityComponent>(new ArchIdentityComponent() { ArchType = ArchType })
 				.AddComponent<BondToVillComponent>()

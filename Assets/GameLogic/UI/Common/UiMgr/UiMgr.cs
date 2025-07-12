@@ -8,17 +8,21 @@ namespace GameLogic.UI.Common.UiMgr {
 	/// <para> 所有的 *单例UI* 需要在编辑器中的这个单例处注册，这个类负责开始时触发所有类从而触发 NSFrame 的注册 </para>
 	/// 同时也时统一触发 *单例UI* 面板的接口
 	/// </summary>
-	public class UiMgr : MonoSingleton<UiMgr> {
+	public class UIMgr : MonoSingleton<UIMgr> {
 		private Dictionary<Type, PanelBase> _panels;
 
 		private void LazyInitializePanels() {
 			_panels = new Dictionary<Type, PanelBase>();
-			foreach (var panel in FindObjectsByType<PanelBase>(FindObjectsSortMode.None)) {
+			foreach (var panel in FindObjectsByType<PanelBase>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
 				if (panel is IRegisterUiMgr) {
 					panel.gameObject.SetActive(true);
 					_panels[panel.GetType()] = panel;
 				}
 			}
+		}
+
+		void Start() {
+			TogglePanel<StartMenu.MainPanel>();
 		}
 
 		public T TogglePanel<T>() where T : PanelBase {

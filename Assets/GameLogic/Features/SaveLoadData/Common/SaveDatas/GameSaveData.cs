@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using GameLogic.Common.Logic;
-using GameLogic.Features.TickCounter;
 using GameLogic.World;
 using NsEcsFrame.Core;
 

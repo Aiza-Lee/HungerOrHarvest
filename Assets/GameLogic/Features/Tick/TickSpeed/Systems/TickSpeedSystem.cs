@@ -17,8 +17,7 @@ namespace GameLogic.Features.TickSpeed {
 
 		public void OnCreate() { }
 		public void OnDestroy() { }
-		public void OnLogicUpdate(float _) {
-		}
+		public void OnLogicUpdate(float _) { }
 		public void OnRenderUpdate(float _) {
 			var speedRes = _world.GetResource<TickSpeedResource>();
 			if (speedRes.IsDirty) {

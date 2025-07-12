@@ -1,5 +1,4 @@
 using NsEcsFrame.Core;
-using NSFrame;
 using UnityEngine;
 
 namespace GameLogic.Common.View {

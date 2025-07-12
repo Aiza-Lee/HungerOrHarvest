@@ -1,5 +1,4 @@
 using GameLogic.Common.Logic;
-using GameLogic.Features.ClearWorld;
 using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
@@ -26,10 +25,13 @@ namespace GameLogic.Features.SaveLoadData {
 			var loadCmd = _world.GetResource<LoadGameCmdResource>();
 			if (!loadCmd.LoadGameCommand) return;
 			loadCmd.LoadGameCommand = false;
-			var saveInfo = _world.GetResource<SaveInfoResource>().SaveInfo;
+
+			var saveInfoRes = _world.GetResource<SaveInfoResource>();
+			var saveInfo = saveInfoRes.SaveInfo;
 			var gameData = saveInfo.LoadObject<GameSaveData>();
 
-			ClearWorldAPI.Clear();
+			SaveLoadDataAPI.ClearWorld();
+
 			GidMgr.Inst = gameData.GidMgr;
 			var reses = _world.GetAllResources();
 			foreach (var res in reses) {
@@ -38,8 +40,8 @@ namespace GameLogic.Features.SaveLoadData {
 				}
 			}
 
-			var entitiesData = gameData.EntitiesSaveData.Entities;
-			entitiesData.ForEach(entityData => {
+			var entityDatas = gameData.EntitiesSaveData.Entities;
+			entityDatas.ForEach(entityData => {
 				var entity = _world.CreateEntity();
 				entityData.Components.ForEach(comp => {
 					entity.AddComponent(comp);
@@ -54,6 +56,8 @@ namespace GameLogic.Features.SaveLoadData {
 				var villAi = vill.GetComponent<VillBehaviourTreeComponent>();
 				villAi = new VillBehaviourTreeComponent(vill);
 			});
+
+			saveInfoRes.LoadedSave = true;
 		}
 		public void OnRenderUpdate(float _) { }
 	}

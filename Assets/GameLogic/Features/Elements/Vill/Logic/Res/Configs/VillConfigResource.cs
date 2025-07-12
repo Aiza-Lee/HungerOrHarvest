@@ -3,6 +3,7 @@ using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Common.View;
+using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -54,6 +55,7 @@ namespace GameLogic.Features.Vill {
 				.AddComponent<JobExpComponent>()
 				.AddComponent<RoutePlanComponent>()
 				.AddComponent<VillVitalityComponent>(new() { Vit = VitConfig.MaxVit, RecoverChances = VitConfig.RecoverChancePerDay })
+				.AddComponent<SavedEntityComponent>()
 			;
 			AddDerivedComponents(entity);
 			return entity;

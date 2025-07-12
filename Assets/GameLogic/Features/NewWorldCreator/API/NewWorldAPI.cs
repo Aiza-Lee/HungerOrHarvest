@@ -1,3 +1,4 @@
+using GameLogic.Features.TickSpeed;
 using GameLogic.World;
 
 namespace GameLogic.Features.NewWorldCreator {
@@ -13,6 +14,7 @@ namespace GameLogic.Features.NewWorldCreator {
 				WorldName = worldName,
 				BaseInfo = baseInfo
 			};
+			TickSpeedAPI.PauseTick(false);
 		}
 	}
 }

@@ -1,5 +1,4 @@
 using GameLogic.Common.Logic;
-using GameLogic.Common.View;
 using GameLogic.Features.Arch;
 using GameLogic.Features.Layer;
 using GameLogic.Features.Vill;

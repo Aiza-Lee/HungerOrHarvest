@@ -1,5 +1,6 @@
 using GameLogic.Common.Logic;
 using GameLogic.Features.Layer;
+using GameLogic.Features.SaveLoadData;
 using GameLogic.World;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -48,7 +49,10 @@ namespace GameLogic.Features.Generator {
 		go.GetComponent<LayerEntityMono>().SetEntity(layer);
 
 		var eventEntity = _world.CreateEntity();
-		eventEntity.AddComponent(new LayerGeneratedEventComp_Logic() { LayerGid = gidComp.Gid });
+		eventEntity
+			.AddComponent(new LayerGeneratedEventComp_Logic() { LayerGid = gidComp.Gid })
+			.AddComponent<SavedEntityComponent>()
+		;
 	}
 
 		public void OnRenderUpdate(float _) { }

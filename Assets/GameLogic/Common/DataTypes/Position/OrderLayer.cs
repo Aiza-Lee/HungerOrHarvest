@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using GameLogic.Common.Logic;
 using UnityEngine;
 
 namespace GameLogic.Common.DataTypes {

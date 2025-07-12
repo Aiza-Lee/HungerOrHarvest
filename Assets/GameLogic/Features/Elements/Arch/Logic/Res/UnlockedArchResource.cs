@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
-using GameLogic.Features.ClearWorld;
 using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Core;
 

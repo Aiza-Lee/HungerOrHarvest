@@ -1,4 +1,3 @@
-using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Features.Arch;
 using GameLogic.Features.Generator;
@@ -28,7 +27,7 @@ namespace GameLogic.Features.NewWorldCreator {
 			if (infoRes.NewWorldInfo == null) return;
 			var baseInfo = infoRes.NewWorldInfo.BaseInfo;
 			var worldName = infoRes.NewWorldInfo.WorldName;
-			ClearWorld.ClearWorldAPI.Clear();
+			SaveLoadData.SaveLoadDataAPI.ClearWorld();
 			_world.Name = worldName;
 			CreateWorld(baseInfo);
 			infoRes.NewWorldInfo = null; // 清除创建信息，避免重复创建

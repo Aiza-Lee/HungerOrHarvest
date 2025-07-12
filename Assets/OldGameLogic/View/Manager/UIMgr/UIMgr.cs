@@ -24,7 +24,6 @@ namespace OldGameLogic.View {
 		}
 
 		private void Start() {
-			TogglePanelImpl<UI.StartMenu.MainPanel>();
 		}
 
 		private void Update() {

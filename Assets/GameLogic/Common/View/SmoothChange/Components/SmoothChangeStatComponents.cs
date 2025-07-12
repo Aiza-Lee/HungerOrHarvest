@@ -1,5 +1,4 @@
 using GameLogic.Common.UnityComponentsBridge;
-using GameLogic.World;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;

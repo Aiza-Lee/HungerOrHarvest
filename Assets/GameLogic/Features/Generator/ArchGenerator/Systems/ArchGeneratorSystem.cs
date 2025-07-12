@@ -1,5 +1,6 @@
 using GameLogic.Common.Logic;
 using GameLogic.Features.Arch;
+using GameLogic.Features.SaveLoadData;
 using GameLogic.World;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -50,7 +51,10 @@ namespace GameLogic.Features.Generator {
 			go.GetComponent<ArchEntityMono>().SetEntity(entity);
 
 			var eventEntity = _world.CreateEntity();
-			eventEntity.AddComponent(new ArchGeneratedEventComp_Logic() { ArchGid = gidComp.Gid });
+			eventEntity
+				.AddComponent(new ArchGeneratedEventComp_Logic() { ArchGid = gidComp.Gid })
+				.AddComponent<SavedEntityComponent>()
+			;
 		}
 
 	} 
