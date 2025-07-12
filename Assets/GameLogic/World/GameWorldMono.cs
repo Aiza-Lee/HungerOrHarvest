@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using GameLogic.Common.Logic;
 using GameLogic.Common.View;
 using GameLogic.Features.Arch;
-using GameLogic.Features.ClearWorld;
+using GameLogic.Features.AutoSortingLayer;
 using GameLogic.Features.Destroyer;
 using GameLogic.Features.Elements.Vill;
 using GameLogic.Features.Generator;
@@ -25,8 +25,17 @@ namespace GameLogic.World {
 
 		protected override void RegisterSystems() {
 			World.SystemManager
+				/* Common */
+				.RegisterSystem<CoordToTransformSystem>()
+				.RegisterSystem<OlToTransformSystem>()
+				.RegisterSystem<CoordToSmoothPositionSystem>()
+				.RegisterSystem<SmoothChangeSystem>()
+
 				/* NewWorldCreator */
 				.RegisterSystem<NewWorldCreatorSystem>()
+
+				/* AutoSoringOrder */
+				.RegisterSystem<AutoSortingLayerSystem>()
 
 				/* Tick */
 				.RegisterSystem<TickSpeedSystem>()
@@ -56,17 +65,10 @@ namespace GameLogic.World {
 				/* Vill */
 				.RegisterSystem<VillExpSystem>()
 				.RegisterSystem<VillAiSystem>()
-				.RegisterSystem<VillSpriteSoringOrderSystem>()
 
 				/* Destroy */
 				.RegisterSystem<ArchDestroyerSystem>()
 				.RegisterSystem<VillDestroyerSystem>()
-
-				/* Common */
-				.RegisterSystem<SmoothedCoordToSmoothChangeStatSystem>()
-				.RegisterSystem<SmoothChangeSystem>()
-				.RegisterSystem<CoordToTransformSystem>()
-				.RegisterSystem<OLToCoordSystem>()
 
 				/* Sync */
 				.RegisterSystem<CameraSyncSystem>()

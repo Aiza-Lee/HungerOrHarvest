@@ -9,9 +9,9 @@ namespace GameLogic.Features.MainCamera {
 		public float CAMERA_MOVE_SPEED;
 		public float CAMERA_STOP_LENGTH;
 		public List<float> CameraSizes;
-		public SmoothChangeInfo DefaultCameraSizeChangeInfo;
-		public SmoothChangeInfo DefaultCameraStopPositionChangeInfo;
-		public SmoothChangeInfo DefaultForwardPositionChangeInfo;
-		public SmoothChangeInfo DefaultBackwardPositionChangeInfo;
+		public ChangeInfo DefaultCameraSizeChangeInfo;
+		public ChangeInfo DefaultCameraStopPositionChangeInfo;
+		public ChangeInfo DefaultForwardPositionChangeInfo;
+		public ChangeInfo DefaultBackwardPositionChangeInfo;
 	}
 }

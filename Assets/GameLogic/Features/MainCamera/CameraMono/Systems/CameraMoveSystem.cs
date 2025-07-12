@@ -4,7 +4,6 @@ using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Common.View;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
-using NsEcsFrame.Unity;
 using NSFrame;
 using UnityEngine;
 
@@ -34,15 +33,15 @@ namespace GameLogic.Features.MainCamera {
 
 			var config = _world.GetResource<CameraConfigResource>();
 			var camera = _world.CreateQueryBuilder().WithAll<MainCameraComponent>().Build().GetEntities()[0];
-			var smoothStat = camera.GetComponent<SmoothChangeStatComponent>();
+			var smoothStat = camera.GetComponent<SmoothCameraSizeStatComponent>();
 
 			if (input.IsSizeDirty) {
 				input.IsSizeDirty = false;
 				var targetSize = config.CameraSizes[input.TargetCameraSizeIndex];
 				var cameraComp = camera.GetComponent<CameraComponent>();
 				if (cameraComp.FeildOfView != targetSize) {
-					var info = PoolSystem.PopObj<SmoothChangeInfo>().InitFrom(config.DefaultCameraSizeChangeInfo, new SmoothValue(targetSize));
-					smoothStat.AddNewChange(info);
+					smoothStat.SetChangeInfo(config.DefaultCameraSizeChangeInfo)
+							.StartAChange(camera, targetSize);
 				}
 			}
 
@@ -50,35 +49,42 @@ namespace GameLogic.Features.MainCamera {
 
 			var moveLength = config.CAMERA_MOVE_SPEED * deltaTime;
 			var curPos = camera.GetComponent<TransformComponent>().LocalPosition;
+			var moveStat = camera.GetComponent<SmoothPositionStatComponent>();
+
 
 			if (input.MoveLeftKey) {
-				var target = new SmoothValue(curPos + moveLength * Vector3.left);
-				var info = SmoothChangeInfo.NewDirectInfo(ChangeTargetType.Transform_Position, target);
-				smoothStat.AddNewChange(info);
+				var target = curPos + moveLength * Vector3.left;
+				if (target.x < ConstMgr.MIN_UX) { target.x = ConstMgr.MIN_UX; }
+				moveStat.SetChangeInfo(new(0, ChangeCurveType.Directive, false)).StartAChange(camera, target);
+
 			} else if (input.MoveRightKey) {
-				var target = new SmoothValue(curPos + moveLength * Vector3.right);
-				var info = SmoothChangeInfo.NewDirectInfo(ChangeTargetType.Transform_Position, target);
-				smoothStat.AddNewChange(info);
+				var target = curPos + moveLength * Vector3.right;
+				if (target.x > ConstMgr.MAX_UX) { target.x = ConstMgr.MAX_UX; }
+				moveStat.SetChangeInfo(new(0, ChangeCurveType.Directive, false)).StartAChange(camera, target);
+
 			} else if (input.MoveLeftKeyUp) {
-				var target = new SmoothValue(curPos + config.CAMERA_STOP_LENGTH * Vector3.left);
-				var info = PoolSystem.PopObj<SmoothChangeInfo>().InitFrom(config.DefaultCameraStopPositionChangeInfo, target);
-				smoothStat.AddNewChange(info);
+				var target = curPos + config.CAMERA_STOP_LENGTH * Vector3.left;
+				if (target.x < ConstMgr.MIN_UX) { target.x = ConstMgr.MIN_UX; }
+				moveStat.SetChangeInfo(config.DefaultCameraStopPositionChangeInfo).StartAChange(camera, target);
+
 			} else if (input.MoveRightKeyUp) {
-				var target = new SmoothValue(curPos + config.CAMERA_STOP_LENGTH * Vector3.right);
-				var info = PoolSystem.PopObj<SmoothChangeInfo>().InitFrom(config.DefaultCameraStopPositionChangeInfo, target);
-				smoothStat.AddNewChange(info);
+				var target = curPos + config.CAMERA_STOP_LENGTH * Vector3.right;
+				if (target.x > ConstMgr.MAX_UX) { target.x = ConstMgr.MAX_UX; }
+				moveStat.SetChangeInfo(config.DefaultCameraStopPositionChangeInfo).StartAChange(camera, target);
 			}
+
 
 			if (input.MoveForwardKeyDown) {
 				MonoService.Inst.StartCoroutine(LockMoveCoro(config.DefaultForwardPositionChangeInfo.TotalTime));
-				var target = new SmoothValue(curPos + ConstMgr.LayerGap * Vector3.forward);
-				var info = PoolSystem.PopObj<SmoothChangeInfo>().InitFrom(config.DefaultForwardPositionChangeInfo, target);
-				smoothStat.AddNewChange(info);
+				var target = curPos + ConstMgr.LayerGap * Vector3.forward;
+				if (target.z > ConstMgr.MAX_UZ) { target.z = ConstMgr.MAX_UZ; }
+				moveStat.SetChangeInfo(config.DefaultForwardPositionChangeInfo).StartAChange(camera, target);
+
 			} else if (input.MoveBackwardKeyDown) {
 				MonoService.Inst.StartCoroutine(LockMoveCoro(config.DefaultBackwardPositionChangeInfo.TotalTime));
-				var target = new SmoothValue(curPos + ConstMgr.LayerGap * Vector3.back);
-				var info = PoolSystem.PopObj<SmoothChangeInfo>().InitFrom(config.DefaultBackwardPositionChangeInfo, target);
-				smoothStat.AddNewChange(info);
+				var target = curPos + ConstMgr.LayerGap * Vector3.back;
+				if (target.z < ConstMgr.MIN_UZ) { target.z = ConstMgr.MIN_UZ; }
+				moveStat.SetChangeInfo(config.DefaultBackwardPositionChangeInfo).StartAChange(camera, target);
 			}
 
 		}

@@ -1,10 +1,11 @@
+using GameLogic.Common.Logic;
 using NsEcsFrame.Core;
 
-namespace GameLogic.Common.Logic {
+namespace GameLogic.Common.View {
 	/// <summary>
-	/// OLToCoordSystem 负责将 OLComponent 转换为 CoordComponent。
+	/// CoordToSmoothPositionSystem 负责处理CoordComponent 到 SmoothChangeStat 的转换逻辑。
 	/// </summary>
-	public class OLToCoordSystem : ISystem {
+	public class CoordToSmoothPositionSystem : ISystem {
 		public int Priority => 1000;
 		public bool Enabled { get; set; }
 
@@ -19,15 +20,13 @@ namespace GameLogic.Common.Logic {
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) {
 			var entities = _world.CreateQueryBuilder()
-				.WithAll<OLComponent, CoordComponent>()
-				.Build();
+				.WithAll<CoordComponent, SmoothPositionStatComponent>().Build();
 			entities.ForEach(entity => {
-				var olComp = entity.GetComponent<OLComponent>();
-				if (!olComp.IsDirty) return;
 				var coordComp = entity.GetComponent<CoordComponent>();
-				coordComp.Coord = olComp.OL.ToCoord();
-				coordComp.IsDirty = true;
-				olComp.IsDirty = false;
+				if (!coordComp.IsDirty) return;
+				coordComp.IsDirty = false;
+				var statComp = entity.GetComponent<SmoothPositionStatComponent>();
+				statComp.StartAChange(entity, coordComp.Coord.ToVec3DefaultY());
 			});
 		}
 		public void OnRenderUpdate(float _) { }

@@ -7,20 +7,21 @@ using GameLogic.World;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
+using UnityEngine;
 
 namespace GameLogic.Features.MainCamera {
 	public class CameraEntityMono : EntityMono, IWorldClearRespondable {
 		public void RespondWorldClear() {
 			// 在世界清除时，直接将摄像机位置移动到世界中心点
 			var entity = GameWorldMono.MainWorld.GetEntity(EntityId);
-			var stat = entity.GetComponent<SmoothChangeStatComponent>();
+			var stat = entity.GetComponent<SmoothPositionStatComponent>();
 
 			var targetOL = ConstMgr.WORLD_CENTER_OL;
 			targetOL.LYR -= 1;
 			var target = targetOL.ToVec3DefaultY();
+			target.y = ConstMgr.DEFAULT_CAMERA_HEIGHT;
 
-			var info = SmoothChangeInfo.NewDirectInfo(ChangeTargetType.Transform_Position, new(target));
-			stat.AddNewChange(info);
+			stat.SetChangeInfo(new(0, ChangeCurveType.Directive, false)).StartAChange(entity, target);
 		}
 
 		protected override IEnumerable<IComponent> GetAllComponents(Entity entity) {
@@ -33,10 +34,13 @@ namespace GameLogic.Features.MainCamera {
 
 			var entity = GameWorldMono.MainWorld.CreateEntity();
 			entity
-				.AddComponent<TransformComponent>()
+				.AddComponent<TransformComponent>(new() {
+					LocalPosition = new(0, ConstMgr.DEFAULT_CAMERA_HEIGHT, 0)
+				})
 				.AddComponent<MainCameraComponent>()
 				.AddComponent<CameraComponent>()
-				.AddComponent<SmoothChangeStatComponent>()
+				.AddComponent<SmoothPositionStatComponent>(new(new ChangeInfo()))
+				.AddComponent<SmoothCameraSizeStatComponent>(new(new ChangeInfo()))
 				.AddComponent<IgnoreWorldClearComponent>()
 			;
 			SetEntity(entity);

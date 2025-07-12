@@ -4,9 +4,9 @@ using NsEcsFrame.Core;
 
 namespace GameLogic.Common.View {
 	/// <summary>
-	/// CoordToTransformSystem 转换 CoordComponent 到 Transform ，并清除Dirty标记
+	/// OlToTransformSystem 负责将 OLComponent 转换为 TransformComponent，并清除Dirty标记
 	/// </summary>
-	public class CoordToTransformSystem : ISystem {
+	public class OlToTransformSystem : ISystem {
 		public int Priority => 19000;
 		public bool Enabled { get; set; }
 
@@ -21,14 +21,14 @@ namespace GameLogic.Common.View {
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) { }
 		public void OnRenderUpdate(float _) {
-			var query = _world.CreateQueryBuilder().WithAll<CoordComponent, TransformComponent>().Build();
+			var query = _world.CreateQueryBuilder().WithAll<OLComponent, TransformComponent>().Build();
 			query.ForEach(e => {
-				var cComp = e.GetComponent<CoordComponent>();
-				if (!cComp.IsDirty) return;
+				var olComp = e.GetComponent<OLComponent>();
+				if (!olComp.IsDirty) return;
 				var transComp = e.GetComponent<TransformComponent>();
-				transComp.LocalPosition = cComp.Coord.ToVec3DefaultY();
+				transComp.LocalPosition = olComp.OL.ToVec3DefaultY();
 				transComp.Dirty = true;
-				cComp.IsDirty = false;
+				olComp.IsDirty = false;
 			});
 		}
 	} 

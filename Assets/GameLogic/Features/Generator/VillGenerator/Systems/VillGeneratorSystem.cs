@@ -39,19 +39,20 @@ namespace GameLogic.Features.Generator {
 			var config = configRes.GetConfig(type);
 			var vill = config.GetDefaultEntity(_world);
 
-			var coordComp = vill.GetComponent<SmoothedCoordComponent>();
+			var coordComp = vill.GetComponent<CoordComponent>();
 			coordComp.Coord = data.OL.ToCoord();
 			coordComp.IsDirty = true;
 
 			var gidComp = vill.GetComponent<GidComponent>();
 			gidComp.Gid = GidMgr.Inst.GetGid();
 			GameWorldMono.GidToEntity[gidComp.Gid] = vill;
-		var artConfig = configRes.GetArtConfig(type);			
-		var go = GameObject.Instantiate(artConfig.Prefab);
-		go.GetComponent<VillEntityMono>().SetEntity(vill);
+			
+			var artConfig = configRes.GetArtConfig(type);			
+			var go = GameObject.Instantiate(artConfig.Prefab);
+			go.GetComponent<VillEntityMono>().SetEntity(vill);
 
-		var eventEntity = _world.CreateEntity();
-		eventEntity.AddComponent(new VillGeneratedEventComp() { VillGid = gidComp.Gid });
-	}
+			var eventEntity = _world.CreateEntity();
+			eventEntity.AddComponent(new VillGeneratedEventComp() { VillGid = gidComp.Gid });
+		}
 	}
 }

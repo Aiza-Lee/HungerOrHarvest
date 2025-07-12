@@ -20,7 +20,11 @@ namespace GameLogic.Features.Vill {
 		public void OnDestroy() { }
 
 		public void OnLogicUpdate(float deltaTime) {
-			;
+			var query = _world.CreateQueryBuilder()
+				.WithAll<VillBehaviourTreeComponent>().Build();
+			query.ForEach(entity => {
+				entity.GetComponent<VillBehaviourTreeComponent>().BehaviourTree.Think();
+			});
 		}
 
 		public void OnRenderUpdate(float _) { }

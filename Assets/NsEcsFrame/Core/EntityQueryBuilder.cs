@@ -45,7 +45,6 @@ namespace NsEcsFrame.Core {
 		/// <summary>
 		/// 添加必须包含的Component类型
 		/// </summary>
-		/// <typeparam name="T">Component类型</typeparam>
 		/// <returns>查询构建器</returns>
 		public EntityQueryBuilder WithAll<T>() where T : class, IComponent {
 			_withAllTypes.Add(typeof(T));
@@ -55,8 +54,6 @@ namespace NsEcsFrame.Core {
 		/// <summary>
 		/// 添加必须包含的多个Component类型
 		/// </summary>
-		/// <typeparam name="T1">第一个Component类型</typeparam>
-		/// <typeparam name="T2">第二个Component类型</typeparam>
 		/// <returns>查询构建器</returns>
 		public EntityQueryBuilder WithAll<T1, T2>()
 			where T1 : class, IComponent
@@ -69,9 +66,6 @@ namespace NsEcsFrame.Core {
 		/// <summary>
 		/// 添加必须包含的多个Component类型
 		/// </summary>
-		/// <typeparam name="T1">第一个Component类型</typeparam>
-		/// <typeparam name="T2">第二个Component类型</typeparam>
-		/// <typeparam name="T3">第三个Component类型</typeparam>
 		/// <returns>查询构建器</returns>
 		public EntityQueryBuilder WithAll<T1, T2, T3>()
 			where T1 : class, IComponent
@@ -86,7 +80,6 @@ namespace NsEcsFrame.Core {
 		/// <summary>
 		/// 添加至少包含一种的Component类型
 		/// </summary>
-		/// <typeparam name="T">Component类型</typeparam>
 		/// <returns>查询构建器</returns>
 		public EntityQueryBuilder WithAny<T>() where T : class, IComponent {
 			_withAnyTypes.Add(typeof(T));
@@ -96,8 +89,6 @@ namespace NsEcsFrame.Core {
 		/// <summary>
 		/// 添加至少包含一种的多个Component类型
 		/// </summary>
-		/// <typeparam name="T1">第一个Component类型</typeparam>
-		/// <typeparam name="T2">第二个Component类型</typeparam>
 		/// <returns>查询构建器</returns>
 		public EntityQueryBuilder WithAny<T1, T2>()
 			where T1 : class, IComponent
@@ -108,9 +99,22 @@ namespace NsEcsFrame.Core {
 		}
 
 		/// <summary>
+		/// 添加至少包含一种的多个Component类型
+		/// </summary>
+		/// <returns>查询构建器</returns>
+		public EntityQueryBuilder WithAny<T1, T2, T3>()
+			where T1 : class, IComponent
+			where T2 : class, IComponent
+			where T3 : class, IComponent {
+			_withAnyTypes.Add(typeof(T1));
+			_withAnyTypes.Add(typeof(T2));
+			_withAnyTypes.Add(typeof(T3));
+			return this;
+		}
+
+		/// <summary>
 		/// 添加不能包含的Component类型
 		/// </summary>
-		/// <typeparam name="T">Component类型</typeparam>
 		/// <returns>查询构建器</returns>
 		public EntityQueryBuilder Without<T>() where T : class, IComponent {
 			_withoutTypes.Add(typeof(T));
@@ -120,8 +124,6 @@ namespace NsEcsFrame.Core {
 		/// <summary>
 		/// 添加不能包含的多个Component类型
 		/// </summary>
-		/// <typeparam name="T1">第一个Component类型</typeparam>
-		/// <typeparam name="T2">第二个Component类型</typeparam>
 		/// <returns>查询构建器</returns>
 		public EntityQueryBuilder Without<T1, T2>()
 			where T1 : class, IComponent

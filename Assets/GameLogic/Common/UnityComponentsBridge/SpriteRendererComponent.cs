@@ -15,7 +15,6 @@ namespace GameLogic.Common.UnityComponentsBridge {
 		public bool IsDirty() => Dirty;
 
 		public void ApplyToSpriteRenderer(SpriteRenderer sr) {
-			if (sr == null) return;
 			sr.color = Color;
 			sr.sortingLayerID = SortingLayerID;
 			sr.sortingOrder = SortingOrder;

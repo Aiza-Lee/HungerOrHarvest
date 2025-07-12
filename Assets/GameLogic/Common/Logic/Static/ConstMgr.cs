@@ -1,4 +1,5 @@
 using GameLogic.Common.DataTypes;
+using NsEcsFrame.Unity;
 using System;
 using UnityEngine;
 
@@ -18,15 +19,27 @@ namespace GameLogic.Common.Logic {
 
 		/// <summary>最大Order，单位为OL</summary>
 		public const int MAX_ORDER = 60;
+		public static int MAX_CX => CX_PER_ODR * MAX_ORDER;
+		public static float MAX_UX => UX_PER_CX * MAX_CX ;
+
 		/// <summary>最小Order，单位为OL</summary>
 		public const int MIN_ORDER = 0;
+		public static int MIN_CX => CX_PER_ODR * MIN_ORDER;
+		public static float MIN_UX => UX_PER_CX * MIN_CX;
+
 		/// <summary>中间Order，单位为OL，保证为偶数</summary>
 		public const int MIDDLE_ORDER = 30;
 
 		/// <summary>最大Layer，单位为OL</summary>
 		public const int MAX_LAYER = 20;
+		public static int MAX_CY => CY_PER_LYR * MAX_LAYER;
+		public static float MAX_UZ => UZ_PER_CY * MAX_CY;
+
 		/// <summary>最小Layer，单位为OL</summary>
 		public const int MIN_LAYER = 0;
+		public static int MIN_CY => CY_PER_LYR * MIN_LAYER;
+		public static float MIN_UZ => UZ_PER_CY * MIN_CY;
+
 		/// <summary>中间Layer，单位为OL，保证为偶数</summary>
 		public const int MIDDLE_LAYER = 10;
 
@@ -54,6 +67,8 @@ namespace GameLogic.Common.Logic {
 		/// <summary>1倍速下每秒的Tick数</summary>
 		public const uint SPEEDx1_TICKS_PER_SECOND = 50;
 
+		public const float DEFAULT_CAMERA_HEIGHT = 1.5f;
+
 		static ConstMgr() {
 			ARCH_TYPE_SIZE = GetEnumSize<ArchType>();
 			JOB_TYPE_SIZE = GetEnumSize<JobType>();
@@ -67,26 +82,26 @@ namespace GameLogic.Common.Logic {
 	}
 
 	public static class ConstMgrExt {
-		public static Vector3 ToVec3(this Coord coord, float y) {
-			return new Vector3(
+		public static SimpleVector3 ToVec3(this Coord coord, float y) {
+			return new SimpleVector3(
 				coord.X * ConstMgr.UX_PER_CX,
 				y,
 				coord.Y * ConstMgr.UZ_PER_CY);
 		}
-		public static Vector3 ToVec3DefaultY(this Coord coord) {
-			return new Vector3(
+		public static SimpleVector3 ToVec3DefaultY(this Coord coord) {
+			return new SimpleVector3(
 				coord.X * ConstMgr.UX_PER_CX,
 				ConstMgr.DEFAULT_Y,
 				coord.Y * ConstMgr.UZ_PER_CY);
 		}
-		public static Vector3 ToVec3(this OL ol, float y) {
-			return new Vector3(
+		public static SimpleVector3 ToVec3(this OL ol, float y) {
+			return new SimpleVector3(
 				ConstMgr.UX_PER_CX * ConstMgr.CX_PER_ODR * ol.ODR,
 				y,
 				ConstMgr.UZ_PER_CY * ConstMgr.CY_PER_LYR * ol.LYR);
 		}
-		public static Vector3 ToVec3DefaultY(this OL ol) {
-			return new Vector3(
+		public static SimpleVector3 ToVec3DefaultY(this OL ol) {
+			return new SimpleVector3(
 				ConstMgr.UX_PER_CX * ConstMgr.CX_PER_ODR * ol.ODR,
 				ConstMgr.DEFAULT_Y,
 				ConstMgr.UZ_PER_CY * ConstMgr.CY_PER_LYR * ol.LYR);

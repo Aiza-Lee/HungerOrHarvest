@@ -16,6 +16,7 @@ namespace NsEcsFrame.Unity {
 		public void ModifyAlpha(float alpha) { a = alpha; }
 		public static implicit operator Color(SimpleColor c) => new(c.r, c.g, c.b, c.a);
 		public static implicit operator SimpleColor(Color c) => new(c);
+		public override readonly string ToString() => $"SimpleColor(r:{r}, g:{g}, b:{b}, a:{a})";
 	}
 
 	[System.Serializable]
@@ -44,6 +45,7 @@ namespace NsEcsFrame.Unity {
 		public static SimpleVector2 operator *(Vector2 a, SimpleVector2 b) => new(a.x * b.x, a.y * b.y);
 
 		public static SimpleVector2 operator /(SimpleVector2 v, float scalar) => new(v.x / scalar, v.y / scalar);
+		public override readonly string ToString() => $"SimpleVector2(x:{x}, y:{y})";
 	}
 
 	[System.Serializable]
@@ -72,6 +74,7 @@ namespace NsEcsFrame.Unity {
 		public static SimpleVector3 operator *(Vector3 a, SimpleVector3 b) => new(a.x * b.x, a.y * b.y, a.z * b.z);
 
 		public static SimpleVector3 operator /(SimpleVector3 v, float scalar) => new(v.x / scalar, v.y / scalar, v.z / scalar);
+		public override readonly string ToString() => $"SimpleVector3(x:{x}, y:{y}, z:{z})";
 	}
 
 	[System.Serializable]
@@ -98,5 +101,6 @@ namespace NsEcsFrame.Unity {
 		public static SimpleQuaternion operator *(SimpleQuaternion q, float scalar) => new(q.x * scalar, q.y * scalar, q.z * scalar, q.w * scalar);
 		public static SimpleQuaternion operator *(float scalar, SimpleQuaternion q) => new(q.x * scalar, q.y * scalar, q.z * scalar, q.w * scalar);
 		public static SimpleQuaternion operator /(SimpleQuaternion q, float scalar) => new(q.x / scalar, q.y / scalar, q.z / scalar, q.w / scalar);
+		public override readonly string ToString() => $"SimpleQuaternion(x:{x}, y:{y}, z:{z}, w:{w})";
 	}
 }

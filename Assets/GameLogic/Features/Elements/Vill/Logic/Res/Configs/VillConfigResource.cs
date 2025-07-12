@@ -44,12 +44,8 @@ namespace GameLogic.Features.Vill {
 			entity
 				.AddComponent<GidComponent>()
 				.AddComponent<VillIdentityComponent>(new() { Type = VillType })
-				.AddComponent<SmoothedCoordComponent>(
-				new() {
-					ChangeCurveType = ChangeCurveType.Linear,
-					TotalTime = (float) TicksPerCoord / ConstMgr.SPEEDx1_TICKS_PER_SECOND
-				})
-				.AddComponent<SmoothChangeStatComponent>()
+				.AddComponent<CoordComponent>()
+				.AddComponent<SmoothPositionStatComponent>(new(1f * ConstMgr.SPEEDx1_TICKS_PER_SECOND / TicksPerCoord, ChangeCurveType.Linear, true))
 				.AddComponent<TransformComponent>()
 				.AddComponent<SpriteRendererComponent>()
 				.AddComponent<VillBehaviourTreeComponent>(new(entity))

@@ -23,7 +23,7 @@ namespace GameLogic.Common.View {
 				.Build();
 			query.ForEach(e => {
 				var spriteRendererComp = e.GetComponent<SpriteRendererComponent>();
-				if (!spriteRendererComp.Dirty) return;
+				if (!spriteRendererComp.IsDirty()) return;
 				var go = EntityMono.GetByEntityId(e.ID);
 				spriteRendererComp.ApplyToSpriteRenderer(go.GetComponent<UnityEngine.SpriteRenderer>());
 				spriteRendererComp.ClearDirty();
