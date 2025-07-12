@@ -50,7 +50,7 @@ namespace GameLogic.Features.Generator {
 			go.GetComponent<ArchEntityMono>().SetEntity(entity);
 
 			var eventEntity = _world.CreateEntity();
-			eventEntity.AddComponent(new ArchGeneratedEventComp() { ArchGid = gidComp.Gid });
+			eventEntity.AddComponent(new ArchGeneratedEventComp_Logic() { ArchGid = gidComp.Gid });
 		}
 
 	} 

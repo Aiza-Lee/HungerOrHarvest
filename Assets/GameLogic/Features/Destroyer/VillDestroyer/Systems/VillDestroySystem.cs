@@ -28,7 +28,7 @@ namespace GameLogic.Features.Destroyer {
 
 				// 创建删除事件实体
 				var eventEntity = _world.CreateEntity();
-				eventEntity.AddComponent(new VillDestroyedEventComp() { DestroyedVillGid = gid });
+				eventEntity.AddComponent(new VillDestroyedEventComp_Logic() { DestroyedVillGid = gid });
 
 				// 解除和建筑的绑定
 				ClearBond(entity, gid);

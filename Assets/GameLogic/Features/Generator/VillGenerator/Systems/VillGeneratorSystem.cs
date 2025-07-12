@@ -52,7 +52,7 @@ namespace GameLogic.Features.Generator {
 			go.GetComponent<VillEntityMono>().SetEntity(vill);
 
 			var eventEntity = _world.CreateEntity();
-			eventEntity.AddComponent(new VillGeneratedEventComp() { VillGid = gidComp.Gid });
+			eventEntity.AddComponent(new VillGeneratedEventComp_Logic() { VillGid = gidComp.Gid });
 		}
 	}
 }

@@ -16,6 +16,7 @@ using GameLogic.Features.SpeedControl;
 using GameLogic.Features.TickCounter;
 using GameLogic.Features.TickSpeed;
 using GameLogic.Features.Vill;
+using GameLogic.Features.WorldEdge;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
 
@@ -61,6 +62,8 @@ namespace GameLogic.World {
 				.RegisterSystem<ArchGeneratorSystem>()
 				.RegisterSystem<LayerGeneratorSystem>()
 				.RegisterSystem<VillGeneratorSystem>()
+				.RegisterSystem<GeneratedEventConsumerSystem_Logic>()
+				.RegisterSystem<GeneratedEventConsumerSystem_View>()
 
 				/* Vill */
 				.RegisterSystem<VillExpSystem>()
@@ -69,6 +72,11 @@ namespace GameLogic.World {
 				/* Destroy */
 				.RegisterSystem<ArchDestroyerSystem>()
 				.RegisterSystem<VillDestroyerSystem>()
+				.RegisterSystem<DestroyedEventComsumerSystem_Logic>()
+				.RegisterSystem<DestroyedEventComsumerSystem_View>()
+
+				/* WorldEdge */
+				.RegisterSystem<WorldEdgeSystem>()
 
 				/* Sync */
 				.RegisterSystem<CameraSyncSystem>()
@@ -123,6 +131,9 @@ namespace GameLogic.World {
 				/* NewWorldCreator */
 				.InsertResource(new RandomWorldConfigResource())
 				.InsertResource(new NewWorldInfoResource())
+
+				/* WorldEdge */
+				.InsertResource(new WorldEdgeResource())
 			;
 		}
 	}

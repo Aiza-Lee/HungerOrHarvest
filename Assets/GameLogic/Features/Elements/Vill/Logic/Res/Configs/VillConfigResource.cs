@@ -45,7 +45,7 @@ namespace GameLogic.Features.Vill {
 				.AddComponent<GidComponent>()
 				.AddComponent<VillIdentityComponent>(new() { Type = VillType })
 				.AddComponent<CoordComponent>()
-				.AddComponent<SmoothPositionStatComponent>(new(1f * ConstMgr.SPEEDx1_TICKS_PER_SECOND / TicksPerCoord, ChangeCurveType.Linear, true))
+				.AddComponent<SmoothPositionStatComponent>(new(0, ChangeCurveType.Directive, true))
 				.AddComponent<TransformComponent>()
 				.AddComponent<SpriteRendererComponent>()
 				.AddComponent<VillBehaviourTreeComponent>(new(entity))
@@ -53,7 +53,7 @@ namespace GameLogic.Features.Vill {
 				.AddComponent<BondToArchComponent>()
 				.AddComponent<JobExpComponent>()
 				.AddComponent<RoutePlanComponent>()
-				.AddComponent<VillVitalityComponent>(new() { RecoverChances = VitConfig.RecoverChancePerDay })
+				.AddComponent<VillVitalityComponent>(new() { Vit = VitConfig.MaxVit, RecoverChances = VitConfig.RecoverChancePerDay })
 			;
 			AddDerivedComponents(entity);
 			return entity;
@@ -63,6 +63,10 @@ namespace GameLogic.Features.Vill {
 		[Tooltip("体力配置")] public VitConfig VitConfig;
 		[Tooltip("随机游走横向半径(相对于已解锁的地块,计量单位是ORD)")] public uint SpareOrdRadius;
 		[Tooltip("走过每个Coord所需要的Tick数量")] public uint TicksPerCoord;
+
+		public ChangeInfo NormalWalkChangeInfo => new(1f * TicksPerCoord / ConstMgr.SPEEDx1_TICKS_PER_SECOND, ChangeCurveType.Linear, true);
+		// public ChangeInfo FastWalkChangeInfo => new(0.5f * TicksPerCoord / ConstMgr.SPEEDx1_TICKS_PER_SECOND, ChangeCurveType.Linear, true);
+		// public ChangeInfo SlowWalkChangeInfo => new(2f * TicksPerCoord / ConstMgr.SPEEDx1_TICKS_PER_SECOND, ChangeCurveType.Linear, true);
 	}
 
 	public abstract class VillArtConfigBase : ScriptableObject {

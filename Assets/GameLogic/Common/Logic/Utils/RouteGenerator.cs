@@ -8,7 +8,7 @@ namespace GameLogic.Common.Logic.Utils {
 		private static readonly int[] _randomOrder = new int[3];
 
 		public static List<Coord> GetRoute(Coord start, Coord end) {
-			if (start.OnSameEdge(end)) {
+			if (start.IsOnSameEdge(end)) {
 				if (start == end) { return new(); } else { return new() { end }; }
 			}
 
@@ -23,7 +23,7 @@ namespace GameLogic.Common.Logic.Utils {
 				var cur = top.Value;
 				var dis = cost[cur];
 				// 如果 cur 和 end 在同一条边上，那么 cur 到 end 的路径就是 end
-				if (cur.OnSameEdge(end)) {
+				if (cur.IsOnSameEdge(end)) {
 					// 但是要保证 end 是可到达的
 					if (!end.IsOL() || end.Y >= cur.Y) {
 						var res = ReconstructPath(cameFrom, cur, addStart: false);

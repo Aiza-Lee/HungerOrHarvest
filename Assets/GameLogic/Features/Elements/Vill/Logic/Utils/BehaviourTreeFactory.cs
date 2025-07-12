@@ -6,12 +6,14 @@ using GameLogic.Features.Arch;
 using GameLogic.Features.Destroyer;
 using GameLogic.Features.Repo;
 using GameLogic.Features.TickCounter;
+using GameLogic.Features.WorldEdge;
 using GameLogic.World;
 using NSFrame.BehaviourTree;
 using UnityEngine;
 
 namespace GameLogic.Features.Vill {
 	public static class BehaviourTreeFactory {
+		private static readonly bool EnableDebugLogs = false;
 		public static BehaviourTree<VillAiBlackboard> CreateVillBehaviourTree(VillAiBlackboard bb) {
 			var builder = new BehaviourTreeBuilder<VillAiBlackboard>();
 			{ // 创建Normal村民行为树
@@ -126,7 +128,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus WorkProd(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("WorkProd called");
+			if (EnableDebugLogs) Debug.Log("WorkProd called");
 #endif
 			var workArchEntity = GameWorldMono.GidToEntity[bb.Entity.GetComponent<BondToArchComponent>().WorkArchGid];
 			var archLevel = workArchEntity.GetComponent<ArchLevelComponent>().Level;
@@ -155,7 +157,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus Sleep(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("Sleep called");
+			if (EnableDebugLogs) Debug.Log("Sleep called");
 #endif
 			// todo: 睡觉逻辑,目前的实现应该没有问题，但是可能是个bug
 			return NodeStatus.SUCCESS;
@@ -163,7 +165,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus Recover(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("Recover called");
+			if (EnableDebugLogs) Debug.Log("Recover called");
 #endif
 			if (bb.VitPercent >= 1f) {
 				return NodeStatus.FAILURE;
@@ -179,7 +181,7 @@ namespace GameLogic.Features.Vill {
 		}
 		private static NodeStatus RecoverTillWork(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("RecoverTillWork called");
+			if (EnableDebugLogs) Debug.Log("RecoverTillWork called");
 #endif
 			if (bb.VitPercent >= bb.VitConfig.RecoverVitThreshold) {
 				return NodeStatus.FAILURE; // 已经满了
@@ -196,21 +198,21 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus ExitRecoverMode(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("ExitRecoverMode called");
+			if (EnableDebugLogs) Debug.Log("ExitRecoverMode called");
 #endif
 			bb.VitalityComp.AtRecoverMode = false;
 			return NodeStatus.SUCCESS;
 		}
 		private static NodeStatus EnterRecoverMode(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("EnterRecoverMode called");
+			if (EnableDebugLogs) Debug.Log("EnterRecoverMode called");
 #endif
 			bb.VitalityComp.AtRecoverMode = true;
 			return NodeStatus.SUCCESS;
 		}
 		private static NodeStatus UseRecoverChance(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("UseRecoverChance called");
+			if (EnableDebugLogs) Debug.Log("UseRecoverChance called");
 #endif
 			if (bb.VitalityComp.RecoverChances <= 0) {
 				return NodeStatus.FAILURE; // 没有恢复机会了
@@ -220,7 +222,7 @@ namespace GameLogic.Features.Vill {
 		}
 		private static bool CheckFoodEnoughForRecover(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("CheckFoodEnoughForRecover called");
+			if (EnableDebugLogs) Debug.Log("CheckFoodEnoughForRecover called");
 #endif
 			var vitDemand = bb.VitConfig.MaxVit - bb.VitalityComp.Vit;
 			var foodDemand = vitDemand / bb.VitConfig.VitPerFood;
@@ -230,7 +232,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus EnterHome(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("EnterHome called");
+			if (EnableDebugLogs) Debug.Log("EnterHome called");
 #endif
 			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
 			if (villBondArch.HomeArchGid == 0) return NodeStatus.FAILURE; // 没有家，无法进入
@@ -245,7 +247,7 @@ namespace GameLogic.Features.Vill {
 		}
 		private static NodeStatus LeaveHome(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("LeaveHome called");
+			if (EnableDebugLogs) Debug.Log("LeaveHome called");
 #endif
 			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
 			if (villBondArch.HomeArchGid == 0) return NodeStatus.FAILURE; // 没有家，无法进入
@@ -261,7 +263,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus EnterWorkArch(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("EnterWorkArch called");
+			if (EnableDebugLogs) Debug.Log("EnterWorkArch called");
 #endif
 			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
 			if (villBondArch.WorkArchGid == 0) return NodeStatus.FAILURE; // 没有工作建筑，无法进入
@@ -277,7 +279,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus LeaveWorkArch(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("LeaveWorkArch called");
+			if (EnableDebugLogs) Debug.Log("LeaveWorkArch called");
 #endif
 			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
 			if (villBondArch.WorkArchGid == 0) return NodeStatus.FAILURE; // 没有工作建筑，无法离开
@@ -293,7 +295,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus EnterDie(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("EnterDie called");
+			if (EnableDebugLogs) Debug.Log("EnterDie called");
 #endif
 			bb.VitalityComp.Die = true;
 			bb.VitalityComp.IsDirty = true;
@@ -302,7 +304,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus ExitDying(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("ExitDying called");
+			if (EnableDebugLogs) Debug.Log("ExitDying called");
 #endif
 			bb.VitalityComp.IsDying = false;
 			bb.VitalityComp.IsDirty = true;
@@ -311,7 +313,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus Move(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("Move called");
+			if (EnableDebugLogs) Debug.Log("Move called");
 #endif
 			var tick = bb.World.GetResource<TickCounterResource>();
 			var routeComp = bb.RoutePlanComp;
@@ -327,10 +329,11 @@ namespace GameLogic.Features.Vill {
 				return NodeStatus.SUCCESS; // 还在移动中，等待下一次移动
 			}
 			moveComp.LastMoveTick = tick.TickCount;
-			var smoothedCoord = bb.SmoothedCoordComp;
-			smoothedCoord.Coord += smoothedCoord.Coord.DirectionTo(routeComp.MoveRoute[routeComp.CurMoveIndex]);
-			smoothedCoord.IsDirty = true;
-			if (smoothedCoord.Coord == routeComp.MoveRoute[routeComp.CurMoveIndex]) {
+			var cComp = bb.CoordComp;
+			cComp.Coord += cComp.Coord.DirectionTo(routeComp.MoveRoute[routeComp.CurMoveIndex]);
+			cComp.IsDirty = true;
+			bb.SmoothPosStatComp.SetChangeInfo(bb.Config.NormalWalkChangeInfo);
+			if (cComp.Coord == routeComp.MoveRoute[routeComp.CurMoveIndex]) {
 				routeComp.CurMoveIndex++;
 			}
 			return NodeStatus.SUCCESS;
@@ -338,7 +341,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus Die(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("Die called");
+			if (EnableDebugLogs) Debug.Log("Die called");
 #endif
 			var villDestroyRes = bb.World.GetResource<VillDestroyResource>();
 			villDestroyRes.VillToDestroy.Add(bb.GidComp.Gid);
@@ -347,7 +350,7 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus GetRouteForDie(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("GetRouteForDie called");
+			if (EnableDebugLogs) Debug.Log("GetRouteForDie called");
 #endif
 			// todo: 目前先定位到家
 			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
@@ -361,7 +364,7 @@ namespace GameLogic.Features.Vill {
 			}
 
 			routeComp.CurMoveIndex = 0;
-			routeComp.MoveRoute = RouteGenerator.GetRoute(bb.SmoothedCoordComp.Coord, home.GetComponent<OLComponent>().OL.ToCoord());
+			routeComp.MoveRoute = RouteGenerator.GetRoute(bb.CoordComp.Coord, home.GetComponent<OLComponent>().OL.ToCoord());
 			if (routeComp.MoveRoute == null || routeComp.MoveRoute.Count == 0) {
 				return NodeStatus.FAILURE; // 无法获取路线
 			}
@@ -369,7 +372,7 @@ namespace GameLogic.Features.Vill {
 		}
 		private static NodeStatus GetRouteForHome(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("GetRouteForHome called");
+			if (EnableDebugLogs) Debug.Log("GetRouteForHome called");
 #endif
 			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
 			if (villBondArch.HomeArchGid == 0) {
@@ -382,7 +385,7 @@ namespace GameLogic.Features.Vill {
 			}
 
 			routeComp.CurMoveIndex = 0;
-			routeComp.MoveRoute = RouteGenerator.GetRoute(bb.SmoothedCoordComp.Coord, home.GetComponent<OLComponent>().OL.ToCoord());
+			routeComp.MoveRoute = RouteGenerator.GetRoute(bb.CoordComp.Coord, home.GetComponent<OLComponent>().OL.ToCoord());
 			if (routeComp.MoveRoute == null || routeComp.MoveRoute.Count == 0) {
 				return NodeStatus.FAILURE; // 无法获取路线
 			}
@@ -391,18 +394,23 @@ namespace GameLogic.Features.Vill {
 
 		private static NodeStatus GetRouteForRandom(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("GetRouteForRandom called");
+			if (EnableDebugLogs) Debug.Log("GetRouteForRandom called");
 #endif
-			// todo: 随机路线规划,目前先保持不动
 			var routeComp = bb.RoutePlanComp;
-			routeComp.MoveRoute.Clear();
-			routeComp.CurMoveIndex = 1;
+			if (routeComp.MoveRoute.Count > 0 && routeComp.MoveRoute.Last() != bb.CoordComp.Coord) {
+				return NodeStatus.FAILURE;
+			}
+			routeComp.CurMoveIndex = 0;
+			routeComp.MoveRoute = RouteGenerator.GetRoute(bb.CoordComp.Coord, WorldEdgeAPI.GetRandomCoordInWorldEdge());
+			if (routeComp.MoveRoute == null || routeComp.MoveRoute.Count == 0) {
+				return NodeStatus.FAILURE; // 无法获取路线
+			}
 			return NodeStatus.SUCCESS;
 		}
 
 		private static NodeStatus GetRouteForWorkArch(VillAiBlackboard bb) {
 #if UNITY_EDITOR
-			if (bb.World.EnableDebugLogs) Debug.Log("GetRouteForWorkArch called");
+			if (EnableDebugLogs) Debug.Log("GetRouteForWorkArch called");
 #endif
 			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
 			if (villBondArch.WorkArchGid == 0) {
@@ -415,7 +423,7 @@ namespace GameLogic.Features.Vill {
 			}
 
 			routeComp.CurMoveIndex = 0;
-			routeComp.MoveRoute = RouteGenerator.GetRoute(bb.SmoothedCoordComp.Coord, workArch.GetComponent<OLComponent>().OL.ToCoord());
+			routeComp.MoveRoute = RouteGenerator.GetRoute(bb.CoordComp.Coord, workArch.GetComponent<OLComponent>().OL.ToCoord());
 			if (routeComp.MoveRoute == null || routeComp.MoveRoute.Count == 0) {
 				return NodeStatus.FAILURE; // 无法获取路线
 			}

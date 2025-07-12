@@ -1,6 +1,7 @@
 using GameLogic.Common.DataTypes;
 using NsEcsFrame.Unity;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameLogic.Common.Logic {
@@ -69,6 +70,9 @@ namespace GameLogic.Common.Logic {
 
 		public const float DEFAULT_CAMERA_HEIGHT = 1.5f;
 
+		/// <summary>  村庄边界的宽度，单位为OL。主要用于界定村民的随机移动范围。</summary>
+		public const int DEFAULT_WORLD_EDGE_WIDTH = 2;
+
 		static ConstMgr() {
 			ARCH_TYPE_SIZE = GetEnumSize<ArchType>();
 			JOB_TYPE_SIZE = GetEnumSize<JobType>();
@@ -82,6 +86,7 @@ namespace GameLogic.Common.Logic {
 	}
 
 	public static class ConstMgrExt {
+		/* Coord Extension */
 		public static SimpleVector3 ToVec3(this Coord coord, float y) {
 			return new SimpleVector3(
 				coord.X * ConstMgr.UX_PER_CX,
@@ -94,6 +99,56 @@ namespace GameLogic.Common.Logic {
 				ConstMgr.DEFAULT_Y,
 				coord.Y * ConstMgr.UZ_PER_CY);
 		}
+		public static bool IsOL(this Coord coord) => coord.X % ConstMgr.CX_PER_ODR == 0 && coord.Y % ConstMgr.CY_PER_LYR == 0;
+		public static bool IsOnLayer(this Coord coord) => coord.Y % ConstMgr.CY_PER_LYR == 0;
+		public static OL ToOL(this Coord coord) {
+			if (!coord.IsOL()) {
+				throw new Exception($"Coord {coord} is not on a valid OL");
+			}
+			return new OL(coord.X / ConstMgr.CX_PER_ODR, coord.Y / ConstMgr.CY_PER_LYR);
+		}
+		public static List<OL> GetNeighborOLs(this Coord coord) {
+			var rX = coord.X % ConstMgr.CX_PER_ODR;
+			var rY = coord.Y % ConstMgr.CY_PER_LYR;
+			if (rX == 0 && rY == 0) {
+				var ol = new OL(coord.X / ConstMgr.CX_PER_ODR, coord.Y / ConstMgr.CY_PER_LYR);
+				return ol.GetNeighbors();
+			}
+			if (rX == 0) {
+				var ORD = coord.X / ConstMgr.CX_PER_ODR;
+				var tmp = 1f * coord.Y / ConstMgr.CY_PER_LYR;
+				// y 方向更大的
+				var upper = new OL(ORD, Mathf.CeilToInt(tmp));
+				// y 方向更小的
+				var lower = new OL(ORD, Mathf.FloorToInt(tmp));
+				if (upper.CheckAvailableForArch()) {
+					return new() { upper, lower };
+				} else {
+					return new() { upper };
+				}
+			}
+			if (rY == 0) {
+				var LYR = coord.Y / ConstMgr.CY_PER_LYR;
+				var tmp = 1f * coord.X / ConstMgr.CX_PER_ODR;
+				return new() {
+					new(Mathf.FloorToInt(tmp), LYR),
+					new(Mathf.CeilToInt(tmp), LYR),
+				};
+			}
+			throw new Exception($"Coord {coord} is not on a valid OL");
+		}
+		public static bool IsOnSameEdge(this Coord coord, Coord other) {
+			if (coord.X == other.X && coord.X % ConstMgr.CX_PER_ODR == 0) {
+				var dis = Mathf.Abs(coord.Y - other.Y);
+				return dis < ConstMgr.CY_PER_LYR || (dis == ConstMgr.CY_PER_LYR && Mathf.Max(coord.Y, other.Y) / ConstMgr.CY_PER_LYR % 2 == 0);
+			}
+			if (coord.Y == other.Y && coord.Y % ConstMgr.CY_PER_LYR == 0) {
+				return Mathf.Abs(coord.X - other.X) <= ConstMgr.CX_PER_ODR;
+			}
+			return false;
+		}
+
+		/* OL Extension */
 		public static SimpleVector3 ToVec3(this OL ol, float y) {
 			return new SimpleVector3(
 				ConstMgr.UX_PER_CX * ConstMgr.CX_PER_ODR * ol.ODR,
@@ -106,5 +161,10 @@ namespace GameLogic.Common.Logic {
 				ConstMgr.DEFAULT_Y,
 				ConstMgr.UZ_PER_CY * ConstMgr.CY_PER_LYR * ol.LYR);
 		}
+		public static Coord ToCoord(this OL ol) {
+			return new Coord(ol.ODR * ConstMgr.CX_PER_ODR, ol.LYR * ConstMgr.CY_PER_LYR);
+		}
+
+
 	}
 }

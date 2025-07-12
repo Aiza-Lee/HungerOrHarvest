@@ -1,4 +1,5 @@
 using NsEcsFrame.Core;
+using NSFrame;
 using UnityEngine;
 
 namespace GameLogic.Common.View {
@@ -34,13 +35,13 @@ namespace GameLogic.Common.View {
 					.WithAny<SmoothCameraSizeStatComponent>()
 					.Build();
 			query.ForEach(e => {
-				if (e.HasComponent<SmoothCameraSizeStatComponent>()) { CompOperate(e, e.GetComponent<SmoothCameraSizeStatComponent>()); }
-				if (e.HasComponent<SmoothPositionStatComponent>()) { CompOperate(e, e.GetComponent<SmoothPositionStatComponent>()); }
-				if (e.HasComponent<SmoothRotationStatComponent>()) { CompOperate(e, e.GetComponent<SmoothRotationStatComponent>()); }
-				if (e.HasComponent<SmoothScaleStatComponent>()) { CompOperate(e, e.GetComponent<SmoothScaleStatComponent>()); }
-				if (e.HasComponent<SmoothAlphaStatComponent>()) { CompOperate(e, e.GetComponent<SmoothAlphaStatComponent>()); }
-				if (e.HasComponent<SmoothOffsetMinStatComponent>()) { CompOperate(e, e.GetComponent<SmoothOffsetMinStatComponent>()); }
-				if (e.HasComponent<SmoothOffsetMaxStatComponent>()) { CompOperate(e, e.GetComponent<SmoothOffsetMaxStatComponent>()); }
+				if (e.HasComponent<SmoothCameraSizeStatComponent>())  { CompOperate(e, e.GetComponent<SmoothCameraSizeStatComponent>()); }
+				if (e.HasComponent<SmoothPositionStatComponent>())    { CompOperate(e, e.GetComponent<SmoothPositionStatComponent>()); }
+				if (e.HasComponent<SmoothRotationStatComponent>())    { CompOperate(e, e.GetComponent<SmoothRotationStatComponent>()); }
+				if (e.HasComponent<SmoothScaleStatComponent>())       { CompOperate(e, e.GetComponent<SmoothScaleStatComponent>()); }
+				if (e.HasComponent<SmoothAlphaStatComponent>())       { CompOperate(e, e.GetComponent<SmoothAlphaStatComponent>()); }
+				if (e.HasComponent<SmoothOffsetMinStatComponent>())   { CompOperate(e, e.GetComponent<SmoothOffsetMinStatComponent>()); }
+				if (e.HasComponent<SmoothOffsetMaxStatComponent>())   { CompOperate(e, e.GetComponent<SmoothOffsetMaxStatComponent>()); }
 				if (e.HasComponent<SmoothAudioVolumeStatComponent>()) { CompOperate(e, e.GetComponent<SmoothAudioVolumeStatComponent>()); }
 			});
 		}
@@ -52,14 +53,12 @@ namespace GameLogic.Common.View {
 				comp.Started = false;
 				return;
 			}
-			if (comp.ElapsedTime < comp.TotalTime) {
-				comp.ElapsedTime += comp.UseLogicTime ? Time.deltaTime : Time.unscaledDeltaTime;
-				if (comp.ElapsedTime > comp.TotalTime) {
-					comp.ElapsedTime = comp.TotalTime;
-					comp.Started = false;
-				}
-				comp.ApplyChange(entity);
+			comp.ElapsedTime += comp.UseLogicTime ? Time.deltaTime : Time.unscaledDeltaTime;
+			if (comp.ElapsedTime.IsApproximatelyEqual(comp.TotalTime, 1E-05f)) {
+				comp.ElapsedTime = comp.TotalTime;
+				comp.Started = false;
 			}
+			comp.ApplyChange(entity);
 		}
 	}
 }

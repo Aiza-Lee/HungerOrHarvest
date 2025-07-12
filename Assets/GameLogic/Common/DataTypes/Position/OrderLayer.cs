@@ -22,9 +22,6 @@ namespace GameLogic.Common.DataTypes {
 		public readonly OL Translate(int odr, int lyr) {
 			return new(ODR + odr, LYR + lyr);
 		}
-		public readonly Coord ToCoord() {
-			return new(ODR * ConstMgr.CX_PER_ODR, LYR * ConstMgr.CY_PER_LYR);
-		}
 		public readonly List<OL> GetNeighbors() {
 			return new() {
 				new(ODR - 1, LYR),

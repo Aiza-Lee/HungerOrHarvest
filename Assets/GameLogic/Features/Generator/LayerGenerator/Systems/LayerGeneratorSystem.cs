@@ -48,7 +48,7 @@ namespace GameLogic.Features.Generator {
 		go.GetComponent<LayerEntityMono>().SetEntity(layer);
 
 		var eventEntity = _world.CreateEntity();
-		eventEntity.AddComponent(new LayerGeneratedEventComp() { LayerGid = gidComp.Gid });
+		eventEntity.AddComponent(new LayerGeneratedEventComp_Logic() { LayerGid = gidComp.Gid });
 	}
 
 		public void OnRenderUpdate(float _) { }

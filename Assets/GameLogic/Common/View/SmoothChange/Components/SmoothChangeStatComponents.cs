@@ -5,9 +5,10 @@ using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
 
 namespace GameLogic.Common.View {
+	[System.Serializable]
 	public class SmoothPositionStatComponent : SmoothChangeStatCompBase<SimpleVector3> {
 		public SmoothPositionStatComponent(ChangeInfo changeInfo) : base(changeInfo) { }
-		public SmoothPositionStatComponent(float totalTime, ChangeCurveType curveType, bool useLogicTime) 
+		public SmoothPositionStatComponent(float totalTime, ChangeCurveType curveType, bool useLogicTime)
 			: base(totalTime, curveType, useLogicTime) { }
 
 		public override void SetStartValueToCurValue(Entity entity) {

@@ -29,7 +29,7 @@ namespace GameLogic.Features.Destroyer {
 
 				// 创建删除事件实体
 				var eventEntity = _world.CreateEntity();
-				eventEntity.AddComponent(new ArchDestroyedEventComp() { ArchGid = gid });
+				eventEntity.AddComponent(new ArchDestroyedEventComp_Logic() { ArchGid = gid });
 
 				// 解除和村民的绑定
 				ClearBond(entity);

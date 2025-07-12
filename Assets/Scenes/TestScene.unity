@@ -1250,7 +1250,7 @@ MonoBehaviour:
     Key1Speed: 1
     Key2Speed: 2
     Key3Speed: 3
-    Key4Speed: 4
+    Key4Speed: 10
 --- !u!1 &1905816166
 GameObject:
   m_ObjectHideFlags: 0

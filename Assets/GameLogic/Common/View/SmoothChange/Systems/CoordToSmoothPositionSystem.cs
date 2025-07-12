@@ -4,6 +4,7 @@ using NsEcsFrame.Core;
 namespace GameLogic.Common.View {
 	/// <summary>
 	/// CoordToSmoothPositionSystem 负责处理CoordComponent 到 SmoothChangeStat 的转换逻辑。
+	/// 仅限同时含有 CoordComponent 和 SmoothPositionStatComponent 的实体。
 	/// </summary>
 	public class CoordToSmoothPositionSystem : ISystem {
 		public int Priority => 1000;

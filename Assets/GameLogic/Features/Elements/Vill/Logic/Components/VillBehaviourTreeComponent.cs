@@ -44,7 +44,10 @@ namespace GameLogic.Features.Vill {
 		public VillMoveComponent MoveComp => _moveComp ??= Entity.GetComponent<VillMoveComponent>();
 
 		private CoordComponent _coordComp;
-		public CoordComponent SmoothedCoordComp => _coordComp ??= Entity.GetComponent<CoordComponent>();
+		public CoordComponent CoordComp => _coordComp ??= Entity.GetComponent<CoordComponent>();
+
+		private SmoothPositionStatComponent _smoothPosStatComp;
+		public SmoothPositionStatComponent SmoothPosStatComp => _smoothPosStatComp ??= Entity.GetComponent<SmoothPositionStatComponent>();
 
 		public float VitPercent => VitalityComp.Vit / VitConfig.MaxVit;
 		public bool IsHungry => VitPercent < VitConfig.LowVitThreshold;

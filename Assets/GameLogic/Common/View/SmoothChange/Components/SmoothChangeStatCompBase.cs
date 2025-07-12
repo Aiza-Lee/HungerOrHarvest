@@ -1,6 +1,7 @@
 using NsEcsFrame.Core;
 
 namespace GameLogic.Common.View {
+	[System.Serializable]
 	public abstract class SmoothChangeStatCompBase<T> : IComponent where T : struct {
 		/// <summary>
 		/// 是否已经被设置好，准备进行平滑变化
