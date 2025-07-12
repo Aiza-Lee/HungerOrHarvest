@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NsEcsFrame.Unity;
 using NsEcsFrame.Utils;
 using UnityEngine;
 
@@ -71,6 +72,9 @@ namespace NsEcsFrame.Core {
 				}
 				return;
 			}
+			
+			// 清除可能存在的Gameobject
+			EntityMono.DestroyGameObjectById(entityId);
 			// 清除所有组件
 			_componentManager.RemoveAllComponents(entityId);
 			// 从活跃实体字典中移除

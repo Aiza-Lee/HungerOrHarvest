@@ -1,5 +1,7 @@
 using GameLogic.Common.Logic;
 using GameLogic.World;
+using NsEcsFrame.Unity;
+using UnityEngine;
 
 namespace GameLogic.Features.ClearWorld {
 	/// <summary>

@@ -18,6 +18,13 @@ namespace NsEcsFrame.Unity {
 			_entityMap.TryGetValue(id, out var mono);
 			return mono;
 		}
+		public static void DestroyGameObjectById(EntityId id) {
+			if (_entityMap.TryGetValue(id, out var mono)) {
+				mono.gameObject.SetActive(false);
+				Destroy(mono.gameObject);
+				_entityMap.Remove(id);
+			}
+		}
 
 		private EntityId _entityId;
 		public EntityId EntityId => _entityId;
