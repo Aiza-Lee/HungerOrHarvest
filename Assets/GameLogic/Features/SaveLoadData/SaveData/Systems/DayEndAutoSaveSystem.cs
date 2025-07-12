@@ -1,6 +1,5 @@
 using GameLogic.Features.TickCounter;
 using NsEcsFrame.Core;
-using NSFrame;
 
 namespace GameLogic.Features.SaveLoadData {
 	/// <summary>
@@ -22,7 +21,7 @@ namespace GameLogic.Features.SaveLoadData {
 		public void OnLogicUpdate(float _) {
 			var tickCounter = _world.GetResource<TickCounterResource>();
 			if (!tickCounter.IsDayLastTick) return;
-			SaveGameAPI.Save(true);
+			SaveLoadDataAPI.Save(true);
 		}
 		public void OnRenderUpdate(float _) { }
 	} 

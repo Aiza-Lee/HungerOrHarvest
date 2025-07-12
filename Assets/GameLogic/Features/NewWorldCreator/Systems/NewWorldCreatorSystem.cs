@@ -3,6 +3,7 @@ using GameLogic.Common.Logic;
 using GameLogic.Features.Arch;
 using GameLogic.Features.Generator;
 using GameLogic.Features.Repo;
+using GameLogic.Features.SaveLoadData;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.NewWorldCreator {
@@ -36,19 +37,23 @@ namespace GameLogic.Features.NewWorldCreator {
 
 		private void CreateWorld(RandomWorldBaseInfo info) {
 			var repoRes = _world.GetResource<RepoStatResource>();
+			// 解锁初始仓库和建筑
 			foreach (var unlock in info.UnlockedRepos) {
 				repoRes.Unlocked_F[unlock.EnumType] = true;
 				repoRes.RepoMax_F[unlock.EnumType] = unlock.Value;
 			}
+			// 初始资源
 			foreach (var repo in info.InitialRepos) {
 				repoRes.Repos_F[repo.EnumType] = repo.Value;
 			}
 
+			// 解锁建筑
 			var archUnlockRes = _world.GetResource<UnlockedArchResource>();
 			foreach (var unlock in info.UnlockedArchs) {
 				archUnlockRes.Unlocked_F[unlock] = true;
 			}
 
+			// 生成layer
 			var mid = info.Layers.Count / 2;
 			for (int i = 0; i < info.Layers.Count; i++) {
 				var layerType = info.Layers[i];
@@ -57,16 +62,20 @@ namespace GameLogic.Features.NewWorldCreator {
 				int odr = 0;
 				while (ux < ConstMgr.MAX_UX) {
 					LayerGenerateAPI.GenerateLayer(layerType, new(odr, i - mid + ConstMgr.MIDDLE_LAYER));
-					odr += (int)(ConstMgr.LAYER_SPRITE_UX_LENGTH / (ConstMgr.UX_PER_CX * ConstMgr.CX_PER_ODR));
+					odr += (int) (ConstMgr.LAYER_SPRITE_UX_LENGTH / (ConstMgr.UX_PER_CX * ConstMgr.CX_PER_ODR));
 					ux += ConstMgr.LAYER_SPRITE_UX_LENGTH;
 				}
 			}
+			// 生成建筑
 			foreach (var arch in info.Archs) {
 				ArchGenerateAPI.GenerateArch(arch.EnumType, arch.Value + ConstMgr.WORLD_CENTER_OL);
 			}
+			// 生成村民
 			foreach (var vill in info.Vills) {
 				VillGenerateAPI.GenerateVill(vill.EnumType, vill.Value + ConstMgr.WORLD_CENTER_OL);
 			}
+			
+			SaveLoadDataAPI.Save(false);
 		}
 	} 
 }
