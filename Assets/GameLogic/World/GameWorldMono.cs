@@ -87,9 +87,6 @@ namespace GameLogic.World {
 		}
 		protected override void RegisterResources() {
 			World
-				/* Common */
-				.InsertResource(new ChangeCurveResource())
-
 				/* Generator */
 				.InsertResource(new VillGeneratorResource())
 				.InsertResource(new LayerGeneratorResource())

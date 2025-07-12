@@ -17,11 +17,10 @@ namespace GameLogic.Common.View {
 		}
 		public override void ApplyChange(Entity entity) {
 			var transComp = entity.GetComponent<TransformComponent>();
-			var curveRes = GameWorldMono.MainWorld.GetResource<ChangeCurveResource>();
 			if (TotalTime <= 0f) {
 				transComp.LocalPosition = TargetValue;
 			} else {
-				transComp.LocalPosition = StartValue + (TargetValue - StartValue) * curveRes.PresetCurves[CurveType](ElapsedTime / TotalTime);
+				transComp.LocalPosition = StartValue + (TargetValue - StartValue) * ChangeCurves.GetCurve(CurveType)(ElapsedTime / TotalTime);
 			}
 			transComp.Dirty = true;
 		}
@@ -36,11 +35,10 @@ namespace GameLogic.Common.View {
 		}
 		public override void ApplyChange(Entity entity) {
 			var transComp = entity.GetComponent<TransformComponent>();
-			var curveRes = GameWorldMono.MainWorld.GetResource<ChangeCurveResource>();
 			if (TotalTime <= 0f) {
 				transComp.LocalRotation = TargetValue;
 			} else {
-				transComp.LocalRotation = StartValue + (TargetValue - StartValue) * curveRes.PresetCurves[CurveType](ElapsedTime / TotalTime);
+				transComp.LocalRotation = StartValue + (TargetValue - StartValue) * ChangeCurves.GetCurve(CurveType)(ElapsedTime / TotalTime);
 			}
 			transComp.Dirty = true;
 		}
@@ -55,11 +53,10 @@ namespace GameLogic.Common.View {
 		}
 		public override void ApplyChange(Entity entity) {
 			var transComp = entity.GetComponent<TransformComponent>();
-			var curveRes = GameWorldMono.MainWorld.GetResource<ChangeCurveResource>();
 			if (TotalTime <= 0f) {
 				transComp.LocalScale = TargetValue;
 			} else {
-				transComp.LocalScale = StartValue + (TargetValue - StartValue) * curveRes.PresetCurves[CurveType](ElapsedTime / TotalTime);
+				transComp.LocalScale = StartValue + (TargetValue - StartValue) * ChangeCurves.GetCurve(CurveType)(ElapsedTime / TotalTime);
 			}
 			transComp.Dirty = true;
 		}
@@ -74,12 +71,11 @@ namespace GameLogic.Common.View {
 		}
 		public override void ApplyChange(Entity entity) {
 			var rendererComp = entity.GetComponent<SpriteRendererComponent>();
-			var curveRes = GameWorldMono.MainWorld.GetResource<ChangeCurveResource>();
 			float alpha;
 			if (TotalTime <= 0f) {
 				alpha = TargetValue;
 			} else {
-				alpha = StartValue + (TargetValue - StartValue) * curveRes.PresetCurves[CurveType](ElapsedTime / TotalTime);
+				alpha = StartValue + (TargetValue - StartValue) * ChangeCurves.GetCurve(CurveType)(ElapsedTime / TotalTime);
 			}
 			rendererComp.Color.ModifyAlpha(alpha);
 			rendererComp.Dirty = true;
@@ -95,11 +91,10 @@ namespace GameLogic.Common.View {
 		}
 		public override void ApplyChange(Entity entity) {
 			var rectTransComp = entity.GetComponent<RectTransformComponent>();
-			var curveRes = GameWorldMono.MainWorld.GetResource<ChangeCurveResource>();
 			if (TotalTime <= 0f) {
 				rectTransComp.OffsetMin = TargetValue;
 			} else {
-				rectTransComp.OffsetMin = StartValue + (TargetValue - StartValue) * curveRes.PresetCurves[CurveType](ElapsedTime / TotalTime);
+				rectTransComp.OffsetMin = StartValue + (TargetValue - StartValue) * ChangeCurves.GetCurve(CurveType)(ElapsedTime / TotalTime);
 			}
 			rectTransComp.Dirty = true;
 		}
@@ -114,11 +109,10 @@ namespace GameLogic.Common.View {
 		}
 		public override void ApplyChange(Entity entity) {
 			var rectTransComp = entity.GetComponent<RectTransformComponent>();
-			var curveRes = GameWorldMono.MainWorld.GetResource<ChangeCurveResource>();
 			if (TotalTime <= 0f) {
 				rectTransComp.OffsetMax = TargetValue;
 			} else {
-				rectTransComp.OffsetMax = StartValue + (TargetValue - StartValue) * curveRes.PresetCurves[CurveType](ElapsedTime / TotalTime);
+				rectTransComp.OffsetMax = StartValue + (TargetValue - StartValue) * ChangeCurves.GetCurve(CurveType)(ElapsedTime / TotalTime);
 			}
 			rectTransComp.Dirty = true;
 		}
@@ -133,11 +127,10 @@ namespace GameLogic.Common.View {
 		}
 		public override void ApplyChange(Entity entity) {
 			var cameraComp = entity.GetComponent<CameraComponent>();
-			var curveRes = GameWorldMono.MainWorld.GetResource<ChangeCurveResource>();
 			if (TotalTime <= 0f) {
 				cameraComp.FeildOfView = TargetValue;
 			} else {
-				cameraComp.FeildOfView = StartValue + (TargetValue - StartValue) * curveRes.PresetCurves[CurveType](ElapsedTime / TotalTime);
+				cameraComp.FeildOfView = StartValue + (TargetValue - StartValue) * ChangeCurves.GetCurve(CurveType)(ElapsedTime / TotalTime);
 			}
 			cameraComp.Dirty = true;
 		}
@@ -152,11 +145,10 @@ namespace GameLogic.Common.View {
 		}
 		public override void ApplyChange(Entity entity) {
 			var audioComp = entity.GetComponent<AudioSourceComponent>();
-			var curveRes = GameWorldMono.MainWorld.GetResource<ChangeCurveResource>();
 			if (TotalTime <= 0f) {
 				audioComp.Volume = TargetValue;
 			} else {
-				audioComp.Volume = StartValue + (TargetValue - StartValue) * curveRes.PresetCurves[CurveType](ElapsedTime / TotalTime);
+				audioComp.Volume = StartValue + (TargetValue - StartValue) * ChangeCurves.GetCurve(CurveType)(ElapsedTime / TotalTime);
 			}
 			audioComp.Dirty = true;
 		}
