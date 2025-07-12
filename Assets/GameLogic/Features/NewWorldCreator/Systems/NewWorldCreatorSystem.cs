@@ -52,8 +52,14 @@ namespace GameLogic.Features.NewWorldCreator {
 			var mid = info.Layers.Count / 2;
 			for (int i = 0; i < info.Layers.Count; i++) {
 				var layerType = info.Layers[i];
-				// todo: 等到美术资源确定层的长度后，再决定这里如何生成，生成几个layer对象
-				LayerGenerateAPI.GenerateLayer(layerType, new(0, i - mid + ConstMgr.MIDDLE_LAYER));
+
+				float ux = 0f;
+				int odr = 0;
+				while (ux < ConstMgr.MAX_UX) {
+					LayerGenerateAPI.GenerateLayer(layerType, new(odr, i - mid + ConstMgr.MIDDLE_LAYER));
+					odr += (int)(ConstMgr.LAYER_SPRITE_UX_LENGTH / (ConstMgr.UX_PER_CX * ConstMgr.CX_PER_ODR));
+					ux += ConstMgr.LAYER_SPRITE_UX_LENGTH;
+				}
 			}
 			foreach (var arch in info.Archs) {
 				ArchGenerateAPI.GenerateArch(arch.EnumType, arch.Value + ConstMgr.WORLD_CENTER_OL);

@@ -25,7 +25,10 @@ namespace GameLogic.Common.View {
 				var spriteRendererComp = e.GetComponent<SpriteRendererComponent>();
 				if (!spriteRendererComp.IsDirty()) return;
 				var go = EntityMono.GetByEntityId(e.ID);
-				spriteRendererComp.ApplyToSpriteRenderer(go.GetComponent<UnityEngine.SpriteRenderer>());
+				var unityComps = go.GetComponentsInChildren<UnityEngine.SpriteRenderer>();
+				foreach (var sr in unityComps) {
+					spriteRendererComp.ApplyToSpriteRenderer(sr);
+				}
 				spriteRendererComp.ClearDirty();
 			});
 		}
