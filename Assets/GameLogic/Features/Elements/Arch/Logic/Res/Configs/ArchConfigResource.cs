@@ -7,7 +7,7 @@ using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
 
-namespace GameLogic.Features.Arch {
+namespace GameLogic.Features.Elements.Arch {
 	[System.Serializable]
 	public class ArchConfigResource : IResource {
 		[SerializeReference][SerializeField][Tooltip("没有找到配置时的默认配置")] private ArchConfigBase DefaultConfig;

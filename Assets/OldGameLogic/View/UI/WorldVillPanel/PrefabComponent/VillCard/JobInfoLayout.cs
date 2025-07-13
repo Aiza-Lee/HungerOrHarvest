@@ -1,8 +1,7 @@
 using OldGameLogic.Model.Mgr;
 using UnityEngine;
 
-namespace OldGameLogic.View.UI.WorldVillPanel
-{
+namespace OldGameLogic.View.UI.WorldVillPanel {
 	/// <summary>
 	/// 村民展开面板中，展示职业信息的布局
 	/// </summary>

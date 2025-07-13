@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic.Features.Arch {
+namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
 		fileName = "CarpenterWorkshopArchLevelConfig",
 		menuName = "HungerOrHarvest/Config/Arch/CarpenterWorkshopLevel",

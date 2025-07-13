@@ -36,6 +36,10 @@ MonoBehaviour:
       Value:
         ODR: 0
         LYR: 0
+    - EnumType: 2
+      Value:
+        ODR: 1
+        LYR: 1
   Vills:
     _items:
     - EnumType: 0

@@ -2,7 +2,7 @@ using GameLogic.Common.DataTypes;
 using NsEcsFrame.Core;
 using UnityEngine;
 
-namespace GameLogic.Features.Arch {
+namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
 		fileName = "CottageArchConfig", 
 		menuName = "HungerOrHarvest/Config/Arch/Cottage", 

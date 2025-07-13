@@ -1,7 +1,7 @@
 using GameLogic.Common.DataTypes;
 using NsEcsFrame.Core;
 
-namespace GameLogic.Features.Arch {
+namespace GameLogic.Features.Elements.Arch {
 	/// <summary>
 	/// 标识一个建筑的组件
 	/// </summary>

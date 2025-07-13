@@ -3,7 +3,7 @@ using GameLogic.Common.DataTypes;
 using GameLogic.Features.WorldDataManager;
 using NsEcsFrame.Core;
 
-namespace GameLogic.Features.Arch {
+namespace GameLogic.Features.Elements.Arch {
 	public class UnlockedArchResource : IResource, ISaveableResource, IWorldClearRespondable {
 		public EtList<ArchType, bool> Unlocked_F = new(fillAll: true);
 

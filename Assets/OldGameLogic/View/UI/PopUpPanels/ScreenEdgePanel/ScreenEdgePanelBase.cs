@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
-using Codice.CM.Common;
 using NSFrame;
 using TMPro;
 using UnityEngine;
 
-namespace OldGameLogic.View.UI.PopUpPanels.ScreenEdgePanel
-{
+namespace OldGameLogic.View.UI.PopUpPanels.ScreenEdgePanel {
 	[RequireComponent(typeof(SmoothOffsetMin), typeof(SmoothOffsetMax))]
 	public abstract class ScreenEdgePanelBase : PanelBase {
 
@@ -63,7 +61,7 @@ namespace OldGameLogic.View.UI.PopUpPanels.ScreenEdgePanel
 		public void CloseAfterSeconds(float sec) {
 			StartCoroutine(DoWait(sec, () => ClosePanelImpl()));
 		}
-		
+
 		/// <summary>
 		/// 关闭该窗口的方法，如果从外部直接调用Toggle不会触发返回动画而是直接关闭
 		/// </summary>
@@ -129,10 +127,10 @@ namespace OldGameLogic.View.UI.PopUpPanels.ScreenEdgePanel
 				EdgeType.Right => new(-_distanceToEdge, _SOMax.CurVal.y),
 				_ => throw new NotImplementedException(),
 			});
-		
+
 			OnShow_Derived();
 		}
 
-		
+
 	}
 }

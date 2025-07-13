@@ -1,7 +1,7 @@
 using GameLogic.Common.DataTypes;
 using UnityEngine;
 
-namespace GameLogic.Features.Arch {
+namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
 		fileName = "ClayPitArchArtConfig", 
 		menuName = "HungerOrHarvest/Config/ArchArt/ClayPitArt", 

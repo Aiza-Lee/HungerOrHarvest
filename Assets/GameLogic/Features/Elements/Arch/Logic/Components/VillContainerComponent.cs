@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NsEcsFrame.Core;
 
-namespace GameLogic.Features.Arch {
+namespace GameLogic.Features.Elements.Arch {
 	/// <summary>
 	/// 记录包含了哪些村民的组件
 	/// </summary>

@@ -1,5 +1,5 @@
 using NsEcsFrame.Unity;
 
-namespace GameLogic.Features.Arch {
+namespace GameLogic.Features.Elements.Arch {
 	public class ArchConfigResourceMono : ResourceMono<ArchConfigResource> {}
 }
