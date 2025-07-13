@@ -17,6 +17,7 @@ using GameLogic.Features.Vill;
 using GameLogic.Features.WorldEdge;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
+using GameLogic.Features.UiData.StartMenuData;
 
 namespace GameLogic.World {
 	public class GameWorldMono : WorldBehaviour {
@@ -82,6 +83,10 @@ namespace GameLogic.World {
 				.RegisterSystem<DestroyedEventConsumerSystem_Logic>()
 				.RegisterSystem<DestroyedEventConsumerSystem_View>()
 				.RegisterSystem<SaveEventConsumerSystem_Logic>()
+
+			/* UI */
+				/* StartMenu */
+				.RegisterSystem<StartMenuDataSystem>()
 				
 			;
 		}
@@ -131,6 +136,10 @@ namespace GameLogic.World {
 
 				/* WorldEdge */
 				.InsertResource(new WorldEdgeResource())
+
+			/* UI */
+				/* StartMenu */
+				.InsertResource(new StartMenuDataResource())
 			;
 		}
 	}

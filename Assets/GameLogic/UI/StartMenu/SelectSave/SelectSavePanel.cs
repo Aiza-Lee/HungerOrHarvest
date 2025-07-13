@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GameLogic.Features.UiData.StartMenuData;
 using GameLogic.UI.Common.UiMgr;
 using NSFrame;
 using UnityEngine;
@@ -22,6 +23,24 @@ namespace GameLogic.UI.StartMenu {
 			Refresh();
 		}
 
+		void Update() {
+			if (StartMenuDataAPI.IsAnySaveChanged) {
+				StartMenuDataAPI.IsAnySaveChanged = false;
+				Refresh();
+			}
+		}
+
+		/// <summary>
+		/// 刷新左侧世界列表和右侧存档列表
+		/// </summary>
+		private void Refresh() {
+			InitAllSaves();
+			_leftLayout.ResetContent(
+				_nameToSaveInfos.Select(group => group.Key).ToList()
+			);
+			_leftLayout.ChooseFirstWorld();
+		}
+
 		/// <summary>
 		/// 初始化所有存档信息
 		/// <para>每一个世界所有存档按照最后保存的时间排序</para>
@@ -37,7 +56,7 @@ namespace GameLogic.UI.StartMenu {
 			}
 			_nameToSaveInfos.Clear();
 			foreach (var pr in tmpDict) {
-				_nameToSaveInfos.Add(new(pr.Key, pr.Value));
+				_nameToSaveInfos.Add(pr);
 				pr.Value.Sort((a, b) => b.LastUpdateTime.CompareTo(a.LastUpdateTime));
 			}
 			_nameToSaveInfos.Sort((a, b) => b.Value[0].LastUpdateTime.CompareTo(a.Value[0].LastUpdateTime));
@@ -48,12 +67,15 @@ namespace GameLogic.UI.StartMenu {
 				_nameToSaveInfos.Find(group => group.Key == saveName).Value
 			);
 		}
-		public void Refresh() {
-			InitAllSaves();
-			_leftLayout.ResetContent(
-				_nameToSaveInfos.Select(group => group.Key).ToList()
-			);
-			_leftLayout.ChooseFirstWorld();
+
+		public (bool, string) CheckNameValid(string name) {
+			if (string.IsNullOrWhiteSpace(name)) {
+				return (false, "存档名称不能为空");
+			}
+			if (_nameToSaveInfos.Any(group => group.Key == name)) {
+				return (false, "存档名称已存在");
+			}
+			return (true, string.Empty);
 		}
 	}
 }
