@@ -20,6 +20,11 @@ public class EntityViewer : EditorWindow {
 	private bool _showComponentDetails = true;
 	private readonly Dictionary<ulong, bool> _entityFoldouts = new();
 	private readonly Dictionary<Type, bool> _componentFoldouts = new();
+	
+	// 添加自动刷新相关字段
+	private bool _autoRefresh = false;
+	private double _lastRefreshTime;
+	private float _refreshInterval = 1.0f; // 1秒刷新一次
 
 	[MenuItem("Tools/ECS实体查看器")]
 	public static void ShowWindow() {
@@ -28,6 +33,17 @@ public class EntityViewer : EditorWindow {
 
 	private void OnEnable() {
 		RefreshEntities();
+		// 记录初始时间
+		_lastRefreshTime = EditorApplication.timeSinceStartup;
+	}
+	
+	private void Update() {
+		// 自动刷新逻辑
+		if (_autoRefresh && EditorApplication.timeSinceStartup - _lastRefreshTime > _refreshInterval) {
+			RefreshEntities();
+			_lastRefreshTime = EditorApplication.timeSinceStartup;
+			Repaint(); // 触发OnGUI重绘
+		}
 	}
 
 	private void RefreshEntities() {
@@ -89,11 +105,24 @@ public class EntityViewer : EditorWindow {
 		// 显示详情选项
 		_showComponentDetails = GUILayout.Toggle(_showComponentDetails, "显示组件详情", EditorStyles.toolbarButton);
 
+		GUILayout.Space(10);
+
+		// 自动刷新选项
+		_autoRefresh = GUILayout.Toggle(_autoRefresh, "自动刷新", EditorStyles.toolbarButton);
+
+		if (_autoRefresh) {
+			GUILayout.Label("间隔:", GUILayout.Width(30));
+			_refreshInterval = EditorGUILayout.FloatField(_refreshInterval, EditorStyles.toolbarTextField, GUILayout.Width(40));
+			_refreshInterval = Mathf.Clamp(_refreshInterval, 0.1f, 10f);
+			GUILayout.Label("秒", GUILayout.Width(15));
+		}
+
 		GUILayout.FlexibleSpace();
 
-		// 刷新按钮
+		// 手动刷新按钮
 		if (GUILayout.Button("刷新", EditorStyles.toolbarButton)) {
 			RefreshEntities();
+			Repaint(); // 立即重绘
 		}
 
 		EditorGUILayout.EndHorizontal();
