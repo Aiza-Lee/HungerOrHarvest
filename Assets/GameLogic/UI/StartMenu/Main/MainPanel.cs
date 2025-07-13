@@ -1,5 +1,4 @@
-using GameLogic.Features.SaveLoadData;
-using GameLogic.Features.TickSpeed;
+using GameLogic.Features.WorldDataManager;
 using GameLogic.UI.Common.CenterPopUp;
 using GameLogic.UI.Common.UiMgr;
 using NSFrame;
@@ -12,7 +11,7 @@ namespace GameLogic.UI.StartMenu {
 
 		#region PublicMethods
 		public void OnEnterClicked() {
-			if (SaveLoadDataAPI.IsWorldLoaded()) {
+			if (WorldDataManagerAPI.IsWorldLoaded()) {
 				// UiMgr.Inst.TogglePanel<WorldRepoPanel.MainPanel>();
 				// UiMgr.Inst.TogglePanel<WorldVillPanel.MainPanel>();
 				UIMgr.Inst.TogglePanel<MainPanel>();

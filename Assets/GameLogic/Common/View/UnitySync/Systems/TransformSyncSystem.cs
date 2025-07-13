@@ -27,14 +27,12 @@ namespace GameLogic.Common.View {
 			var query = _world.CreateQueryBuilder()
 							.WithAll<TransformComponent>()
 							.Build();
-			// Debug.Log($"{query.Count} entities with TransformComponent found in TransformSyncSystem");
 			query.ForEach(e => {
 				var transComp = e.GetComponent<TransformComponent>();
-				// Debug.Log($"TransformSyncSystem: Processing entity {e.ID} with TransformComponent");
 				if (!transComp.Dirty) return;
+				transComp.ClearDirty();
 				var go = EntityMono.GetByEntityId(e.ID);
 				transComp.ApplyToTransform(go.transform);
-				transComp.ClearDirty();
 			});
 		}
 	}

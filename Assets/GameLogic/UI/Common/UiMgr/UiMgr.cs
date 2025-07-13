@@ -37,6 +37,30 @@ namespace GameLogic.UI.Common.UiMgr {
 			}
 		}
 
+		public T ShowPanel<T>() where T : PanelBase {
+			if (_panels == null) { LazyInitializePanels(); }
+			var type = typeof(T);
+			if (_panels.TryGetValue(type, out var panel)) {
+				panel.Show();
+				return panel as T;
+			} else {
+				Debug.LogWarning($"Panel of type {type} not found in UIMgr.");
+				return null;
+			}
+		}
+
+		public T ClosePanel<T>() where T : PanelBase {
+			if (_panels == null) { LazyInitializePanels(); }
+			var type = typeof(T);
+			if (_panels.TryGetValue(type, out var panel)) {
+				panel.Close();
+				return panel as T;
+			} else {
+				Debug.LogWarning($"Panel of type {type} not found in UIMgr.");
+				return null;
+			}
+		}
+
 		public T FindPanel<T>() where T : PanelBase {
 			if (_panels == null) { LazyInitializePanels(); }
 			if (_panels.TryGetValue(typeof(T), out var panel)) {

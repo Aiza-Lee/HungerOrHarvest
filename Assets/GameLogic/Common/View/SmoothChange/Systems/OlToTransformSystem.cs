@@ -25,10 +25,10 @@ namespace GameLogic.Common.View {
 			query.ForEach(e => {
 				var olComp = e.GetComponent<OLComponent>();
 				if (!olComp.IsDirty) return;
+				olComp.IsDirty = false;
 				var transComp = e.GetComponent<TransformComponent>();
 				transComp.LocalPosition = olComp.OL.ToVec3DefaultY();
 				transComp.Dirty = true;
-				olComp.IsDirty = false;
 			});
 		}
 	} 

@@ -86,6 +86,8 @@ namespace NsEcsFrame.Unity {
 		public SimpleQuaternion(Quaternion q) : this(q.x, q.y, q.z, q.w) { }
 		public static implicit operator Quaternion(SimpleQuaternion q) => new(q.x, q.y, q.z, q.w);
 		public static implicit operator SimpleQuaternion(Quaternion q) => new(q);
+		public static implicit operator Vector4(SimpleQuaternion q) => new(q.x, q.y, q.z, q.w);
+		public static implicit operator SimpleQuaternion(Vector4 v) => new(v.x, v.y, v.z, v.w);
 
 		public static SimpleQuaternion operator +(SimpleQuaternion a, SimpleQuaternion b) => new(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
 		public static SimpleQuaternion operator +(SimpleQuaternion q, Quaternion b) => new(q.x + b.x, q.y + b.y, q.z + b.z, q.w + b.w);

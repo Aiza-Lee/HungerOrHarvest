@@ -1,4 +1,4 @@
-using GameLogic.Features.NewWorldCreator;
+using GameLogic.Features.WorldDataManager;
 using GameLogic.UI.Common.CenterPopUp;
 using GameLogic.UI.Common.UiMgr;
 using UnityEngine;
@@ -11,9 +11,13 @@ namespace GameLogic.UI.StartMenu {
 			popup.SetHintStr("输入...");
 			popup.OnYesChoosed += (name) => {
 				name = name.Trim().Replace("\u200B", "");
-				NewWorldAPI.NewRandomWorld(name);
-				UIMgr.Inst.FindPanel<SelectSavePanel>().Refresh();
+				WorldDataManagerAPI.NewRandomWorld(name);
 			};
+		}
+		private void Update() {
+			if (/* todo: ditry check true*/true) {
+				UIMgr.Inst.FindPanel<SelectSavePanel>().Refresh();
+			}
 		}
 	}
 }

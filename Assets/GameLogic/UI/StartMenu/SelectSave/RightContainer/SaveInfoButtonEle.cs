@@ -3,7 +3,7 @@ using NSFrame;
 using TMPro;
 using UnityEngine;
 using GameLogic.UI.Common.UiComponents.GroupLayout;
-using GameLogic.Features.SaveLoadData;
+using GameLogic.Features.WorldDataManager;
 using GameLogic.UI.Common.UiMgr;
 using GameLogic.UI.Common.CenterPopUp;
 
@@ -35,7 +35,7 @@ namespace GameLogic.UI.StartMenu {
 			var popup = UIMgr.Inst.TogglePanel<CenterYesNoPanel>();
 			popup.SetTipText(tipText);
 			popup.OnYesChoosed += () => {
-				SaveLoadDataAPI.LoadData(_saveInfo);
+				WorldDataManagerAPI.LoadData(_saveInfo);
 				UIMgr.Inst.TogglePanel<SelectSavePanel>();
 			};
 		}

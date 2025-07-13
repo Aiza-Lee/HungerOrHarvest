@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
-using GameLogic.Features.SaveLoadData;
+using GameLogic.Features.WorldDataManager;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Generator {
@@ -16,8 +16,10 @@ namespace GameLogic.Features.Generator {
 			ArchDatas.Clear();
 
 			foreach (var data in loadedData) {
-				if (data is ArchGenerateData archData) {
-					ArchDatas.Add(archData);
+				if (data is ArchGeneratorResource res) {
+					ArchDatas.Clear();
+					ArchDatas.AddRange(res.ArchDatas);
+					break;
 				}
 			}
 		}

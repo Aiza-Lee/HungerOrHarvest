@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using GameLogic.Features.SaveLoadData;
+using GameLogic.Features.WorldDataManager;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.TickCounter {
@@ -24,17 +24,17 @@ namespace GameLogic.Features.TickCounter {
 
 		public void Load(IEnumerable<object> loadedData) {
 			foreach (var data in loadedData) {
-				if (data is TickCounterResource tickCounter) {
-					TodayTickCount = tickCounter.TodayTickCount;
-					TickCount = tickCounter.TickCount;
-					DayCount = tickCounter.DayCount;
-					IsDay = tickCounter.IsDay;
-					DayProcess = tickCounter.DayProcess;
-					NightProcess = tickCounter.NightProcess;
-					IsDayLastTick = tickCounter.IsDayLastTick;
-					IsNightLastTick = tickCounter.IsNightLastTick;
-					IsDayFirstTick = tickCounter.IsDayFirstTick;
-					IsNightFirstTick = tickCounter.IsNightFirstTick;
+				if (data is TickCounterResource res) {
+					TodayTickCount = res.TodayTickCount;
+					TickCount = res.TickCount;
+					DayCount = res.DayCount;
+					IsDay = res.IsDay;
+					DayProcess = res.DayProcess;
+					NightProcess = res.NightProcess;
+					IsDayLastTick = res.IsDayLastTick;
+					IsNightLastTick = res.IsNightLastTick;
+					IsDayFirstTick = res.IsDayFirstTick;
+					IsNightFirstTick = res.IsNightFirstTick;
 					break;
 				}
 			}

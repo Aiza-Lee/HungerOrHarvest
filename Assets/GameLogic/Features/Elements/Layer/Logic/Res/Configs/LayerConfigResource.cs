@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
-using GameLogic.Features.SaveLoadData;
+using GameLogic.Features.WorldDataManager;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -46,7 +46,6 @@ namespace GameLogic.Features.Layer {
 				.AddComponent<LayerIdentityComponent>(new() { LayerType = LayerType })
 				.AddComponent<TransformComponent>()
 				.AddComponent<SpriteRendererComponent>()
-				.AddComponent<CoordComponent>()
 				.AddComponent<OLComponent>()
 				.AddComponent<SavedEntityComponent>();
 			;

@@ -1,6 +1,6 @@
 using GameLogic.Common.Logic;
 using GameLogic.Features.Layer;
-using GameLogic.Features.SaveLoadData;
+using GameLogic.Features.WorldDataManager;
 using GameLogic.World;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace GameLogic.Features.Generator {
 	/// LayerGeneratorSystem 负责生成层的实体。
 	/// </summary>
 	public class LayerGeneratorSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 500;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;
@@ -35,25 +35,23 @@ namespace GameLogic.Features.Generator {
 		private void GenerateLayer(LayerGenerateData data) {
 			var type = data.Type;
 			var config = _world.GetResource<LayerConfigResource>().GetConfig(type);
-			var layer = config.GetDefaultEntity(_world);
+			var entity = config.GetDefaultEntity(_world);
 
-			var olComp = layer.GetComponent<OLComponent>();
+			var olComp = entity.GetComponent<OLComponent>();
 			olComp.OL = data.OL;
 			olComp.IsDirty = true;
 
-			var gidComp = layer.GetComponent<GidComponent>();
+			var gidComp = entity.GetComponent<GidComponent>();
 			gidComp.Gid = GidMgr.Inst.GetGid();
-			GameWorldMono.GidToEntity[gidComp.Gid] = layer;
-		var ac = _world.GetResource<LayerConfigResource>().GetArtConfig(type);
-		var go = GameObject.Instantiate(ac.Prefab);
-		go.GetComponent<LayerEntityMono>().SetEntity(layer);
+			GameWorldMono.GidToEntity[gidComp.Gid] = entity;
+			var ac = _world.GetResource<LayerConfigResource>().GetArtConfig(type);
+			var go = GameObject.Instantiate(ac.Prefab);
+			go.GetComponent<LayerEntityMono>().SetEntity(entity);
 
-		var eventEntity = _world.CreateEntity();
-		eventEntity
-			.AddComponent(new LayerGeneratedEventComp_Logic() { LayerGid = gidComp.Gid })
-			.AddComponent<SavedEntityComponent>()
-		;
-	}
+			_world.CreateEntity()
+				.AddComponent(new LayerGeneratedEventComp_Logic() { LayerGid = gidComp.Gid })
+				.AddComponent<SavedEntityComponent>();
+		}
 
 		public void OnRenderUpdate(float _) { }
 	}

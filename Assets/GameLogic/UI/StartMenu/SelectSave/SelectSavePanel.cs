@@ -35,9 +35,10 @@ namespace GameLogic.UI.StartMenu {
 				tmpDict.TryAdd(si.SaveName, new());
 				tmpDict[si.SaveName].Add(si);
 			}
-			foreach (var ele in tmpDict) {
-				_nameToSaveInfos.Add(new(ele.Key, ele.Value));
-				ele.Value.Sort((a, b) => b.LastUpdateTime.CompareTo(a.LastUpdateTime));
+			_nameToSaveInfos.Clear();
+			foreach (var pr in tmpDict) {
+				_nameToSaveInfos.Add(new(pr.Key, pr.Value));
+				pr.Value.Sort((a, b) => b.LastUpdateTime.CompareTo(a.LastUpdateTime));
 			}
 			_nameToSaveInfos.Sort((a, b) => b.Value[0].LastUpdateTime.CompareTo(a.Value[0].LastUpdateTime));
 		}

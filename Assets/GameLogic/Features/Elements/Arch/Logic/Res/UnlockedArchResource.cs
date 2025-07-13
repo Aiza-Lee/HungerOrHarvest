@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
-using GameLogic.Features.SaveLoadData;
+using GameLogic.Features.WorldDataManager;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Arch {

@@ -1,4 +1,4 @@
-using GameLogic.Features.SaveLoadData;
+using GameLogic.Features.WorldDataManager;
 
 namespace GameLogic.Common.Logic {
 	/// <summary>

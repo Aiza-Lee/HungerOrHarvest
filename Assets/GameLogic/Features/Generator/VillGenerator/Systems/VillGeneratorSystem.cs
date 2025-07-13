@@ -1,5 +1,5 @@
 using GameLogic.Common.Logic;
-using GameLogic.Features.SaveLoadData;
+using GameLogic.Features.WorldDataManager;
 using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
@@ -10,7 +10,7 @@ namespace GameLogic.Features.Generator {
 	/// 负责生成村民
 	/// </summary>
 	public class VillGeneratorSystem : ISystem {
-		public int Priority => 100;
+		public int Priority => 500;
 		public bool Enabled { get; set; }
 
 		private IWorld _world;

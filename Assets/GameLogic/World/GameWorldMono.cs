@@ -8,9 +8,8 @@ using GameLogic.Features.Generator;
 using GameLogic.Features.Job;
 using GameLogic.Features.Layer;
 using GameLogic.Features.MainCamera;
-using GameLogic.Features.NewWorldCreator;
+using GameLogic.Features.WorldDataManager;
 using GameLogic.Features.Repo;
-using GameLogic.Features.SaveLoadData;
 using GameLogic.Features.SpeedControl;
 using GameLogic.Features.TickCounter;
 using GameLogic.Features.TickSpeed;
@@ -31,9 +30,6 @@ namespace GameLogic.World {
 				.RegisterSystem<CoordToSmoothPositionSystem>()
 				.RegisterSystem<SmoothChangeSystem>()
 
-				/* NewWorldCreator */
-				.RegisterSystem<NewWorldCreatorSystem>()
-
 				/* AutoSoringOrder */
 				.RegisterSystem<AutoSortingLayerSystem>()
 
@@ -45,9 +41,10 @@ namespace GameLogic.World {
 				.RegisterSystem<SpeedControlInputSystem>()
 				.RegisterSystem<SpeedControlSystem>()
 
-				/* SaveLoadGame */
+				/* WorldDataManager */
 				.RegisterSystem<LoadGameCmdSystem>()
 				.RegisterSystem<DayEndAutoSaveSystem>()
+				.RegisterSystem<NewWorldCreatorSystem>()
 
 				/* Repo */
 				.RegisterSystem<DayFirstTickClearCounterSystem>()
@@ -61,8 +58,6 @@ namespace GameLogic.World {
 				.RegisterSystem<ArchGeneratorSystem>()
 				.RegisterSystem<LayerGeneratorSystem>()
 				.RegisterSystem<VillGeneratorSystem>()
-				.RegisterSystem<GeneratedEventConsumerSystem_Logic>()
-				.RegisterSystem<GeneratedEventConsumerSystem_View>()
 
 				/* Vill */
 				.RegisterSystem<VillExpSystem>()
@@ -71,8 +66,6 @@ namespace GameLogic.World {
 				/* Destroy */
 				.RegisterSystem<ArchDestroyerSystem>()
 				.RegisterSystem<VillDestroyerSystem>()
-				.RegisterSystem<DestroyedEventComsumerSystem_Logic>()
-				.RegisterSystem<DestroyedEventComsumerSystem_View>()
 
 				/* WorldEdge */
 				.RegisterSystem<WorldEdgeSystem>()
@@ -82,6 +75,14 @@ namespace GameLogic.World {
 				.RegisterSystem<RectTransformSyncSystem>()
 				.RegisterSystem<SpriteRendererSyncSystem>()
 				.RegisterSystem<TransformSyncSystem>()
+
+				/* EventConsumer */
+				.RegisterSystem<GeneratedEventConsumerSystem_Logic>()
+				.RegisterSystem<GeneratedEventConsumerSystem_View>()
+				.RegisterSystem<DestroyedEventConsumerSystem_Logic>()
+				.RegisterSystem<DestroyedEventConsumerSystem_View>()
+				.RegisterSystem<SaveEventConsumerSystem_Logic>()
+				
 			;
 		}
 		protected override void RegisterResources() {

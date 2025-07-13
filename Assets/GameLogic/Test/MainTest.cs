@@ -1,4 +1,4 @@
-using GameLogic.Features.NewWorldCreator;
+using GameLogic.Features.WorldDataManager;
 using GameLogic.Features.SpeedControl;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ namespace GameLogic.Test {
 			}
 			if (Input.GetKeyDown(KeyCode.N)) {
 				// 创建一个新的随机世界
-				NewWorldAPI.NewRandomWorld("TestWorld");
+				WorldDataManagerAPI.NewRandomWorld("TestWorld");
 				Debug.Log("New random world created.");
 			}
 		}

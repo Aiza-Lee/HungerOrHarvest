@@ -7,6 +7,10 @@ using NsEcsFrame.Core;
 using UnityEngine;
 
 namespace GameLogic.Features.AutoSortingLayer {
+	/// <summary>
+	/// 自动设置实体的SortingLayer的API。
+	/// <para>目前只是作为内部实现的Utils使用</para>
+	/// </summary>
 	public static class AutoSortingLayerAPI {
 		public static void SetSortingLayerByCoordY(Entity entity, int cy) {
 			SetSortingLayerByOlLyr(entity, Mathf.CeilToInt(1f * cy / ConstMgr.CY_PER_LYR));
