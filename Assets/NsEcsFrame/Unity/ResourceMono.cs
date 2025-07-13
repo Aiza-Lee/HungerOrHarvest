@@ -6,7 +6,7 @@ namespace NsEcsFrame.Unity {
 	/// 在unity面板中直接调试Ecs中的Resource资源，会在初始化的时候覆盖world中注册的同类型资源。
 	/// </summary>
 	public abstract class ResourceMono<T> : MonoBehaviour where T : class, IResource {
-		[SerializeField] private T _resource;
+		[SerializeField] protected T _resource;
 
 		void Start() {
 			if (WorldBehaviour.MainWorld == null) {

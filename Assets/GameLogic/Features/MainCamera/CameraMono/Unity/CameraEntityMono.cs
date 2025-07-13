@@ -23,7 +23,7 @@ namespace GameLogic.Features.MainCamera {
 			stat.SetChangeInfo(new(0, ChangeCurveType.Directive, false)).StartAChange(entity, target);
 		}
 
-		protected override IEnumerable<IComponent> GetAllComponents(Entity entity) {
+		protected override IEnumerable<IComponent> GetSomeComponents(Entity entity) {
 			yield return entity.GetComponent<MainCameraComponent>();
 			yield return entity.GetComponent<TransformComponent>();
 		}

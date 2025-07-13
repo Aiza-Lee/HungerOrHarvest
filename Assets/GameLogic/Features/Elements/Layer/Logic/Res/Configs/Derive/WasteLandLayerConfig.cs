@@ -10,7 +10,7 @@ namespace GameLogic.Features.Layer {
 	public class WasteLandLayerConfig : LayerConfigBase {
 		public override LayerType LayerType => LayerType.WasteLand;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

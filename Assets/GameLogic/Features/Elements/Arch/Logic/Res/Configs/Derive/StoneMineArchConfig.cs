@@ -10,7 +10,7 @@ namespace GameLogic.Features.Arch {
 	public class StoneMineArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.StoneMine;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

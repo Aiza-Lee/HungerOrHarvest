@@ -36,14 +36,28 @@ namespace GameLogic.Features.Generator {
 		private void GenerateArch(ArchGenerateData data) {
 			var type = data.Type;
 			var config = _world.GetResource<ArchConfigResource>().GetConfig(type);
-			var entity = config.GetDefaultEntity(_world);
+
+			bool newOL = true;
+			bool newGid = true;
+
+			var entity = _world.CreateEntity();
+			foreach (var comp in data.ExtraComponents) {
+				if (comp is OLComponent) newOL = false;
+				else if (comp is GidComponent) newGid = false;
+				entity.AddComponent(comp);
+			}
+			config.TryAddComponentsToEntity(entity);
 
 			var olComp = entity.GetComponent<OLComponent>();
-			olComp.OL = data.OL;
+			if (newOL) {
+				olComp.OL = data.OL;
+		}
 			olComp.IsDirty = true;
 
 			var gidComp = entity.GetComponent<GidComponent>();
-			gidComp.Gid = GidMgr.Inst.GetGid();
+			if (newGid) {
+				gidComp.Gid = GidMgr.Inst.GetGid();
+			}
 			GameWorldMono.GidToEntity[gidComp.Gid] = entity;
 
 			var ac = _world.GetResource<ArchConfigResource>().GetArtConfig(type);

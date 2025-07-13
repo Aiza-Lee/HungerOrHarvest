@@ -40,6 +40,29 @@ namespace NsEcsFrame.Core {
 			return component;
 		}
 
+		public IComponent AddComponent(EntityId entityId, IComponent component) {
+			var componentType = component.GetType();
+
+			// 确保已注册Component类型  
+			if (!_componentStorages.ContainsKey(componentType)) {
+				var storageType = typeof(ComponentStorage<>).MakeGenericType(componentType);
+				_componentStorages[componentType] = (IComponentStorage) Activator.CreateInstance(storageType);
+			}
+
+			// 使用接口统一方法，让具体存储类处理类型转换
+			var storage = _componentStorages[componentType];
+			storage.AddComponent(entityId, component);
+
+			// 记录Entity拥有的Component类型
+			if (!_entityComponentTypes.TryGetValue(entityId, out var componentTypes)) {
+				componentTypes = new HashSet<Type>();
+				_entityComponentTypes[entityId] = componentTypes;
+			}
+			componentTypes.Add(componentType);
+
+			return component;
+		}
+
 		public bool RemoveComponent<T>(EntityId entityID) where T : class, IComponent {
 			Type type = typeof(T);
 
@@ -167,6 +190,10 @@ namespace NsEcsFrame.Core {
 			/// 获取所有包含该Component类型的EntityID
 			/// </summary>
 			IReadOnlyCollection<EntityId> GetEntities();
+			/// <summary>
+			/// 添加Component到特定Entity（通用版本）
+			/// </summary>
+			void AddComponent(EntityId entityId, IComponent component);
 		}
 
 		private interface IComponentStorageWithAll {
@@ -182,6 +209,15 @@ namespace NsEcsFrame.Core {
 
 			public void AddComponent(EntityId entityId, T component) {
 				_components[entityId] = component;
+			}
+
+			public void AddComponent(EntityId entityId, IComponent component) {
+				// 类型安全的转换
+				if (component is T typedComponent) {
+					AddComponent(entityId, typedComponent);
+				} else {
+					throw new ArgumentException($"Component type {component.GetType()} is not compatible with storage type {typeof(T)}");
+				}
 			}
 
 			public bool HasComponent(EntityId entityId) {

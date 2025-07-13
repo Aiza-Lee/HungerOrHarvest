@@ -8,7 +8,7 @@ using UnityEngine;
 namespace GameLogic.Features.Vill {
 	[RequireComponent(typeof(SpriteRenderer))]
 	public class VillEntityMono : EntityMono {
-		protected override IEnumerable<IComponent> GetAllComponents(Entity entity) {
+		protected override IEnumerable<IComponent> GetSomeComponents(Entity entity) {
 			yield return entity.GetComponent<CoordComponent>();
 			yield return entity.GetComponent<SmoothPositionStatComponent>();
 			yield return entity.GetComponent<RoutePlanComponent>();

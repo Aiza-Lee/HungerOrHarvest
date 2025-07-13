@@ -1,11 +1,17 @@
+using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
 using GameLogic.World;
+using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Generator {
 	public static class VillGenerateAPI {
-		public static void GenerateVill(VillType type, OL ol) {
+		public static void GenerateVill(VillType type, Coord coord, List<IComponent> extraComponents = null) {
 			var res = GameWorldMono.MainWorld.GetResource<VillGeneratorResource>();
-			res.VillDatas.Add(new VillGenerateData { Type = type, OL = ol });
+			res.VillDatas.Add(new VillGenerateData {
+				Type = type,
+				Coord = coord,
+				ExtraComponents = extraComponents ?? new List<IComponent>()
+			});
 		}
 	}
 }

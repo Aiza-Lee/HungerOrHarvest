@@ -10,7 +10,7 @@ namespace GameLogic.Features.Arch {
 	public class HunterCabinArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.HunterCabin;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

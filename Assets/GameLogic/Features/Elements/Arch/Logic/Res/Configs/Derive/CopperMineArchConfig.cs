@@ -10,7 +10,7 @@ namespace GameLogic.Features.Arch {
 	public class CopperMineArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.CopperMine;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

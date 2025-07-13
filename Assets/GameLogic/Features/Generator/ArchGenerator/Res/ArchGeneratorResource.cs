@@ -32,5 +32,6 @@ namespace GameLogic.Features.Generator {
 	public class ArchGenerateData {
 		public ArchType Type;
 		public OL OL;
+		public List<IComponent> ExtraComponents = new();
 	}
 }

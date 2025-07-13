@@ -10,7 +10,7 @@ namespace GameLogic.Features.Layer {
 	public class SeaEndLayerConfig : LayerConfigBase {
 		public override LayerType LayerType => LayerType.SeaEnd;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

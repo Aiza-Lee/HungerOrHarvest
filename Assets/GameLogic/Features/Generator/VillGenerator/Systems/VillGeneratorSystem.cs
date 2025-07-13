@@ -37,25 +37,39 @@ namespace GameLogic.Features.Generator {
 			var configRes = _world.GetResource<VillConfigResource>();
 			var type = data.Type;
 			var config = configRes.GetConfig(type);
-			var vill = config.GetDefaultEntity(_world);
+			bool newCoord = true;
+			bool newGid = true;
+
+			var vill = _world.CreateEntity();
+			foreach (var comp in data.ExtraComponents) {
+
+				if (comp is CoordComponent) newCoord = false;
+				else if (comp is GidComponent) newGid = false;
+
+				vill.AddComponent(comp);
+				Debug.Log($"生成村民: {type}, 组件数量: {vill.GetAllComponents().Count}, 从{data.ExtraComponents.Count}个额外组件中加载");
+			}
+			config.TryAddComponentsToEntity(vill);
 
 			var coordComp = vill.GetComponent<CoordComponent>();
-			coordComp.Coord = data.OL.ToCoord();
+			if (newCoord) {
+				coordComp.Coord = data.Coord;
+			}
 			coordComp.IsDirty = true;
 
 			var gidComp = vill.GetComponent<GidComponent>();
-			gidComp.Gid = GidMgr.Inst.GetGid();
+			if (newGid) {
+				gidComp.Gid = GidMgr.Inst.GetGid();
+			}
 			GameWorldMono.GidToEntity[gidComp.Gid] = vill;
 			
 			var artConfig = configRes.GetArtConfig(type);			
 			var go = GameObject.Instantiate(artConfig.Prefab);
 			go.GetComponent<VillEntityMono>().SetEntity(vill);
 
-			var eventEntity = _world.CreateEntity();
-			eventEntity
+			_world.CreateEntity()
 				.AddComponent(new VillGeneratedEventComp_Logic() { VillGid = gidComp.Gid })
-				.AddComponent<SavedEntityComponent>()
-			;
+				.AddComponent<SavedEntityComponent>();
 		}
 	}
 }

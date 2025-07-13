@@ -10,7 +10,7 @@ namespace GameLogic.Features.Arch {
 	public class CottageArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.Cottage;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

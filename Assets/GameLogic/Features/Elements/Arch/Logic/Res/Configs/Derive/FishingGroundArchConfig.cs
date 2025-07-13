@@ -10,7 +10,7 @@ namespace GameLogic.Features.Arch {
 	public class FishingGroundArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.FishingGround;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

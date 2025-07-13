@@ -28,6 +28,7 @@ namespace GameLogic.Features.Generator {
 
 	public class VillGenerateData {
 		public VillType Type;
-		public OL OL;
+		public Coord Coord;
+		public List<IComponent> ExtraComponents = new();
 	}
 }

@@ -26,9 +26,10 @@ namespace GameLogic.Features.Generator {
 			LayerDatas.Clear();
 		}
 	}
-	
+
 	public class LayerGenerateData {
 		public LayerType Type;
 		public OL OL;
+		public List<IComponent> ExtraComponents = new();
 	}
 }

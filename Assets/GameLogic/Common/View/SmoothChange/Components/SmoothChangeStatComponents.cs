@@ -6,6 +6,7 @@ using NsEcsFrame.Unity;
 namespace GameLogic.Common.View {
 	[System.Serializable]
 	public class SmoothPositionStatComponent : SmoothChangeStatCompBase<SimpleVector3> {
+		public SmoothPositionStatComponent() : base() { }
 		public SmoothPositionStatComponent(ChangeInfo changeInfo) : base(changeInfo) { }
 		public SmoothPositionStatComponent(float totalTime, ChangeCurveType curveType, bool useLogicTime)
 			: base(totalTime, curveType, useLogicTime) { }
@@ -25,6 +26,7 @@ namespace GameLogic.Common.View {
 		}
 	}
 	public class SmoothRotationStatComponent : SmoothChangeStatCompBase<SimpleQuaternion> {
+		public SmoothRotationStatComponent() : base() { }
 		public SmoothRotationStatComponent(ChangeInfo changeInfo) : base(changeInfo) { }
 		public SmoothRotationStatComponent(float totalTime, ChangeCurveType curveType, bool useLogicTime) 
 			: base(totalTime, curveType, useLogicTime) { }
@@ -43,6 +45,7 @@ namespace GameLogic.Common.View {
 		}
 	}
 	public class SmoothScaleStatComponent : SmoothChangeStatCompBase<SimpleVector3> {
+		public SmoothScaleStatComponent() : base() { }
 		public SmoothScaleStatComponent(ChangeInfo changeInfo) : base(changeInfo) { }
 		public SmoothScaleStatComponent(float totalTime, ChangeCurveType curveType, bool useLogicTime) 
 			: base(totalTime, curveType, useLogicTime) { }
@@ -61,6 +64,7 @@ namespace GameLogic.Common.View {
 		}
 	}
 	public class SmoothAlphaStatComponent : SmoothChangeStatCompBase<float> {
+		public SmoothAlphaStatComponent() : base() { }
 		public SmoothAlphaStatComponent(ChangeInfo changeInfo) : base(changeInfo) { }
 		public SmoothAlphaStatComponent(float totalTime, ChangeCurveType curveType, bool useLogicTime) 
 			: base(totalTime, curveType, useLogicTime) { }
@@ -81,6 +85,7 @@ namespace GameLogic.Common.View {
 		}
 	}
 	public class SmoothOffsetMinStatComponent : SmoothChangeStatCompBase<SimpleVector2> {
+		public SmoothOffsetMinStatComponent() : base() { }
 		public SmoothOffsetMinStatComponent(ChangeInfo changeInfo) : base(changeInfo) { }
 		public SmoothOffsetMinStatComponent(float totalTime, ChangeCurveType curveType, bool useLogicTime) 
 			: base(totalTime, curveType, useLogicTime) { }
@@ -99,6 +104,7 @@ namespace GameLogic.Common.View {
 		}
 	}
 	public class SmoothOffsetMaxStatComponent : SmoothChangeStatCompBase<SimpleVector2> {
+		public SmoothOffsetMaxStatComponent() : base() { }
 		public SmoothOffsetMaxStatComponent(ChangeInfo changeInfo) : base(changeInfo) { }
 		public SmoothOffsetMaxStatComponent(float totalTime, ChangeCurveType curveType, bool useLogicTime) 
 			: base(totalTime, curveType, useLogicTime) { }
@@ -117,6 +123,7 @@ namespace GameLogic.Common.View {
 		}
 	}
 	public class SmoothCameraSizeStatComponent : SmoothChangeStatCompBase<float> {
+		public SmoothCameraSizeStatComponent() : base() { }
 		public SmoothCameraSizeStatComponent(ChangeInfo changeInfo) : base(changeInfo) { }
 		public SmoothCameraSizeStatComponent(float totalTime, ChangeCurveType curveType, bool useLogicTime) 
 			: base(totalTime, curveType, useLogicTime) { }
@@ -135,6 +142,7 @@ namespace GameLogic.Common.View {
 		}
 	}
 	public class SmoothAudioVolumeStatComponent : SmoothChangeStatCompBase<float> {
+		public SmoothAudioVolumeStatComponent() : base() { }
 		public SmoothAudioVolumeStatComponent(ChangeInfo changeInfo) : base(changeInfo) { }
 		public SmoothAudioVolumeStatComponent(float totalTime, ChangeCurveType curveType, bool useLogicTime) 
 			: base(totalTime, curveType, useLogicTime) { }

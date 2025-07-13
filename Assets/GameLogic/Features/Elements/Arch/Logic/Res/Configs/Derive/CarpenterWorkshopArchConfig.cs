@@ -10,7 +10,7 @@ namespace GameLogic.Features.Arch {
 	public class CarpenterWorkshopArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.CarpenterWorkshop;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

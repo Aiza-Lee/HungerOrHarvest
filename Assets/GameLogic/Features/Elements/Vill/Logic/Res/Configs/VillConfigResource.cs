@@ -39,31 +39,28 @@ namespace GameLogic.Features.Vill {
 
 	public abstract class VillConfigBase : ScriptableObject {
 		abstract public VillType VillType { get; }
-
-		public Entity GetDefaultEntity(IWorld world) {
-			var entity = world.CreateEntity();
+		public void TryAddComponentsToEntity(Entity entity) {
 			entity
-				.AddComponent<GidComponent>()
-				.AddComponent<VillIdentityComponent>(new() { Type = VillType })
-				.AddComponent<CoordComponent>()
-				.AddComponent<SmoothPositionStatComponent>(new(0, ChangeCurveType.Directive, true))
-				.AddComponent<TransformComponent>()
-				.AddComponent<SpriteRendererComponent>()
-				.AddComponent<VillBehaviourTreeComponent>(new(entity))
-				.AddComponent<VillMoveComponent>()
-				.AddComponent<BondToArchComponent>()
-				.AddComponent<JobExpComponent>()
-				.AddComponent<RoutePlanComponent>()
-				.AddComponent<VillVitalityComponent>(new() { Vit = VitConfig.MaxVit, RecoverChances = VitConfig.RecoverChancePerDay })
-				.AddComponent<SavedEntityComponent>()
+				.TryAddComponent<GidComponent>()
+				.TryAddComponent<VillIdentityComponent>(new() { Type = VillType })
+				.TryAddComponent<CoordComponent>()
+				.TryAddComponent<SmoothPositionStatComponent>(new(0, ChangeCurveType.Directive, true))
+				.TryAddComponent<TransformComponent>()
+				.TryAddComponent<SpriteRendererComponent>()
+				.TryAddComponent<VillBehaviourTreeComponent>(new(entity))
+				.TryAddComponent<VillMoveComponent>()
+				.TryAddComponent<BondToArchComponent>()
+				.TryAddComponent<JobExpComponent>()
+				.TryAddComponent<RoutePlanComponent>()
+				.TryAddComponent<VillVitalityComponent>(new() { Vit = VitConfig.MaxVit, RecoverChances = VitConfig.RecoverChancePerDay })
+				.TryAddComponent<SavedEntityComponent>()
 			;
 			AddDerivedComponents(entity);
-			return entity;
 		}
 		protected abstract void AddDerivedComponents(Entity entity);
 
 		[Tooltip("体力配置")] public VitConfig VitConfig;
-		[Tooltip("随机游走横向半径(相对于已解锁的地块,计量单位是ORD)")] public uint SpareOrdRadius;
+		// [Tooltip("随机游走横向半径(相对于已解锁的地块,计量单位是ORD)")] public uint SpareOrdRadius;
 		[Tooltip("走过每个Coord所需要的Tick数量")] public uint TicksPerCoord;
 
 		public ChangeInfo NormalWalkChangeInfo => new(1f * TicksPerCoord / ConstMgr.SPEEDx1_TICKS_PER_SECOND, ChangeCurveType.Linear, true);

@@ -40,22 +40,20 @@ namespace GameLogic.Features.Arch {
 	public abstract class ArchConfigBase : ScriptableObject {
 		abstract public ArchType ArchType { get; }
 
-		public Entity GetDefaultEntity(IWorld world) {
-			var entity = world.CreateEntity();
+		public void TryAddComponentsToEntity(Entity entity) {
 			entity
-				.AddComponent<GidComponent>()
-				.AddComponent<TransformComponent>()
-				.AddComponent<SpriteRendererComponent>()
-				.AddComponent<OLComponent>()
-				.AddComponent<ArchIdentityComponent>(new ArchIdentityComponent() { ArchType = ArchType })
-				.AddComponent<BondToVillComponent>()
-				.AddComponent<VillContainerComponent>()
-				.AddComponent<SavedEntityComponent>()
+				.TryAddComponent<GidComponent>()
+				.TryAddComponent<ArchIdentityComponent>(new() { ArchType = ArchType })
+				.TryAddComponent<TransformComponent>()
+				.TryAddComponent<SpriteRendererComponent>()
+				.TryAddComponent<OLComponent>()
+				.TryAddComponent<SavedEntityComponent>()
+				.TryAddComponent<BondToVillComponent>()
+				.TryAddComponent<VillContainerComponent>()
 			;
-			AddDerivedComponents(entity);
-			return entity;
+			TryAddDerivedComponents(entity);
 		}
-		protected abstract void AddDerivedComponents(Entity entity);
+		protected abstract void TryAddDerivedComponents(Entity entity);
 
 		[Tooltip("建筑名称")] public string Name;
 		[Tooltip("建造所需时间（Tick）")] public int ConstructTicks;

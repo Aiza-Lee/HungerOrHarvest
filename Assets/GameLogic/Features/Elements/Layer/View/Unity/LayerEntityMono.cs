@@ -5,7 +5,7 @@ using NsEcsFrame.Unity;
 
 namespace GameLogic.Features.Layer {
 	public class LayerEntityMono : EntityMono {
-		protected override IEnumerable<IComponent> GetAllComponents(Entity entity) {
+		protected override IEnumerable<IComponent> GetSomeComponents(Entity entity) {
 			yield return entity.GetComponent<LayerIdentityComponent>();
 			yield return entity.GetComponent<OLComponent>();
 		}

@@ -30,6 +30,14 @@ namespace NsEcsFrame.Core {
 		T AddComponent<T>(EntityId entityId, T component) where T : class, IComponent;
 
 		/// <summary>
+		/// 添加Component（使用实际组件类型）
+		/// </summary>
+		/// <param name="entityId">EntityID</param>
+		/// <param name="component">Component实例</param>
+		/// <returns>添加的Component</returns>
+		IComponent AddComponent(EntityId entityId, IComponent component);
+
+		/// <summary>
 		/// 移除Component
 		/// </summary>
 		/// <typeparam name="T">Component类型</typeparam>

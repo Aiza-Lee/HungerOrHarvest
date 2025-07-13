@@ -35,7 +35,7 @@ namespace NsEcsFrame.Unity {
 			_entityId = entity.ID;
 			_entityMap[_entityId] = this;
 			_components.Clear();
-			foreach (var component in GetAllComponents(entity)) {
+			foreach (var component in GetSomeComponents(entity)) {
 				_components.Add(component);
 			}
 		}
@@ -48,6 +48,6 @@ namespace NsEcsFrame.Unity {
 		/// <summary>
 		/// 返回所有需要在unity Inspector中调试的Entity的组件的引用的集合。
 		/// </summary>
-		protected abstract IEnumerable<IComponent> GetAllComponents(Entity entity);
+		protected abstract IEnumerable<IComponent> GetSomeComponents(Entity entity);
 	}
 }

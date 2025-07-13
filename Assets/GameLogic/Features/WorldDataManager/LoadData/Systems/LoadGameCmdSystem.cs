@@ -1,4 +1,9 @@
+using System.Linq;
 using GameLogic.Common.Logic;
+using GameLogic.Features.Arch;
+using GameLogic.Features.Generator;
+using GameLogic.Features.Layer;
+using GameLogic.Features.SpeedControl;
 using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
@@ -44,6 +49,9 @@ namespace GameLogic.Features.WorldDataManager {
 
 			var entityDatas = gameData.EntitiesSaveData.Entities;
 			entityDatas.ForEach(entityData => {
+
+				if (CheckForElement(entityData)) return;
+
 				var entity = _world.CreateEntity();
 				entityData.Components.ForEach(comp => {
 					entity.AddComponent(comp);
@@ -51,16 +59,51 @@ namespace GameLogic.Features.WorldDataManager {
 						GameWorldMono.GidToEntity[gidComp.Gid] = entity;
 					}
 				});
+
 			});
 
 			var vills = _world.CreateQueryBuilder().WithAll<VillIdentityComponent>().Build();
 			vills.ForEach(vill => {
-				var villAi = vill.GetComponent<VillBehaviourTreeComponent>();
-				villAi = new VillBehaviourTreeComponent(vill);
+				vill.AddComponent(new VillBehaviourTreeComponent(vill));
 			});
 
 			saveInfoRes.IsLoaded = true;
+			SpeedControlAPI.SetSpeedControlInputEnabled(true);
 		}
 		public void OnRenderUpdate(float _) { }
+
+		/// <summary>
+		/// 检查是否为元素类型的实体，并进行相应的生成操作(通过Generator生成)。
+		/// </summary>
+		private bool CheckForElement(EntitySaveData saveData) {
+			var vill = saveData.Components.OfType<VillIdentityComponent>().FirstOrDefault();
+			if (vill != null) {
+				var coord = saveData.Components.OfType<CoordComponent>().First();
+				if (coord != null) {
+					VillGenerateAPI.GenerateVill(vill.Type, coord.Coord, saveData.Components);
+					return true;
+				}
+			}
+
+			var layer = saveData.Components.OfType<LayerIdentityComponent>().FirstOrDefault();
+			if (layer != null) {
+				var ol = saveData.Components.OfType<OLComponent>().First();
+				if (ol != null) {
+					LayerGenerateAPI.GenerateLayer(layer.LayerType, ol.OL, saveData.Components);
+					return true;
+				}
+			}
+
+			var arch = saveData.Components.OfType<ArchIdentityComponent>().FirstOrDefault();
+			if (arch != null) {
+				var ol = saveData.Components.OfType<OLComponent>().First();
+				if (ol != null) {
+					ArchGenerateAPI.GenerateArch(arch.ArchType, ol.OL, saveData.Components);
+					return true;
+				}
+			}
+
+			return false;
+		}
 	}
 }

@@ -10,7 +10,7 @@ namespace GameLogic.Features.Layer {
 	public class SnowLayerConfig : LayerConfigBase {
 		public override LayerType LayerType => LayerType.Snow;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

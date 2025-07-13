@@ -1,7 +1,9 @@
 using GameLogic.Common.Logic;
 using GameLogic.Features.Arch;
 using GameLogic.Features.Generator;
+using GameLogic.Features.MainCamera;
 using GameLogic.Features.Repo;
+using GameLogic.Features.SpeedControl;
 using GameLogic.World;
 using NsEcsFrame.Core;
 
@@ -26,12 +28,13 @@ namespace GameLogic.Features.WorldDataManager {
 			var infoRes = _world.GetResource<NewWorldInfoResource>();
 			if (infoRes.NewWorldInfo == null) return;
 			WorldDataManagerAPI.ClearWorld();
-			
+
 			var baseInfo = infoRes.NewWorldInfo.BaseInfo;
 			var worldName = infoRes.NewWorldInfo.WorldName;
 			_world.Name = worldName;
 			CreateWorld(baseInfo);
 			infoRes.NewWorldInfo = null; // 清除创建信息，避免重复创建
+			_world.GetResource<SaveInfoResource>().IsLoaded = true;
 		}
 		public void OnRenderUpdate(float _) { }
 
@@ -73,10 +76,12 @@ namespace GameLogic.Features.WorldDataManager {
 			}
 			// 生成村民
 			foreach (var vill in info.Vills) {
-				VillGenerateAPI.GenerateVill(vill.EnumType, vill.Value + ConstMgr.WORLD_CENTER_OL);
+				VillGenerateAPI.GenerateVill(vill.EnumType, (vill.Value + ConstMgr.WORLD_CENTER_OL).ToCoord());
 			}
-			
+
 			WorldDataManagerAPI.Save(false);
+			SpeedControlAPI.SetSpeedControlInputEnabled(true);
+			CameraInputAPI.SetCameraInputEnabled(true);
 		}
 	} 
 }

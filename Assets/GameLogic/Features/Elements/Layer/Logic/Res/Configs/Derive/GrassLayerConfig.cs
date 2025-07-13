@@ -10,7 +10,7 @@ namespace GameLogic.Features.Layer {
 	public class GrassLayerConfig : LayerConfigBase {
 		public override LayerType LayerType => LayerType.Grass;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

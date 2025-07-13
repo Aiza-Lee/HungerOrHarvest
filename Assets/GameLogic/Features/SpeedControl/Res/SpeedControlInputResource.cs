@@ -1,6 +1,7 @@
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.SpeedControl {
+	[System.Serializable]
 	public class SpeedControlInputResource : IResource {
 		public bool EnabledInput;
 

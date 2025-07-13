@@ -10,7 +10,7 @@ namespace GameLogic.Features.Layer {
 	public class SnowMountainEndLayerConfig : LayerConfigBase {
 		public override LayerType LayerType => LayerType.SnowMountainEnd;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

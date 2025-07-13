@@ -10,7 +10,7 @@ namespace GameLogic.Features.Layer {
 	public class BeachLayerConfig : LayerConfigBase {
 		public override LayerType LayerType => LayerType.Beach;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

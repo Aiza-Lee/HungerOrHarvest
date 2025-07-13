@@ -10,7 +10,7 @@ namespace GameLogic.Features.Arch {
 	public class ClayPitArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.ClayPit;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

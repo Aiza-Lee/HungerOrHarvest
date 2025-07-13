@@ -39,20 +39,17 @@ namespace GameLogic.Features.Layer {
 	public abstract class LayerConfigBase : ScriptableObject {
 		public abstract LayerType LayerType { get; }
 
-		public Entity GetDefaultEntity(IWorld world) {
-			var entity = world.CreateEntity();
+		public void TryAddComponentsToEntity(Entity entity) {
 			entity
-				.AddComponent<GidComponent>()
-				.AddComponent<LayerIdentityComponent>(new() { LayerType = LayerType })
-				.AddComponent<TransformComponent>()
-				.AddComponent<SpriteRendererComponent>()
-				.AddComponent<OLComponent>()
-				.AddComponent<SavedEntityComponent>();
-			;
-			AddDerivedComponents(entity);
-			return entity;
+				.TryAddComponent<GidComponent>()
+				.TryAddComponent<LayerIdentityComponent>(new() { LayerType = LayerType })
+				.TryAddComponent<TransformComponent>()
+				.TryAddComponent<SpriteRendererComponent>()
+				.TryAddComponent<OLComponent>()
+				.TryAddComponent<SavedEntityComponent>();
+			TryAddDerivedComponents(entity);
 		}
-		protected abstract void AddDerivedComponents(Entity entity);
+		protected abstract void TryAddDerivedComponents(Entity entity);
 
 		public string LayerName;
 		public string LayerDescription;

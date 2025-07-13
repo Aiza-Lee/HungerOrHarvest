@@ -10,7 +10,7 @@ namespace GameLogic.Features.Arch {
 	public class RuinArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.Ruin;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

@@ -18,6 +18,8 @@ namespace GameLogic.Common.View {
 		public T StartValue;
 		public T TargetValue;
 
+		public SmoothChangeStatCompBase() {}
+
 		public SmoothChangeStatCompBase<T> StartAChange(Entity entity, T TargetValue) {
 			SetStartValueToCurValue(entity);
 			this.TargetValue = TargetValue;

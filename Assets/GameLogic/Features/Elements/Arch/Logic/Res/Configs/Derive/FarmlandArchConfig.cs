@@ -10,7 +10,7 @@ namespace GameLogic.Features.Arch {
 	public class FarmlandArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.Farmland;
 
-		protected override void AddDerivedComponents(Entity entity) {
+		protected override void TryAddDerivedComponents(Entity entity) {
 		}
 	}
 }

@@ -57,6 +57,29 @@ namespace NsEcsFrame.Core {
 		}
 
 		/// <summary>
+		/// 尝试添加组件，如果实体已经有该组件则不做任何操作
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		public Entity TryAddComponent<T>() where T : class, IComponent, new() {
+			if (!HasComponent<T>()) {
+				_componentManager.AddComponent<T>(ID);
+			}
+			return this;
+		}
+
+		/// <summary>
+		/// 尝试添加组件，如果实体已经有该组件则不做任何操作
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="component">组件实例</param>
+		public Entity TryAddComponent<T>(T component) where T : class, IComponent {
+			if (!HasComponent<T>()) {
+				_componentManager.AddComponent(ID, component);
+			}
+			return this;
+		}
+
+		/// <summary>
 		/// 移除组件
 		/// </summary>
 		/// <typeparam name="T">组件类型</typeparam>
