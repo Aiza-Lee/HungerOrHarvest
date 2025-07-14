@@ -13,7 +13,7 @@ namespace GameLogic.UI.StartMenu {
 		public void OnEnterClicked() {
 			if (WorldDataManagerAPI.IsWorldLoaded()) {
 				// UiMgr.Inst.TogglePanel<WorldRepoPanel.MainPanel>();
-				// UiMgr.Inst.TogglePanel<WorldVillPanel.MainPanel>();
+				UIMgr.Inst.TogglePanel<WorldVill.MainPanel>();
 				UIMgr.Inst.TogglePanel<MainPanel>();
 
 			} else {

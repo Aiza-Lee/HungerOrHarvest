@@ -44,6 +44,7 @@ namespace GameLogic.Features.Elements.Arch {
 			entity
 				.TryAddComponent<GidComponent>()
 				.TryAddComponent<ArchIdentityComponent>(new() { ArchType = ArchType })
+				.TryAddComponent<ArchLevelComponent>()
 				.TryAddComponent<TransformComponent>()
 				.TryAddComponent<SpriteRendererComponent>()
 				.TryAddComponent<OLComponent>()

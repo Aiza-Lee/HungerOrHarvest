@@ -1,4 +1,3 @@
-using GameLogic.Common.DataTypes;
 using GameLogic.Features.Events;
 using GameLogic.Features.Job;
 using GameLogic.Features.Vill;
@@ -30,23 +29,23 @@ namespace GameLogic.Features.Elements.Vill {
 			_queryBuilder.WithAll<VillIdentityComponent>().Build().ForEach(vill => {
 				var expGainRequest = vill.GetComponent<ExpGainRequestComponent>();
 				var expComp = vill.GetComponent<JobExpComponent>();
-				expComp.JobExp_F.Add(expGainRequest.ExpGain);
-
-				expComp.JobExp_F.ForEach(pr => {
-					var level = expComp.JobLevel_F[pr.EnumType];
-					var config = _jobConfig.GetConfig(pr.EnumType);
+				expGainRequest.ExpGain.ForEach(pr => {
+					var jobType = pr.EnumType;
+					var level = expComp.JobLevel_F[jobType];
+					var config = _jobConfig.GetConfig(jobType);
 					var lConfig = config.LevelConfigs[level];
+
+					expComp.JobExp_F[pr.EnumType] += pr.Value;
 					if (level >= config.LevelConfigs.Count - 1) {
 						pr.Value = Mathf.Min(pr.Value, lConfig.NextLevelExpDemand);
 						return;
 					}
-					if (pr.Value >= lConfig.NextLevelExpDemand) {
-						pr.Value -= lConfig.NextLevelExpDemand;
+					if (expComp.JobExp_F[pr.EnumType] >= lConfig.NextLevelExpDemand) {
+						expComp.JobExp_F[pr.EnumType] -= lConfig.NextLevelExpDemand;
 						expComp.JobLevel_F[pr.EnumType] += 1;
 						vill.AddComponent(new VillJobLevelUpEventComponent() { JobType = pr.EnumType });
 					}
 				});
-
 			});
 		}
 		public void OnRenderUpdate(float _) { }

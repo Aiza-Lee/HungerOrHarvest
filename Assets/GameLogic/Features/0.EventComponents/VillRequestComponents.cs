@@ -18,6 +18,9 @@ namespace GameLogic.Features.Events {
 	public class BondToArchRequestComponent : IComponent {
 		public ulong ArchGid;
 	}
+	public class DisbondArchRequestComponent : IComponent {
+		public ulong ArhcGid;
+	}
 
 	public enum VitCostReason {
 		Production,

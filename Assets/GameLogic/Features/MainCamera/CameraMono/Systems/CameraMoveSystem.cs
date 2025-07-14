@@ -40,7 +40,7 @@ namespace GameLogic.Features.MainCamera {
 				var targetSize = config.CameraSizes[input.TargetCameraSizeIndex];
 				var cameraComp = camera.GetComponent<CameraComponent>();
 				if (cameraComp.FeildOfView != targetSize) {
-					smoothStat.SetChangeInfo(config.DefaultCameraSizeChangeInfo)
+					smoothStat.SetChangeInfo(config.SizeChangeInfo)
 							.StartAChange(camera, targetSize);
 				}
 			}
@@ -65,26 +65,26 @@ namespace GameLogic.Features.MainCamera {
 			} else if (input.MoveLeftKeyUp) {
 				var target = curPos + config.CAMERA_STOP_LENGTH * Vector3.left;
 				if (target.x < ConstMgr.MIN_UX) { target.x = ConstMgr.MIN_UX; }
-				moveStat.SetChangeInfo(config.DefaultCameraStopPositionChangeInfo).StartAChange(camera, target);
+				moveStat.SetChangeInfo(config.StopPositionChangeInfo).StartAChange(camera, target);
 
 			} else if (input.MoveRightKeyUp) {
 				var target = curPos + config.CAMERA_STOP_LENGTH * Vector3.right;
 				if (target.x > ConstMgr.MAX_UX) { target.x = ConstMgr.MAX_UX; }
-				moveStat.SetChangeInfo(config.DefaultCameraStopPositionChangeInfo).StartAChange(camera, target);
+				moveStat.SetChangeInfo(config.StopPositionChangeInfo).StartAChange(camera, target);
 			}
 
 
 			if (input.MoveForwardKeyDown) {
-				MonoService.Inst.StartCoroutine(LockMoveCoro(config.DefaultForwardPositionChangeInfo.TotalTime));
+				MonoService.Inst.StartCoroutine(LockMoveCoro(config.ForwardPositionChangeInfo.TotalTime));
 				var target = curPos + ConstMgr.LayerGap * Vector3.forward;
-				if (target.z > ConstMgr.MAX_UZ) { target.z = ConstMgr.MAX_UZ; }
-				moveStat.SetChangeInfo(config.DefaultForwardPositionChangeInfo).StartAChange(camera, target);
+				if (target.z >= ConstMgr.MAX_UZ - ConstMgr.LayerGap) { target.z = ConstMgr.MAX_UZ - ConstMgr.LayerGap; }
+				moveStat.SetChangeInfo(config.ForwardPositionChangeInfo).StartAChange(camera, target);
 
 			} else if (input.MoveBackwardKeyDown) {
-				MonoService.Inst.StartCoroutine(LockMoveCoro(config.DefaultBackwardPositionChangeInfo.TotalTime));
+				MonoService.Inst.StartCoroutine(LockMoveCoro(config.BackwardPositionChangeInfo.TotalTime));
 				var target = curPos + ConstMgr.LayerGap * Vector3.back;
-				if (target.z < ConstMgr.MIN_UZ) { target.z = ConstMgr.MIN_UZ; }
-				moveStat.SetChangeInfo(config.DefaultBackwardPositionChangeInfo).StartAChange(camera, target);
+				if (target.z <= ConstMgr.MIN_UZ - ConstMgr.LayerGap) { target.z = ConstMgr.MIN_UZ - ConstMgr.LayerGap; }
+				moveStat.SetChangeInfo(config.BackwardPositionChangeInfo).StartAChange(camera, target);
 			}
 
 		}

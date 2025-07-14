@@ -134,7 +134,7 @@ namespace GameLogic.Features.Vill {
 			#endif
 			var arch = VillQueryAPI.GetWorkArchGid(bb.Entity).ToEntity();
 			var archLevel = ArchQueryAPI.GetLevel(arch);
-			var lConfig = ArchQueryAPI.GetArchLevelConfig(arch);
+			var lConfig = ArchQueryAPI.GetLevelConfig(arch);
 
 			var vitCost = lConfig.VitConsPerTick;
 			var cons = lConfig.ExtraConsPerOnePerTick.ToNewEtList();

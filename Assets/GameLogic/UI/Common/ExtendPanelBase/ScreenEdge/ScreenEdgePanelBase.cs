@@ -23,9 +23,7 @@ namespace GameLogic.UI.Common.ExtendPanelBase {
 			_SOMax = GetComponent<SmoothOffsetMax>();
 		}
 
-		public enum EdgeType {
-			Top, Bottom, Left, Right
-		}
+		public enum EdgeType { Top, Bottom, Left, Right }
 		[SerializeField] private EdgeType _edgePopFrom;
 		[SerializeField] private float _distanceToEdge;
 		[SerializeField] private TextMeshProUGUI _tip;

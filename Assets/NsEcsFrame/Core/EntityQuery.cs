@@ -106,6 +106,50 @@ namespace NsEcsFrame.Core {
 				action(entity, component1, component2, component3);
 			}
 		}
+
+		public bool Any(Func<Entity, bool> value) {
+			foreach (var entity in _entities) {
+				if (entity.IsEnabled && entity.IsValid() && value(entity)) {
+					return true;
+				}
+			}
+			return false;
+		}
+		public bool All(Func<Entity, bool> value) {
+			foreach (var entity in _entities) {
+				if (entity.IsEnabled && entity.IsValid() && !value(entity)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		public Entity FirstOrDefault(Func<Entity, bool> value) {
+			foreach (var entity in _entities) {
+				if (entity.IsEnabled && entity.IsValid() && value(entity)) {
+					return entity;
+				}
+			}
+			return null;
+		}
+		public Entity FirstOrDefault() {
+			foreach (var entity in _entities) {
+				if (entity.IsEnabled && entity.IsValid()) {
+					return entity;
+				}
+			}
+			return null;
+		}
+		public Entity First() {
+			if (_entities.Count == 0) {
+				throw new InvalidOperationException("No entities found in the query.");
+			}
+			foreach (var entity in _entities) {
+				if (entity.IsEnabled && entity.IsValid()) {
+					return entity;
+				}
+			}
+			throw new InvalidOperationException("No valid entities found in the query.");
+		}
 	}
 
 	

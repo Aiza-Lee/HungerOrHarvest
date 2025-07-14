@@ -60,14 +60,7 @@ namespace GameLogic.Features.WorldDataManager {
 			var mid = info.Layers.Count / 2;
 			for (int i = 0; i < info.Layers.Count; i++) {
 				var layerType = info.Layers[i];
-
-				float ux = 0f;
-				int odr = 0;
-				while (ux < ConstMgr.MAX_UX) {
-					LayerGenerateAPI.GenerateLayer(layerType, new(odr, i - mid + ConstMgr.MIDDLE_LAYER));
-					odr += (int) (ConstMgr.LAYER_SPRITE_UX_LENGTH / (ConstMgr.UX_PER_CX * ConstMgr.CX_PER_ODR));
-					ux += ConstMgr.LAYER_SPRITE_UX_LENGTH;
-				}
+				LayerGenerateAPI.GenerateLayer(layerType, new(0, i - mid + ConstMgr.MIDDLE_LAYER));
 			}
 			// 生成建筑
 			foreach (var arch in info.Archs) {

@@ -64,7 +64,8 @@ namespace GameLogic.Common.Logic {
 		public const float UZ_PER_CY = 0.4f;
 		/// <summary>地平线的高度，单位为Unity世界坐标系的Y轴</summary>
 		public static float DEFAULT_Y = 0f;
-		public static float LayerGap => CY_PER_LYR * UZ_PER_CY;
+		/// <summary>层之间的距离，单位为Unity世界坐标系的Z轴</summary>
+		public static float LayerGap => UZ_PER_CY * CY_PER_LYR;
 		/// <summary>1倍速下每秒的Tick数</summary>
 		public const uint SPEEDx1_TICKS_PER_SECOND = 20;
 

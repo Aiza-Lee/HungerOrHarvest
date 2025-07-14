@@ -59,6 +59,7 @@ namespace GameLogic.World {
 				/* MainCamera */
 				.RegisterSystem<CameraInputSystem>()
 				.RegisterSystem<CameraMoveSystem>()
+				.RegisterSystem<CameraFollowSystem>()
 
 				/* Generator */
 				.RegisterSystem<ArchGeneratorSystem>()

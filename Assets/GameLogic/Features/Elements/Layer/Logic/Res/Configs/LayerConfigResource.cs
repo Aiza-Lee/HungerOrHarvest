@@ -3,6 +3,7 @@ using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Features.WorldDataManager;
+using GameLogic.World;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -44,7 +45,12 @@ namespace GameLogic.Features.Layer {
 				.TryAddComponent<GidComponent>()
 				.TryAddComponent<LayerIdentityComponent>(new() { LayerType = LayerType })
 				.TryAddComponent<TransformComponent>()
-				.TryAddComponent<SpriteRendererComponent>()
+				.TryAddComponent<SpriteRendererComponent>(new() {
+					DrawMode = SpriteDrawMode.Tiled,
+					TileMode = SpriteTileMode.Continuous,
+					Size = new(ConstMgr.MAX_UX, 16),
+					Color = GameWorldMono.MainWorld.GetResource<LayerConfigResource>().GetArtConfig(LayerType).Prefab.GetComponent<SpriteRenderer>().color
+				})
 				.TryAddComponent<OLComponent>()
 				.TryAddComponent<SavedEntityComponent>();
 			TryAddDerivedComponents(entity);

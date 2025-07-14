@@ -3,6 +3,7 @@ using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.Utils;
 using GameLogic.Features.Events;
+using GameLogic.Features.Job;
 using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
@@ -10,6 +11,8 @@ using NsEcsFrame.Core;
 namespace GameLogic.Features.Elements.Vill {
 	public static class VillQueryAPI {
 		private static IWorld World => GameWorldMono.MainWorld;
+		private static readonly EntityQueryBuilder _villQueryBuilder = World.CreateQueryBuilder()
+			.WithAll<VillIdentityComponent>();
 
 		public static List<ulong> GetAllVillGids() {
 			var query = World.CreateQueryBuilder()
@@ -32,39 +35,68 @@ namespace GameLogic.Features.Elements.Vill {
 			return entityIds;
 		}
 
-		public static float GetVit(Entity entity) {
-			return entity.GetComponent<VillVitalityComponent>().Vit;
+		public static float GetVit(Entity entity) => entity.GetComponent<VillVitalityComponent>().Vit;
+		public static float GetVitPercentage(Entity entity) {
+			var type = entity.GetComponent<VillIdentityComponent>().Type;
+			var vitConfig = GetVitConfig(type);
+			return GetVit(entity) / vitConfig.MaxVit;
 		}
 		public static (int, float) GetJobLevelExp(Entity entity, JobType job) {
 			var jobLevelComp = entity.GetComponent<JobExpComponent>();
 			return (jobLevelComp.JobLevel_F[job], jobLevelComp.JobExp_F[job]);
 		}
+		public static string GetName(Entity vill) {
+			var identityComp = vill.GetComponent<VillIdentityComponent>();
+			return $"{identityComp.LastName}{identityComp.FirstName}";
+		}
+		public static VillType GetVillType(Entity vill) => vill.GetComponent<VillIdentityComponent>().Type;
 
-		public static ulong GetHomeArchGid(Entity vill) {
-			return vill.GetComponent<BondToArchComponent>().HomeArchGid;
+		public static ulong GetHomeArchGid(Entity vill) => vill.GetComponent<BondToArchComponent>().HomeArchGid;
+		public static ulong GetWorkArchGid(Entity vill) => vill.GetComponent<BondToArchComponent>().WorkArchGid;
+		public static ulong GetInArchGid(Entity vill) => vill.GetComponent<InArchComponent>().ArchGid;
+		public static VillArtConfigBase GetArtConfig(VillType type) => World.GetResource<VillConfigResource>().GetArtConfig(type);
+		public static VitConfig GetVitConfig(VillType villType) {
+			return World.GetResource<VillConfigResource>()
+				.GetConfig(villType).VitConfig;
 		}
-		public static ulong GetWorkArchGid(Entity vill) {
-			return vill.GetComponent<BondToArchComponent>().WorkArchGid;
+		public static IEnumerable<EtPair<JobType, int>> GetJobLevels(Entity vill) => vill.GetComponent<JobExpComponent>().JobLevel_F;
+		public static List<EtPair<JobType, int>> GetSortedJobLevels(Entity vill) {
+			var jobLevelComp = vill.GetComponent<JobExpComponent>();
+			var list = new List<EtPair<JobType, int>>(jobLevelComp.JobLevel_F);
+			list.Sort((a, b) => b.Value.CompareTo(a.Value)); // Sort by level descending
+			return list;
 		}
-		public static ulong GetInArchGid(Entity vill) {
-			return vill.GetComponent<InArchComponent>().ArchGid;
+		public static float GetJobExpProportion(Entity vill, JobType job) {
+			var jobLevelComp = vill.GetComponent<JobExpComponent>();
+			var lConfig = JobQueryAPI.GetJobLevelConfig(job, jobLevelComp.JobLevel_F[job]);
+			return jobLevelComp.JobExp_F[job] / lConfig.NextLevelExpDemand;
 		}
-
-		public static VitConfig GetVitConfig(Entity vill) {
-			return GameWorldMono.MainWorld.GetResource<VillConfigResource>()
-				.GetConfig(vill.GetComponent<VillIdentityComponent>().Type)
-				.VitConfig;
+		public static List<Entity> GetNoHomeVills() {
+			var res = new List<Entity>();
+			_villQueryBuilder.Build().ForEach(vill => {
+				if (vill.GetComponent<BondToArchComponent>().HomeArchGid == 0) { res.Add(vill); }
+			});
+			return res;
+		}
+		public static List<Entity> GetHaveHomeNoWorkVills() {
+			var res = new List<Entity>();
+			_villQueryBuilder.Build().ForEach(vill => {
+				var bondComp = vill.GetComponent<BondToArchComponent>();
+				if (bondComp.WorkArchGid == 0 && bondComp.HomeArchGid != 0) { res.Add(vill); }
+			});
+			return res;
 		}
 
 	}
-	
-
 
 
 	public static class VillRequestAPI {
 
 		public static void RequestBondToArch(Entity vill, Entity arch) {
 			vill.AddComponent(new BondToArchRequestComponent() { ArchGid = arch.GetGid(), });
+		}
+		public static void RequestDisbondArch(Entity vill, Entity arch) {
+			vill.AddComponent(new DisbondArchRequestComponent() { ArhcGid = arch.GetGid(), });
 		}
 
 		public static void RequestCostVit(Entity entity, float vit, VitCostReason reason) {
