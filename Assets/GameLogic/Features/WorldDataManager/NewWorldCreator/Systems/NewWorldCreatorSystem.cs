@@ -1,10 +1,9 @@
 using GameLogic.Common.Logic;
-using GameLogic.Features.Elements;
+using GameLogic.Features.Elements.Arch;
 using GameLogic.Features.Generator;
 using GameLogic.Features.MainCamera;
 using GameLogic.Features.Repo;
 using GameLogic.Features.SpeedControl;
-using GameLogic.World;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.WorldDataManager {

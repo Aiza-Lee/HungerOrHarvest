@@ -9,10 +9,13 @@ namespace GameLogic.Features.Vill {
 		public bool Enabled { get; set; }
 
 		private IWorld _world;
+		private EntityQueryBuilder _queryBuilder;
 
 		public void Initialize(IWorld world) {
 			_world = world;
 			Enabled = true;
+			_queryBuilder = _world.CreateQueryBuilder()
+				.WithAll<VillBehaviourTreeComponent>();
 		}
 
 		public void OnCreate() { }
@@ -20,9 +23,7 @@ namespace GameLogic.Features.Vill {
 		public void OnDestroy() { }
 
 		public void OnLogicUpdate(float deltaTime) {
-			var query = _world.CreateQueryBuilder()
-				.WithAll<VillBehaviourTreeComponent>().Build();
-			query.ForEach(entity => {
+			_queryBuilder.Build().ForEach(entity => {
 				entity.GetComponent<VillBehaviourTreeComponent>().BehaviourTree.Think();
 			});
 		}

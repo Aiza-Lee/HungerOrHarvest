@@ -2,8 +2,10 @@ using System.Linq;
 using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.Logic.Utils;
-using GameLogic.Features.Elements;
+using GameLogic.Common.Utils;
 using GameLogic.Features.Destroyer;
+using GameLogic.Features.Elements.Arch;
+using GameLogic.Features.Elements.Vill;
 using GameLogic.Features.Repo;
 using GameLogic.Features.TickCounter;
 using GameLogic.Features.WorldEdge;
@@ -33,7 +35,6 @@ namespace GameLogic.Features.Vill {
 						.Selector()
 							.Sequence()
 								.Condition(bb => bb.World.GetResource<TickCounterResource>().IsNightLastTick == true)
-								.Action(LeaveHome)
 								.Selector()
 									.Sequence()
 										.Condition(bb => bb.VitPercent >= bb.VitConfig.LowVitThreshold)
@@ -44,6 +45,7 @@ namespace GameLogic.Features.Vill {
 										.Action(EnterDie)
 									.End()
 								.End()
+								.Action(LeaveHome)
 							.End()
 							.Sequence()
 								.Condition(bb => bb.World.GetResource<TickCounterResource>().IsDayLastTick == true)
@@ -127,93 +129,83 @@ namespace GameLogic.Features.Vill {
 		}
 
 		private static NodeStatus WorkProd(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("WorkProd called");
-#endif
-			var workArchEntity = GameWorldMono.GidToEntity[bb.Entity.GetComponent<BondToArchComponent>().WorkArchGid];
-			var archLevel = workArchEntity.GetComponent<ArchLevelComponent>().Level;
-			var lConfig = bb.World.GetResource<ArchConfigResource>()
-								.GetConfig(workArchEntity.GetComponent<ArchIdentityComponent>().ArchType)
-								.LevelConfigs[archLevel];
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("WorkProd called");
+			#endif
+			var arch = VillQueryAPI.GetWorkArchGid(bb.Entity).ToEntity();
+			var archLevel = ArchQueryAPI.GetLevel(arch);
+			var lConfig = ArchQueryAPI.GetArchLevelConfig(arch);
+
 			var vitCost = lConfig.VitConsPerTick;
 			var cons = lConfig.ExtraConsPerOnePerTick.ToNewEtList();
 			var prod = lConfig.ExtraProdPerOnePerTick.ToNewEtList();
-			var expAdd = lConfig.AddExpPerTick.ToNewEtList();
+			var expGain = lConfig.AddExpPerTick.ToNewEtList();
+
 			if (bb.IsHungry) {
 				cons.Change(val => val * (1f - bb.VitConfig.HungryProdLoss));
 				prod.Change(val => val * (1f - bb.VitConfig.HungryProdLoss));
+				expGain.Change(val => val * (1f - bb.VitConfig.HungryProdLoss));
 			}
 
-			var prodRes = bb.World.GetResource<TryProdInfoResource>();
-			prodRes.TryProdInfos.Add(new TryProdInfo {
-				VillGid = bb.GidComp.Gid,
-				Cons = cons,
-				Prod = prod,
-				VitCost = vitCost,
-				ExpAdd = expAdd
-			});
+			VillRequestAPI.RequestProd(bb.Entity, cons, prod, expGain, vitCost);
 			return NodeStatus.SUCCESS;
 		}
 
 		private static NodeStatus Sleep(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("Sleep called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("Sleep called");
+			#endif
 			// todo: 睡觉逻辑,目前的实现应该没有问题，但是可能是个bug
 			return NodeStatus.SUCCESS;
 		}
 
 		private static NodeStatus Recover(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("Recover called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("Recover called");
+			#endif
 			if (bb.VitPercent >= 1f) {
 				return NodeStatus.FAILURE;
 			}
 			var cons = bb.VitConfig.FoodConsPerTickWhenRecover;
-			var repoRes = bb.World.GetResource<RepoStatResource>().Repos_F;
-			if (repoRes[RepoType.Food] >= cons) {
-				repoRes[RepoType.Food] -= cons;
-				bb.VitalityComp.Vit = Mathf.Min(bb.VitConfig.MaxVit, bb.VitalityComp.Vit + bb.VitConfig.VitPerFood * cons);
+			if (RepoQueryAPI.GetRepoAmount(RepoType.Food) >= cons) {
+				VillRequestAPI.RequestConsFoodRecoverVit(bb.Entity, cons, bb.VitConfig.VitPerFood * cons);
 				return NodeStatus.SUCCESS;
 			}
-			return NodeStatus.FAILURE; // 无法恢复，食物不足
+			return NodeStatus.FAILURE;
 		}
 		private static NodeStatus RecoverTillWork(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("RecoverTillWork called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("RecoverTillWork called");
+			#endif
 			if (bb.VitPercent >= bb.VitConfig.RecoverVitThreshold) {
 				return NodeStatus.FAILURE; // 已经满了
 			}
 			var cons = bb.VitConfig.FoodConsPerTickWhenRecover;
-			var repos = bb.World.GetResource<RepoStatResource>().Repos_F;
-			if (repos[RepoType.Food] >= cons) {
-				repos[RepoType.Food] -= cons;
-				bb.VitalityComp.Vit = Mathf.Min(bb.VitConfig.MaxVit, bb.VitalityComp.Vit + bb.VitConfig.VitPerFood * cons);
+			if (RepoQueryAPI.GetRepoAmount(RepoType.Food) >= cons) {
+				VillRequestAPI.RequestConsFoodRecoverVit(bb.Entity, cons, bb.VitConfig.VitPerFood * cons);
 				return NodeStatus.SUCCESS;
 			}
 			return NodeStatus.FAILURE; // 无法恢复，食物不足
 		}
 
 		private static NodeStatus ExitRecoverMode(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("ExitRecoverMode called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("ExitRecoverMode called");
+			#endif
 			bb.VitalityComp.AtRecoverMode = false;
 			return NodeStatus.SUCCESS;
 		}
 		private static NodeStatus EnterRecoverMode(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("EnterRecoverMode called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("EnterRecoverMode called");
+			#endif
 			bb.VitalityComp.AtRecoverMode = true;
 			return NodeStatus.SUCCESS;
 		}
 		private static NodeStatus UseRecoverChance(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("UseRecoverChance called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("UseRecoverChance called");
+			#endif
 			if (bb.VitalityComp.RecoverChances <= 0) {
 				return NodeStatus.FAILURE; // 没有恢复机会了
 			}
@@ -221,100 +213,87 @@ namespace GameLogic.Features.Vill {
 			return NodeStatus.SUCCESS; // 成功使用一次恢复机会
 		}
 		private static bool CheckFoodEnoughForRecover(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("CheckFoodEnoughForRecover called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("CheckFoodEnoughForRecover called");
+			#endif
 			var vitDemand = bb.VitConfig.MaxVit - bb.VitalityComp.Vit;
 			var foodDemand = vitDemand / bb.VitConfig.VitPerFood;
-			var repos = bb.World.GetResource<RepoStatResource>().Repos_F;
-			return repos[RepoType.Food] >= foodDemand;
+			return RepoQueryAPI.GetRepoAmount(RepoType.Food) >= foodDemand;
 		}
 
 		private static NodeStatus EnterHome(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("EnterHome called");
-#endif
-			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
-			if (villBondArch.HomeArchGid == 0) return NodeStatus.FAILURE; // 没有家，无法进入
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("EnterHome called");
+			#endif
+			var homeGid = VillQueryAPI.GetHomeArchGid(bb.Entity);
+			if (homeGid == 0) return NodeStatus.FAILURE; // 没有家，无法进入
 
-			var villContainer = GameWorldMono.GidToEntity[villBondArch.HomeArchGid].GetComponent<VillContainerComponent>();
-			if (!villContainer.VillGids.Contains(bb.GidComp.Gid)) {
-				villContainer.VillGids.Add(bb.GidComp.Gid);
-				villContainer.IsDirty = true;
+			if (!VillQueryAPI.GetInArchGid(bb.Entity).Equals(homeGid)) {
+				VillRequestAPI.RequestEnterHomeArch(bb.Entity);
 				return NodeStatus.SUCCESS;
 			}
 			return NodeStatus.FAILURE; // 已经在家中
 		}
 		private static NodeStatus LeaveHome(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("LeaveHome called");
-#endif
-			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
-			if (villBondArch.HomeArchGid == 0) return NodeStatus.FAILURE; // 没有家，无法进入
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("LeaveHome called");
+			#endif
+			var homeGid = VillQueryAPI.GetHomeArchGid(bb.Entity);
+			if (homeGid == 0) return NodeStatus.FAILURE;
 
-			var villContainer = GameWorldMono.GidToEntity[villBondArch.HomeArchGid].GetComponent<VillContainerComponent>();
-			if (villContainer.VillGids.Contains(bb.GidComp.Gid)) {
-				villContainer.VillGids.Remove(bb.GidComp.Gid);
-				villContainer.IsDirty = true;
-				return NodeStatus.SUCCESS;
-			}
-			return NodeStatus.FAILURE; // 已经在家中
+			VillRequestAPI.RequestLeaveArch(bb.Entity);
+
+			return NodeStatus.SUCCESS;
 		}
 
 		private static NodeStatus EnterWorkArch(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("EnterWorkArch called");
-#endif
-			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
-			if (villBondArch.WorkArchGid == 0) return NodeStatus.FAILURE; // 没有工作建筑，无法进入
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("EnterWorkArch called");
+			#endif
+			var workArchGid = VillQueryAPI.GetWorkArchGid(bb.Entity);
+			if (workArchGid == 0) return NodeStatus.FAILURE;
 
-			var villContainer = GameWorldMono.GidToEntity[villBondArch.WorkArchGid].GetComponent<VillContainerComponent>();
-			if (!villContainer.VillGids.Contains(bb.GidComp.Gid)) {
-				villContainer.VillGids.Add(bb.GidComp.Gid);
-				villContainer.IsDirty = true;
+			if (!VillQueryAPI.GetInArchGid(bb.Entity).Equals(workArchGid)) {
+				VillRequestAPI.RequestEnterWorkArch(bb.Entity);
 				return NodeStatus.SUCCESS;
 			}
-			return NodeStatus.FAILURE; // 已经在家中
+			return NodeStatus.FAILURE; // 已经在工作建筑中
 		}
 
 		private static NodeStatus LeaveWorkArch(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("LeaveWorkArch called");
-#endif
-			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
-			if (villBondArch.WorkArchGid == 0) return NodeStatus.FAILURE; // 没有工作建筑，无法离开
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("LeaveWorkArch called");
+			#endif
+			
+			var workArchGid = VillQueryAPI.GetWorkArchGid(bb.Entity);
+			if (workArchGid == 0) return NodeStatus.FAILURE;
 
-			var villContainer = GameWorldMono.GidToEntity[villBondArch.WorkArchGid].GetComponent<VillContainerComponent>();
-			if (villContainer.VillGids.Contains(bb.GidComp.Gid)) {
-				villContainer.VillGids.Remove(bb.GidComp.Gid);
-				villContainer.IsDirty = true;
-				return NodeStatus.SUCCESS;
-			}
-			return NodeStatus.FAILURE; // 已经不在工作建筑中
+			VillRequestAPI.RequestLeaveArch(bb.Entity);
+			return NodeStatus.SUCCESS; // 成功离开工作建筑
 		}
 
 		private static NodeStatus EnterDie(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("EnterDie called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("EnterDie called");
+			#endif
 			bb.VitalityComp.Die = true;
 			bb.VitalityComp.IsDirty = true;
 			return NodeStatus.SUCCESS;
 		}
 
 		private static NodeStatus ExitDying(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("ExitDying called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("ExitDying called");
+			#endif
 			bb.VitalityComp.IsDying = false;
 			bb.VitalityComp.IsDirty = true;
 			return NodeStatus.SUCCESS;
 		}
 
 		private static NodeStatus Move(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("Move called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("Move called");
+			#endif
 			var tick = bb.World.GetResource<TickCounterResource>();
 			var routeComp = bb.RoutePlanComp;
 			var moveComp = bb.MoveComp;
@@ -340,22 +319,22 @@ namespace GameLogic.Features.Vill {
 		}
 
 		private static NodeStatus Die(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("Die called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("Die called");
+			#endif
 			var villDestroyRes = bb.World.GetResource<VillDestroyResource>();
 			villDestroyRes.VillToDestroy.Add(bb.GidComp.Gid);
 			return NodeStatus.SUCCESS; // 死亡处理完成
 		}
 
 		private static NodeStatus GetRouteForDie(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("GetRouteForDie called");
-#endif
-			// todo: 目前先定位到家
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("GetRouteForDie called");
+			#endif
 			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
 			if (villBondArch.HomeArchGid == 0) {
-				return NodeStatus.FAILURE; // 没有家，无法执行
+				DestroyerAPI.DestroyVill(bb.Entity.GetGid());
+				return NodeStatus.FAILURE;
 			}
 			var home = GameWorldMono.GidToEntity[villBondArch.HomeArchGid];
 			var routeComp = bb.RoutePlanComp;
@@ -371,9 +350,9 @@ namespace GameLogic.Features.Vill {
 			return NodeStatus.SUCCESS;
 		}
 		private static NodeStatus GetRouteForHome(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("GetRouteForHome called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("GetRouteForHome called");
+			#endif
 			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
 			if (villBondArch.HomeArchGid == 0) {
 				return NodeStatus.FAILURE; // 没有家，无法执行
@@ -393,9 +372,9 @@ namespace GameLogic.Features.Vill {
 		}
 
 		private static NodeStatus GetRouteForRandom(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("GetRouteForRandom called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("GetRouteForRandom called");
+			#endif
 			var routeComp = bb.RoutePlanComp;
 			if (routeComp.MoveRoute.Count > 0 && routeComp.MoveRoute.Last() != bb.CoordComp.Coord) {
 				return NodeStatus.FAILURE;
@@ -409,9 +388,9 @@ namespace GameLogic.Features.Vill {
 		}
 
 		private static NodeStatus GetRouteForWorkArch(VillAiBlackboard bb) {
-#if UNITY_EDITOR
-			if (EnableDebugLogs) Debug.Log("GetRouteForWorkArch called");
-#endif
+			#if UNITY_EDITOR
+				if (EnableDebugLogs) Debug.Log("GetRouteForWorkArch called");
+			#endif
 			var villBondArch = bb.Entity.GetComponent<BondToArchComponent>();
 			if (villBondArch.WorkArchGid == 0) {
 				return NodeStatus.FAILURE; // 没有家，无法执行

@@ -1,37 +1,47 @@
 using System.Collections.Generic;
+using GameLogic.Common.DataTypes;
 using GameLogic.Common.Utils;
+using GameLogic.Features.Events;
 using GameLogic.World;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Elements.Arch {
-	public static class ArchAPI {
-		public static List<EntityId> GetBondedVills(Entity entity) {
-			var bondedVills = new List<EntityId>();
-			var bondComp = entity.GetComponent<BondToVillComponent>();
-			foreach (var villId in bondComp.BondedVillGids) {
-				bondedVills.Add(villId.GetEntity().ID);
-			}
-			return bondedVills;
+	public static class ArchQueryAPI {
+		public static int GetLevel(Entity arch) => arch.GetComponent<ArchLevelComponent>().Level;
+		public static ArchType GetType(Entity arch) => arch.GetComponent<ArchIdentityComponent>().ArchType;
+
+		public static IEnumerable<ulong> GetBondedVills(Entity arch) {
+			return arch.GetComponent<BondToVillComponent>().BondedVillGids;
+		}
+		public static int GetBondedVillCount(Entity arch) {
+			return arch.GetComponent<BondToVillComponent>().BondedVillGids.Count;
+		}
+		public static int GetArchMaxContain(Entity arch) {
+			return GetArchLevelConfig(arch).MaxVillContain;
+		}
+		public static bool CanBondAnotherVill(Entity arch) {
+			var lConfig = GetArchLevelConfig(arch);
+			var bondedCnt = arch.GetComponent<BondToVillComponent>().BondedVillGids.Count;
+			return bondedCnt < lConfig.MaxVillContain;
+		}
+		public static bool HasBondedVill(Entity arch, ulong villGid) {
+			return arch.GetComponent<BondToVillComponent>().BondedVillGids.Contains(villGid);
 		}
 
-		public static int ArchLevel(Entity entity) {
-			var archComp = entity.GetComponent<ArchLevelComponent>();
-			return archComp.Level;
-		}
 
-		public static bool TryBondVill(Entity arch, Entity vill) {
-			var bondComp = arch.GetComponent<BondToVillComponent>();
-			if (bondComp.BondedVillGids.Contains(vill.GetGid())) {
-				return false;
-			}
-			var archType = arch.GetComponent<ArchIdentityComponent>().ArchType;
-			var config = GameWorldMono.MainWorld.GetResource<ArchConfigResource>().GetConfig(archType);
-			var lConfig = config.LevelConfigs[ArchLevel(arch)];
-			if (bondComp.BondedVillGids.Count >= lConfig.MaxVillContain) {
-				return false;
-			}
-			bondComp.BondedVillGids.Add(vill.GetGid());
-			return true;
+		public static ArchLevelConfigBase GetArchLevelConfig(Entity arch) {
+			var level = GetLevel(arch);
+			var archType = GetType(arch);
+			return GameWorldMono.MainWorld.GetResource<ArchConfigResource>()
+				.GetConfig(archType).LevelConfigs[level];
+		}
+	}
+
+	public static class ArchDirectOperationAPI { }
+
+	public static class ArchRequestAPI {
+		public static void RequestBondToVill(Entity arch, Entity vill) {
+			arch.AddComponent(new BondToVillRequestComponent() { VillGid = vill.GetGid(), });
 		}
 	}
 }

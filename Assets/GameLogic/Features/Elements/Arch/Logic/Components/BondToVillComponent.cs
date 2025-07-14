@@ -7,6 +7,5 @@ namespace GameLogic.Features.Elements.Arch {
 	/// </summary>
 	public class BondToVillComponent : IComponent {
 		public List<ulong> BondedVillGids = new();
-		public bool IsDirty;
 	}
 }

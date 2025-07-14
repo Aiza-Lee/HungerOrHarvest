@@ -39,8 +39,8 @@ namespace NsEcsFrame.Unity {
 				MainWorld = World;
 			}
 
-			RegisterSystems();
 			RegisterResources();
+			RegisterSystems();
 		}
 
 		void Update() {

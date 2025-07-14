@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
-using GameLogic.Features.Elements;
+using GameLogic.Common.Utils;
+using GameLogic.Features.Events;
 using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Elements.Vill {
-	public static class VillAPI {
+	public static class VillQueryAPI {
 		private static IWorld World => GameWorldMono.MainWorld;
 
 		public static List<ulong> GetAllVillGids() {
@@ -31,21 +32,87 @@ namespace GameLogic.Features.Elements.Vill {
 			return entityIds;
 		}
 
-		public static float QueryVillVit(ulong gid) => QueryVillVit(GameWorldMono.GidToEntity[gid].ID);
-		public static float QueryVillVit(EntityId id) {
-			var entity = World.GetEntity(id);
+		public static float GetVit(Entity entity) {
 			return entity.GetComponent<VillVitalityComponent>().Vit;
 		}
+		public static (int, float) GetJobLevelExp(Entity entity, JobType job) {
+			var jobLevelComp = entity.GetComponent<JobExpComponent>();
+			return (jobLevelComp.JobLevel_F[job], jobLevelComp.JobExp_F[job]);
+		}
 
-		public static void BondArch(EntityId villId, EntityId archId) {
-			var vill = World.GetEntity(villId);
-			var arch = World.GetEntity(archId);
-			var archType = arch.GetComponent<ArchIdentityComponent>().ArchType;
-			if (archType == ArchType.Cottage) {
-				vill.GetComponent<BondToArchComponent>().HomeArchGid = arch.GetComponent<GidComponent>().Gid;
-			} else {
-				vill.GetComponent<BondToArchComponent>().WorkArchGid = arch.GetComponent<GidComponent>().Gid;
-			}		
+		public static ulong GetHomeArchGid(Entity vill) {
+			return vill.GetComponent<BondToArchComponent>().HomeArchGid;
+		}
+		public static ulong GetWorkArchGid(Entity vill) {
+			return vill.GetComponent<BondToArchComponent>().WorkArchGid;
+		}
+		public static ulong GetInArchGid(Entity vill) {
+			return vill.GetComponent<InArchComponent>().ArchGid;
+		}
+
+		public static VitConfig GetVitConfig(Entity vill) {
+			return GameWorldMono.MainWorld.GetResource<VillConfigResource>()
+				.GetConfig(vill.GetComponent<VillIdentityComponent>().Type)
+				.VitConfig;
+		}
+
+	}
+	
+
+
+
+	public static class VillRequestAPI {
+
+		public static void RequestBondToArch(Entity vill, Entity arch) {
+			vill.AddComponent(new BondToArchRequestComponent() { ArchGid = arch.GetGid(), });
+		}
+
+		public static void RequestCostVit(Entity entity, float vit, VitCostReason reason) {
+			entity.AddComponent(new VillCostVitRequestComponent() {
+				VitCost = vit,
+				Reason = reason
+			});
+		}
+		public static void RequestGainVit(Entity entity, float vit, VitGainReason reason) {
+			entity.AddComponent(new VillGainVitRequestComponent() {
+				VitGain = vit,
+				Reason = reason
+			});
+		}
+
+		public static void RequestGainExp(Entity entity, EtList<JobType, float> exp, ExpSource source) {
+			entity.AddComponent(new ExpGainRequestComponent() {
+				ExpGain = exp,
+				Source = source,
+			});
+		}
+
+		public static void RequestEnterWorkArch(Entity vill) {
+			vill.AddComponent(new VillEnterWorkArchRequestComponent());
+		}
+		public static void RequestLeaveArch(Entity vill) {
+			vill.AddComponent(new VillLeaveArchRequestComponent());
+		}
+		public static void RequestEnterHomeArch(Entity vill) {
+			vill.AddComponent(new VillEnterHomeArchRequestComponent());
+		}
+
+		public static void RequestProd(Entity vill,
+		EtList<RepoType, float> cons, EtList<RepoType, float> prod,
+		EtList<JobType, float> expGained, float vitCost) {
+			vill.AddComponent(new VillTryProdRequestComponent() {
+				Cons = cons,
+				Prod = prod,
+				ExpGained = expGained,
+				VitToCost = vitCost
+			});
+		}
+		public static void RequestConsFoodRecoverVit(Entity vill, float foodRequest, float vitToRecover) {
+			vill.AddComponent(new VillConsFoodRecoverVitRequestComponent() {
+				FoodRequest = foodRequest,
+				VitToRecover = vitToRecover
+			});
+
 		}
 
 	}

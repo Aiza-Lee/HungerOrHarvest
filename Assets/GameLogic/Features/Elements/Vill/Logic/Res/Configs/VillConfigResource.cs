@@ -50,6 +50,7 @@ namespace GameLogic.Features.Vill {
 				.TryAddComponent<VillBehaviourTreeComponent>(new(entity))
 				.TryAddComponent<VillMoveComponent>()
 				.TryAddComponent<BondToArchComponent>()
+				.TryAddComponent<InArchComponent>()
 				.TryAddComponent<JobExpComponent>()
 				.TryAddComponent<RoutePlanComponent>()
 				.TryAddComponent<VillVitalityComponent>(new() { Vit = VitConfig.MaxVit, RecoverChances = VitConfig.RecoverChancePerDay })

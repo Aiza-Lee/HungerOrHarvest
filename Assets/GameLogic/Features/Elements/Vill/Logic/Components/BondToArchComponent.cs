@@ -8,6 +8,6 @@ namespace GameLogic.Features.Vill {
 	public class BondToArchComponent : IComponent {
 		public ulong WorkArchGid = 0;
 		public ulong HomeArchGid = 0;
-		public bool IsDirty = true;
 	}
+
 }

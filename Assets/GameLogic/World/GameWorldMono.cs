@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using GameLogic.Common.View;
-using GameLogic.Features.Elements;
 using GameLogic.Features.AutoSortingLayer;
 using GameLogic.Features.Destroyer;
 using GameLogic.Features.Elements.Vill;
@@ -18,6 +17,8 @@ using GameLogic.Features.WorldEdge;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
 using GameLogic.Features.UiData.StartMenuData;
+using GameLogic.Features.Elements.Arch;
+using GameLogic.Features.Events;
 
 namespace GameLogic.World {
 	public class GameWorldMono : WorldBehaviour {
@@ -30,6 +31,10 @@ namespace GameLogic.World {
 				.RegisterSystem<OlToTransformSystem>()
 				.RegisterSystem<CoordToSmoothPositionSystem>()
 				.RegisterSystem<SmoothChangeSystem>()
+
+				/* Event */
+				.RegisterSystem<LogicFrameRequestConsumeSystem>()
+				.RegisterSystem<LogicFrameRequestConversionSystem>()
 
 				/* AutoSoringOrder */
 				.RegisterSystem<AutoSortingLayerSystem>()
@@ -60,9 +65,15 @@ namespace GameLogic.World {
 				.RegisterSystem<LayerGeneratorSystem>()
 				.RegisterSystem<VillGeneratorSystem>()
 
+				/* Arch */
+				.RegisterSystem<BondToArchSystem>()
+
 				/* Vill */
-				.RegisterSystem<VillExpSystem>()
 				.RegisterSystem<VillAiSystem>()
+				.RegisterSystem<VillEnterLeaveArchSystem>()
+				.RegisterSystem<VitalitySystem>()
+				.RegisterSystem<ExpSystem>()
+				.RegisterSystem<BondToVillSystem>()
 
 				/* Destroy */
 				.RegisterSystem<ArchDestroyerSystem>()
