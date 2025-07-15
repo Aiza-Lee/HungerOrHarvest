@@ -33,14 +33,12 @@ namespace GameLogic.Common.DataTypes {
 			return self.ToNewEtList().Change(func);
 		}
 
-		public static bool BiggerThan<E, T>(this EtList<E, T> self_F, params IEnumerable<EtPair<E, T>>[] others)
+		public static bool BiggerThan<E, T>(this EtList<E, T> self_F, IEnumerable<EtPair<E, T>> other)
 		where E : Enum
 		where T : struct, IComparable<T> {
-			foreach (var other in others) {
-				foreach (var pr in other) {
-					if (self_F[pr.Index].CompareTo(pr.Value) <= 0) {
-						return false;
-					}
+			foreach (var pr in other) {
+				if (self_F[pr.Index].CompareTo(pr.Value) <= 0) {
+					return false;
 				}
 			}
 			return true;

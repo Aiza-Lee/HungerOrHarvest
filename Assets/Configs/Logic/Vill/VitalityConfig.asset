@@ -16,9 +16,9 @@ MonoBehaviour:
   LowVitThreshold: 0.2
   RecoverVitThreshold: 0.6
   HungryProdLoss: 0.5
-  VitPerFood: 0.5
+  VitPerFood: 5
   MaxVit: 100
-  TickFoodCons: 0.1
+  FoodConsPerTickWhenRecover: 0.1
   RecoverChancePerDay: 1
-  TickDayVitCons: 0.01
-  TickDyingVitCons: 0.05
+  DayVitConsPerTick: 0.01
+  DyingVitConsPerTick: 0.005

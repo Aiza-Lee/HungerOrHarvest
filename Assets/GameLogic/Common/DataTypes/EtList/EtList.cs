@@ -11,7 +11,7 @@ namespace GameLogic.Common.DataTypes {
 	where T : struct {
 		[JsonProperty] public E EnumType;
 		[JsonProperty] public T Value;
-		public int Index => Convert.ToInt32(EnumType);
+		public int Index => EnumType.ToListIndex();
 
 		public EtPair() : this(default, default) { }
 		public EtPair(E enumType, T value) {

@@ -4,14 +4,11 @@ using TMPro;
 using UnityEngine;
 using GameLogic.UI.Common.UiComponents.GroupLayout;
 using GameLogic.UI.Common.UiComponents.PercentBar;
-using GameLogic.Common.DataTypes;
-using NsEcsFrame.Core;
-using GameLogic.Features.Job;
-using GameLogic.Features.Elements.Vill;
 
 namespace GameLogic.UI.WorldVill {
 	/// <summary>
 	/// 村民展开面板中单个职业的信息，目前是等级和exp百分比显示
+	/// 只作为接受数据的容器，不负责数据获取
 	/// </summary>
 	public class VillExpandJobInfo : MonoBehaviour, IGroupLayoutEle {
 
@@ -21,41 +18,20 @@ namespace GameLogic.UI.WorldVill {
 
 		private readonly float Height = 20f;
 
-		private JobType _jobType;
-		private Entity _targetVill;
-
-		[SerializeField] private int _updateInterval = 3; // 更新间隔
-		private int _updateCounter = 10000;
-
 		private RectTransform _rectTrans;
 		void Awake() {
 			_rectTrans = GetComponent<RectTransform>();
 		}
 
-		void OnEnable() {
-			_updateCounter = 10000;
-		}
-
-		void FixedUpdate() {
-			if (_targetVill == null) { return; }
-			if (++_updateCounter < _updateInterval) { return; }
-			_updateCounter = 0;
-			if (!_targetVill.IsValid()) { LogicDestroy(); return; }
-
-			_lvNumber.text = VillQueryAPI.GetJobLevelExp(_targetVill, _jobType).Item1.ToString();
-			_expBar.SetPercentage(VillQueryAPI.GetJobExpProportion(_targetVill, _jobType));
-		}
-
 		#region PublicMethods
 		public void LogicDestroy() {
-			_targetVill = null;
 			BelongedGroup.RemoveEle(this);
 			PoolSystem.PushGO(gameObject);
 		}
-		public void Initialize(Entity vill, JobType jobType) {
-			_targetVill = vill;
-			_jobType = jobType;
-			_jobNameText.text = JobQueryAPI.GetJobName(jobType);
+		public void SetContent(string jobName, int level, float expProportion) {
+			_jobNameText.text = jobName;
+			_lvNumber.text = level.ToString();
+			_expBar.SetPercentage(expProportion);
 		}
 
 		#endregion
@@ -68,6 +44,7 @@ namespace GameLogic.UI.WorldVill {
 		public event Action OnDirty;
 #pragma warning restore 67
 		public void OnAddedToGroup() {
+			_rectTrans.localScale = Vector3.one;
 			_rectTrans.offsetMin = new(0, 0);
 			_rectTrans.offsetMax = new(0, Height);
 		}

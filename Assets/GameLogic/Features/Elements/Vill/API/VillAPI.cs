@@ -61,11 +61,18 @@ namespace GameLogic.Features.Elements.Vill {
 				.GetConfig(villType).VitConfig;
 		}
 		public static IEnumerable<EtPair<JobType, int>> GetJobLevels(Entity vill) => vill.GetComponent<JobExpComponent>().JobLevel_F;
-		public static List<EtPair<JobType, int>> GetSortedJobLevels(Entity vill) {
+		public static List<(JobType, int, float)> GetSortedJobLevels(Entity vill) {
 			var jobLevelComp = vill.GetComponent<JobExpComponent>();
 			var list = new List<EtPair<JobType, int>>(jobLevelComp.JobLevel_F);
-			list.Sort((a, b) => b.Value.CompareTo(a.Value)); // Sort by level descending
-			return list;
+			list.Sort((a, b) => b.Value.CompareTo(a.Value));
+			var res = new List<(JobType, int, float)>();
+			foreach (var jobLevel in list) {
+				var jobType = jobLevel.EnumType;
+				var level = jobLevel.Value;
+				var expProportion = GetJobExpProportion(vill, jobType);
+				res.Add((jobType, level, expProportion));
+			}
+			return res;
 		}
 		public static float GetJobExpProportion(Entity vill, JobType job) {
 			var jobLevelComp = vill.GetComponent<JobExpComponent>();

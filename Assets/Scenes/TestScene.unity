@@ -2170,7 +2170,12 @@ MonoBehaviour:
     DefaultConfig: {fileID: 11400000, guid: 6449e163ad8ed3541bb4c08ef1d163ec, type: 2}
     DefaultArtConfig: {fileID: 0}
     Configs:
+    - {fileID: 11400000, guid: f4c20ae36cffc7c40adedd2270b399c6, type: 2}
     - {fileID: 11400000, guid: 6449e163ad8ed3541bb4c08ef1d163ec, type: 2}
+    - {fileID: 11400000, guid: 7484e3a16777fa840acef83308f6262f, type: 2}
+    - {fileID: 11400000, guid: bb795b2fc8d86d149a3948d35c18163f, type: 2}
+    - {fileID: 11400000, guid: bba2f9fa39f3e8245a415e58c5ec217b, type: 2}
+    - {fileID: 11400000, guid: 4b2232837902ed249a247660da99d166, type: 2}
     ArtConfigs: []
 --- !u!114 &1977988670
 MonoBehaviour:
