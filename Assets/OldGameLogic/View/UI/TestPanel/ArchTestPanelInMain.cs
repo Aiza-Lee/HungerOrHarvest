@@ -38,7 +38,6 @@ namespace OldGameLogic.View.Test
 
 
 		private void Start() {
-			GameViewMgr.Inst.RegisterClearableMgr(this);
 
 			var cnt = ArchInfoLayout.childCount;
 			while (cnt-- != 0) {

@@ -22,11 +22,7 @@ namespace OldGameLogic.View
 			EventSystem.AddListener<ArchLogicBase>((int)ModelEvt.ArchDestroyed_A_1, OnArchDestroyed, NSFrame.EventType.Model);
 			EventSystem.AddListener<VillLogicBase>((int)ModelEvt.VillDestroyed_V_1, OnVillDestroyed, NSFrame.EventType.Model);
 		}
-		private void Start() {
-			GameViewMgr.Inst.RegisterClearableMgr(this);
-		}
 		protected void OnDestroy() {
-			GameViewMgr.Inst.UnregisterClearableMgr(this);
 
 			EventSystem.RemoveListener<VillLogicBase>((int)ModelEvt.VillAdded_V_1, OnVillAdded, NSFrame.EventType.Model);
 			EventSystem.RemoveListener<ArchLogicBase>((int)ModelEvt.ArchAdded_A_1, OnArchAdded, NSFrame.EventType.Model);

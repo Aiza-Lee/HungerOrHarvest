@@ -8,10 +8,6 @@ namespace OldGameLogic.Controller
 		private static readonly Dictionary<string, Func<List<string>, CommandBase>> _allCmds = new() {
 
 			/* Game Operation */
-				/* ViewOpt */
-				{ "cam-free", (args) => new CameraFreeViewCmd(args) },
-				{ "cam-focus-vill", (args) => new CameraFocusVillCmd(args) },
-				{ "cam-focus-arch", (args) => new CameraFocusArchCmd(args) },
 			{ "vill-new", (args) => new CreateVillCmd(args) },
 			{ "vill-bond-arch", (args) => new VillBondArchCmd(args) },
 			{ "vill-disbond-workarch", (args) => new VillDisbondWorkCmd(args) },
@@ -24,11 +20,6 @@ namespace OldGameLogic.Controller
 			{ "speed", (args) => new SetSpeedCmd(args) },
 			{ "unlock-ol", (args) => new UnlockOLCmd(args) },
 			{ "pause", (args) => new TogglePauseCmd(args) },
-
-			/* SaveOpt */
-			// { "save", (args) => new SaveGameCmd(args) },
-			{ "auto-save", (args) => new AutoSaveGameCmd(args) },
-			{ "load", (args) => new LoadGameCmd(args) },
 
 			/* Administrator */
 			{ "multi", (args) => new MultiCmdCmd(args) },

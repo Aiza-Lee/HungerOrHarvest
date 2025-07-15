@@ -10,7 +10,7 @@ namespace OldGameLogic.View
 
 		private void Awake() {
 			_smoothFades = GetComponentsInChildren<SmoothFade>();
-			_cameraTrans = WorldCameraMgr.Inst.Camera.transform;
+			// _cameraTrans = WorldCameraMgr.Inst.Camera.transform;
 		}
 
 		private void Update() {

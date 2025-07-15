@@ -36,7 +36,6 @@ namespace OldGameLogic.View.Test {
 
 
 		private void Start() {
-			GameViewMgr.Inst.RegisterClearableMgr(this);
 
 			var cnt = VillInfoLayout.childCount;
 			while (cnt-- != 0) {

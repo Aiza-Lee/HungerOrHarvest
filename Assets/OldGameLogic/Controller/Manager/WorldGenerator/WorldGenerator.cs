@@ -16,7 +16,6 @@ namespace OldGameLogic.Controller
 		private void GenerateImpl(PreSetConfig config, string worldName) {
 			var saveInfo = SaveSystem.CreateSaveFile(worldName);
 			GameModelMgr.Inst.SetSaveInfo(saveInfo);
-			GameViewMgr.Inst.SetSaveInfo(saveInfo);
 
 			/* LAYER_RANGE */
 			foreach (var pr in config.Layer_Range) {
@@ -59,7 +58,6 @@ namespace OldGameLogic.Controller
 			WorldBaseInfoMgr.Inst.WorldName = worldName;
 			
 			GameModelMgr.Inst.SaveGame();
-			GameViewMgr.Inst.SaveGame();
 			// 提示UI这个存档是第一个存档，方便显示不同的文本
 			var baseSave = SaveSystem.LoadObject<WorldBaseInfoMgrSave>(saveInfo);
 			baseSave.StartingSave = true;
