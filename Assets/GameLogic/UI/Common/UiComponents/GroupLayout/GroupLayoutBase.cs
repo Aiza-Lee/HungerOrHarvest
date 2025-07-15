@@ -43,7 +43,8 @@ namespace GameLogic.UI.Common.UiComponents.GroupLayout {
 
 		#region PublicMethods
 		public void Clear() {
-			foreach (var ele in _eles) {
+			var tmpEles = new List<IGroupLayoutEle>(_eles);
+			foreach (var ele in tmpEles) {
 				ele.LogicDestroy();
 				ele.OnDirty -= RearrangeEle;
 				ele.BelongedGroup = null;

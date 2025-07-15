@@ -12,7 +12,7 @@ namespace GameLogic.UI.WorldVill {
 		}
 		public VillExpandJobInfo Create(Entity vill, JobType jobType) {
 			var info = PoolSystem.PopGO<VillExpandJobInfo>(_prefab);
-			info.SetJobInfo(vill, jobType);
+			info.Initialize(vill, jobType);
 			return info;
 		}
 	}

@@ -11,7 +11,7 @@ namespace GameLogic.UI.WorldVill {
 		}
 		public VillCard Create(Entity entity) {
 			var card = PoolSystem.PopGO<VillCard>(_villCardPrefab);
-			card.SetEntity(entity);
+			card.Initialize(entity);
 			return card;
 		}
 	}

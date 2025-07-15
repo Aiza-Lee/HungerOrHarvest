@@ -31,12 +31,12 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 		/// 如果某次设置没有 set StopCallback 那再SetTarget的时候需要触发 StopCallback
 		/// 如果某次设置 set 了 StopCallback，那原本的callback的触发在设置的时候触发，然后替换为新的callback，就不能再在 SetTarget 中触发
 		/// </summary>
-		private bool _triggerStopCallbackFlag = true;
+		private bool _newSetedStopCallback = false;
 		/// <summary>
 		/// 如果某次设置没有 set DoneCallback 那再SetTarget的时候需要清空 DoneCallback，防止上次的被打断的任务的残余 callback
 		/// 如果某次设置 set 了 DoneCallback，那SetTarget就不该清空
 		/// </summary>
-		private bool _clearDoneCallbackFlag = true;
+		private bool _newSetedDoneCallback = false;
 
 
 		private void Update() {
@@ -75,9 +75,11 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 			}
 		}
 		private void OnInterprete() {
-			_stopCallback?.Invoke();
+			if (_stopCallback == null) return;
+			var _tmpStopCallback = _stopCallback;
 			_stopCallback = null;
 			_running = false;
+			_tmpStopCallback?.Invoke();
 		}
 
 		#region PublicProperties
@@ -87,11 +89,13 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 
 		#region PublicMethods
 		public void SetCurVal(T val) {
+			OnInterprete();
 			SetCurVal_Derived(val);
 			_target = val;
 			_running = false;
 		}
 		public void TranslateCurVal(T val) {
+			OnInterprete();
 			SetCurVal(Add(GetCurVal(), val));
 		}
 		public void EndCurChange() {
@@ -120,7 +124,7 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 		/// </summary>
 		public SmoothChangeBase<T> SetDoneCallback(Action callback) {
 			OnInterprete();
-			_clearDoneCallbackFlag = false;
+			_newSetedDoneCallback = true;
 			_doneCallback = callback;
 			return this;
 		}
@@ -130,7 +134,7 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 		/// </summary>
 		public SmoothChangeBase<T> SetStopCallback(Action callback) {
 			OnInterprete();
-			_triggerStopCallbackFlag = false;
+			_newSetedStopCallback = true;
 			_stopCallback = callback;
 			return this;
 		}
@@ -138,16 +142,16 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 
 		public void Translate(T val) => SetTarget(Add(_target, val));
 		public void SetTarget(T val) {
-			if (_triggerStopCallbackFlag) {
+			if (!_newSetedStopCallback) {
 				OnInterprete();
 			} else {
-				_triggerStopCallbackFlag = true;
+				_newSetedStopCallback = false;
 			}
 
-			if (_clearDoneCallbackFlag) {
+			if (!_newSetedDoneCallback) {
 				_doneCallback = null;
 			} else {
-				_clearDoneCallbackFlag = true;
+				_newSetedDoneCallback = false;
 			}
 
 			_oriVal = GetCurVal();

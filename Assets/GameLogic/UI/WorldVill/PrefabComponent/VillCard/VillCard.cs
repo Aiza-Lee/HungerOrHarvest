@@ -32,7 +32,9 @@ namespace GameLogic.UI.WorldVill {
 		private MainPanel _mainPanel;
 
 		public Entity TargetVill { get; private set; }
-		private bool _isFocused;
+		private bool _isFocusedByCamera;
+		private bool _expanded;
+
 		public const float MAX_WIDTH = 500f;
 		public const float MIN_WIDTH = 130f;
 		public const float HEIGHT = 260f;
@@ -41,7 +43,6 @@ namespace GameLogic.UI.WorldVill {
 
 		[SerializeField] private int _updateInterval = 3;
 		private int _updataCount = 0;
-
 		private RectTransform _rectTrans;
 		private void Awake() {
 			_expandMaskSOMin = _expandMask.GetComponent<SmoothOffsetMin>();
@@ -69,16 +70,20 @@ namespace GameLogic.UI.WorldVill {
 		}
 
 		#region Injection
-		public VillCard SetEntity(Entity vill) {
+		public VillCard Initialize(Entity vill) {
 			TargetVill = vill;
 			_nameText.text = VillQueryAPI.GetName(vill);
 			_image.sprite = VillQueryAPI.GetArtConfig(VillQueryAPI.GetVillType(vill)).WorldSprite;
+			_jobInfoLayout.Initialize(vill);
 			return this;
 		}
 		#endregion
 
 		private void Expand() {
-			_jobInfoLayout.OnExpand(TargetVill);
+			if (!_expanded) {
+				_expanded = true;
+				_jobInfoLayout.SetOpened(true);
+			}
 			_expandMaskSOMax
 				.SetOnChanged((_) => OnDirty?.Invoke())
 				.SetTarget(new(MAX_WIDTH, _expandMask.offsetMax.y));
@@ -86,7 +91,7 @@ namespace GameLogic.UI.WorldVill {
 		private void Shrink() {
 			_expandMaskSOMax
 				.SetOnChanged((_) => OnDirty?.Invoke())
-				.SetDoneCallback(() => _jobInfoLayout.OnShrinkDone())
+				.SetDoneCallback(() => { _jobInfoLayout.SetOpened(false); _expanded = false; })
 				.SetTarget(new(MIN_WIDTH, _expandMask.offsetMax.y));
 		}
 
@@ -96,6 +101,7 @@ namespace GameLogic.UI.WorldVill {
 			_image.sprite = null;
 			Selected = false;
 			_lightingEdge.SetActive(false);
+			_jobInfoLayout.LogicDestroy();
 			PoolSystem.PushGO(gameObject);
 		}
 
@@ -146,18 +152,18 @@ namespace GameLogic.UI.WorldVill {
 		public void OnPointerExit(PointerEventData _) {
 			if (Selected) return;
 			Shrink();
-			if (_isFocused) {
+			if (_isFocusedByCamera) {
 				CameraFollowAPI.SetCameraFollow(null);
-				_isFocused = false;
+				_isFocusedByCamera = false;
 			}
 		}
 		#endregion
 		#region IPointerClickHandler
 		public void OnPointerClick(PointerEventData _) {
 			if (Input.GetKey(KeyCode.LeftControl)) {
-				if (_isFocused) {
+				if (_isFocusedByCamera) {
 					CameraFollowAPI.SetCameraFollow(null);
-					_isFocused = false;
+					_isFocusedByCamera = false;
 				}
 				Selected = !Selected;
 				_lightingEdge.SetActive(Selected);
@@ -172,7 +178,7 @@ namespace GameLogic.UI.WorldVill {
 
 			} else {
 				CameraFollowAPI.SetCameraFollow(TargetVill);
-				_isFocused = true;
+				_isFocusedByCamera = true;
 			}
 		}
 		#endregion

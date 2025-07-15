@@ -30,7 +30,7 @@ namespace GameLogic.UI.WorldRepo {
 		}
 
 		[SerializeField] private int _updateInterval = 10;
-		private int _updateCounter = 0;
+		private int _updateCounter = 1000;
 
 		private void Update() {
 			_updateCounter++;

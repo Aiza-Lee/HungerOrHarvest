@@ -12,6 +12,10 @@ namespace GameLogic.UI.Common.UiComponents.PercentBar {
 
 		private float ExpBarWidth => _barBack.rect.width;
 
+		void OnEnable() {
+			SetPercentage(0f);
+		}
+
 		public void SetPercentage(float percentage) {
 			_barInner.offsetMax = new(-(1f - percentage) * ExpBarWidth, 0);
 		}

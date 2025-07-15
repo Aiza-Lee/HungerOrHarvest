@@ -25,17 +25,20 @@ namespace GameLogic.UI.WorldVill {
 		private Entity _targetVill;
 
 		[SerializeField] private int _updateInterval = 3; // 更新间隔
-		private int _updateCounter = 0;
+		private int _updateCounter = 10000;
 
 		private RectTransform _rectTrans;
 		void Awake() {
 			_rectTrans = GetComponent<RectTransform>();
 		}
 
+		void OnEnable() {
+			_updateCounter = 10000;
+		}
+
 		void FixedUpdate() {
 			if (_targetVill == null) { return; }
-			_updateCounter++;
-			if (_updateCounter < _updateInterval) { return; }
+			if (++_updateCounter < _updateInterval) { return; }
 			_updateCounter = 0;
 			if (!_targetVill.IsValid()) { LogicDestroy(); return; }
 
@@ -46,9 +49,10 @@ namespace GameLogic.UI.WorldVill {
 		#region PublicMethods
 		public void LogicDestroy() {
 			_targetVill = null;
+			BelongedGroup.RemoveEle(this);
 			PoolSystem.PushGO(gameObject);
 		}
-		public void SetJobInfo(Entity vill, JobType jobType) {
+		public void Initialize(Entity vill, JobType jobType) {
 			_targetVill = vill;
 			_jobType = jobType;
 			_jobNameText.text = JobQueryAPI.GetJobName(jobType);
