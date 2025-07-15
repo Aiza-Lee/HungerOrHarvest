@@ -25,6 +25,10 @@ namespace GameLogic.Features.Elements.Vill {
 			_queryBuilder.Build().ForEach(entity => {
 				var request = entity.GetComponent<BondToVillRequestComponent>();
 				var bond = entity.GetComponent<BondToVillComponent>();
+				if (bond.BondedVillGids.Contains(request.VillGid)) {
+					Debug.LogWarning($"Vill Gid: {request.VillGid} is already bonded to Entity {entity}");
+					return;
+				}
 				bond.BondedVillGids.Add(request.VillGid);
 			});
 		}
