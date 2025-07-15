@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 9108426531888961214}
   - component: {fileID: 5787645530662727974}
   m_Layer: 5
-  m_Name: World Panel (Factory)
+  m_Name: World Vill Panel (Factory)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

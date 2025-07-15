@@ -16,17 +16,23 @@ MonoBehaviour:
   MaxVillContain: 3
   Introduction: 
   SelfProdPerTick:
-    _items: []
+    _items:
+      Items: []
   ExtraProdPerOnePerTick:
     _items:
-    - EnumType: 1
-      Value: 1
+      Items:
+      - EnumType: 1
+        Value: 0.1
   SelfConsPerTick:
-    _items: []
+    _items:
+      Items: []
   ExtraConsPerOnePerTick:
-    _items: []
+    _items:
+      Items: []
   AddRepoVolume:
-    _items: []
+    _items:
+      Items: []
   AddExpPerTick:
-    _items: []
+    _items:
+      Items: []
   VitConsPerTick: 0

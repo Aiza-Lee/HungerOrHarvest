@@ -109,8 +109,8 @@ namespace GameLogic.Common.DataTypes {
 			}
 		}
 		public T this[E enumType] {
-			get => this[Convert.ToInt32(enumType)];
-			set => this[Convert.ToInt32(enumType)] = value;
+			get => this[enumType.ToListIndex()];
+			set => this[enumType.ToListIndex()] = value;
 		}
 		public void ForEach(Action<EtPair<E, T>> action) {
 			if (action == null) throw new ArgumentNullException(nameof(action));

@@ -9,11 +9,11 @@ namespace GameLogic.Common.DataTypes {
 	public class ReadOnlyEtList<E, T> : IEnumerable<EtPair<E, T>>
 	where E : Enum
 	where T : struct {
-		[SerializeField] private List<EtPair<E, T>> _items;
+		[SerializeField] private EtList<E, T> _items;
 		public bool Full { get; private set; } = false;
 
 		public ReadOnlyEtList(EtList<E, T> etList) {
-			_items = etList.Items;
+			_items = etList;
 			Full = etList.Full;
 		}
 
@@ -21,6 +21,10 @@ namespace GameLogic.Common.DataTypes {
 			foreach (var item in _items) {
 				yield return item;
 			}
+		}
+
+		public T this[E key] {
+			get => _items[key];
 		}
 
 		IEnumerator IEnumerable.GetEnumerator() {
