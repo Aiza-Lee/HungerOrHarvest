@@ -7,6 +7,12 @@ namespace GameLogic.Features.MainCamera {
 	[System.Serializable]
 	public class CameraConfigResource : IResource {
 
+		public float CameraSizeFocus => CameraSizes[0];
+		public float CameraSizeNormal => CameraSizes[1];
+		public float CameraSizeFar => CameraSizes[2];
+		public float CameraSizeMax => CameraSizes[^1];
+
+
 		[Header("Camera Control Settings")]
 		public float CAMERA_MOVE_SPEED;
 		public float CAMERA_STOP_LENGTH;
@@ -19,5 +25,6 @@ namespace GameLogic.Features.MainCamera {
 		[Header("Camera Follow Settings")]
 		public bool EnableControlCameraFollow = true;
 		public ChangeInfo FollowChangeInfo;
+		public ChangeInfo UnfollowChangeInfo;
 	}
 }

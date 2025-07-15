@@ -34,5 +34,7 @@ MonoBehaviour:
       Items: []
   AddExpPerTick:
     _items:
-      Items: []
-  VitConsPerTick: 0
+      Items:
+      - EnumType: 0
+        Value: 0.01
+  VitConsPerTick: 0.1

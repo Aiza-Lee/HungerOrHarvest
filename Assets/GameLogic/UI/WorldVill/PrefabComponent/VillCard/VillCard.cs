@@ -147,7 +147,7 @@ namespace GameLogic.UI.WorldVill {
 			if (Selected) return;
 			Shrink();
 			if (_isFocused) {
-				CameraFollowAPI.SetCemeraFollow(null);
+				CameraFollowAPI.SetCameraFollow(null);
 				_isFocused = false;
 			}
 		}
@@ -156,7 +156,7 @@ namespace GameLogic.UI.WorldVill {
 		public void OnPointerClick(PointerEventData _) {
 			if (Input.GetKey(KeyCode.LeftControl)) {
 				if (_isFocused) {
-					CameraFollowAPI.SetCemeraFollow(null);
+					CameraFollowAPI.SetCameraFollow(null);
 					_isFocused = false;
 				}
 				Selected = !Selected;
@@ -171,7 +171,7 @@ namespace GameLogic.UI.WorldVill {
 				}
 
 			} else {
-				CameraFollowAPI.SetCemeraFollow(TargetVill);
+				CameraFollowAPI.SetCameraFollow(TargetVill);
 				_isFocused = true;
 			}
 		}

@@ -1137,7 +1137,7 @@ MonoBehaviour:
     - 70
     - 85
     SizeChangeInfo:
-      TotalTime: 0.5
+      TotalTime: 0.3
       CurveType: 9
       UseLogicTime: 0
     StopPositionChangeInfo:
@@ -1154,8 +1154,12 @@ MonoBehaviour:
       UseLogicTime: 0
     EnableControlCameraFollow: 0
     FollowChangeInfo:
-      TotalTime: 0.3
-      CurveType: 9
+      TotalTime: 0.5
+      CurveType: 1
+      UseLogicTime: 0
+    UnfollowChangeInfo:
+      TotalTime: 0.4
+      CurveType: 12
       UseLogicTime: 0
 --- !u!1 &1203334113
 GameObject:

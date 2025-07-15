@@ -1,10 +1,8 @@
-using System.Collections;
 using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Common.View;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
-using NSFrame;
 using UnityEngine;
 
 namespace GameLogic.Features.MainCamera {
@@ -16,8 +14,6 @@ namespace GameLogic.Features.MainCamera {
 		public bool Enabled { get; set; }
 
 		private IWorld _world;
-		/// <summary> 前后移动时阻碍左右移动 </summary>
-		private bool _moveLocked = false;
 
 		public void Initialize(IWorld world) {
 			_world = world;
@@ -44,8 +40,6 @@ namespace GameLogic.Features.MainCamera {
 							.StartAChange(camera, targetSize);
 				}
 			}
-
-			if (_moveLocked) return;
 
 			var moveLength = config.CAMERA_MOVE_SPEED * deltaTime;
 			var curPos = camera.GetComponent<TransformComponent>().LocalPosition;
@@ -75,23 +69,18 @@ namespace GameLogic.Features.MainCamera {
 
 
 			if (input.MoveForwardKeyDown) {
-				MonoService.Inst.StartCoroutine(LockMoveCoro(config.ForwardPositionChangeInfo.TotalTime));
+				CameraInputAPI.TempLockInput(config.ForwardPositionChangeInfo.TotalTime);
 				var target = curPos + ConstMgr.LayerGap * Vector3.forward;
 				if (target.z >= ConstMgr.MAX_UZ - ConstMgr.LayerGap) { target.z = ConstMgr.MAX_UZ - ConstMgr.LayerGap; }
 				moveStat.SetChangeInfo(config.ForwardPositionChangeInfo).StartAChange(camera, target);
 
 			} else if (input.MoveBackwardKeyDown) {
-				MonoService.Inst.StartCoroutine(LockMoveCoro(config.BackwardPositionChangeInfo.TotalTime));
+				CameraInputAPI.TempLockInput(config.BackwardPositionChangeInfo.TotalTime);
 				var target = curPos + ConstMgr.LayerGap * Vector3.back;
 				if (target.z <= ConstMgr.MIN_UZ - ConstMgr.LayerGap) { target.z = ConstMgr.MIN_UZ - ConstMgr.LayerGap; }
 				moveStat.SetChangeInfo(config.BackwardPositionChangeInfo).StartAChange(camera, target);
 			}
 
-		}
-		IEnumerator LockMoveCoro(float time) {
-			_moveLocked = true;
-			yield return new WaitForSecondsRealtime(time);
-			_moveLocked = false;
 		}
 	} 
 }

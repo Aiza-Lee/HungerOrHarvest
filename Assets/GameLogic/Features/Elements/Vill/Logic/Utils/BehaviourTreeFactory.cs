@@ -45,7 +45,7 @@ namespace GameLogic.Features.Vill {
 										.Action(EnterDie)
 									.End()
 								.End()
-								.Action(LeaveHome)
+								.Action(LeaveArch)
 							.End()
 							.Sequence()
 								.Condition(bb => bb.World.GetResource<TickCounterResource>().IsDayLastTick == true)
@@ -57,7 +57,7 @@ namespace GameLogic.Features.Vill {
 							.Sequence()
 								.Condition(bb => bb.World.GetResource<TickCounterResource>().IsDay == false)
 								.Selector()
-									.Action(LeaveWorkArch)
+									.Action(LeaveArch)
 									.Selector()
 										.Action(GetRouteForHome)
 										.Action(Move)
@@ -82,7 +82,7 @@ namespace GameLogic.Features.Vill {
 									.Sequence()
 										.Condition(bb => bb.VitalityComp.AtRecoverMode == true)
 										.Selector()
-											.Action(LeaveWorkArch)
+											.Action(LeaveArch)
 											.Selector()
 												.Action(GetRouteForHome)
 												.Action(Move)
@@ -113,6 +113,7 @@ namespace GameLogic.Features.Vill {
 										.Sequence()
 											.Condition(bb => bb.Entity.GetComponent<BondToArchComponent>().WorkArchGid == 0)
 											.Selector()
+												.Action(LeaveArch)
 												.Action(GetRouteForRandom)
 												.Action(Move)
 											.End()
@@ -234,17 +235,6 @@ namespace GameLogic.Features.Vill {
 			}
 			return NodeStatus.FAILURE; // 已经在家中
 		}
-		private static NodeStatus LeaveHome(VillAiBlackboard bb) {
-			#if UNITY_EDITOR
-				if (EnableDebugLogs) Debug.Log("LeaveHome called");
-			#endif
-			var homeGid = VillQueryAPI.GetHomeArchGid(bb.Entity);
-			if (homeGid == 0) return NodeStatus.FAILURE;
-
-			VillRequestAPI.RequestLeaveArch(bb.Entity);
-
-			return NodeStatus.SUCCESS;
-		}
 
 		private static NodeStatus EnterWorkArch(VillAiBlackboard bb) {
 			#if UNITY_EDITOR
@@ -260,16 +250,16 @@ namespace GameLogic.Features.Vill {
 			return NodeStatus.FAILURE; // 已经在工作建筑中
 		}
 
-		private static NodeStatus LeaveWorkArch(VillAiBlackboard bb) {
+		private static NodeStatus LeaveArch(VillAiBlackboard bb) {
 			#if UNITY_EDITOR
-				if (EnableDebugLogs) Debug.Log("LeaveWorkArch called");
+				if (EnableDebugLogs) Debug.Log("LeaveArch called");
 			#endif
-			
-			var workArchGid = VillQueryAPI.GetWorkArchGid(bb.Entity);
-			if (workArchGid == 0) return NodeStatus.FAILURE;
+
+			var archGid = VillQueryAPI.GetInArchGid(bb.Entity);
+			if (archGid == 0) return NodeStatus.FAILURE;
 
 			VillRequestAPI.RequestLeaveArch(bb.Entity);
-			return NodeStatus.SUCCESS; // 成功离开工作建筑
+			return NodeStatus.SUCCESS; // 成功离开建筑
 		}
 
 		private static NodeStatus EnterDie(VillAiBlackboard bb) {

@@ -174,6 +174,10 @@ namespace GameLogic.Common.Logic {
 			return new Coord(ol.ODR * ConstMgr.CX_PER_ODR, ol.LYR * ConstMgr.CY_PER_LYR);
 		}
 
-
+		/* Unity Coordinate Extensions */
+		public static SimpleVector3 ClosestBackLayerPosition(this SimpleVector3 position) {
+			var z = Mathf.FloorToInt(position.z / ConstMgr.LayerGap + 0.5f) * ConstMgr.LayerGap;
+			return new SimpleVector3(position.x, position.y, z);
+		}
 	}
 }
