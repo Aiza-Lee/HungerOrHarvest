@@ -32,8 +32,10 @@ namespace GameLogic.Features.Events {
 
 		public void OnCreate() { }
 		public void OnDestroy() { }
-		public void OnLogicUpdate(float _) {
+		public void OnLogicUpdate(float _)
+		{
 			ConsumeVillAbout();
+			ConsumeArchAbout();
 		}
 		private void ConsumeVillAbout() {
 			_VillTryProd.Build().ForEach(entity => entity.RemoveComponent<VillTryProdRequestComponent>());
