@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CottageArchLevelConfig_00
   m_EditorClassIdentifier: 
   Level: 0
-  MaxVillContain: 0
+  MaxVillContain: 3
   Introduction: "\u7761\u89C9\u4E4B\u5730"
   SelfProdPerTick:
     _items:
@@ -23,7 +23,7 @@ MonoBehaviour:
     _items: []
   SelfConsPerTick:
     _items: []
-  ExtraRepoConsPerOnePerTick:
+  ExtraConsPerOnePerTick:
     _items: []
   AddRepoVolume:
     _items: []
