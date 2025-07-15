@@ -13,6 +13,27 @@ namespace NsEcsFrame.Core {
 			_world = world;
 		}
 
+		public ISystemManager RegisterSystem(Type type) {
+			if (_systems.ContainsKey(type)) {
+				if (_world.EnableDebugLogs) {
+					Debug.Log($"System {type.Name} is already registered.");
+				}
+				return this;
+			}
+
+			var system = (ISystem)Activator.CreateInstance(type);
+			system.Initialize(_world);
+			_systems[type] = system;
+			_orderedSystems.Add(system);
+			_needsOrdering = true;
+
+			system.OnCreate();
+			if (_world.EnableDebugLogs) {
+				Debug.Log($"System {type.Name} registered successfully.");
+			}
+			return this;
+		}
+
 		public ISystemManager RegisterSystem<T>() where T : class, ISystem, new() {
 			Type type = typeof(T);
 

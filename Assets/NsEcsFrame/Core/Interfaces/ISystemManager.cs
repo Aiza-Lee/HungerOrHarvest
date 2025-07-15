@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace NsEcsFrame.Core {
@@ -5,6 +6,13 @@ namespace NsEcsFrame.Core {
 	/// System管理器，负责System的注册、排序和更新
 	/// </summary>
 	public interface ISystemManager {
+
+		/// <summary>
+		/// 注册System
+		/// </summary>
+		/// <param name="type">System类型</param>
+		/// <returns>ISystemManager，支持链式调用</returns>
+		ISystemManager RegisterSystem(Type type);
 		/// <summary>
 		/// 注册System
 		/// </summary>

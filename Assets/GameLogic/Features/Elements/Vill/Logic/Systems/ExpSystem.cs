@@ -32,16 +32,18 @@ namespace GameLogic.Features.Elements.Vill {
 				expGainRequest.ExpGain.ForEach(pr => {
 					var jobType = pr.EnumType;
 					var level = expComp.JobLevel_F[jobType];
-					var config = _jobConfig.GetConfig(jobType);
-					var lConfig = config.LevelConfigs[level];
-
 					expComp.JobExp_F[pr.EnumType] += pr.Value;
-					if (level >= config.LevelConfigs.Count - 1) {
-						pr.Value = Mathf.Min(pr.Value, lConfig.NextLevelExpDemand);
+
+					var nextLevelExpDemand = JobQueryAPI.GetJobNextLevelExpDemand(jobType, level);
+					var maxLevel = JobQueryAPI.GetJobMaxLevel(jobType);
+
+					if (level >= maxLevel) {
+						pr.Value = Mathf.Min(pr.Value, nextLevelExpDemand);
 						return;
 					}
-					if (expComp.JobExp_F[pr.EnumType] >= lConfig.NextLevelExpDemand) {
-						expComp.JobExp_F[pr.EnumType] -= lConfig.NextLevelExpDemand;
+					
+					if (expComp.JobExp_F[pr.EnumType] >= nextLevelExpDemand) {
+						expComp.JobExp_F[pr.EnumType] -= nextLevelExpDemand;
 						expComp.JobLevel_F[pr.EnumType] += 1;
 						vill.AddComponent(new VillJobLevelUpEventComponent() { JobType = pr.EnumType });
 					}

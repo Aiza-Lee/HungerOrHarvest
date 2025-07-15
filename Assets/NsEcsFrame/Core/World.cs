@@ -125,6 +125,19 @@ namespace NsEcsFrame.Core {
 			}
 		}
 
+
+		public IWorld InsertResource(Type type) {
+			if (!typeof(IResource).IsAssignableFrom(type)) {
+				throw new ArgumentException($"Type {type.Name} does not implement IResource");
+			}
+
+			if (Activator.CreateInstance(type) is not IResource resource) {
+				throw new InvalidOperationException($"Failed to create instance of resource type {type.Name}");
+			}
+
+			_resources[type] = resource;
+			return this;
+		}
 		public IWorld InsertResource<T>(T resource) where T : class, IResource {
 			var type = typeof(T);
 			_resources[type] = resource;

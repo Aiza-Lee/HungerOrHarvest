@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace NsEcsFrame.Core {
@@ -92,6 +93,11 @@ namespace NsEcsFrame.Core {
 		/// </summary>
 		/// <returns>查询构建器</returns>
 		EntityQueryBuilder CreateQueryBuilder();
+
+		/// <summary>
+		/// 添加/覆盖单例组件
+		/// </summary>
+		IWorld InsertResource(Type type);
 
 		/// <summary>
 		/// 添加/覆盖单例组件
