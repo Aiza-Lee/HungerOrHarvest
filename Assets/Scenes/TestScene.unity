@@ -1881,7 +1881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _resource:
     RandomWorldBaseInfos:
-    - {fileID: 11400000, guid: 665d87ddd7407e149b629b9752266c18, type: 2}
+    - {fileID: 11400000, guid: c0497b1eeb22acc40bb7852d00233fd0, type: 2}
 --- !u!1 &1827125514
 GameObject:
   m_ObjectHideFlags: 0

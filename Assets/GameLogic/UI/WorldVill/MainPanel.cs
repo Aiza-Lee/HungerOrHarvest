@@ -100,32 +100,32 @@ namespace GameLogic.UI.WorldVill {
 					case GroupType.Arch: {
 							DoCardsTransfer(tag.RectTrans, vc => {
 								var arch = ArchQueryAPI.GetBondableWorkArch((ArchType) clickedArchType);
-								ArchRequestAPI.RequestBondToVill(arch, vc.TargetVill);
-								VillRequestAPI.RequestBondToArch(vc.TargetVill, arch);
+								ArchDirectOperationAPI.BondToVill(arch, vc.TargetVill);
+								VillDirectOperationAPI.BondToArch(vc.TargetVill, arch);
 							});
 							break;
 						}
 					case GroupType.Workless: {
 							DoCardsTransfer(tag.RectTrans, vc => {
 								var arch = VillQueryAPI.GetWorkArchGid(vc.TargetVill).ToEntity();
-								ArchRequestAPI.RequestDisbondVill(arch, vc.TargetVill);
-								VillRequestAPI.RequestDisbondArch(vc.TargetVill, arch);
+								ArchDirectOperationAPI.DisbondVill(arch, vc.TargetVill.GetGid());
+								VillDirectOperationAPI.DisbondArch(vc.TargetVill, arch);
 							});
 							break;
 						}
 					case GroupType.Homeless: {
 							DoCardsTransfer(tag.RectTrans, vc => {
 								var arch = VillQueryAPI.GetHomeArchGid(vc.TargetVill).ToEntity();
-								ArchRequestAPI.RequestDisbondVill(arch, vc.TargetVill);
-								VillRequestAPI.RequestDisbondArch(vc.TargetVill, arch);
+								ArchDirectOperationAPI.DisbondVill(arch, vc.TargetVill.GetGid());
+								VillDirectOperationAPI.DisbondArch(vc.TargetVill, arch);
 							});
 							break;
 						}
 					case GroupType.Home: {
 							DoCardsTransfer(tag.RectTrans, (vc) => {
 								var arch = ArchQueryAPI.GetBondableWorkArch(ArchType.Cottage);
-								ArchRequestAPI.RequestBondToVill(arch, vc.TargetVill);
-								VillRequestAPI.RequestBondToArch(vc.TargetVill, arch);
+								ArchDirectOperationAPI.BondToVill(arch, vc.TargetVill);
+								VillDirectOperationAPI.BondToArch(vc.TargetVill, arch);
 							});
 							break;
 						}

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.Utils;
+using GameLogic.Features.Elements.Arch;
 using GameLogic.Features.Events;
 using GameLogic.Features.Job;
 using GameLogic.Features.Vill;
@@ -89,15 +90,52 @@ namespace GameLogic.Features.Elements.Vill {
 
 	}
 
+	public static class VillDirectOperationAPI {
+		public static void BondToArch(Entity vill, Entity arch) {
+			var bondComp = vill.GetComponent<BondToArchComponent>();
+			var archType = ArchQueryAPI.GetType(arch);
+			if (archType == ArchType.Cottage) {
+				bondComp.HomeArchGid = arch.GetGid();
+			} else {
+				bondComp.WorkArchGid = arch.GetGid();
+			}
+		}
+
+		public static void DisbondArch(Entity vill, Entity arch) {
+			var bondComp = vill.GetComponent<BondToArchComponent>();
+			if (bondComp.WorkArchGid == arch.GetGid()) {
+				bondComp.WorkArchGid = 0;
+			} else if (bondComp.HomeArchGid == arch.GetGid()) {
+				bondComp.HomeArchGid = 0;
+			} else {
+				throw new System.Exception("Cannot disbond from arch, vill is not bonded to this arch.");
+			}
+		}
+
+		public static void EnterWorkArch(Entity vill) {
+			var bondComp = vill.GetComponent<BondToArchComponent>();
+			if (bondComp.WorkArchGid == 0) {
+				throw new System.Exception("Cannot enter work arch, vill is not bonded to a work arch.");
+			}
+			vill.GetComponent<InArchComponent>().ArchGid = bondComp.WorkArchGid;
+		}
+		public static void EnterHomeArch(Entity vill) {
+			var bondComp = vill.GetComponent<BondToArchComponent>();
+			if (bondComp.HomeArchGid == 0) {
+				throw new System.Exception("Cannot enter home arch, vill is not bonded to a home arch.");
+			}
+			vill.GetComponent<InArchComponent>().ArchGid = bondComp.HomeArchGid;
+		}
+		public static void LeaveArch(Entity vill) {
+			var inArchComp = vill.GetComponent<InArchComponent>();
+			if (inArchComp.ArchGid == 0) {
+				throw new System.Exception("Cannot leave arch, vill is not in any arch.");
+			}
+			inArchComp.ArchGid = 0;
+		}
+	}
 
 	public static class VillRequestAPI {
-
-		public static void RequestBondToArch(Entity vill, Entity arch) {
-			vill.AddComponent(new BondToArchRequestComponent() { ArchGid = arch.GetGid(), });
-		}
-		public static void RequestDisbondArch(Entity vill, Entity arch) {
-			vill.AddComponent(new DisbondArchRequestComponent() { ArhcGid = arch.GetGid(), });
-		}
 
 		public static void RequestCostVit(Entity entity, float vit, VitCostReason reason) {
 			entity.AddComponent(new VillCostVitRequestComponent() {
@@ -117,16 +155,6 @@ namespace GameLogic.Features.Elements.Vill {
 				ExpGain = exp,
 				Source = source,
 			});
-		}
-
-		public static void RequestEnterWorkArch(Entity vill) {
-			vill.AddComponent(new VillEnterWorkArchRequestComponent());
-		}
-		public static void RequestLeaveArch(Entity vill) {
-			vill.AddComponent(new VillLeaveArchRequestComponent());
-		}
-		public static void RequestEnterHomeArch(Entity vill) {
-			vill.AddComponent(new VillEnterHomeArchRequestComponent());
 		}
 
 		public static void RequestProd(Entity vill,

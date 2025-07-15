@@ -15,17 +15,10 @@ namespace GameLogic.Features.Events {
 		public float VitToRecover;
 	}
 
-	public class BondToArchRequestComponent : IComponent {
-		public ulong ArchGid;
-	}
-	public class DisbondArchRequestComponent : IComponent {
-		public ulong ArhcGid;
-	}
-
 	public enum VitCostReason {
 		Production,
 		/// <summary> 白天的自然消耗 </summary>
-		DayTckcCost
+		DayTickCost
 	}
 	public class VillCostVitRequestComponent : IComponent {
 		public float VitCost;

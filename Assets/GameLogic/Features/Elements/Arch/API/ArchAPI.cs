@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
 using GameLogic.Common.Utils;
-using GameLogic.Features.Events;
 using GameLogic.World;
 using NsEcsFrame.Core;
 
@@ -76,14 +75,21 @@ namespace GameLogic.Features.Elements.Arch {
 		}
 	}
 
-	public static class ArchDirectOperationAPI { }
-
-	public static class ArchRequestAPI {
-		public static void RequestBondToVill(Entity arch, Entity vill) {
-			arch.AddComponent(new BondToVillRequestComponent() { VillGid = vill.GetGid(), });
+	public static class ArchDirectOperationAPI {
+		public static void BondToVill(Entity arch, Entity vill) {
+			var bondComp = arch.GetComponent<BondToVillComponent>();
+			if (bondComp.BondedVillGids.Count >= ArchQueryAPI.GetArchMaxContain(arch)) {
+				throw new System.Exception("Cannot bond to vill, arch is full.");
+			}
+			bondComp.BondedVillGids.Add(vill.GetGid());
 		}
-		public static void RequestDisbondVill(Entity arch, Entity vill) {
-			arch.AddComponent(new DisbondVillRequestComponent() { VillGid = vill.GetGid(), });
+		public static void DisbondVill(Entity arch, ulong villGid) {
+			var bondComp = arch.GetComponent<BondToVillComponent>();
+			if (!bondComp.BondedVillGids.Remove(villGid)) {
+				throw new System.Exception("Cannot unbond vill, vill is not bonded.");
+			}
 		}
 	}
+
+	public static class ArchRequestAPI { }
 }

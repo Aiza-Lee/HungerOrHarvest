@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e861133827a0c64cbf93e8f4e777343, type: 3}
+  m_Name: Test__RandomWorldBaseInfo_01
+  m_EditorClassIdentifier: 
+  UnlockedArchs: 01000000000000000200000003000000
+  Layers: 040000000300000000000000000000000000000000000000000000000000000000000000020000000100000005000000
+  UnlockedRepos:
+    _items:
+      Items:
+      - EnumType: 0
+        Value: 2000
+      - EnumType: 1
+        Value: 2000
+      - EnumType: 2
+        Value: 2000
+      - EnumType: 4
+        Value: 2000
+  InitialRepos:
+    _items:
+      Items:
+      - EnumType: 1
+        Value: 200
+      - EnumType: 2
+        Value: 200
+  Archs:
+    _items:
+      Items:
+      - EnumType: 1
+        Value:
+          ODR: 0
+          LYR: 0
+      - EnumType: 2
+        Value:
+          ODR: 1
+          LYR: 1
+  Vills:
+    _items:
+      Items:
+      - EnumType: 0
+        Value:
+          ODR: 0
+          LYR: 0
