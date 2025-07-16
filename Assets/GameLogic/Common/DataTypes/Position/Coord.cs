@@ -1,5 +1,6 @@
 using System;
 using GameLogic.Common.Logic;
+using NsEcsFrame.Unity;
 using UnityEngine;
 
 namespace GameLogic.Common.DataTypes {

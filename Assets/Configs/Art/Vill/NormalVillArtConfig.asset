@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeeabac740058404f984ecc701cd3966, type: 3}
   m_Name: NormalVillArtConfig
   m_EditorClassIdentifier: 
-  WorldSprite: {fileID: -4589819371187565370, guid: 62c911815701c9d41a11eac9b7997f8f, type: 3}
-  MapSprite: {fileID: -4589819371187565370, guid: 62c911815701c9d41a11eac9b7997f8f, type: 3}
+  WorldSprite: {fileID: -4791340842840364436, guid: b174d0c63bad2d948b94b32d23715fe6, type: 3}
+  MapSprite: {fileID: -4791340842840364436, guid: b174d0c63bad2d948b94b32d23715fe6, type: 3}
   Animator: {fileID: 0}
   Prefab: {fileID: 4632101640204001798, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}

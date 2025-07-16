@@ -8,6 +8,7 @@ using GameLogic.Features.Job;
 using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
+using NsEcsFrame.Unity;
 
 namespace GameLogic.Features.Elements.Vill {
 	public static class VillQueryAPI {
