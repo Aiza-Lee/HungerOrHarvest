@@ -13,18 +13,24 @@ MonoBehaviour:
   m_Name: CarpenterWorkshopArchLevelConfig_00
   m_EditorClassIdentifier: 
   Level: 0
-  MaxContain: 0
+  MaxVillContain: 3
   Introduction: 
-  InherentProdVelsSave:
-    _items: []
-  ExtraProdVelsPerOneSave:
-    _items: []
-  InherentConsVelsSave:
-    _items: []
-  ExtraConsVelsPerOneSave:
-    _items: []
-  VolumeAddsSave:
-    _items: []
-  ExpAddsSave:
-    _items: []
-  VitConsRate: 0
+  SelfProdPerTick:
+    _items:
+      Items: []
+  ExtraProdPerOnePerTick:
+    _items:
+      Items: []
+  SelfConsPerTick:
+    _items:
+      Items: []
+  ExtraConsPerOnePerTick:
+    _items:
+      Items: []
+  AddRepoVolume:
+    _items:
+      Items: []
+  AddExpPerTick:
+    _items:
+      Items: []
+  VitConsPerTick: 0

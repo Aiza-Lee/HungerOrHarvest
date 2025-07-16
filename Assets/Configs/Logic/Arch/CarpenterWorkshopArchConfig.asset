@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2994521eaef48bb41a673ef265cb93a3, type: 3}
   m_Name: CarpenterWorkshopArchConfig
   m_EditorClassIdentifier: 
-  Name: 
+  Name: "\u4F10\u6728\u5C4B"
   ConstructTicks: 0
   ConstructCost:
-    _items: []
+    _items:
+      Items: []
   DeconstructRate: 0
   RepairRate: 0
   LevelConfigs:

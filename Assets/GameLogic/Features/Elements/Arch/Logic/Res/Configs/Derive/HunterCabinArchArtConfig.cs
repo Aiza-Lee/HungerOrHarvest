@@ -5,8 +5,8 @@ namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
 		fileName = "HunterCabinArchArtConfig", 
 		menuName = "HungerOrHarvest/Config/ArchArt/HunterCabinArt", 
-		order = (int) ArchType.HunterCabin * 2)]
+		order = (int) ArchType.HuntingCabin * 2)]
 	public class HunterCabinArchArtConfig : ArchArtConfigBase {
-		public override ArchType ArchType => ArchType.HunterCabin;
+		public override ArchType ArchType => ArchType.HuntingCabin;
 	}
 }

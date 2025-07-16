@@ -1,11 +1,13 @@
 using System.Linq;
 using GameLogic.Common.Logic;
 using GameLogic.Features.Elements.Arch;
+using GameLogic.Features.Elements.Decorations;
 using GameLogic.Features.Generator;
 using GameLogic.Features.Layer;
 using GameLogic.Features.SpeedControl;
 using GameLogic.Features.Vill;
 using GameLogic.World;
+using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using NSFrame;
 
@@ -50,7 +52,8 @@ namespace GameLogic.Features.WorldDataManager {
 			var entityDatas = gameData.EntitiesSaveData.Entities;
 			entityDatas.ForEach(entityData => {
 
-				if (CheckForElement(entityData)) return;
+				// 检查是否需要Generator生成
+				if (CheckForGenerator(entityData)) return;
 
 				var entity = _world.CreateEntity();
 				entityData.Components.ForEach(comp => {
@@ -73,14 +76,14 @@ namespace GameLogic.Features.WorldDataManager {
 		public void OnRenderUpdate(float _) { }
 
 		/// <summary>
-		/// 检查是否为元素类型的实体，并进行相应的生成操作(通过Generator生成)。
+		/// 检查是否为需要Generator生成的类型，并进行相应的生成操作(通过Generator生成)。
 		/// </summary>
-		private bool CheckForElement(EntitySaveData saveData) {
+		private bool CheckForGenerator(EntitySaveData saveData) {
 			var vill = saveData.Components.OfType<VillIdentityComponent>().FirstOrDefault();
 			if (vill != null) {
 				var coord = saveData.Components.OfType<CoordComponent>().First();
 				if (coord != null) {
-					VillGenerateAPI.GenerateVill(vill.Type, coord.Coord, saveData.Components);
+					VillGenerateAPI.Generate(vill.Type, coord.Coord, saveData.Components);
 					return true;
 				}
 			}
@@ -89,7 +92,7 @@ namespace GameLogic.Features.WorldDataManager {
 			if (layer != null) {
 				var ol = saveData.Components.OfType<OLComponent>().First();
 				if (ol != null) {
-					LayerGenerateAPI.GenerateLayer(layer.LayerType, ol.OL, saveData.Components);
+					LayerGenerateAPI.Generate(layer.LayerType, ol.OL, saveData.Components);
 					return true;
 				}
 			}
@@ -98,9 +101,17 @@ namespace GameLogic.Features.WorldDataManager {
 			if (arch != null) {
 				var ol = saveData.Components.OfType<OLComponent>().First();
 				if (ol != null) {
-					ArchGenerateAPI.GenerateArch(arch.ArchType, ol.OL, saveData.Components);
+					ArchGenerateAPI.Generate(arch.ArchType, ol.OL, saveData.Components);
 					return true;
 				}
+			}
+
+			var decoration = saveData.Components.OfType<DecorationIdentityComp>().FirstOrDefault();
+			if (decoration != null) {
+				var coord = saveData.Components.OfType<CoordComponent>().First().Coord;
+				var scale = saveData.Components.OfType<TransformComponent>().First().LocalScale;
+				DecorationGeneratorAPI.Generate(decoration.Type, coord, scale);
+				return true;
 			}
 
 			return false;

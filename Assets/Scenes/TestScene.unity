@@ -994,6 +994,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Repo Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 6289297825645886760, guid: ca0e695009e7bfd4a9e2f4b3f88f8e05, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7263610006258786833, guid: ca0e695009e7bfd4a9e2f4b3f88f8e05, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1845,6 +1849,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1754552821}
   - component: {fileID: 1754552822}
+  - component: {fileID: 1754552823}
   m_Layer: 0
   m_Name: Random World Base Info Config Res
   m_TagString: Untagged
@@ -1882,6 +1887,32 @@ MonoBehaviour:
   _resource:
     RandomWorldBaseInfos:
     - {fileID: 11400000, guid: c0497b1eeb22acc40bb7852d00233fd0, type: 2}
+--- !u!114 &1754552823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754552820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e59ab574d9706843bd54510570e5e4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resource:
+    DecorationPrefabs:
+    - Key: 1
+      Value:
+      - {fileID: 2049738430073254299, guid: 8767e79fca242ac4191354adc93406d8, type: 3}
+      - {fileID: 2049738430073254299, guid: 898f1849218efed4da7e8d6c8792f1b8, type: 3}
+      - {fileID: 2049738430073254299, guid: a2f0a34c9d3605f4fa4d4643c940c676, type: 3}
+      - {fileID: 2049738430073254299, guid: 0b6d1ea9e36a4134f86d362b7ed63280, type: 3}
+    - Key: 2
+      Value:
+      - {fileID: 2049738430073254299, guid: dff9e911b9ed54e45a69ec2f08c43a48, type: 3}
+      - {fileID: 2049738430073254299, guid: 19b878b2463d6fb40a7efca5b08b8764, type: 3}
+      - {fileID: 2049738430073254299, guid: a54bf585b9b9ec9409e1ee94d40ad8e3, type: 3}
+      - {fileID: 2049738430073254299, guid: 5e7fe405528fb23498f83c54e74f6169, type: 3}
 --- !u!1 &1827125514
 GameObject:
   m_ObjectHideFlags: 0
@@ -2194,12 +2225,22 @@ MonoBehaviour:
     DefaultArtConfig: {fileID: 0}
     Configs:
     - {fileID: 11400000, guid: 6453f9697e7ebbc48ad9914893d696f9, type: 2}
+    - {fileID: 11400000, guid: 1361d73a2f1dfc94da394b1ca791c886, type: 2}
+    - {fileID: 11400000, guid: 7c4ef3026d788504d9c8cf2726b7f73e, type: 2}
     - {fileID: 11400000, guid: 4729ff32533e2044e9d80f4eedfe61b7, type: 2}
+    - {fileID: 11400000, guid: eeb51c12bdea34b47b36e3a37068127a, type: 2}
+    - {fileID: 11400000, guid: 4207fa0c40c9018499e6027f55c82500, type: 2}
     - {fileID: 11400000, guid: 72fd50e96d971b24d9bec3923c86e319, type: 2}
+    - {fileID: 11400000, guid: efac52bf5d84a1743bf81da99599da14, type: 2}
+    - {fileID: 11400000, guid: 1a78d82845d13ce45ba5a627ed4c4111, type: 2}
     ArtConfigs:
+    - {fileID: 11400000, guid: c64d378ee500e36429c6c6a96538e2e0, type: 2}
+    - {fileID: 11400000, guid: 0114333e027d53442b30ca2ead250282, type: 2}
     - {fileID: 11400000, guid: aebc97dac2fb2c74fa9ee7154dc6f38c, type: 2}
     - {fileID: 11400000, guid: 3c5520141dbded64abdc204cc8b860ac, type: 2}
+    - {fileID: 11400000, guid: bf8160a5fdd450543b5d47e6de5f50b1, type: 2}
     - {fileID: 11400000, guid: f95502be519befe4b800ceeace79dbaf, type: 2}
+    - {fileID: 11400000, guid: 8c8e788c3b4293d4bb7c052cb4eda370, type: 2}
 --- !u!1 &2027287849
 GameObject:
   m_ObjectHideFlags: 0

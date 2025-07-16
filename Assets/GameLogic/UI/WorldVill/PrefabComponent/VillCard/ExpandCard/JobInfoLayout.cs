@@ -3,7 +3,6 @@ using GameLogic.Features.Elements.Vill;
 using GameLogic.Features.Job;
 using GameLogic.UI.Common.UiComponents.GroupLayout;
 using NsEcsFrame.Core;
-using NSFrame;
 using UnityEngine;
 
 namespace GameLogic.UI.WorldVill {

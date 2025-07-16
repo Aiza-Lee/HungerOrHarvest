@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
+using GameLogic.Features.Elements.Decorations;
 using UnityEngine;
 
 namespace GameLogic.Features.WorldDataManager {
@@ -14,8 +15,10 @@ namespace GameLogic.Features.WorldDataManager {
 
 		[Tooltip("解锁的Repo -> 资源上限")] public ReadOnlyEtList<RepoType, float> UnlockedRepos;
 		[Tooltip("初始资源Repo种类 -> 资源数量")] public ReadOnlyEtList<RepoType, float> InitialRepos;
-		
+
 		[Tooltip("arch类型 -> 所在位置(相对于地图中心)")] public ReadOnlyEtList<ArchType, OL> Archs;
 		[Tooltip("vill类型 -> 所在位置(相对于地图中心)")] public ReadOnlyEtList<VillType, OL> Vills;
+
+		[Tooltip("装饰物生成概率")] public List<SerializablePair<DecorationType, float>> DecorationRates;
 	}
 }

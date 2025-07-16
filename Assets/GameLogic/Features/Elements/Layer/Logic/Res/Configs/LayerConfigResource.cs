@@ -48,7 +48,7 @@ namespace GameLogic.Features.Layer {
 				.TryAddComponent<SpriteRendererComponent>(new() {
 					DrawMode = SpriteDrawMode.Tiled,
 					TileMode = SpriteTileMode.Continuous,
-					Size = new(ConstMgr.MAX_UX, 16),
+					Size = new(ConstMgr.MAX_UX, 1),
 					Color = GameWorldMono.MainWorld.GetResource<LayerConfigResource>().GetArtConfig(LayerType).Prefab.GetComponent<SpriteRenderer>().color
 				})
 				.TryAddComponent<OLComponent>()

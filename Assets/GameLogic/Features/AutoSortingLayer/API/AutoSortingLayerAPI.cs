@@ -1,6 +1,7 @@
 using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Features.Elements.Arch;
+using GameLogic.Features.Elements.Decorations;
 using GameLogic.Features.Layer;
 using GameLogic.Features.Vill;
 using NsEcsFrame.Core;
@@ -12,13 +13,13 @@ namespace GameLogic.Features.AutoSortingLayer {
 	/// <para>目前只是作为内部实现的Utils使用</para>
 	/// </summary>
 	public static class AutoSortingLayerAPI {
-		public static void SetSortingLayerByCoordY(Entity entity, int cy) {
-			SetSortingLayerByOlLyr(entity, Mathf.CeilToInt(1f * cy / ConstMgr.CY_PER_LYR));
+		public static void Set_SortingOrderAndLayer_ByCoordY(Entity entity, int cy) {
+			Set_SortingLayer_ByOlLyr(entity, Mathf.CeilToInt(1f * cy / ConstMgr.CY_PER_LYR));
 			if (cy % ConstMgr.CY_PER_LYR != 0) {
 				entity.GetComponent<SpriteRendererComponent>().SortingOrder = ConstMgr.MAX_SORTING_ORDER;
 			}
 		}
-		public static void SetSortingLayerByOlLyr(Entity entity, int lyr) {
+		public static void Set_SortingLayer_ByOlLyr(Entity entity, int lyr) {
 			var srComp = entity.GetComponent<SpriteRendererComponent>();
 			srComp.SortingLayerID = SortingLayer.NameToID($"m_Layer{lyr}");
 			if (entity.HasComponent<ArchIdentityComponent>()) {
@@ -27,8 +28,10 @@ namespace GameLogic.Features.AutoSortingLayer {
 				srComp.SortingOrder = ConstMgr.VILL_SORTING_ORDER;
 			} else if (entity.HasComponent<LayerIdentityComponent>()) {
 				srComp.SortingOrder = ConstMgr.EARTH_SORTING_ORDER;
-			} else {
+			} else if (entity.HasComponent<DecorationIdentityComp>()) {
 				srComp.SortingOrder = ConstMgr.BACK_SORTING_ORDER;
+			} else {
+				srComp.SortingOrder = ConstMgr.FRONT_SORTING_ORDER;
 			}
 			srComp.MarkDirty();
 		}

@@ -1,5 +1,3 @@
-using GameLogic.Common.DataTypes;
-using NsEcsFrame.Core;
 using NSFrame;
 using UnityEngine;
 

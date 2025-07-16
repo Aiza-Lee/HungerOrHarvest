@@ -5,7 +5,7 @@ using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Generator {
 	public static class ArchGenerateAPI {
-		public static void GenerateArch(ArchType type, OL ol, List<IComponent> extraComponents = null) {
+		public static void Generate(ArchType type, OL ol, List<IComponent> extraComponents = null) {
 			var res = GameWorldMono.MainWorld.GetResource<ArchGeneratorResource>();
 			res.ArchDatas.Add(new ArchGenerateData {
 				Type = type,

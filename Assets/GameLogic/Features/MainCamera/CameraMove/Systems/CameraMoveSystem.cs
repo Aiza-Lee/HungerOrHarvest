@@ -1,6 +1,7 @@
 using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Common.View;
+using GameLogic.Features.WorldEdge;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -69,15 +70,17 @@ namespace GameLogic.Features.MainCamera {
 
 
 			if (input.MoveForwardKeyDown) {
-				CameraInputAPI.TempLockInput(config.ForwardPositionChangeInfo.TotalTime);
 				var target = curPos + ConstMgr.LayerGap * Vector3.forward;
-				if (target.z >= ConstMgr.MAX_UZ - ConstMgr.LayerGap) { target.z = ConstMgr.MAX_UZ - ConstMgr.LayerGap; }
+				if (target.z > (WorldEdgeAPI.MaxLyr - 1) * ConstMgr.LayerGap) return;
+
+				CameraInputAPI.TempLockInput(config.ForwardPositionChangeInfo.TotalTime);
 				moveStat.SetChangeInfo(config.ForwardPositionChangeInfo).StartAChange(camera, target);
 
 			} else if (input.MoveBackwardKeyDown) {
-				CameraInputAPI.TempLockInput(config.BackwardPositionChangeInfo.TotalTime);
 				var target = curPos + ConstMgr.LayerGap * Vector3.back;
-				if (target.z <= ConstMgr.MIN_UZ - ConstMgr.LayerGap) { target.z = ConstMgr.MIN_UZ - ConstMgr.LayerGap; }
+				if (target.z < (WorldEdgeAPI.MinLyr - 1) * ConstMgr.LayerGap) return;
+
+				CameraInputAPI.TempLockInput(config.BackwardPositionChangeInfo.TotalTime);
 				moveStat.SetChangeInfo(config.BackwardPositionChangeInfo).StartAChange(camera, target);
 			}
 

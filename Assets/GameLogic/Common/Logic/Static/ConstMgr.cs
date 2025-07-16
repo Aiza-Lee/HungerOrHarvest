@@ -72,7 +72,7 @@ namespace GameLogic.Common.Logic {
 		public const float DEFAULT_CAMERA_HEIGHT = 1.5f;
 
 		/// <summary>  村庄边界的宽度，单位为OL。主要用于界定村民的随机移动范围。</summary>
-		public const int DEFAULT_WORLD_EDGE_WIDTH = 2;
+		public const int DEFAULT_WORLD_EDGE_WIDTH = 1;
 
 		/// <summary>手动维护的layer gameobject在世界中的长度</summary>
 		public const float LAYER_SPRITE_UX_LENGTH = 64;

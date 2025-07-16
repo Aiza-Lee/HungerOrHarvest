@@ -20,8 +20,8 @@ namespace GameLogic.UI.WorldRepo {
 			_image.sprite = sprite;
 		}
 		public void SetSumMax(float sum, float max) {
-			_sumText.text = $"{sum:F1}";
-			_maxText.text = $"{max:F1}";
+			_sumText.text = $"{sum:F0}";
+			_maxText.text = $"{max:F0}";
 		}
 		#endregion
 

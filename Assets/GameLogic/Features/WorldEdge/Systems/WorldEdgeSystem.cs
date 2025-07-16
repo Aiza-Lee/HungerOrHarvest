@@ -24,12 +24,19 @@ namespace GameLogic.Features.WorldEdge {
 			var query = _world.CreateQueryBuilder().WithAll<ArchGeneratedEventComp_Logic>().Build();
 			query.ForEach(e => {
 				var archEvent = e.GetComponent<ArchGeneratedEventComp_Logic>();
-				var archGid = archEvent.ArchGid;
-				var archEntity = GameWorldMono.GidToEntity[archGid];
-				var olComp = archEntity.GetComponent<OLComponent>();
-				
+				var gid = archEvent.ArchGid;
+				var entity = GameWorldMono.GidToEntity[gid];
+				var olComp = entity.GetComponent<OLComponent>();
+
 				// 更新边界范围
-				_world.GetResource<WorldEdgeResource>().UpdateEdge(olComp.OL);
+				_world.GetResource<WorldEdgeResource>().UpdateArchEdge(olComp.OL);
+			});
+			
+			_world.CreateQueryBuilder().WithAll<LayerGeneratedEventComp_Logic>().Build().ForEach(e => {
+				var layerEvent = e.GetComponent<LayerGeneratedEventComp_Logic>();
+				var gid = layerEvent.LayerGid;
+				var lyr = GameWorldMono.GidToEntity[gid].GetComponent<OLComponent>().OL.LYR;
+				_world.GetResource<WorldEdgeResource>().UpdateLayerRange(lyr);
 			});
 		}
 		public void OnRenderUpdate(float _) { }

@@ -21,16 +21,16 @@ MonoBehaviour:
         Value: 2000
       - EnumType: 1
         Value: 2000
-      - EnumType: 2
+      - EnumType: 10
         Value: 2000
-      - EnumType: 4
+      - EnumType: 6
         Value: 2000
   InitialRepos:
     _items:
       Items:
       - EnumType: 1
         Value: 2000
-      - EnumType: 2
+      - EnumType: 0
         Value: 200
   Archs:
     _items:
@@ -106,3 +106,8 @@ MonoBehaviour:
         Value:
           ODR: -1
           LYR: -1
+  DecorationRates:
+  - Key: 1
+    Value: 0.008
+  - Key: 2
+    Value: 0.002

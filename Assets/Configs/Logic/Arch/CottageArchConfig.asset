@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a845edec8720904bb3536cb19f0a69e, type: 3}
   m_Name: CottageArchConfig
   m_EditorClassIdentifier: 
-  Name: 
-  ConstructTick: 0
+  Name: "\u5DE2\u5C45"
+  ConstructTicks: 0
   ConstructCost:
-    _items: []
+    _items:
+      Items: []
   DeconstructRate: 0
   RepairRate: 0
   LevelConfigs:

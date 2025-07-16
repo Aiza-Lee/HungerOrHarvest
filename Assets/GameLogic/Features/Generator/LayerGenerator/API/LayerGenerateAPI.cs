@@ -5,7 +5,7 @@ using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Generator {
 	public static class LayerGenerateAPI {
-		public static void GenerateLayer(LayerType type, OL ol, List<IComponent> extraComponents = null) {
+		public static void Generate(LayerType type, OL ol, List<IComponent> extraComponents = null) {
 			var res = GameWorldMono.MainWorld.GetResource<LayerGeneratorResource>();
 			res.LayerDatas.Add(new LayerGenerateData {
 				Type = type,

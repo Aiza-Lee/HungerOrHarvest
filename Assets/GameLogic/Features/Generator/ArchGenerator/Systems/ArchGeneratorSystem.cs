@@ -51,7 +51,7 @@ namespace GameLogic.Features.Generator {
 			var olComp = entity.GetComponent<OLComponent>();
 			if (newOL) {
 				olComp.OL = data.OL;
-		}
+			}
 			olComp.IsDirty = true;
 
 			var gidComp = entity.GetComponent<GidComponent>();
@@ -71,5 +71,5 @@ namespace GameLogic.Features.Generator {
 			;
 		}
 
-	} 
+	}
 }

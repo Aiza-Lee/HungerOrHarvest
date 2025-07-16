@@ -1,10 +1,13 @@
+using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Features.Elements.Arch;
+using GameLogic.Features.Elements.Decorations;
 using GameLogic.Features.Generator;
 using GameLogic.Features.MainCamera;
 using GameLogic.Features.Repo;
 using GameLogic.Features.SpeedControl;
 using NsEcsFrame.Core;
+using UnityEngine;
 
 namespace GameLogic.Features.WorldDataManager {
 	/// <summary>
@@ -56,24 +59,47 @@ namespace GameLogic.Features.WorldDataManager {
 				archUnlockRes.Unlocked_F[unlock] = true;
 			}
 
-			// 生成layer
+			// 生成layer和装饰物
 			var mid = info.Layers.Count / 2;
 			for (int i = 0; i < info.Layers.Count; i++) {
 				var layerType = info.Layers[i];
-				LayerGenerateAPI.GenerateLayer(layerType, new(0, i - mid + ConstMgr.MIDDLE_LAYER));
+				var lyr = i - mid + ConstMgr.MIDDLE_LAYER;
+				LayerGenerateAPI.Generate(layerType, new(0, lyr));
+
+				// 生成装饰物
+				if (layerType != LayerType.Grass) continue;
+				for (int cx = 0; cx <= ConstMgr.MAX_CX; ++cx) {
+					var coord = new Coord(cx, ConstMgr.CY_PER_LYR * lyr);
+					foreach (var pr in info.DecorationRates) {
+						if (TrySpawnDecoration(pr.Key, coord, pr.Value)) {
+							// 确保不重叠
+							break;
+						}
+					}
+				}
 			}
 			// 生成建筑
 			foreach (var arch in info.Archs) {
-				ArchGenerateAPI.GenerateArch(arch.EnumType, arch.Value + ConstMgr.WORLD_CENTER_OL);
+				ArchGenerateAPI.Generate(arch.EnumType, arch.Value + ConstMgr.WORLD_CENTER_OL);
 			}
 			// 生成村民
 			foreach (var vill in info.Vills) {
-				VillGenerateAPI.GenerateVill(vill.EnumType, (vill.Value + ConstMgr.WORLD_CENTER_OL).ToCoord());
+				VillGenerateAPI.Generate(vill.EnumType, (vill.Value + ConstMgr.WORLD_CENTER_OL).ToCoord());
 			}
+
 
 			WorldDataManagerAPI.Save(false);
 			SpeedControlAPI.SetSpeedControlInputEnabled(true);
 			CameraInputAPI.SetCameraInputEnabled(true);
 		}
-	} 
+
+		private bool TrySpawnDecoration(DecorationType type, Coord coord, float posibility) {
+			var p = Random.Range(0f, 1f);
+			if (p > posibility) return false;
+			// 随机缩放尺寸
+			var randomScale = Random.Range(0.8f, 1.2f);
+			DecorationGeneratorAPI.Generate(type, coord, new(randomScale, randomScale, randomScale));
+			return true;
+		}
+	}
 }

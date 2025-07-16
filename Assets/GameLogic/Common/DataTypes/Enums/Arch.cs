@@ -3,14 +3,16 @@ using Unity.Plastic.Newtonsoft.Json;
 namespace GameLogic.Common.DataTypes {
 	[JsonConverter(typeof(Unity.Plastic.Newtonsoft.Json.Converters.StringEnumConverter))]
 	public enum ArchType {
-		Ruin = 0,
+		Ruins = 0,
 		Cottage = 1,
-		HunterCabin = 2,
+		HuntingCabin = 2,
 		StoneMine = 3,
-		FishingGround = 4,
+		FishingDock = 4,
 		Farmland = 5,
-		CarpenterWorkshop = 6,
+		CarpentryShop = 6,
 		ClayPit = 7,
 		CopperMine = 8,
+		LumberMill = 9,
+		MeteoriteMine = 10,
 	}
 }
