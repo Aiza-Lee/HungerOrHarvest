@@ -1,4 +1,11 @@
-*.asset filter=lfs diff=lfs merge=lfs -text
+# Only track truly large Unity assets that exceed GitHub's limits
+# Most Unity config assets are small and don't need LFS
+
+# 3D models (usually large)
 *.fbx filter=lfs diff=lfs merge=lfs -text
-*.png filter=lfs diff=lfs merge=lfs -text
-*.jpg filter=lfs diff=lfs merge=lfs -text
+
+# Specific large font assets (over 100MB)
+**/createdFontAssets/*.asset filter=lfs diff=lfs merge=lfs -text
+
+# Add other large asset patterns as needed:
+# **/*SDF.asset filter=lfs diff=lfs merge=lfs -text
