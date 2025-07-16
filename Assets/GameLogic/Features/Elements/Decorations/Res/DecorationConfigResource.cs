@@ -5,18 +5,23 @@ using UnityEngine;
 
 namespace GameLogic.Features.Elements.Decorations {
 	public enum DecorationType {
-		Tree = 1,
-		Stump = 2,
-		Rock = 3,
+		Tree_01 = 1,
+		Tree_02 = 2,
+		Tree_03 = 3,
+		Tree_04 = 4,
+		Stump_01 = 101,
+		Stump_02 = 102,
+		Stump_03 = 103,
+		Stump_04 = 104,
 	}
 	[System.Serializable]
 	public class DecorationConfigResource : IResource {
-		public List<SerializablePair<DecorationType, List<GameObject>>> DecorationPrefabs;
+		public List<SerializablePair<DecorationType, GameObject>> DecorationPrefabs;
 
-		public GameObject GetRandomDecorationPrefab(DecorationType type) {
+		public GameObject GetDecorationPrefab(DecorationType type) {
 			var pair = DecorationPrefabs.Find(p => p.Key == type);
-			if (pair != null && pair.Value.Count > 0) {
-				return pair.Value[Random.Range(0, pair.Value.Count)];
+			if (pair != null) {
+				return pair.Value;
 			}
 			return null;
 		}

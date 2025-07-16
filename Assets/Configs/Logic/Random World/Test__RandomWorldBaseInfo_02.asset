@@ -108,6 +108,18 @@ MonoBehaviour:
           LYR: -1
   DecorationRates:
   - Key: 1
-    Value: 0.008
+    Value: 0.004
   - Key: 2
-    Value: 0.002
+    Value: 0.004
+  - Key: 3
+    Value: 0.004
+  - Key: 4
+    Value: 0.004
+  - Key: 101
+    Value: 0.0005
+  - Key: 102
+    Value: 0.0005
+  - Key: 103
+    Value: 0.0005
+  - Key: 104
+    Value: 0.0005

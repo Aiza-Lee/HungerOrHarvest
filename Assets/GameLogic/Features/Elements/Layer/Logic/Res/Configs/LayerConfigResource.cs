@@ -41,6 +41,7 @@ namespace GameLogic.Features.Layer {
 		public abstract LayerType LayerType { get; }
 
 		public void TryAddComponentsToEntity(Entity entity) {
+			var prefab = GameWorldMono.MainWorld.GetResource<LayerConfigResource>().GetArtConfig(LayerType).Prefab;
 			entity
 				.TryAddComponent<GidComponent>()
 				.TryAddComponent<LayerIdentityComponent>(new() { LayerType = LayerType })
@@ -48,8 +49,8 @@ namespace GameLogic.Features.Layer {
 				.TryAddComponent<SpriteRendererComponent>(new() {
 					DrawMode = SpriteDrawMode.Tiled,
 					TileMode = SpriteTileMode.Continuous,
-					Size = new(ConstMgr.MAX_UX, 1),
-					Color = GameWorldMono.MainWorld.GetResource<LayerConfigResource>().GetArtConfig(LayerType).Prefab.GetComponent<SpriteRenderer>().color
+					Size = new(ConstMgr.MAX_UX, prefab.GetComponent<SpriteRenderer>().size.y),
+					Color = prefab.GetComponent<SpriteRenderer>().color
 				})
 				.TryAddComponent<OLComponent>()
 				.TryAddComponent<SavedEntityComponent>();

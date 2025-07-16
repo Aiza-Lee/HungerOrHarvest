@@ -1902,17 +1902,21 @@ MonoBehaviour:
   _resource:
     DecorationPrefabs:
     - Key: 1
-      Value:
-      - {fileID: 2049738430073254299, guid: 8767e79fca242ac4191354adc93406d8, type: 3}
-      - {fileID: 2049738430073254299, guid: 898f1849218efed4da7e8d6c8792f1b8, type: 3}
-      - {fileID: 2049738430073254299, guid: a2f0a34c9d3605f4fa4d4643c940c676, type: 3}
-      - {fileID: 2049738430073254299, guid: 0b6d1ea9e36a4134f86d362b7ed63280, type: 3}
+      Value: {fileID: 2049738430073254299, guid: 8767e79fca242ac4191354adc93406d8, type: 3}
     - Key: 2
-      Value:
-      - {fileID: 2049738430073254299, guid: dff9e911b9ed54e45a69ec2f08c43a48, type: 3}
-      - {fileID: 2049738430073254299, guid: 19b878b2463d6fb40a7efca5b08b8764, type: 3}
-      - {fileID: 2049738430073254299, guid: a54bf585b9b9ec9409e1ee94d40ad8e3, type: 3}
-      - {fileID: 2049738430073254299, guid: 5e7fe405528fb23498f83c54e74f6169, type: 3}
+      Value: {fileID: 2049738430073254299, guid: 898f1849218efed4da7e8d6c8792f1b8, type: 3}
+    - Key: 3
+      Value: {fileID: 2049738430073254299, guid: a2f0a34c9d3605f4fa4d4643c940c676, type: 3}
+    - Key: 4
+      Value: {fileID: 2049738430073254299, guid: 0b6d1ea9e36a4134f86d362b7ed63280, type: 3}
+    - Key: 101
+      Value: {fileID: 2049738430073254299, guid: dff9e911b9ed54e45a69ec2f08c43a48, type: 3}
+    - Key: 102
+      Value: {fileID: 2049738430073254299, guid: 19b878b2463d6fb40a7efca5b08b8764, type: 3}
+    - Key: 103
+      Value: {fileID: 2049738430073254299, guid: a54bf585b9b9ec9409e1ee94d40ad8e3, type: 3}
+    - Key: 104
+      Value: {fileID: 2049738430073254299, guid: 5e7fe405528fb23498f83c54e74f6169, type: 3}
 --- !u!1 &1827125514
 GameObject:
   m_ObjectHideFlags: 0

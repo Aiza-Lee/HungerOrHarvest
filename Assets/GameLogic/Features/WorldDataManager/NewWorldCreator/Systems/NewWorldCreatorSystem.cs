@@ -61,6 +61,7 @@ namespace GameLogic.Features.WorldDataManager {
 
 			// 生成layer和装饰物
 			var mid = info.Layers.Count / 2;
+			var rates = info.DecorationRates;
 			for (int i = 0; i < info.Layers.Count; i++) {
 				var layerType = info.Layers[i];
 				var lyr = i - mid + ConstMgr.MIDDLE_LAYER;
@@ -70,12 +71,18 @@ namespace GameLogic.Features.WorldDataManager {
 				if (layerType != LayerType.Grass) continue;
 				for (int cx = 0; cx <= ConstMgr.MAX_CX; ++cx) {
 					var coord = new Coord(cx, ConstMgr.CY_PER_LYR * lyr);
-					foreach (var pr in info.DecorationRates) {
-						if (TrySpawnDecoration(pr.Key, coord, pr.Value)) {
-							// 确保不重叠
+
+					// 随机生成装饰物，采用轮盘抽样
+					var p = Random.Range(0f, 1f);
+					var pSum = 0f;
+					foreach (var pr in rates) {
+						pSum += pr.Value;
+						if (p < pSum) {
+							SpawnDecoration(pr.Key, coord);
 							break;
 						}
 					}
+
 				}
 			}
 			// 生成建筑
@@ -93,12 +100,15 @@ namespace GameLogic.Features.WorldDataManager {
 			CameraInputAPI.SetCameraInputEnabled(true);
 		}
 
-		private bool TrySpawnDecoration(DecorationType type, Coord coord, float posibility) {
-			var p = Random.Range(0f, 1f);
-			if (p > posibility) return false;
+		private bool SpawnDecoration(DecorationType type, Coord coord) {
 			// 随机缩放尺寸
 			var randomScale = Random.Range(0.8f, 1.2f);
-			DecorationGeneratorAPI.Generate(type, coord, new(randomScale, randomScale, randomScale));
+			DecorationGeneratorAPI.Generate(
+				type,
+				coord,
+				new(randomScale, randomScale, randomScale),
+				Random.Range(0, 2) == 0 // 随机翻转X轴
+			);
 			return true;
 		}
 	}

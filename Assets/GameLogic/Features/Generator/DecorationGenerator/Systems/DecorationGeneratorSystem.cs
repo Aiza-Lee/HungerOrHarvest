@@ -33,8 +33,8 @@ namespace GameLogic.Features.Generator {
 									.AddComponent(new TransformComponent() { LocalScale = data.Scale })
 									.AddComponent(new CoordComponent { Coord = data.Position })
 									.AddComponent(new SavedEntityComponent())
-									.AddComponent(new SpriteRendererComponent());
-					var prefab = DecorationAPI.GetRandomDecorationPrefab(data.Type);
+									.AddComponent(new SpriteRendererComponent() { FlipX = data.FlipX });
+					var prefab = DecorationAPI.GetDecorationPrefab(data.Type);
 					var go = GameObject.Instantiate(prefab);
 					go.GetComponent<EntityMono>().SetEntity(entity);
 				}

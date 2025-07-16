@@ -9,11 +9,12 @@ namespace GameLogic.Features.Generator {
 	public class DecorationGeneratorResource : IResource, ISaveableResource {
 		public List<DecorationGenerateData> DecorationDatas = new();
 
-		public void AddDecoration(DecorationType type, Coord position, SimpleVector3 scale) {
+		public void AddDecoration(DecorationType type, Coord position, SimpleVector3 scale, bool flipX) {
 			DecorationDatas.Add(new DecorationGenerateData {
 				Type = type,
 				Position = position,
-				Scale = scale
+				Scale = scale,
+				FlipX = flipX
 			});
 		}
 
@@ -34,5 +35,6 @@ namespace GameLogic.Features.Generator {
 		public DecorationType Type;
 		public Coord Position;
 		public SimpleVector3 Scale;
+		public bool FlipX;
 	}
 }

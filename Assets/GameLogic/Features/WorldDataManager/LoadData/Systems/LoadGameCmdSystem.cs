@@ -1,5 +1,6 @@
 using System.Linq;
 using GameLogic.Common.Logic;
+using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Features.Elements.Arch;
 using GameLogic.Features.Elements.Decorations;
 using GameLogic.Features.Generator;
@@ -110,7 +111,8 @@ namespace GameLogic.Features.WorldDataManager {
 			if (decoration != null) {
 				var coord = saveData.Components.OfType<CoordComponent>().First().Coord;
 				var scale = saveData.Components.OfType<TransformComponent>().First().LocalScale;
-				DecorationGeneratorAPI.Generate(decoration.Type, coord, scale);
+				var flipX = saveData.Components.OfType<SpriteRendererComponent>().FirstOrDefault().FlipX;
+				DecorationGeneratorAPI.Generate(decoration.Type, coord, scale, flipX);
 				return true;
 			}
 

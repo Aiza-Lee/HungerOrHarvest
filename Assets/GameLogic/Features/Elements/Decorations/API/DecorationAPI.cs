@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GameLogic.World;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ namespace GameLogic.Features.Elements.Decorations {
 		/// </summary>
 		/// <param name="type">装饰物类型</param>
 		/// <returns>随机装饰物预制体</returns>
-		public static GameObject GetRandomDecorationPrefab(DecorationType type) {
-			return GameWorldMono.MainWorld.GetResource<DecorationConfigResource>().GetRandomDecorationPrefab(type);
+		public static GameObject GetDecorationPrefab(DecorationType type) {
+			return GameWorldMono.MainWorld.GetResource<DecorationConfigResource>().GetDecorationPrefab(type);
 		}
 	}
 }
