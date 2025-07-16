@@ -1,16 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e8dd7f31be1caa46aaf4a8f7fbc2331, type: 3}
-  m_Name: BeachLayerConfig
-  m_EditorClassIdentifier: 
-  LayerName: 
-  LayerDescription: 
+version https://git-lfs.github.com/spec/v1
+oid sha256:8bca9f9b2bbbbbe4224b5e08c7fc767c4136c7c86c684d89a29a959c620ba018
+size 456

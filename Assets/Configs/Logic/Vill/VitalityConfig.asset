@@ -1,24 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbbf48d6f172b65419cee29e95fee135, type: 3}
-  m_Name: VitalityConfig
-  m_EditorClassIdentifier: 
-  HungryVitThreshold: 0.1
-  LowVitThreshold: 0.2
-  RecoverVitThreshold: 0.6
-  HungryProdLoss: 0.5
-  VitPerFood: 5
-  MaxVit: 100
-  FoodConsPerTickWhenRecover: 0.1
-  RecoverChancePerDay: 1
-  DayVitConsPerTick: 0.01
-  DyingVitConsPerTick: 0.005
+version https://git-lfs.github.com/spec/v1
+oid sha256:0fe6e4430595193fab109720448d9e78d7fb8df3acfceb66a3df7d1b1785177d
+size 669

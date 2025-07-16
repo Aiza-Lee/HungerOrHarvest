@@ -1,18 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe02c2e6a03f8e34bb92cd12a2b730ba, type: 3}
-  m_Name: StoneMineArchArtConfig
-  m_EditorClassIdentifier: 
-  WorldSprite: {fileID: -5786540449782116118, guid: 812e58ff9c6090f46845ae82aa13ce65, type: 3}
-  MapSprite: {fileID: -5786540449782116118, guid: 812e58ff9c6090f46845ae82aa13ce65, type: 3}
-  Animator: {fileID: 0}
-  Prefab: {fileID: 118420102723132381, guid: cc3e94f666be1d54e94939cbd8b9ec26, type: 3}
+version https://git-lfs.github.com/spec/v1
+oid sha256:cac3706fc9af464b193629c7b7daf51b2a7dddde7bbea2bb2faa9487d4d2c125
+size 729

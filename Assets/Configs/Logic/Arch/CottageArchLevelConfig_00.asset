@@ -1,32 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5da0d3e525bd1d24fabb9b7efb4bde6f, type: 3}
-  m_Name: CottageArchLevelConfig_00
-  m_EditorClassIdentifier: 
-  Level: 0
-  MaxVillContain: 3
-  Introduction: "\u7761\u89C9\u4E4B\u5730"
-  SelfProdPerTick:
-    _items:
-    - EnumType: 6
-      Value: 0.001
-  ExtraProdPerOnePerTick:
-    _items: []
-  SelfConsPerTick:
-    _items: []
-  ExtraConsPerOnePerTick:
-    _items: []
-  AddRepoVolume:
-    _items: []
-  AddExpPerTick:
-    _items: []
-  VitConsPerTick: 0
+version https://git-lfs.github.com/spec/v1
+oid sha256:218fad75a9fa666043b6eab447289c6e712841ca32f06c3e636b2c19b3c02499
+size 788

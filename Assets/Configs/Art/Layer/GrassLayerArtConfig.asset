@@ -1,16 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36831e6b380a1b645b7848348ffc859b, type: 3}
-  m_Name: GrassLayerArtConfig
-  m_EditorClassIdentifier: 
-  Sprite: {fileID: 0}
-  Prefab: {fileID: 6027108390514112321, guid: 5878d12087484da4c90322c23862563f, type: 3}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9c64c82d2eb4c2c468da8b2b4570196a552f0e9d7f568a8882558f545b1bd6dd
+size 535

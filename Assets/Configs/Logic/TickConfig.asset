@@ -1,17 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 829b46999ba012749ade6af5ff3b6aaf, type: 3}
-  m_Name: TickConfig
-  m_EditorClassIdentifier: 
-  DAY_TICKS: 2000
-  NIGHT_TICKS: 1000
-  NIGHT_TIME_SPEED: 10
+version https://git-lfs.github.com/spec/v1
+oid sha256:a6c238841e6b2287ac509b96c58978e0a6857f4408717b532a9d4894bcfae895
+size 477

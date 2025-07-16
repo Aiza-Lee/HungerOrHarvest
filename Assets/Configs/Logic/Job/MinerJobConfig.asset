@@ -1,18 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7a0dac3ef43de44f9299aadea568c25, type: 3}
-  m_Name: MinerJobConfig
-  m_EditorClassIdentifier: 
-  JobName: "\u91C7\u77FF"
-  JobDescription: 
-  LevelConfigs:
-  - {fileID: 11400000, guid: 59bd1f1436dfa8b4d9b19ece1ea0ba15, type: 2}
+version https://git-lfs.github.com/spec/v1
+oid sha256:595ad6458420b7b2a8d58556d3b769782eb7e1d767e963bbb079bc27f811fb4e
+size 554

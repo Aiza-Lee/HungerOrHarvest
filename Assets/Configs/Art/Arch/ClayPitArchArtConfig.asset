@@ -1,18 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbdbd546ed14c8a4d8cec95965802306, type: 3}
-  m_Name: ClayPitArchArtConfig
-  m_EditorClassIdentifier: 
-  WorldSprite: {fileID: 696420935796086578, guid: fb8d54b62d3f1b141b6175a2c75300ae, type: 3}
-  MapSprite: {fileID: 696420935796086578, guid: fb8d54b62d3f1b141b6175a2c75300ae, type: 3}
-  Animator: {fileID: 0}
-  Prefab: {fileID: 42990976938659487, guid: 022e1146ee701304687f89a6eadcbc37, type: 3}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9a1562c98e546ca8409ba92ab7eefb00272c30b646c9b5b1414f82c6a7d3b004
+size 722

@@ -1,16 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6fecacabb5bbf1468bdb99ecafd0fe2, type: 3}
-  m_Name: SnowLayerArtConfig
-  m_EditorClassIdentifier: 
-  Sprite: {fileID: 0}
-  Prefab: {fileID: 2011307254257003627, guid: 17fffa9b5b4cf5b4bb28692bac405adf, type: 3}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b8da03676463202f97b961c5e75527d8cb6541eee0c6c719c11f71c005e9d6dd
+size 534

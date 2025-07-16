@@ -1,19 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08ebec8fc22d54747b833c1ec55c67d8, type: 3}
-  m_Name: FarmerJobConfig
-  m_EditorClassIdentifier: 
-  JobName: "\u79CD\u690D"
-  JobDescription: "\u4EA7\u51FA\u98DF\u7269"
-  LevelConfigs:
-  - {fileID: 11400000, guid: 28001e949a06d7540a776bc94e7ff5dc, type: 2}
-  - {fileID: 11400000, guid: f2230b564ece00c408641bc2b68f1b53, type: 2}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7e964a4366f94c17c5a9a3db148d30b372e92938b97a0f14b05fd804371ec281
+size 654
