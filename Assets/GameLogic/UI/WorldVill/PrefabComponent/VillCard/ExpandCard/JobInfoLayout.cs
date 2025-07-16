@@ -59,6 +59,7 @@ namespace GameLogic.UI.WorldVill {
 			_isCardOpened = opened;
 			if (opened == true) {
 				_updateCount = 1000;
+				FixedUpdate();
 			}
 		}
 		public void LogicDestroy() {

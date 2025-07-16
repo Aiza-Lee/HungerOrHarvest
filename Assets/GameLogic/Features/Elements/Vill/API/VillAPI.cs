@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.Utils;
@@ -62,18 +63,26 @@ namespace GameLogic.Features.Elements.Vill {
 				.GetConfig(villType).VitConfig;
 		}
 		public static IEnumerable<EtPair<JobType, int>> GetJobLevels(Entity vill) => vill.GetComponent<JobExpComponent>().JobLevel_F;
+		/// <summary>
+		/// 返回格式 为 (JobType, Level, ExpProportion)
+		/// </summary>
 		public static List<(JobType, int, float)> GetSortedJobLevels(Entity vill) {
 			var jobLevelComp = vill.GetComponent<JobExpComponent>();
-			var list = new List<EtPair<JobType, int>>(jobLevelComp.JobLevel_F);
-			list.Sort((a, b) => b.Value.CompareTo(a.Value));
-			var res = new List<(JobType, int, float)>();
-			foreach (var jobLevel in list) {
-				var jobType = jobLevel.EnumType;
-				var level = jobLevel.Value;
-				var expProportion = GetJobExpProportion(vill, jobType);
-				res.Add((jobType, level, expProportion));
-			}
-			return res;
+			// var list = new List<EtPair<JobType, int>>(jobLevelComp.JobLevel_F);
+			var list = new List<(JobType, int, float)>();
+			jobLevelComp.JobLevel_F.ForEach(pr => list.Add((
+				pr.EnumType,
+				pr.Value,
+				jobLevelComp.JobExp_F[pr.EnumType] / JobQueryAPI.GetJobLevelConfig(pr.EnumType, pr.Value).NextLevelExpDemand
+			)));
+
+			list.Sort((a, b) => {
+				if (a.Item2 == b.Item2) {
+					return b.Item3.CompareTo(a.Item3);
+				}
+				return b.Item2.CompareTo(a.Item2);
+			});
+			return list;
 		}
 		public static float GetJobExpProportion(Entity vill, JobType job) {
 			var jobLevelComp = vill.GetComponent<JobExpComponent>();
