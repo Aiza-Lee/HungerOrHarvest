@@ -317,6 +317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select Save Panel (Factory)
       objectReference: {fileID: 0}
+    - target: {fileID: 1340602061688558528, guid: a7f70c53903bbae458e80e6afe2a78f2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7276206984517961744, guid: a7f70c53903bbae458e80e6afe2a78f2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -496,7 +500,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1492,6 +1496,10 @@ PrefabInstance:
     - target: {fileID: 4354935562481211299, guid: faedbbbd4f07d584490f67e73fe8d374, type: 3}
       propertyPath: m_Name
       value: World Vill Panel (Factory)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4354935562481211299, guid: faedbbbd4f07d584490f67e73fe8d374, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4627264952174253039, guid: faedbbbd4f07d584490f67e73fe8d374, type: 3}
       propertyPath: m_Pivot.x

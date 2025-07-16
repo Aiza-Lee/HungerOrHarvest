@@ -23,7 +23,7 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 		private int _curModID;
 		private bool _running;
 
-		private Action<T> OnChanged;
+		private Action<T> _onChanged;
 		private Action _stopCallback;
 		private Action _doneCallback;
 
@@ -54,10 +54,10 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 
 			var newVal = Add(_oriVal, Mul(Sub(_target, _oriVal), curve(_elapsedTime / totalTime)));
 			SetCurVal_Derived(newVal);
-			OnChanged?.Invoke(newVal);
+			_onChanged?.Invoke(newVal);
 
 			if (_elapsedTime >= totalTime) {
-				OnChanged = null;
+				_onChanged = null;
 				_curModID = 0;
 				_running = false;
 
@@ -115,7 +115,7 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 		/// </summary>
 		public SmoothChangeBase<T> SetOnChanged(Action<T> onChanged) {
 			OnInterprete();
-			OnChanged = onChanged;
+			_onChanged = onChanged;
 			return this;
 		}
 
