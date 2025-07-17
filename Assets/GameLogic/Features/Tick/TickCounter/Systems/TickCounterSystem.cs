@@ -31,6 +31,7 @@ namespace GameLogic.Features.TickCounter {
 			cnterRes.IsDay = cnterRes.TodayTickCount <= config.DAY_TICKS;
 			cnterRes.DayProcess = (float) cnterRes.TodayTickCount / config.DAY_TICKS;
 			cnterRes.NightProcess = (float) (cnterRes.TodayTickCount - config.DAY_TICKS) / config.NIGHT_TICKS;
+			cnterRes.WholeProcess = (float) cnterRes.TodayTickCount / (config.DAY_TICKS + config.NIGHT_TICKS);
 
 			cnterRes.IsDayFirstTick = cnterRes.TodayTickCount == 1;
 			cnterRes.IsNightFirstTick = cnterRes.TodayTickCount == config.DAY_TICKS + 1;

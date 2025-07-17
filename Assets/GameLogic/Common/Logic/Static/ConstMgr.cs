@@ -52,8 +52,8 @@ namespace GameLogic.Common.Logic {
 		public static readonly Vector3 WORLD_CENTER_VEC3 = WORLD_CENTER_OL.ToVec3DefaultY();
 
 		public const int BACK_SORTING_ORDER 	= -30000;
-		public const int EARTH_SORTING_ORDER 	= -20000;
-		public const int ARCH_SORTING_ORDER 	= -10000;
+		public const int ARCH_SORTING_ORDER 	= -20000;
+		public const int EARTH_SORTING_ORDER 	= -10000;
 		public const int VILL_SORTING_ORDER 	= 0;
 		public const int FRONT_SORTING_ORDER 	= 10000;
 		public const int MAX_SORTING_ORDER 		= 20000;

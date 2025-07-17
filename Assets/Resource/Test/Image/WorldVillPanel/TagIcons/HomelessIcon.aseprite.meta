@@ -123,15 +123,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: HomelessIcon
     originalName: 
-    pivot: {x: 0.50409836, y: -0.21465969}
+    pivot: {x: 0.49268293, y: -0.7079646}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 244
-      height: 191
+      width: 205
+      height: 113
     spriteID: a5923c35aa2870f49b8575fbc0e31c24
     spriteBone: []
     spriteOutline: []
@@ -153,10 +153,10 @@ ScriptedImporter:
     - name: HomelessIcon
       frameIndex: 0
       cellRect:
-        x: 5
-        y: 41
-        width: 244
-        height: 191
+        x: 27
+        y: 80
+        width: 205
+        height: 113
       spriteId: a5923c35aa2870f49b8575fbc0e31c24
     linkedCells: []
     parentIndex: -1

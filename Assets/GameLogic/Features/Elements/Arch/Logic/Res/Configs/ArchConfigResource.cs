@@ -41,12 +41,13 @@ namespace GameLogic.Features.Elements.Arch {
 		abstract public ArchType ArchType { get; }
 
 		public void TryAddComponentsToEntity(Entity entity) {
+			var prefab = ArchQueryAPI.GetArtConfig(ArchType).Prefab;
 			entity
 				.TryAddComponent<GidComponent>()
 				.TryAddComponent<ArchIdentityComponent>(new() { ArchType = ArchType })
 				.TryAddComponent<ArchLevelComponent>()
-				.TryAddComponent<TransformComponent>()
-				.TryAddComponent<SpriteRendererComponent>()
+				.TryAddComponent<TransformComponent>(new(prefab.GetComponent<Transform>()))
+				.TryAddComponent<SpriteRendererComponent>(new(prefab.GetComponent<SpriteRenderer>()))
 				.TryAddComponent<OLComponent>()
 				.TryAddComponent<SavedEntityComponent>()
 				.TryAddComponent<BondToVillComponent>()

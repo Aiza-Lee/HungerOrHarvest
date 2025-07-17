@@ -123,15 +123,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: HomeIcon
     originalName: 
-    pivot: {x: 0.49596772, y: -0.49635035}
+    pivot: {x: 0.49268293, y: -0.6637168}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 248
-      height: 137
+      width: 205
+      height: 113
     spriteID: 0f70ba45897b33e43af91df3d136a6d7
     spriteBone: []
     spriteOutline: []
@@ -153,10 +153,10 @@ ScriptedImporter:
     - name: HomeIcon
       frameIndex: 0
       cellRect:
-        x: 5
-        y: 68
-        width: 248
-        height: 137
+        x: 27
+        y: 75
+        width: 205
+        height: 113
       spriteId: 0f70ba45897b33e43af91df3d136a6d7
     linkedCells: []
     parentIndex: -1

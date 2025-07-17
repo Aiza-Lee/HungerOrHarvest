@@ -5,20 +5,41 @@ using NsEcsFrame.Unity;
 
 namespace GameLogic.Common.UnityComponentsBridge {
 	public class SpriteRendererComponent : IComponent, IDirtyMarker {
-		public SimpleColor Color = new(1f, 1f, 1f, 1f);
-		public int SortingLayerID = SortingLayer.NameToID("Default");
-		public int SortingOrder = 0;
+		public SimpleColor Color;
+		public int SortingLayerID;
+		public int SortingOrder;
 
 		public SimpleVector2 Size;
-		public SpriteDrawMode DrawMode = SpriteDrawMode.Simple;
-		public SpriteTileMode TileMode = SpriteTileMode.Continuous;
-		public bool FlipX = false;
-		public bool FlipY = false;
+		public SpriteDrawMode DrawMode;
+		public SpriteTileMode TileMode;
+		public bool FlipX;
+		public bool FlipY;
 
 		public bool Dirty = true;
 		public void MarkDirty() => Dirty = true;
 		public void ClearDirty() => Dirty = false;
 		public bool IsDirty() => Dirty;
+
+		public SpriteRendererComponent() {
+			Color = new SimpleColor(1f, 1f, 1f, 1f);
+			SortingLayerID = SortingLayer.NameToID("Default");
+			SortingOrder = 0;
+			DrawMode = SpriteDrawMode.Simple;
+			TileMode = SpriteTileMode.Continuous;
+			FlipX = false;
+			FlipY = false;
+		}
+
+		public SpriteRendererComponent(SpriteRenderer sr) {
+			Color = sr.color;
+			SortingLayerID = sr.sortingLayerID;
+			SortingOrder = sr.sortingOrder;
+			Size = sr.size;
+			DrawMode = sr.drawMode;
+			TileMode = sr.tileMode;
+			FlipX = sr.flipX;
+			FlipY = sr.flipY;
+		}
 
 		public void ApplyToSpriteRenderer(SpriteRenderer sr) {
 			sr.color = Color;

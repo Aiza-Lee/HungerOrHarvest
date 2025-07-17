@@ -23,10 +23,10 @@ namespace GameLogic.Features.AutoSortingLayer {
 				srComp.MarkDirty();
 			} else if (entity.HasComponent<DecorationIdentityComp>()) {
 				// 同一层的按照coord.x设置sortingOrder
-				srComp.SortingOrder = ConstMgr.BACK_SORTING_ORDER + coord.X;
+				srComp.SortingOrder = ConstMgr.BACK_SORTING_ORDER + (int)entity.ID.ID;
 				srComp.MarkDirty();
 			} else if (entity.HasComponent<VillIdentityComponent>()) {
-				srComp.SortingOrder = ConstMgr.VILL_SORTING_ORDER + coord.X;
+				srComp.SortingOrder = ConstMgr.VILL_SORTING_ORDER + (int)entity.ID.ID;
 				srComp.MarkDirty();
 			}
 		}

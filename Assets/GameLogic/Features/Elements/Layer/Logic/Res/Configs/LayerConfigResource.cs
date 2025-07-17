@@ -45,7 +45,7 @@ namespace GameLogic.Features.Layer {
 			entity
 				.TryAddComponent<GidComponent>()
 				.TryAddComponent<LayerIdentityComponent>(new() { LayerType = LayerType })
-				.TryAddComponent<TransformComponent>()
+				.TryAddComponent<TransformComponent>(new(prefab.GetComponent<Transform>()))
 				.TryAddComponent<SpriteRendererComponent>(new() {
 					DrawMode = SpriteDrawMode.Tiled,
 					TileMode = SpriteTileMode.Continuous,

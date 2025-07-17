@@ -4,6 +4,7 @@ using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Common.View;
 using GameLogic.Features.WorldDataManager;
+using GameLogic.World;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -40,13 +41,14 @@ namespace GameLogic.Features.Vill {
 	public abstract class VillConfigBase : ScriptableObject {
 		abstract public VillType VillType { get; }
 		public void TryAddComponentsToEntity(Entity entity) {
+			var prefab = GameWorldMono.MainWorld.GetResource<VillConfigResource>().GetArtConfig(VillType).Prefab;
 			entity
 				.TryAddComponent<GidComponent>()
 				.TryAddComponent<VillIdentityComponent>(new() { Type = VillType })
 				.TryAddComponent<CoordComponent>()
 				.TryAddComponent<SmoothPositionStatComponent>(new(0, ChangeCurveType.Directive, true))
-				.TryAddComponent<TransformComponent>()
-				.TryAddComponent<SpriteRendererComponent>()
+				.TryAddComponent<TransformComponent>(new(prefab.GetComponent<Transform>()))
+				.TryAddComponent<SpriteRendererComponent>(new(prefab.GetComponent<SpriteRenderer>()))
 				.TryAddComponent<VillBehaviourTreeComponent>(new(entity))
 				.TryAddComponent<VillMoveComponent>()
 				.TryAddComponent<BondToArchComponent>()

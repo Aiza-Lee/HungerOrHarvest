@@ -123,15 +123,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: WorklessIcon
     originalName: 
-    pivot: {x: 0.4817814, y: -0.20408164}
+    pivot: {x: 0.48663104, y: -0.70535713}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 247
-      height: 196
+      width: 187
+      height: 112
     spriteID: 87b04fc9d6a29284a9bde0d6960dfad2
     spriteBone: []
     spriteOutline: []
@@ -153,10 +153,10 @@ ScriptedImporter:
     - name: WorklessIcon
       frameIndex: 0
       cellRect:
-        x: 9
-        y: 40
-        width: 247
-        height: 196
+        x: 37
+        y: 79
+        width: 187
+        height: 112
       spriteId: 87b04fc9d6a29284a9bde0d6960dfad2
     linkedCells: []
     parentIndex: -1

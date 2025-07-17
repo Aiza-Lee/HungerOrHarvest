@@ -16,6 +16,7 @@ namespace GameLogic.Features.TickCounter {
 		public bool IsNight => !IsDay;
 		public float DayProcess;
 		public float NightProcess;
+		public float WholeProcess;
 
 		public bool IsDayLastTick;
 		public bool IsNightLastTick;
@@ -31,6 +32,7 @@ namespace GameLogic.Features.TickCounter {
 					IsDay = res.IsDay;
 					DayProcess = res.DayProcess;
 					NightProcess = res.NightProcess;
+					WholeProcess = res.WholeProcess;
 					IsDayLastTick = res.IsDayLastTick;
 					IsNightLastTick = res.IsNightLastTick;
 					IsDayFirstTick = res.IsDayFirstTick;
@@ -47,6 +49,7 @@ namespace GameLogic.Features.TickCounter {
 			IsDay = false;
 			DayProcess = 0f;
 			NightProcess = 0f;
+			WholeProcess = 0f;
 			IsDayLastTick = false;
 			IsNightLastTick = false;
 			IsDayFirstTick = false;
