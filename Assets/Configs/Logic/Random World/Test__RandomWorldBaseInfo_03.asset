@@ -31,9 +31,9 @@ MonoBehaviour:
     _items:
       Items:
       - EnumType: 1
-        Value: 2000
-      - EnumType: 0
         Value: 200
+      - EnumType: 0
+        Value: 50
   Archs:
     _items:
       Items:

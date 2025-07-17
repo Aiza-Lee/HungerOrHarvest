@@ -231,6 +231,8 @@ namespace GameLogic.Features.Vill {
 
 			if (!VillQueryAPI.GetInArchGid(bb.Entity).Equals(homeGid)) {
 				VillDirectOperationAPI.EnterHomeArch(bb.Entity);
+				// todo:临时解决方案
+				VillViewAPI.StopAnimation(bb.Entity);
 				return NodeStatus.SUCCESS;
 			}
 			return NodeStatus.FAILURE; // 已经在家中
@@ -245,6 +247,8 @@ namespace GameLogic.Features.Vill {
 
 			if (!VillQueryAPI.GetInArchGid(bb.Entity).Equals(workArchGid)) {
 				VillDirectOperationAPI.EnterWorkArch(bb.Entity);
+				// todo:临时解决方案
+				VillViewAPI.PlayAnimation(bb.Entity, "Plough");
 				return NodeStatus.SUCCESS;
 			}
 			return NodeStatus.FAILURE; // 已经在工作建筑中
@@ -259,6 +263,8 @@ namespace GameLogic.Features.Vill {
 			if (archGid == 0) return NodeStatus.FAILURE;
 
 			VillDirectOperationAPI.LeaveArch(bb.Entity);
+			// todo:临时解决方案
+			VillViewAPI.PlayAnimation(bb.Entity, "Walk");
 			return NodeStatus.SUCCESS; // 成功离开建筑
 		}
 

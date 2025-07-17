@@ -7,7 +7,7 @@ namespace GameLogic.Features.WorldDataManager {
 		public static void Save(bool isAutoSave) {
 			var world = GameWorldMono.MainWorld;
 			var saveInfo = SaveSystem.CreateSaveFile(world.Name);
-			world.GetResource<SaveInfoResource>().SaveInfo = saveInfo;
+			world.GetResource<CurSaveInfoResource>().SaveInfo = saveInfo;
 
 			var extendSaveInfo = new ExtendSaveInfo(isAutoSave, world.GetResource<TickCounterResource>().DayCount);
 			var gameSaveData = new GameSaveData(world);

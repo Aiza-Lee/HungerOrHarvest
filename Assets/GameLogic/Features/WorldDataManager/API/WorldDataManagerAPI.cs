@@ -8,7 +8,7 @@ namespace GameLogic.Features.WorldDataManager {
 		/// 设置saveInfo对象
 		/// </summary>
 		public static void SetSaveInfo(SaveInfo saveInfo) {
-			var res = GameWorldMono.MainWorld.GetResource<SaveInfoResource>();
+			var res = GameWorldMono.MainWorld.GetResource<CurSaveInfoResource>();
 			res.SaveInfo = saveInfo;
 		}
 
@@ -19,6 +19,10 @@ namespace GameLogic.Features.WorldDataManager {
 			SetSaveInfo(saveInfo);
 			var res = GameWorldMono.MainWorld.GetResource<LoadGameCmdResource>();
 			res.LoadGameCommand = true;
+		}
+
+		public static void ReloadToday() {
+			GameWorldMono.MainWorld.GetResource<LoadGameCmdResource>().LoadGameCommand = true;
 		}
 
 		/// <summary>
@@ -32,7 +36,7 @@ namespace GameLogic.Features.WorldDataManager {
 		public static void ClearWorld() => ClearWorldUtils.ClearWorld();
 
 		public static bool IsWorldLoaded() {
-			return GameWorldMono.MainWorld.GetResource<SaveInfoResource>().IsLoaded;
+			return GameWorldMono.MainWorld.GetResource<CurSaveInfoResource>().IsLoaded;
 		}
 
 		/// <summary>
@@ -48,7 +52,7 @@ namespace GameLogic.Features.WorldDataManager {
 				BaseInfo = baseInfo
 			};
 			TickSpeedAPI.PauseTick(false);
-			world.GetResource<SaveInfoResource>().IsLoaded = true;
+			world.GetResource<CurSaveInfoResource>().IsLoaded = true;
 		}
 	}
 }

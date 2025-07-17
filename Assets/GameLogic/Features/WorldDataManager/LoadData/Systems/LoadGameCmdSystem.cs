@@ -34,7 +34,7 @@ namespace GameLogic.Features.WorldDataManager {
 			if (!loadCmd.LoadGameCommand) return;
 			loadCmd.LoadGameCommand = false;
 
-			var saveInfoRes = _world.GetResource<SaveInfoResource>();
+			var saveInfoRes = _world.GetResource<CurSaveInfoResource>();
 			var saveInfo = saveInfoRes.SaveInfo;
 			var gameData = saveInfo.LoadObject<GameSaveData>();
 

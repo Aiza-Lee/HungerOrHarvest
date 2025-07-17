@@ -36,7 +36,7 @@ namespace GameLogic.Features.WorldDataManager {
 			_world.Name = worldName;
 			CreateWorld(baseInfo);
 			infoRes.NewWorldInfo = null; // 清除创建信息，避免重复创建
-			_world.GetResource<SaveInfoResource>().IsLoaded = true;
+			_world.GetResource<CurSaveInfoResource>().IsLoaded = true;
 		}
 		public void OnRenderUpdate(float _) { }
 
