@@ -42,12 +42,15 @@ namespace GameLogic.Features.Vill {
 		abstract public VillType VillType { get; }
 		public void TryAddComponentsToEntity(Entity entity) {
 			var prefab = GameWorldMono.MainWorld.GetResource<VillConfigResource>().GetArtConfig(VillType).Prefab;
+			var scale = Random.Range(0.85f, 1.05f);
 			entity
 				.TryAddComponent<GidComponent>()
 				.TryAddComponent<VillIdentityComponent>(new() { Type = VillType })
 				.TryAddComponent<CoordComponent>()
 				.TryAddComponent<SmoothPositionStatComponent>(new(0, ChangeCurveType.Directive, true))
-				.TryAddComponent<TransformComponent>(new(prefab.GetComponent<Transform>()))
+				.TryAddComponent<TransformComponent>(new(prefab.GetComponent<Transform>()) {
+					LocalScale = new Vector3(scale, scale, scale)
+				})
 				.TryAddComponent<SpriteRendererComponent>(new(prefab.GetComponent<SpriteRenderer>()))
 				.TryAddComponent<VillBehaviourTreeComponent>(new(entity))
 				.TryAddComponent<VillMoveComponent>()
