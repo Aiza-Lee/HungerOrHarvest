@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: af388c4e4917c9347abaa29a1548f2a0
+guid: 08ed7fcdfc5ca304e8413f63cd1d587b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5276023889631691043
-    second: GrassLayer_0
+      213: 6795104139809018348
+    second: "\u9504\u5730_0"
+  - first:
+      213: 1883734046272440712
+    second: "\u9504\u5730_1"
+  - first:
+      213: 8450131901916141975
+    second: "\u9504\u5730_2"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,10 +54,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 256
+  spritePixelsToUnits: 1600
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,22 +132,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GrassLayer_0
+      name: "\u9504\u5730_0"
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 7168
-        height: 2048
-      alignment: 9
-      pivot: {x: 0.00048228577, y: 0.8856451}
+        x: 32
+        y: 54
+        width: 1025
+        height: 1783
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dde3708d93cc7c6b0800000000000000
-      internalID: -5276023889631691043
+      spriteID: ce15a11963f0d4e50800000000000000
+      internalID: 6795104139809018348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u9504\u5730_1"
+      rect:
+        serializedVersion: 2
+        x: 1224
+        y: 10
+        width: 1213
+        height: 1827
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 889c067722e542a10800000000000000
+      internalID: 1883734046272440712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u9504\u5730_2"
+      rect:
+        serializedVersion: 2
+        x: 2440
+        y: 46
+        width: 1210
+        height: 1550
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79958eea136e44570800000000000000
+      internalID: 8450131901916141975
       vertices: []
       indices: 
       edges: []
@@ -149,7 +197,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 030e1749462a3854abcbf28a7d5d39ce
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -157,7 +205,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      GrassLayer_0: -5276023889631691043
+      "\u9504\u5730_0": 6795104139809018348
+      "\u9504\u5730_1": 1883734046272440712
+      "\u9504\u5730_2": 8450131901916141975
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

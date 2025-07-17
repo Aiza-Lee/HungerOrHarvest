@@ -71,14 +71,16 @@ namespace GameLogic.Features.MainCamera {
 
 			if (input.MoveForwardKeyDown) {
 				var target = curPos + ConstMgr.LayerGap * Vector3.forward;
-				if (target.z > (WorldEdgeAPI.MaxLyr - 1) * ConstMgr.LayerGap) return;
+				// 最后一项处理精度问题
+				if (target.z > (WorldEdgeAPI.MaxLyr - 1) * ConstMgr.LayerGap + ConstMgr.LayerGap * 0.1f) return;
 
 				CameraInputAPI.TempLockInput(config.ForwardPositionChangeInfo.TotalTime);
 				moveStat.SetChangeInfo(config.ForwardPositionChangeInfo).StartAChange(camera, target);
 
 			} else if (input.MoveBackwardKeyDown) {
 				var target = curPos + ConstMgr.LayerGap * Vector3.back;
-				if (target.z < (WorldEdgeAPI.MinLyr - 1) * ConstMgr.LayerGap) return;
+				// 最后一项处理精度问题
+				if (target.z < (WorldEdgeAPI.MinLyr - 1) * ConstMgr.LayerGap - ConstMgr.LayerGap * 0.1f) return;
 
 				CameraInputAPI.TempLockInput(config.BackwardPositionChangeInfo.TotalTime);
 				moveStat.SetChangeInfo(config.BackwardPositionChangeInfo).StartAChange(camera, target);

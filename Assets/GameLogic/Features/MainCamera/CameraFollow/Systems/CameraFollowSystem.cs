@@ -26,13 +26,13 @@ namespace GameLogic.Features.MainCamera {
 		public void OnLogicUpdate(float _) { }
 		public void OnRenderUpdate(float _) {
 			var config = _world.GetResource<CameraConfigResource>();
-			if (Time.time - _lastSetTargetTime < config.FollowChangeInfo.TotalTime / Mathf.PI) {
+			if (Time.unscaledTime - _lastSetTargetTime < config.FollowChangeInfo.TotalTime / Mathf.PI) {
 				return;
 			}
 			_world.CreateQueryBuilder().WithAll<MainCameraComponent>().Build().ForEach(camera => {
 				var targetEntity = camera.GetComponent<MainCameraComponent>().TargetEntity;
 				if (targetEntity == null || !targetEntity.IsValid()) { return; }
-				_lastSetTargetTime = Time.time;
+				_lastSetTargetTime = Time.unscaledTime;
 				SimpleVector3 target = targetEntity.GetComponent<TransformComponent>().LocalPosition - new SimpleVector3(0, 0, ConstMgr.LayerGap);
 				target.y = ConstMgr.DEFAULT_CAMERA_HEIGHT;
 				camera.GetComponent<SmoothPositionStatComponent>()
