@@ -8,13 +8,13 @@ namespace GameLogic.Features.Elements.Vill {
 		public static void SetDirection(Entity vill, Coord direction) {
 			var sr = vill.GetComponent<SpriteRendererComponent>();
 			if (direction.X >= 0) {
-				if (sr.FlipX != true) {
-					sr.FlipX = true;
+				if (sr.FlipX != false) {
+					sr.FlipX = false;
 					sr.Dirty = true;
 				}
 			} else if (direction.X < 0) {
-				if (sr.FlipX != false) {
-					sr.FlipX = false;
+				if (sr.FlipX != true) {
+					sr.FlipX = true;
 					sr.Dirty = true;
 				}
 			}

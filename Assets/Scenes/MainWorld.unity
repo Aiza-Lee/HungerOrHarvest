@@ -282,33 +282,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8733877225686608545, guid: 4b0b1fedeb8e1114fa4c697c7d011e0f, type: 3}
   m_PrefabInstance: {fileID: 91017041}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &118971277 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4632101640204001798, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
-  m_PrefabInstance: {fileID: 2094469879}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &118971278
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 118971277}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 71c5a0a9118297f46bd49ffee94dad79, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &156299521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,43 +2547,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4632101640204001798, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8175347301700704034, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -4791340842840364436, guid: b174d0c63bad2d948b94b32d23715fe6, type: 3}
-    - target: {fileID: 8175347301700704034, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8175347301700704034, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8175347301700704034, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8175347301700704034, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
-      propertyPath: m_SortingLayer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8175347301700704034, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
-      propertyPath: m_SortingOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8175347301700704034, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 1636736731
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4632101640204001798, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 118971278}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
 --- !u!1 &2102348362
 GameObject:

@@ -51,12 +51,12 @@ namespace GameLogic.Common.Logic {
 		/// <summary>世界中心点，单位为Unity世界坐标系的Vec3</summary>
 		public static readonly Vector3 WORLD_CENTER_VEC3 = WORLD_CENTER_OL.ToVec3DefaultY();
 
-		public const int MAX_SORTING_ORDER = 1000;
-		public const int FRONT_SORTING_ORDER = 5;
-		public const int VILL_SORTING_ORDER = 4;
-		public const int ARCH_SORTING_ORDER = 3;
-		public const int EARTH_SORTING_ORDER = 2;
-		public const int BACK_SORTING_ORDER = 1;
+		public const int BACK_SORTING_ORDER 	= -30000;
+		public const int EARTH_SORTING_ORDER 	= -20000;
+		public const int ARCH_SORTING_ORDER 	= -10000;
+		public const int VILL_SORTING_ORDER 	= 0;
+		public const int FRONT_SORTING_ORDER 	= 10000;
+		public const int MAX_SORTING_ORDER 		= 20000;
 
 		/// <summary>单位Coord的X，在Unity世界坐标系中X轴的长度</summary>
 		public const float UX_PER_CX = 0.4f;

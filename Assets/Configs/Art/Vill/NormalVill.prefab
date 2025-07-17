@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1980965964070790485}
   - component: {fileID: 8175347301700704034}
   - component: {fileID: 4326992182415110691}
+  - component: {fileID: 2077210555805268988}
   m_Layer: 8
   m_Name: NormalVill
   m_TagString: Untagged
@@ -73,11 +74,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -741661815
-  m_SortingLayer: 15
-  m_SortingOrder: -1
+  m_SortingLayerID: 543630673
+  m_SortingLayer: 11
+  m_SortingOrder: 0
   m_Sprite: {fileID: -4791340842840364436, guid: b174d0c63bad2d948b94b32d23715fe6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,3 +104,25 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!95 &2077210555805268988
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4632101640204001798}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 71c5a0a9118297f46bd49ffee94dad79, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

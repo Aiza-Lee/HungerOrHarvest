@@ -32,7 +32,7 @@ namespace GameLogic.Features.AutoSortingLayer {
 				if (entity.HasComponent<CoordComponent>()) {
 					var coordComp = entity.GetComponent<CoordComponent>();
 					if (!coordComp.IsDirty) return;
-					AutoSortingLayerAPI.Set_SortingOrderAndLayer_ByCoordY(entity, coordComp.Coord.Y);
+					AutoSortingLayerAPI.Set_SortingOrderAndLayer_ByCoord(entity, coordComp.Coord);
 				} else if (entity.HasComponent<OLComponent>()) {
 					var OlComp = entity.GetComponent<OLComponent>();
 					if (!OlComp.IsDirty) return;
