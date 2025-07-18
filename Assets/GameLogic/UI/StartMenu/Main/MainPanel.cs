@@ -14,6 +14,7 @@ namespace GameLogic.UI.StartMenu {
 			if (WorldDataManagerAPI.IsWorldLoaded()) {
 				UIMgr.Inst.TogglePanel<WorldRepo.MainPanel>();
 				UIMgr.Inst.TogglePanel<WorldVill.MainPanel>();
+				UIMgr.Inst.TogglePanel<FunctionalButtons.MainPanel>();
 				UIMgr.Inst.TogglePanel<MainPanel>();
 
 			} else {
