@@ -1,6 +1,6 @@
 using NsEcsFrame.Core;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	/// <summary>
 	/// VillAiSystem 负责处理村民的 AI 行为逻辑。
 	/// </summary>

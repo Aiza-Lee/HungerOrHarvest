@@ -1,6 +1,6 @@
 using NsEcsFrame.Core;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	[System.Serializable]
 	public class InArchComponent : IComponent {
 		/// <summary>

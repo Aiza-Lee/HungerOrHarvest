@@ -13,7 +13,7 @@ using GameLogic.World;
 using NSFrame.BehaviourTree;
 using UnityEngine;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	public static class BehaviourTreeFactory {
 		private static readonly bool EnableDebugLogs = false;
 		public static BehaviourTree<VillAiBlackboard> CreateVillBehaviourTree(VillAiBlackboard bb) {
@@ -57,7 +57,10 @@ namespace GameLogic.Features.Vill {
 							.Sequence()
 								.Condition(bb => bb.World.GetResource<TickCounterResource>().IsDay == false)
 								.Selector()
-									.Action(LeaveArch)
+									.Sequence()
+										.Condition(bb => bb.InArchComp.ArchGid != 0 && bb.InArchComp.ArchGid == bb.BondToArchComp.WorkArchGid)
+										.Action(LeaveArch)
+									.End()
 									.Selector()
 										.Action(GetRouteForHome)
 										.Action(Move)
@@ -82,7 +85,10 @@ namespace GameLogic.Features.Vill {
 									.Sequence()
 										.Condition(bb => bb.VitalityComp.AtRecoverMode == true)
 										.Selector()
-											.Action(LeaveArch)
+											.Sequence()
+												.Condition(bb => bb.InArchComp.ArchGid != 0 && bb.InArchComp.ArchGid == bb.BondToArchComp.WorkArchGid)
+												.Action(LeaveArch)
+											.End()
 											.Selector()
 												.Action(GetRouteForHome)
 												.Action(Move)

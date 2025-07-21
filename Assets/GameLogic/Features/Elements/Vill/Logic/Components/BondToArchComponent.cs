@@ -1,6 +1,6 @@
 using NsEcsFrame.Core;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	/// <summary>
 	/// BondToArchComponent 用于存储村民与建筑之间的绑定关系。
 	/// </summary>

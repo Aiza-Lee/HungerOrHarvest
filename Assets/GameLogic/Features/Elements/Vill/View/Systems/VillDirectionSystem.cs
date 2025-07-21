@@ -1,6 +1,5 @@
 using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
-using GameLogic.Features.Vill;
 using NsEcsFrame.Core;
 
 namespace GameLogic.Features.Elements.Vill {

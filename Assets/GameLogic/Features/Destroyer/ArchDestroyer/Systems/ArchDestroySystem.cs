@@ -1,6 +1,6 @@
 using GameLogic.Common.DataTypes;
 using GameLogic.Features.Elements.Arch;
-using GameLogic.Features.Vill;
+using GameLogic.Features.Elements.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
 

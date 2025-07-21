@@ -90,6 +90,17 @@ namespace GameLogic.Features.Elements.Arch {
 				throw new System.Exception("Cannot unbond vill, vill is not bonded.");
 			}
 		}
+
+		public static void VillEnter(Entity arch, ulong villGid) {
+			var container = arch.GetComponent<VillContainerComponent>();
+			container.VillGids.Add(villGid);
+		}
+		public static void VillLeave(Entity arch, ulong villGid) {
+			var container = arch.GetComponent<VillContainerComponent>();
+			if (!container.VillGids.Remove(villGid)) {
+				throw new System.Exception("Cannot remove vill, vill is not in the arch.");
+			}
+		}
 	}
 
 	public static class ArchRequestAPI { }

@@ -1,7 +1,7 @@
 using GameLogic.Common.DataTypes;
 using UnityEngine;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	[CreateAssetMenu(
 		fileName = "普通村民配置-Art",
 		menuName = "HungerOrHarvest/Config/VillArt/普通-Art",

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
 using GameLogic.Features.Events;
-using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -17,19 +16,27 @@ namespace GameLogic.Features.Elements.Vill {
 
 		private IWorld _world;
 		private EntityQueryBuilder _costQuery, _gainQuery;
-		private readonly Dictionary<VillType, VitConfig> _vitConfigs = new();
+		private Dictionary<VillType, VitConfig> _vitConfigs;
+		private Dictionary<VillType, VitConfig> VitConfigs {
+			get {
+				if (_vitConfigs == null) {
+					_vitConfigs = new Dictionary<VillType, VitConfig>();
+					var configRes = GameWorldMono.MainWorld.GetResource<VillConfigResource>();
+					foreach (VillType type in System.Enum.GetValues(typeof(VillType))) {
+						try {
+							_vitConfigs[type] = configRes.GetConfig(type).VitConfig;
+						} catch { }
+					}
+				}
+				return _vitConfigs;
+			}
+		}
 
 		public void Initialize(IWorld world) {
 			_world = world;
 			Enabled = true;
 			_costQuery = world.CreateQueryBuilder().WithAll<VillCostVitRequestComponent>();
 			_gainQuery = world.CreateQueryBuilder().WithAll<VillGainVitRequestComponent>();
-			var configRes = GameWorldMono.MainWorld.GetResource<VillConfigResource>();
-			foreach (VillType type in System.Enum.GetValues(typeof(VillType))) {
-				try {
-					_vitConfigs[type] = configRes.GetConfig(type).VitConfig;
-				} catch { }
-			}
 		}
 
 		public void OnCreate() { }
@@ -47,7 +54,7 @@ namespace GameLogic.Features.Elements.Vill {
 			_gainQuery.Build().ForEach(entity => {
 				var request = entity.GetComponent<VillGainVitRequestComponent>();
 				var vitComp = entity.GetComponent<VillVitalityComponent>();
-				var vitConfig = _vitConfigs[entity.GetComponent<VillIdentityComponent>().Type];
+				var vitConfig = VitConfigs[entity.GetComponent<VillIdentityComponent>().Type];
 				vitComp.Vit = Mathf.Min(vitComp.Vit + request.VitGain, vitConfig.MaxVit);
 			});
 		}

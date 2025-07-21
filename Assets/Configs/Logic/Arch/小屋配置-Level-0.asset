@@ -25,9 +25,7 @@ MonoBehaviour:
       Items: []
   SelfConsPerTick:
     _items:
-      Items:
-      - EnumType: 1
-        Value: 1
+      Items: []
   ExtraConsPerOnePerTick:
     _items:
       Items: []

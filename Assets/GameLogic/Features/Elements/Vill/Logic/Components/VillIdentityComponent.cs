@@ -1,7 +1,7 @@
 using GameLogic.Common.DataTypes;
 using NsEcsFrame.Core;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	/// <summary>
 	/// VillIdentityComponent 用于存储村民的身份信息，包括类型、名字和姓氏。
 	/// </summary>

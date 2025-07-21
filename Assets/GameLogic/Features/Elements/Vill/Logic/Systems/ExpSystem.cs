@@ -1,6 +1,5 @@
 using GameLogic.Features.Events;
 using GameLogic.Features.Job;
-using GameLogic.Features.Vill;
 using NsEcsFrame.Core;
 using UnityEngine;
 

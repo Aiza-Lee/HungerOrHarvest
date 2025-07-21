@@ -9,7 +9,7 @@ using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	[System.Serializable]
 	public class VillConfigResource : IResource {
 		[SerializeReference][SerializeField] private VillConfigBase DefaultConfig;
@@ -41,7 +41,8 @@ namespace GameLogic.Features.Vill {
 	public abstract class VillConfigBase : ScriptableObject {
 		abstract public VillType VillType { get; }
 		public void TryAddComponentsToEntity(Entity entity) {
-			var prefab = GameWorldMono.MainWorld.GetResource<VillConfigResource>().GetArtConfig(VillType).Prefab;
+			var artConfig = GameWorldMono.MainWorld.GetResource<VillConfigResource>().GetArtConfig(VillType);
+			var prefab = artConfig.Prefab;
 			var scale = Random.Range(0.85f, 1.05f);
 			entity
 				.TryAddComponent<GidComponent>()
@@ -60,6 +61,10 @@ namespace GameLogic.Features.Vill {
 				.TryAddComponent<RoutePlanComponent>()
 				.TryAddComponent<VillVitalityComponent>(new() { Vit = VitConfig.MaxVit, RecoverChances = VitConfig.RecoverChancePerDay })
 				.TryAddComponent<SavedEntityComponent>()
+				.TryAddComponent<VillConfigComponent>(new() {
+					LogicConfig = this,
+					ArtConfig = artConfig
+				})
 			;
 			AddDerivedComponents(entity);
 		}

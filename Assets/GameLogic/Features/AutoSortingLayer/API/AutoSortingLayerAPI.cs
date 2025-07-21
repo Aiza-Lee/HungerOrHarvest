@@ -3,8 +3,8 @@ using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Features.Elements.Arch;
 using GameLogic.Features.Elements.Decorations;
+using GameLogic.Features.Elements.Vill;
 using GameLogic.Features.Layer;
-using GameLogic.Features.Vill;
 using NsEcsFrame.Core;
 using UnityEngine;
 

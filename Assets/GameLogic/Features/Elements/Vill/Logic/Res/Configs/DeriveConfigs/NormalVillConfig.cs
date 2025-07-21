@@ -2,7 +2,7 @@ using GameLogic.Common.DataTypes;
 using NsEcsFrame.Core;
 using UnityEngine;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	[CreateAssetMenu(
 		fileName = "普通村民配置",
 		menuName = "HungerOrHarvest/Config/Vill/普通",

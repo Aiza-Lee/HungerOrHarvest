@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829b46999ba012749ade6af5ff3b6aaf, type: 3}
   m_Name: TickConfig
   m_EditorClassIdentifier: 
-  DAY_TICKS: 2000
-  NIGHT_TICKS: 500
+  DAY_TICKS: 4000
+  NIGHT_TICKS: 1000
   NIGHT_TIME_SPEED: 10

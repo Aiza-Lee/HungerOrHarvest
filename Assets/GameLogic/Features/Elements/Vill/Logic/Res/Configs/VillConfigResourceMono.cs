@@ -1,6 +1,6 @@
 using NsEcsFrame.Unity;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	[System.Serializable]
 	public class VillConfigResourceMono : ResourceMono<VillConfigResource> { }
 }

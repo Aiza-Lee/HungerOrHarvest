@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using GameLogic.Common.DataTypes;
 using NsEcsFrame.Core;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	/// <summary>
 	/// RoutePlanComponent 用于存储村民的移动路线和当前移动索引。
 	/// </summary>

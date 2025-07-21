@@ -5,7 +5,7 @@ using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
 using UnityEngine;
 
-namespace GameLogic.Features.Vill {
+namespace GameLogic.Features.Elements.Vill {
 	[RequireComponent(typeof(SpriteRenderer))]
 	public class VillEntityMono : EntityMono {
 		protected override IEnumerable<IComponent> GetSomeComponents(Entity entity) {

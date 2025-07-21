@@ -1,15 +1,12 @@
 using System.Collections.Generic;
-using System.Linq;
 using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.Utils;
 using GameLogic.Features.Elements.Arch;
 using GameLogic.Features.Events;
 using GameLogic.Features.Job;
-using GameLogic.Features.Vill;
 using GameLogic.World;
 using NsEcsFrame.Core;
-using NsEcsFrame.Unity;
 
 namespace GameLogic.Features.Elements.Vill {
 	public static class VillQueryAPI {
@@ -135,6 +132,7 @@ namespace GameLogic.Features.Elements.Vill {
 				throw new System.Exception("Cannot enter work arch, vill is not bonded to a work arch.");
 			}
 			vill.GetComponent<InArchComponent>().ArchGid = bondComp.WorkArchGid;
+			ArchDirectOperationAPI.VillEnter(bondComp.WorkArchGid.ToEntity(), vill.GetGid());
 		}
 		public static void EnterHomeArch(Entity vill) {
 			var bondComp = vill.GetComponent<BondToArchComponent>();
@@ -142,12 +140,14 @@ namespace GameLogic.Features.Elements.Vill {
 				throw new System.Exception("Cannot enter home arch, vill is not bonded to a home arch.");
 			}
 			vill.GetComponent<InArchComponent>().ArchGid = bondComp.HomeArchGid;
+			ArchDirectOperationAPI.VillEnter(bondComp.HomeArchGid.ToEntity(), vill.GetGid());
 		}
 		public static void LeaveArch(Entity vill) {
 			var inArchComp = vill.GetComponent<InArchComponent>();
 			if (inArchComp.ArchGid == 0) {
 				throw new System.Exception("Cannot leave arch, vill is not in any arch.");
 			}
+			ArchDirectOperationAPI.VillLeave(inArchComp.ArchGid.ToEntity(), vill.GetGid());
 			inArchComp.ArchGid = 0;
 		}
 	}
