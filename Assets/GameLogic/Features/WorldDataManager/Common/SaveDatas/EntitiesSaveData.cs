@@ -23,7 +23,7 @@ namespace GameLogic.Features.WorldDataManager {
 		public EntitySaveData(Entity entity) {
 			var comps = entity.GetAllComponents();
 			foreach (var comp in comps) {
-				if (comp is ISaveIgnoreComponent) continue; // 跳过不需要保存的组件
+				if (comp is IIgnoreSaveComponent) continue; // 跳过不需要保存的组件
 				Components.Add(comp);
 			}
 		}

@@ -37,24 +37,20 @@ namespace GameLogic.Features.Generator {
 			var configRes = _world.GetResource<VillConfigResource>();
 			var type = data.Type;
 			var config = configRes.GetConfig(type);
-			bool newCoord = true;
 			bool newGid = true;
 
 			var vill = _world.CreateEntity();
 			foreach (var comp in data.ExtraComponents) {
 
-				if (comp is CoordComponent) newCoord = false;
-				else if (comp is GidComponent) newGid = false;
+				if (comp is GidComponent) newGid = false;
 
 				vill.AddComponent(comp);
-				Debug.Log($"生成村民: {type}, 组件数量: {vill.GetAllComponents().Count}, 从{data.ExtraComponents.Count}个额外组件中加载");
+				// Debug.Log($"生成村民: {type}, 组件数量: {vill.GetAllComponents().Count}, 从{data.ExtraComponents.Count}个额外组件中加载");
 			}
 			config.TryAddComponentsToEntity(vill);
 
 			var coordComp = vill.GetComponent<CoordComponent>();
-			if (newCoord) {
-				coordComp.Coord = data.Coord;
-			}
+			coordComp.Coord = data.Coord;
 			coordComp.IsDirty = true;
 
 			var gidComp = vill.GetComponent<GidComponent>();

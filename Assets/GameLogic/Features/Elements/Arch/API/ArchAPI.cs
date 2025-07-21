@@ -40,11 +40,12 @@ namespace GameLogic.Features.Elements.Arch {
 		public static ArchArtConfigBase GetArtConfig(ArchType archType) {
 			return GameWorldMono.MainWorld.GetResource<ArchConfigResource>().GetArtConfig(archType);
 		}
+		public static ArchArtConfigBase GetArtConfig(Entity arch) {
+			return arch.GetComponent<ArchConfigComponent>().ArtConfig;
+		}
 		public static ArchLevelConfigBase GetLevelConfig(Entity arch) {
 			var level = GetLevel(arch);
-			var archType = GetType(arch);
-			return GameWorldMono.MainWorld.GetResource<ArchConfigResource>()
-				.GetConfig(archType).LevelConfigs[level];
+			return arch.GetComponent<ArchConfigComponent>().LogicConfig.LevelConfigs[level];
 		}
 
 		public static Entity GetBondableWorkArch(ArchType archType) {

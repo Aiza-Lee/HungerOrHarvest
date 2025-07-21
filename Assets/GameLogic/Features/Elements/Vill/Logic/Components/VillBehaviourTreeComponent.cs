@@ -8,7 +8,7 @@ namespace GameLogic.Features.Vill {
 	/// <summary>
 	/// VillBehaviourTreeComponent 用于存储村民的行为树对象
 	/// </summary>
-	public class VillBehaviourTreeComponent : IComponent, ISaveIgnoreComponent {
+	public class VillBehaviourTreeComponent : IComponent, IIgnoreSaveComponent {
 		public BehaviourTree<VillAiBlackboard> BehaviourTree { get; set; }
 		public VillBehaviourTreeComponent(Entity entity) {
 			BehaviourTree = BehaviourTreeFactory.CreateVillBehaviourTree(new(entity));

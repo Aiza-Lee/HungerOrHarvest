@@ -3,6 +3,7 @@ using GameLogic.Common.DataTypes;
 using GameLogic.Common.Logic;
 using GameLogic.Common.UnityComponentsBridge;
 using GameLogic.Features.WorldDataManager;
+using GameLogic.World;
 using NsEcsFrame.Components;
 using NsEcsFrame.Core;
 using UnityEngine;
@@ -41,17 +42,21 @@ namespace GameLogic.Features.Elements.Arch {
 		abstract public ArchType ArchType { get; }
 
 		public void TryAddComponentsToEntity(Entity entity) {
-			var prefab = ArchQueryAPI.GetArtConfig(ArchType).Prefab;
+			var artConfig = GameWorldMono.MainWorld.GetResource<ArchConfigResource>().GetArtConfig(ArchType);
 			entity
 				.TryAddComponent<GidComponent>()
 				.TryAddComponent<ArchIdentityComponent>(new() { ArchType = ArchType })
 				.TryAddComponent<ArchLevelComponent>()
-				.TryAddComponent<TransformComponent>(new(prefab.GetComponent<Transform>()))
-				.TryAddComponent<SpriteRendererComponent>(new(prefab.GetComponent<SpriteRenderer>()))
+				.TryAddComponent<TransformComponent>(new(artConfig.Prefab.GetComponent<Transform>()))
+				.TryAddComponent<SpriteRendererComponent>(new(artConfig.Prefab.GetComponent<SpriteRenderer>()))
 				.TryAddComponent<OLComponent>()
 				.TryAddComponent<SavedEntityComponent>()
 				.TryAddComponent<BondToVillComponent>()
 				.TryAddComponent<VillContainerComponent>()
+				.TryAddComponent<ArchConfigComponent>(new() {
+					LogicConfig = this,
+					ArtConfig = artConfig
+				})
 			;
 			TryAddDerivedComponents(entity);
 		}

@@ -37,21 +37,17 @@ namespace GameLogic.Features.Generator {
 			var type = data.Type;
 			var config = _world.GetResource<ArchConfigResource>().GetConfig(type);
 
-			bool newOL = true;
 			bool newGid = true;
 
 			var entity = _world.CreateEntity();
 			foreach (var comp in data.ExtraComponents) {
-				if (comp is OLComponent) newOL = false;
-				else if (comp is GidComponent) newGid = false;
+				if (comp is GidComponent) newGid = false;
 				entity.AddComponent(comp);
 			}
 			config.TryAddComponentsToEntity(entity);
 
 			var olComp = entity.GetComponent<OLComponent>();
-			if (newOL) {
-				olComp.OL = data.OL;
-			}
+			olComp.OL = data.OL;
 			olComp.IsDirty = true;
 
 			var gidComp = entity.GetComponent<GidComponent>();
