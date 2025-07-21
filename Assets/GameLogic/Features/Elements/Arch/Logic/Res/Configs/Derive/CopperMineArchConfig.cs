@@ -2,7 +2,7 @@ using GameLogic.Common.DataTypes;
 using NsEcsFrame.Core;
 using UnityEngine;
 
-namespace GameLogic.Features.Elements.Arch.Arch {
+namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
 		fileName = "CopperMineArchConfig", 
 		menuName = "HungerOrHarvest/Config/Arch/CopperMine", 

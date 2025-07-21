@@ -34,7 +34,7 @@ namespace GameLogic.Features.Repo {
 					repoStat.Repos_F.Sub(tryProd.Cons);
 					repoStat.Repos_F.Add(tryProd.Prod);
 					dailyCnter.DailyConsSum_F.Add(tryProd.Cons);
-					dailyCnter.DailyConsSum_F.Add(tryProd.Prod);
+					dailyCnter.DailyProdSum_F.Add(tryProd.Prod);
 				}
 			});
 
@@ -44,7 +44,7 @@ namespace GameLogic.Features.Repo {
 					repoStat.Repos_F.Sub(tryProd.Cons);
 					repoStat.Repos_F.Add(tryProd.Prod);
 					dailyCnter.DailyConsSum_F.Add(tryProd.Cons);
-					dailyCnter.DailyConsSum_F.Add(tryProd.Prod);
+					dailyCnter.DailyProdSum_F.Add(tryProd.Prod);
 					VillRequestAPI.RequestGainExp(vill, tryProd.ExpGained, ExpSource.Production);
 					VillRequestAPI.RequestCostVit(vill, tryProd.VitToCost, VitCostReason.Production);
 				}
