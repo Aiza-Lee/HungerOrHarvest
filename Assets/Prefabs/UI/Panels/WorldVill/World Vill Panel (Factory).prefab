@@ -135,10 +135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248e5bdea42330d49afd7328fcb9e8fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Configs:
-  - CurveType: 1
-    Time: 0.05
-  TickMove: 0
+  ChangeInfos:
+  - TotalTime: 0.2
+    CurveType: 9
+    UseLogicTime: 0
 --- !u!114 &2894370570574399189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,10 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109b68d9ca2b4fb4f96afb2eb7025769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Configs:
-  - CurveType: 1
-    Time: 0.1
-  TickMove: 0
+  ChangeInfos:
+  - TotalTime: 0.2
+    CurveType: 9
+    UseLogicTime: 0
 --- !u!1 &2749642343136833286
 GameObject:
   m_ObjectHideFlags: 0

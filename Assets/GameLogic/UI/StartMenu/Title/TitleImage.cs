@@ -21,6 +21,7 @@ namespace GameLogic.UI.StartMenu.Title {
 			_isMax = !_isMax;
 			_smoothScale
 				.SetDoneCallback(() => SetTask())
+				.SetChangeInfoIndex(0)
 				.SetTarget(_isMax ? new(_minScale, _minScale, _minScale) : new(_maxScale, _maxScale, _maxScale));
 		}
 	}

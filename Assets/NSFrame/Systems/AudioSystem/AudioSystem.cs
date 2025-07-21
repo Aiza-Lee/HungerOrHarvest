@@ -106,18 +106,32 @@ namespace NSFrame {
 			_bgmPlayer.Stop();
 		}
 
-		public static void PlaySFX(string clipName) {
-			if (!_sfxClips.ContainsKey(clipName)) {
-				Debug.LogError($"NS: No SFX named \"{clipName}\".");
-				return;
+		/// <summary>
+		/// 播放音效
+		/// </summary>
+		/// <param name="clip">音效对象</param>
+		/// <param name="volumeFactor">相对于系统的音量额外的音量因子</param>
+		/// <returns>是否成功播放</returns>
+		public static bool PlaySFX(AudioClip clip, float volumeFactor = 1f) {
+			if (MuteSFX) return false;
+			if (clip == null) {
+				Debug.LogError("NS: SFX clip is null.");
+				return false;
 			}
-			if (MuteSFX) return;
 			AudioSource player = PoolSystem.PopGO<AudioSource>(_config.SFXAudioSourcePrefab, _sfxRoot);
-			player.clip = _sfxClips[clipName];
-			player.volume = GlobalVolume * SFXVolume;
+			player.clip = clip;
+			player.volume = GlobalVolume * SFXVolume * volumeFactor;
 			player.loop = false;
 			player.Play();
 			MonoServiceTool.NS_StartCoroutine(DoRecycle(player));
+			return true;
+		}
+		public static bool PlaySFX(string clipName) {
+			if (!_sfxClips.ContainsKey(clipName)) {
+				Debug.LogError($"NS: No SFX named \"{clipName}\".");
+				return false;
+			}
+			return PlaySFX(_sfxClips[clipName]);
 		}
 		static IEnumerator DoRecycle(AudioSource player) {
 			yield return new WaitForSeconds(player.clip.length);

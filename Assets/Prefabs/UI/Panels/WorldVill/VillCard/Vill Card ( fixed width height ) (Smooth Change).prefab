@@ -187,10 +187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2a38ab3a2d07244b398b5baf93bbda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Configs:
-  - CurveType: 1
-    Time: 0.5
-  TickMove: 0
+  ChangeInfos:
+  - TotalTime: 0.5
+    CurveType: 9
+    UseLogicTime: 0
 --- !u!114 &2504526089610908393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,10 +203,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248e5bdea42330d49afd7328fcb9e8fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Configs:
-  - CurveType: 6
-    Time: 0.2
-  TickMove: 0
+  ChangeInfos:
+  - TotalTime: 0.5
+    CurveType: 9
+    UseLogicTime: 0
 --- !u!114 &3878236686748701918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,12 +219,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109b68d9ca2b4fb4f96afb2eb7025769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Configs:
-  - CurveType: 6
-    Time: 0.2
-  - CurveType: 9
-    Time: 0.5
-  TickMove: 0
+  ChangeInfos:
+  - TotalTime: 0.5
+    CurveType: 9
+    UseLogicTime: 0
+  - TotalTime: 0.5
+    CurveType: 9
+    UseLogicTime: 0
 --- !u!1 &1865836955772658436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,10 +1098,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248e5bdea42330d49afd7328fcb9e8fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Configs:
-  - CurveType: 6
-    Time: 0.2
-  TickMove: 0
+  ChangeInfos:
+  - TotalTime: 0.2
+    CurveType: 9
+    UseLogicTime: 0
 --- !u!114 &4583899158145093192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,7 +1114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109b68d9ca2b4fb4f96afb2eb7025769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Configs:
-  - CurveType: 6
-    Time: 0.2
-  TickMove: 0
+  ChangeInfos:
+  - TotalTime: 0.2
+    CurveType: 9
+    UseLogicTime: 0

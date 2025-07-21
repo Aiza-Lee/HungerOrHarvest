@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameLogic.Common.View;
 using GameLogic.UI.Common.UiComponents.SmoothChange;
 using UnityEngine;
 
@@ -31,11 +32,11 @@ namespace GameLogic.UI.Common.UiComponents.GroupLayout {
 			_rectTrans = GetComponent<RectTransform>();
 			if (!_eleContainer.TryGetComponent(out _eleContainerSOMin)) {
 				_eleContainerSOMin = _eleContainer.gameObject.AddComponent<SmoothOffsetMin>();
-				_eleContainerSOMin.Configs = new() { new ChangeConfig().SetLinearCurve(0.2f) };
+				_eleContainerSOMin.ChangeInfos = new() { new() { CurveType = ChangeCurveType.Linear, TotalTime = 0.2f } };
 			}
 			if (!_eleContainer.TryGetComponent(out _eleContainerSOMax)) {
 				_eleContainerSOMax = _eleContainer.gameObject.AddComponent<SmoothOffsetMax>();
-				_eleContainerSOMax.Configs = new() { new ChangeConfig().SetLinearCurve(0.2f) };
+				_eleContainerSOMax.ChangeInfos = new() { new() { CurveType = ChangeCurveType.Linear, TotalTime = 0.2f } };
 			}
 		}
 

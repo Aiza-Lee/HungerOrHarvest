@@ -114,7 +114,7 @@ namespace GameLogic.UI.WorldVill {
 			_rectTrans.SetParent(target);
 			_rectTrans.SetAsLastSibling();
 			_thisSOMin
-				.SetMod(1)
+				.SetChangeInfoIndex(1)
 				.SetOnChanged((val) => _thisSOMax.SetCurVal(new(val.x + MIN_WIDTH, val.y + HEIGHT)))
 				.SetTarget(new(0f, 0f));
 			_smoothScale

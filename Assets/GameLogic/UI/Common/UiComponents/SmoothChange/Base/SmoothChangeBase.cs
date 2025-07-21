@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameLogic.Common.View;
 using UnityEngine;
 
 namespace GameLogic.UI.Common.UiComponents.SmoothChange {
@@ -14,13 +15,11 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 			_target = GetCurVal();
 		}
 
-		public List<ChangeConfig> Configs;
-		public bool TickMove;
+		public List<ChangeInfo> ChangeInfos;
 
 		private T _target;
 		private T _oriVal;
 		private float _elapsedTime;
-		private int _curModID;
 		private bool _running;
 
 		private Action<T> _onChanged;
@@ -38,6 +37,10 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 		/// </summary>
 		private bool _newSetedDoneCallback = false;
 
+		/// <summary> 当前的变化配置 </summary>
+		private ChangeInfo _curConfig;
+		/// <summary> 当前变化的曲线，缓存从字典查找的结果 </summary>
+		private Func<float, float> _curve;
 
 		private void Update() {
 			if (_running) {
@@ -45,20 +48,17 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 			}
 		}
 		private void DealChange() {
-			var curve = Configs[_curModID].Curve;
-			var totalTime = Configs[_curModID].Time;
-			_elapsedTime += TickMove ? Time.deltaTime : Time.unscaledDeltaTime;
-			if (_elapsedTime > totalTime) {
-				_elapsedTime = totalTime;
-			}
+			var totalTime = _curConfig.TotalTime;
 
-			var newVal = Add(_oriVal, Mul(Sub(_target, _oriVal), curve(_elapsedTime / totalTime)));
+			_elapsedTime += _curConfig.UseLogicTime ? Time.deltaTime : Time.unscaledDeltaTime;
+
+			var newVal = Add(_oriVal, Mul(Sub(_target, _oriVal), _curve(Mathf.Clamp01(_elapsedTime / totalTime))));
 			SetCurVal_Derived(newVal);
 			_onChanged?.Invoke(newVal);
 
 			if (_elapsedTime >= totalTime) {
 				_onChanged = null;
-				_curModID = 0;
+				_curve = null;
 				_running = false;
 
 				// 这里可能需要再回调中修改stopCallBack的值，就不做延后处理了，在这里用个临时变量搞一下
@@ -104,9 +104,13 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 			_target = GetCurVal();
 		}
 
-		public SmoothChangeBase<T> SetMod(int modID) {
+		public SmoothChangeBase<T> SetChangeInfoIndex(int index) {
+			return SetChangeInfo(ChangeInfos[index]);
+		}
+		public SmoothChangeBase<T> SetChangeInfo(ChangeInfo config) {
 			OnInterprete();
-			_curModID = modID;
+			_curConfig = config;
+			_curve = ChangeCurves.GetCurve(_curConfig.CurveType);
 			return this;
 		}
 
@@ -158,6 +162,10 @@ namespace GameLogic.UI.Common.UiComponents.SmoothChange {
 			_target = val;
 			_elapsedTime = 0f;
 			_running = true;
+			if (_curve == null) {
+				_curConfig = ChangeInfos[0];
+				_curve = ChangeCurves.GetCurve(_curConfig.CurveType);
+			}
 		}
 		#endregion
 	}
