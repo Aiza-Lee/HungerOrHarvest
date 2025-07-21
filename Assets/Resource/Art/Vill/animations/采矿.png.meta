@@ -60,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1100
+  spritePixelsToUnits: 600
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -138,12 +138,12 @@ TextureImporter:
       name: "\u91C7\u77FF_0"
       rect:
         serializedVersion: 2
-        x: 79
-        y: 46
-        width: 749
-        height: 1420
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 838
+        height: 2232
+      alignment: 9
+      pivot: {x: 0.5, y: 0.105}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -159,12 +159,12 @@ TextureImporter:
       name: "\u91C7\u77FF_1"
       rect:
         serializedVersion: 2
-        x: 873
-        y: 39
-        width: 793
-        height: 1420
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 838
+        y: 0
+        width: 838
+        height: 2232
+      alignment: 9
+      pivot: {x: 0.5, y: 0.105}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -180,12 +180,12 @@ TextureImporter:
       name: "\u91C7\u77FF_2"
       rect:
         serializedVersion: 2
-        x: 1752
-        y: 29
-        width: 695
-        height: 1420
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1676
+        y: 0
+        width: 838
+        height: 2232
+      alignment: 9
+      pivot: {x: 0.5, y: 0.105}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -201,12 +201,12 @@ TextureImporter:
       name: "\u91C7\u77FF_3"
       rect:
         serializedVersion: 2
-        x: 2639
-        y: 32
-        width: 598
-        height: 1420
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 2514
+        y: 0
+        width: 838
+        height: 2232
+      alignment: 9
+      pivot: {x: 0.5, y: 0.105}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -221,7 +221,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c601d03859ff353488fde916e58f7745
     internalID: 0
     vertices: []
     indices: 
