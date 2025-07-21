@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
-		fileName = "CottageArchLevelConfig", 
-		menuName = "HungerOrHarvest/Config/ArchLevel/CottageLevel", 
-		order = (int) ArchType.Cottage * 2 + 1)]
+		fileName = "小屋配置-Level", 
+		menuName = "HungerOrHarvest/Config/Arch/小屋/Level配置", 
+		order = (int) ArchType.Cottage * 3 + 2)]
 	public class CottageArchLevelConfig : ArchLevelConfigBase { }
 }

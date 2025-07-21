@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace GameLogic.Features.Vill {
-	[CreateAssetMenu(fileName = "VitalityConfig", menuName = "HungerOrHarvest/Config/Vill/VitConfig")]
+	[CreateAssetMenu(fileName = "体力配置", menuName = "HungerOrHarvest/Config/Vill/体力配置", order = 100)]
 	public class VitConfig : ScriptableObject {
 		[Header("体力阈值配置")]
 		[Tooltip("饥饿阈值")] public float HungryVitThreshold = 0.1f; // 默认10%

@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
-		fileName = "CopperMineArchConfig", 
-		menuName = "HungerOrHarvest/Config/Arch/CopperMine", 
-		order = (int) ArchType.CopperMine * 2)]
+		fileName = "铜矿配置", 
+		menuName = "HungerOrHarvest/Config/Arch/铜矿/基础配置", 
+		order = (int) ArchType.CopperMine * 3)]
 	public class CopperMineArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.CopperMine;
 

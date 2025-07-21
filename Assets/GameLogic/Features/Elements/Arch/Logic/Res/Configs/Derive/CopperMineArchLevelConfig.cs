@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
-		fileName = "CopperMineArchLevelConfig", 
-		menuName = "HungerOrHarvest/Config/ArchLevel/CopperMineLevel", 
-		order = (int) ArchType.CopperMine * 2 + 1)]
+		fileName = "铜矿配置-Level", 
+		menuName = "HungerOrHarvest/Config/Arch/铜矿/Level配置", 
+		order = (int) ArchType.CopperMine * 3 + 2)]
 	public class CopperMineArchLevelConfig : ArchLevelConfigBase { }
 }

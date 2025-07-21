@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace GameLogic.Features.Elements.Arch{
 	[CreateAssetMenu(
-		fileName = "RuinArchConfig", 
-		menuName = "HungerOrHarvest/Config/Arch/Ruin", 
-		order = (int) ArchType.Ruins * 2)]
+		fileName = "废墟配置",
+		menuName = "HungerOrHarvest/Config/Arch/废墟/基础配置",
+		order = (int) ArchType.Ruins * 3)]
 	public class RuinArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.Ruins;
 

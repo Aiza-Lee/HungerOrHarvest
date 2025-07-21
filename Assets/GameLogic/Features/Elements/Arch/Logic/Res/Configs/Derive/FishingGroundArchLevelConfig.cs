@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
-		fileName = "FishingGroundArchLevelConfig", 
-		menuName = "HungerOrHarvest/Config/ArchLevel/FishingGroundLevel", 
-		order = (int) ArchType.FishingDock * 2 + 1)]
+		fileName = "渔场配置-Level", 
+		menuName = "HungerOrHarvest/Config/Arch/渔场/Level配置", 
+		order = (int) ArchType.FishingDock * 3 + 2)]
 	public class FishingGroundArchLevelConfig : ArchLevelConfigBase { }
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
-		fileName = "ClayPitArchLevelConfig", 
-		menuName = "HungerOrHarvest/Config/ArchLevel/ClayPitLevel", 
-		order = (int) ArchType.ClayPit * 2 + 1)]
+		fileName = "粘土坑配置-Level", 
+		menuName = "HungerOrHarvest/Config/Arch/粘土坑/Level配置",
+		order = (int) ArchType.ClayPit * 3 + 2)]
 	public class ClayPitArchLevelConfig : ArchLevelConfigBase { }
 }

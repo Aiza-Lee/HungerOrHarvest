@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace GameLogic.Features.Vill {
 	[CreateAssetMenu(
-		fileName = "NormalVillArtConfig",
-		menuName = "HungerOrHarvest/Config/VillArt/NormalArt",
+		fileName = "普通村民配置-Art",
+		menuName = "HungerOrHarvest/Config/VillArt/普通-Art",
 		order = (int) VillType.Normal * 2)]
 	public class NormalVillArtConfig : VillArtConfigBase {
 		public override VillType VillType => VillType.Normal;

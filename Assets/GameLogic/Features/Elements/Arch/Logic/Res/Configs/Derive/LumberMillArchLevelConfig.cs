@@ -3,8 +3,8 @@ namespace GameLogic.Features.Elements.Arch {
 	using UnityEngine;
 
 	[CreateAssetMenu(
-		fileName = "LumberMillArchLevelConfig",
-		menuName = "HungerOrHarvest/Config/ArchLevel/LumberMill",
-		order = (int) ArchType.LumberMill * 2 + 1)]
+		fileName = "伐木场配置-Level",
+		menuName = "HungerOrHarvest/Config/Arch/伐木场/Level配置",
+		order = (int) ArchType.LumberMill * 3 + 2)]
 	public class LumberMillArchLevelConfig : ArchLevelConfigBase { }
 }

@@ -4,9 +4,9 @@ namespace GameLogic.Features.Elements.Arch {
 	using UnityEngine;
 
 	[CreateAssetMenu(
-		fileName = "LumberMillArchConfig",
-		menuName = "HungerOrHarvest/Config/Arch/LumberMill",
-		order = (int) ArchType.LumberMill * 2)]
+		fileName = "伐木场配置",
+		menuName = "HungerOrHarvest/Config/Arch/伐木场/基础配置",
+		order = (int) ArchType.LumberMill * 3)]
 	public class LumberMillArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.LumberMill;
 

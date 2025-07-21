@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
-		fileName = "RuinArchLevelConfig", 
-		menuName = "HungerOrHarvest/Config/ArchLevel/RuinLevel", 
-		order = (int) ArchType.Ruins * 2 + 1)]
+		fileName = "废墟配置-Level", 
+		menuName = "HungerOrHarvest/Config/Arch/废墟/Level配置", 
+		order = (int) ArchType.Ruins * 3 + 2)]
 	public class RuinArchLevelConfig : ArchLevelConfigBase { }
 }

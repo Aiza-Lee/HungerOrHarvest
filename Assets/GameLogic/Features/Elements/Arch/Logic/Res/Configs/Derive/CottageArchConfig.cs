@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace GameLogic.Features.Elements.Arch {
 	[CreateAssetMenu(
-		fileName = "CottageArchConfig", 
-		menuName = "HungerOrHarvest/Config/Arch/Cottage", 
-		order = (int) ArchType.Cottage * 2)]
+		fileName = "小屋配置", 
+		menuName = "HungerOrHarvest/Config/Arch/小屋/基础配置", 
+		order = (int) ArchType.Cottage * 3)]
 	public class CottageArchConfig : ArchConfigBase {
 		public override ArchType ArchType => ArchType.Cottage;
 

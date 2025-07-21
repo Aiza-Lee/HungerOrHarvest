@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace GameLogic.Features.Vill {
 	[CreateAssetMenu(
-		fileName = "NormalVillConfig",
-		menuName = "HungerOrHarvest/Config/Vill/Normal",
+		fileName = "普通村民配置",
+		menuName = "HungerOrHarvest/Config/Vill/普通",
 		order = (int) VillType.Normal * 2)]
 	public class NormalVillConfig : VillConfigBase {
 		public override VillType VillType => VillType.Normal;
