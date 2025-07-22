@@ -17,6 +17,15 @@ namespace NsEcsFrame.Unity {
 		public static implicit operator Color(SimpleColor c) => new(c.r, c.g, c.b, c.a);
 		public static implicit operator SimpleColor(Color c) => new(c);
 		public override readonly string ToString() => $"SimpleColor(r:{r}, g:{g}, b:{b}, a:{a})";
+
+		public static SimpleColor AlphaBlend(SimpleColor back, SimpleColor front) {
+			return new() {
+				a = front.a + back.a * (1 - front.a),
+				r = front.r * front.a + back.r * (1 - front.a),
+				g = front.g * front.a + back.g * (1 - front.a),
+				b = front.b * front.a + back.b * (1 - front.a),
+			};
+		}
 	}
 
 	[System.Serializable]

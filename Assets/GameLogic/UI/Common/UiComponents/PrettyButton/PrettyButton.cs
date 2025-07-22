@@ -89,7 +89,7 @@ namespace GameLogic.UI.Common.UiComponents.PrettyButton {
 			}
 			if (_themeConfig.EnableColor) {
 				_backImageColor.SetChangeInfo(_themeConfig.ColorChangeInfo)
-					.SetTarget(_themeConfig.PressedColor);
+					.SetTarget(AlphaBlend(_themeConfig.PressedColor, _originalColor));
 			}
 			if (_themeConfig.EnablePressedOffset) {
 				_soMin.SetChangeInfo(_themeConfig.PressedOffsetChangeInfo)
@@ -147,7 +147,8 @@ namespace GameLogic.UI.Common.UiComponents.PrettyButton {
 			if (!Interactable) return;
 
 			if (_themeConfig.EnableColor) {
-				_backImage.color = _themeConfig.HoverColor;
+				_backImageColor.SetChangeInfo(_themeConfig.ColorChangeInfo)
+					.SetTarget(AlphaBlend(_themeConfig.HoverColor, _originalColor));
 			}
 			if (_themeConfig.EnableScale) {
 				_smoothScale.SetChangeInfo(_themeConfig.HoverScaleChangeInfo)
@@ -164,12 +165,21 @@ namespace GameLogic.UI.Common.UiComponents.PrettyButton {
 			if (!Interactable) return;
 
 			if (_themeConfig.EnableColor) {
-				_backImage.color = _originalColor;
+				_backImageColor.SetChangeInfo(_themeConfig.ColorChangeInfo)
+					.SetTarget(_originalColor);
 			}
 			if (_themeConfig.EnableScale) {
 				_smoothScale.SetChangeInfo(_themeConfig.UnhoverScaleChangeInfo)
 					.SetTarget(Vector3.one);
 			}
+		}
+		
+		private Color AlphaBlend(Color front, Color back) {
+			float r = front.r * front.a + back.r * (1 - front.a);
+			float g = front.g * front.a + back.g * (1 - front.a);
+			float b = front.b * front.a + back.b * (1 - front.a);
+			float a = front.a * front.a + back.a * (1 - front.a);
+			return new(r, g, b, a);
 		}
 	}
 }

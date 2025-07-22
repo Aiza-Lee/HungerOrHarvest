@@ -4,6 +4,7 @@ using UnityEngine;
 using NsEcsFrame.Unity;
 
 namespace GameLogic.Common.UnityComponentsBridge {
+	[System.Serializable]
 	public class SpriteRendererComponent : IComponent, IDirtyMarker {
 		public SimpleColor Color;
 		public int SortingLayerID;

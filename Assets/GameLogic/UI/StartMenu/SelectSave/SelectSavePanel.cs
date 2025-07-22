@@ -77,5 +77,19 @@ namespace GameLogic.UI.StartMenu {
 			}
 			return (true, string.Empty);
 		}
+
+		public void DeletSaveInfo(SaveInfo saveInfo) {
+			_nameToSaveInfos
+				.Find(group => group.Key == saveInfo.SaveName)
+				.Value.Remove(saveInfo);
+			SaveSystem.DeleteSaveFile(saveInfo);
+			if (_nameToSaveInfos.Find(group => group.Key == saveInfo.SaveName).Value.Count == 0) {
+				_rightLayout.ResetContent(null);
+				// 如果该世界没有存档了，则直接全部重新加载，不会有很大的性能损失
+				Refresh();
+			} else {
+				ChooseWorld(saveInfo.SaveName);
+			}
+		}
 	}
 }

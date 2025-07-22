@@ -65,6 +65,10 @@ namespace NsEcsFrame.Core {
 
 			return entity;
 		}
+		/// <summary>
+		/// 销毁实体，自动完成unity的GameObject销毁逻辑（EntityMono）
+		/// </summary>
+		/// <param name="entityId"></param>
 		public void DestroyEntity(EntityId entityId) {
 			if (!_aliveEntities.Contains(entityId.ID)) {
 				if (EnableDebugLogs) {
@@ -72,7 +76,7 @@ namespace NsEcsFrame.Core {
 				}
 				return;
 			}
-			
+
 			// 清除可能存在的Gameobject
 			EntityMono.DestroyGameObjectById(entityId);
 			// 清除所有组件

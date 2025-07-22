@@ -7,7 +7,7 @@ namespace GameLogic.UI.StartMenu {
 
 		public void ResetContent(List<SaveInfo> saveInfos) {
 			base.Clear();
-			saveInfos.ForEach(si => {
+			saveInfos?.ForEach(si => {
 				base.AddEle(ButtonFactory.Inst.CreateSaveInfoButton(si));
 			});
 		}

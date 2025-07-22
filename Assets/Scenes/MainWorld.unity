@@ -1765,7 +1765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isMainWorld: 1
   _worldName: GameWorld
-  _enableDebugLogs: 1
+  _enableDebugLogs: 0
 --- !u!4 &745634987
 Transform:
   m_ObjectHideFlags: 0
@@ -3762,6 +3762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1f04aef3b582824980707bbeee32a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _entityId:
+    ID: 0
+    Version: 0
   _components: []
   references:
     version: 2

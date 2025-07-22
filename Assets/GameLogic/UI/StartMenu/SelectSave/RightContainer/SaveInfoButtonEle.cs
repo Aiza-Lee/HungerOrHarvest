@@ -39,9 +39,18 @@ namespace GameLogic.UI.StartMenu {
 				UIMgr.Inst.TogglePanel<SelectSavePanel>();
 			};
 		}
+		public void OnDeleteClicked() {
+			// 弹出确认框
+			var tipText = $"确定要删除存档: {_saveInfo.SaveName} ?";
+			var popup = UIMgr.Inst.TogglePanel<CenterYesNoPanel>();
+			popup.SetTipText(tipText);
+			popup.OnYesChoosed += () => {
+				UIMgr.Inst.FindPanel<SelectSavePanel>().DeletSaveInfo(_saveInfo);
+			};
+		}
 
 		#region IGroupLayoutEle
-		public GroupLayoutBase BelongedGroup { get; set;}
+		public GroupLayoutBase BelongedGroup { get; set; }
 		public float EleSize => _eleSize;
 		public RectTransform RectTrans => _rectTrans;
 		#pragma warning disable 67

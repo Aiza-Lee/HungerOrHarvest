@@ -1,6 +1,7 @@
 using GameLogic.Common.UnityComponentsBridge;
 using NsEcsFrame.Core;
 using NsEcsFrame.Unity;
+using UnityEngine;
 
 namespace GameLogic.Common.View {
 	public class SpriteRendererSyncSystem : ISystem {
@@ -25,6 +26,11 @@ namespace GameLogic.Common.View {
 				var spriteRendererComp = e.GetComponent<SpriteRendererComponent>();
 				if (!spriteRendererComp.IsDirty()) return;
 				var go = EntityMono.GetByEntityId(e.ID);
+				if (go == null) {
+					Debug.Log($"Entity {e.ID} IsValid: {e.IsValid()}");
+					Debug.LogWarning($"Entity {e.ID} has no GameObject associated with it. Skipping SpriteRenderer sync.");
+					return;
+				}
 				var unityComps = go.GetComponentsInChildren<UnityEngine.SpriteRenderer>();
 				foreach (var sr in unityComps) {
 					spriteRendererComp.ApplyToSpriteRenderer(sr);

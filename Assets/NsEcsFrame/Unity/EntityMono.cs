@@ -20,18 +20,24 @@ namespace NsEcsFrame.Unity {
 		}
 		public static void DestroyGameObjectById(EntityId id) {
 			if (_entityMap.TryGetValue(id, out var mono)) {
+				// Debug.Log($"Destroying GameObject for EntityMono with ID: {id}");
+				if (mono == null) {
+					_entityMap.Remove(id);
+					return;
+				}
 				mono.gameObject.SetActive(false);
 				Destroy(mono.gameObject);
 				_entityMap.Remove(id);
 			}
 		}
 
-		private EntityId _entityId;
+		[SerializeField] private EntityId _entityId;
 		public EntityId EntityId => _entityId;
 
 		[SerializeField][SerializeReference] private List<IComponent> _components = new();
 
 		public void SetEntity(Entity entity) {
+			// Debug.Log($"Setting entity for entityMono: {entity.ID}");
 			_entityId = entity.ID;
 			_entityMap[_entityId] = this;
 			_components.Clear();
@@ -42,12 +48,26 @@ namespace NsEcsFrame.Unity {
 
 		void OnDestroy() {
 			_components.Clear();
-			_entityMap.Remove(_entityId);
 		}
 
 		/// <summary>
 		/// 返回所有需要在unity Inspector中调试的Entity的组件的引用的集合。
 		/// </summary>
 		protected abstract IEnumerable<IComponent> GetSomeComponents(Entity entity);
+
+		[ContextMenu("Initializa All Components")]
+		private void InitializeAllComponents() {
+			_components.Clear();
+			var entity = WorldBehaviour.MainWorld.GetEntity(_entityId);
+			if (entity == null) {
+				Debug.LogWarning($"Entity with ID {_entityId} not found in the world.");
+				return;
+			}
+			foreach (var component in entity.GetAllComponents()) {
+				if (component is not null) {
+					_components.Add(component);
+				}
+			}
+		}
 	}
 }
