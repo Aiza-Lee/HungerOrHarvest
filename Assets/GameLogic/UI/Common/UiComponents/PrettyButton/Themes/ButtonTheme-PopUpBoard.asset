@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ButtonTheme-PopUpBoard
   m_EditorClassIdentifier: 
   _enableColor: 1
-  _hoverColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
-  _pressedColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  _disabledColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  _hoverColor: {r: 0.9, g: 0.9, b: 0.9, a: 0.3137255}
+  _pressedColor: {r: 0.7, g: 0.7, b: 0.7, a: 0.3137255}
+  _disabledColor: {r: 0.6, g: 0.6, b: 0.6, a: 0.3137255}
   _colorChangeInfo:
     TotalTime: 0.1
     CurveType: 9
@@ -39,7 +39,7 @@ MonoBehaviour:
     TotalTime: 0
     CurveType: 0
     UseLogicTime: 0
-  _enablePressedOffset: 1
+  _enablePressedOffset: 0
   _pressedOffset: {x: 0, y: -2}
   _pressedOffsetChangeInfo:
     TotalTime: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
     UseLogicTime: 0
   _enableClickParticles: 0
   _clickParticlePrefab: {fileID: 0}
-  _enableAudio: 1
+  _enableAudio: 0
   _hoverSound: {fileID: 0}
   _clickSound: {fileID: 0}
   _volume: 0.5

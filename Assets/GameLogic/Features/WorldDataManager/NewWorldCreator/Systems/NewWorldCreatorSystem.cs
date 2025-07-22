@@ -97,7 +97,6 @@ namespace GameLogic.Features.WorldDataManager {
 
 			WorldDataManagerAPI.Save(false);
 			SpeedControlAPI.SetSpeedControlInputEnabled(true);
-			CameraInputAPI.SetCameraInputEnabled(true);
 		}
 
 		private bool SpawnDecoration(DecorationType type, Coord coord) {

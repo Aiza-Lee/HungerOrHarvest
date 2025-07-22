@@ -11,7 +11,10 @@ GameObject:
   - component: {fileID: 3089329217017194278}
   - component: {fileID: 170309393791389965}
   - component: {fileID: 1212632305746904323}
-  - component: {fileID: 2988645223982621092}
+  - component: {fileID: 6290278330766362475}
+  - component: {fileID: 3645796847752514642}
+  - component: {fileID: 4193178619473256526}
+  - component: {fileID: 2078703846665056375}
   m_Layer: 0
   m_Name: Button No
   m_TagString: Untagged
@@ -77,7 +80,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2988645223982621092
+--- !u!114 &6290278330766362475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,39 +89,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 396663637356799733}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 109b68d9ca2b4fb4f96afb2eb7025769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1212632305746904323}
-  m_OnClick:
+  ChangeInfos: []
+--- !u!114 &3645796847752514642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396663637356799733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248e5bdea42330d49afd7328fcb9e8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeInfos: []
+--- !u!114 &4193178619473256526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396663637356799733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2a38ab3a2d07244b398b5baf93bbda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeInfos: []
+--- !u!114 &2078703846665056375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396663637356799733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639120af475e43c4daea31dbff299fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _backImage: {fileID: 1212632305746904323}
+  _buttonIcon: {fileID: 0}
+  _buttonText: {fileID: 61059806800392054}
+  _themeConfig: {fileID: 11400000, guid: 819655c31539e8a48aee6896bdde0430, type: 2}
+  _interactionConfig:
+    enableLongPress: 0
+    _longPressTime: 1
+    _interactable: 1
+  _onClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 91469365013133837}
@@ -134,6 +155,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onLongPress:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1578914406051767757
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +169,10 @@ GameObject:
   - component: {fileID: 2803049861952429096}
   - component: {fileID: 6027066356201963359}
   - component: {fileID: 1883694118675625506}
-  - component: {fileID: 7634796288006962787}
+  - component: {fileID: 3232718838981546479}
+  - component: {fileID: 6634532271773227352}
+  - component: {fileID: 7393373338892109556}
+  - component: {fileID: 929901620763608581}
   m_Layer: 0
   m_Name: Button Yes
   m_TagString: Untagged
@@ -211,7 +238,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7634796288006962787
+--- !u!114 &3232718838981546479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,39 +247,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 1578914406051767757}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 109b68d9ca2b4fb4f96afb2eb7025769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1883694118675625506}
-  m_OnClick:
+  ChangeInfos: []
+--- !u!114 &6634532271773227352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578914406051767757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248e5bdea42330d49afd7328fcb9e8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeInfos: []
+--- !u!114 &7393373338892109556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578914406051767757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2a38ab3a2d07244b398b5baf93bbda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeInfos: []
+--- !u!114 &929901620763608581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578914406051767757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639120af475e43c4daea31dbff299fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _backImage: {fileID: 1883694118675625506}
+  _buttonIcon: {fileID: 0}
+  _buttonText: {fileID: 2132749646972672673}
+  _themeConfig: {fileID: 11400000, guid: 819655c31539e8a48aee6896bdde0430, type: 2}
+  _interactionConfig:
+    enableLongPress: 0
+    _longPressTime: 1
+    _interactable: 1
+  _onClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 91469365013133837}
@@ -268,6 +313,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onLongPress:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1609551477458621534
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,7 +690,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3498398871949083829}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
