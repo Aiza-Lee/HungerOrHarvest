@@ -13,28 +13,26 @@ namespace GameLogic.Features.Elements.Vill {
 
 		private IWorld _world;
 		private EntityQueryBuilder _queryBuilder;
-		private JobConfigResource _jobConfig;
 
 		public void Initialize(IWorld world) {
 			_world = world;
 			Enabled = true;
 			_queryBuilder = _world.CreateQueryBuilder().WithAll<ExpGainRequestComponent>();
-			_jobConfig = _world.GetResource<JobConfigResource>();
 		}
 
 		public void OnCreate() { }
 		public void OnDestroy() { }
 		public void OnLogicUpdate(float _) {
-			_queryBuilder.WithAll<VillIdentityComponent>().Build().ForEach(vill => {
-				var expGainRequest = vill.GetComponent<ExpGainRequestComponent>();
+			_queryBuilder.Build().ForEach(vill => {
+				var request = vill.GetComponent<ExpGainRequestComponent>();
 				var expComp = vill.GetComponent<JobExpComponent>();
-				expGainRequest.ExpGain.ForEach(pr => {
-					var jobType = pr.EnumType;
-					var level = expComp.JobLevel_F[jobType];
+				request.ExpGain.ForEach(pr => {
+					var type = pr.EnumType;
+					var level = expComp.JobLevel_F[type];
 					expComp.JobExp_F[pr.EnumType] += pr.Value;
 
-					var nextLevelExpDemand = JobQueryAPI.GetJobNextLevelExpDemand(jobType, level);
-					var maxLevel = JobQueryAPI.GetJobMaxLevel(jobType);
+					var nextLevelExpDemand = JobQueryAPI.GetJobNextLevelExpDemand(type, level);
+					var maxLevel = JobQueryAPI.GetJobMaxLevel(type);
 
 					if (level >= maxLevel) {
 						pr.Value = Mathf.Min(pr.Value, nextLevelExpDemand);
