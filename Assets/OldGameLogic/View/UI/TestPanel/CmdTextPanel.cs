@@ -120,11 +120,11 @@ namespace OldGameLogic.View.Test
 
 		private void DisableCameraControll() {
 			// WorldCameraMgr.Inst.Controllable = false;
-			WorldViewMgr.Inst.Controllable = false;
+			// WorldViewMgr.Inst.Controllable = false;
 		}
 		private void EnableCameraControll() {
 			// WorldCameraMgr.Inst.Controllable = true;
-			WorldViewMgr.Inst.Controllable = true;
+			// WorldViewMgr.Inst.Controllable = true;
 		}
 	}
 }

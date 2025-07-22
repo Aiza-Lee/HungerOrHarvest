@@ -8,18 +8,18 @@ namespace OldGameLogic.Controller
 		private static readonly Dictionary<string, Func<List<string>, CommandBase>> _allCmds = new() {
 
 			/* Game Operation */
-			{ "vill-new", (args) => new CreateVillCmd(args) },
-			{ "vill-bond-arch", (args) => new VillBondArchCmd(args) },
-			{ "vill-disbond-workarch", (args) => new VillDisbondWorkCmd(args) },
-			{ "vill-disbond-home", (args) => new VillDisbondHomeCmd(args) },
-			{ "arch-new", (args) => new CreateArchCmd(args) },
+			// { "vill-new", (args) => new CreateVillCmd(args) },
+			// { "vill-bond-arch", (args) => new VillBondArchCmd(args) },
+			// { "vill-disbond-workarch", (args) => new VillDisbondWorkCmd(args) },
+			// { "vill-disbond-home", (args) => new VillDisbondHomeCmd(args) },
+			// { "arch-new", (args) => new CreateArchCmd(args) },
 
-			{ "destroy-arch", (args) => new DestroyArchCmd(args) },
-			{ "destroy-vill", (args) => new DestroyVillCmd(args) },
+			// { "destroy-arch", (args) => new DestroyArchCmd(args) },
+			// { "destroy-vill", (args) => new DestroyVillCmd(args) },
 
-			{ "speed", (args) => new SetSpeedCmd(args) },
-			{ "unlock-ol", (args) => new UnlockOLCmd(args) },
-			{ "pause", (args) => new TogglePauseCmd(args) },
+			// { "speed", (args) => new SetSpeedCmd(args) },
+			// { "unlock-ol", (args) => new UnlockOLCmd(args) },
+			// { "pause", (args) => new TogglePauseCmd(args) },
 
 			/* Administrator */
 			{ "multi", (args) => new MultiCmdCmd(args) },

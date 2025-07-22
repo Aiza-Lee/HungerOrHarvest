@@ -22,36 +22,36 @@ namespace OldGameLogic.Controller
 				return false;
 			}
 		}
-		public static bool TryConvertToCoord(string str, out Coord result) {
-			var strs = str.Split(',');
+		// public static bool TryConvertToCoord(string str, out Coord result) {
+		// 	var strs = str.Split(',');
 
-			if (
-				strs.Length == 2 
-				&& strs[0].StartsWith('(') && strs[1].EndsWith(')') 
-				&& int.TryParse(strs[0][1..], out var x) && int.TryParse(strs[1][..^1], out var y)
-			) {
-				result = new Coord(x, y); 
-				return true;
-			}
+		// 	if (
+		// 		strs.Length == 2 
+		// 		&& strs[0].StartsWith('(') && strs[1].EndsWith(')') 
+		// 		&& int.TryParse(strs[0][1..], out var x) && int.TryParse(strs[1][..^1], out var y)
+		// 	) {
+		// 		result = new Coord(x, y); 
+		// 		return true;
+		// 	}
 
-			result = default;
-			return false;
-		}
+		// 	result = default;
+		// 	return false;
+		// }
 
-		public static bool TryConvertToOL(string str, out OL result) {
-			var strs = str.Split(',');
+		// public static bool TryConvertToOL(string str, out OL result) {
+		// 	var strs = str.Split(',');
 
-			if (
-				strs.Length == 2 
-				&& strs[0].StartsWith('[') && strs[1].EndsWith(']') 
-				&& int.TryParse(strs[0][1..], out var x) && int.TryParse(strs[1][..^1], out var y)
-			) {
-				result = new OL(x, y); 
-				return true;
-			}
+		// 	if (
+		// 		strs.Length == 2 
+		// 		&& strs[0].StartsWith('[') && strs[1].EndsWith(']') 
+		// 		&& int.TryParse(strs[0][1..], out var x) && int.TryParse(strs[1][..^1], out var y)
+		// 	) {
+		// 		result = new OL(x, y); 
+		// 		return true;
+		// 	}
 
-			result = default;
-			return false;
-		}
+		// 	result = default;
+		// 	return false;
+		// }
 	}
 }
