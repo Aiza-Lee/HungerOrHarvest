@@ -29,7 +29,7 @@ namespace GameLogic.Features.MainCamera {
 			if (!input.EnableCameraInput) return;
 
 			var config = _world.GetResource<CameraConfigResource>();
-			var camera = _world.CreateQueryBuilder().WithAll<MainCameraComponent>().Build().GetEntities()[0];
+			var camera = MainCameraAPI.GetMainCamera();
 			var smoothStat = camera.GetComponent<SmoothCameraSizeStatComponent>();
 
 			if (input.IsSizeDirty) {
