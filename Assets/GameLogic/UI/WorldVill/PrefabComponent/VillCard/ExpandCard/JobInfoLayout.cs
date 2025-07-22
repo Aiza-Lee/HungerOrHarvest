@@ -19,8 +19,13 @@ namespace GameLogic.UI.WorldVill {
 		private Entity _targetVill;
 
 		private bool _isCardOpened = false;
-		[SerializeField] private int _updateInterval = 10;
-		private int _updateCount = 100;
+		[SerializeField] private float _updateIntervalTime = 0.7f;
+		private float _lastUpdateTime = -100f;
+
+		protected override void Awake() {
+			base.Awake();
+			_updateIntervalTime += Random.Range(0f, 1f);
+		}
 
 		void FixedUpdate() {
 			if (!_isCardOpened) {
@@ -28,8 +33,8 @@ namespace GameLogic.UI.WorldVill {
 				return;
 			}
 			if (_targetVill == null) return;
-			if (++_updateCount < _updateInterval) return;
-			_updateCount = 0;
+			if (Time.unscaledTime - _lastUpdateTime < _updateIntervalTime) return;
+			_lastUpdateTime = Time.unscaledTime;
 
 			Clear();
 			GenerateJobInfos();
@@ -58,7 +63,7 @@ namespace GameLogic.UI.WorldVill {
 		public void SetOpened(bool opened) {
 			_isCardOpened = opened;
 			if (opened == true) {
-				_updateCount = 1000;
+				_lastUpdateTime = -100f;
 				FixedUpdate();
 			}
 		}

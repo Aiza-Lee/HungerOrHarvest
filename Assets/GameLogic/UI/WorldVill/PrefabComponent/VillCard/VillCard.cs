@@ -40,7 +40,7 @@ namespace GameLogic.UI.WorldVill {
 
 		public bool Selected { get; private set; }
 
-		[SerializeField] private float _updateIntervalTime;
+		[SerializeField] private float _updateIntervalTime = 0.7f;
 		private float _lastUpdateTime = -100f;
 
 		private RectTransform _rectTrans;
@@ -51,7 +51,7 @@ namespace GameLogic.UI.WorldVill {
 			_thisSOMax = GetComponent<SmoothOffsetMax>();
 			_smoothScale = GetComponent<SmoothScale>();
 			_rectTrans = GetComponent<RectTransform>();
-			_updateIntervalTime = Random.Range(0.6f, 0.8f);
+			_updateIntervalTime += Random.Range(0f, 1f);
 		}
 		private void Start() {
 			_mainPanel = UIMgr.Inst.FindPanel<MainPanel>();
