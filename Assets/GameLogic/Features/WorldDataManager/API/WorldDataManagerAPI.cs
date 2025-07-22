@@ -51,7 +51,7 @@ namespace GameLogic.Features.WorldDataManager {
 				WorldName = worldName,
 				BaseInfo = baseInfo
 			};
-			TickSpeedAPI.PauseTick(false);
+			TickSpeedAPI.SetTickPaused(false);
 			world.GetResource<CurSaveInfoResource>().IsLoaded = true;
 		}
 	}

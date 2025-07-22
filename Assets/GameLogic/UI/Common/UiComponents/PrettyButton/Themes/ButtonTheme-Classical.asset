@@ -21,7 +21,7 @@ MonoBehaviour:
     CurveType: 9
     UseLogicTime: 0
   _enableScale: 1
-  _hoverScale: 1.1
+  _hoverScale: 1.05
   _hoverScaleChangeInfo:
     TotalTime: 0.1
     CurveType: 9

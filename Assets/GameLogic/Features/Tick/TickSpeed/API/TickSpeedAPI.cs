@@ -7,14 +7,14 @@ namespace GameLogic.Features.TickSpeed {
 			tsRes.TickSpeed = speed;
 			tsRes.IsDirty = true;
 		}
-		public static void PauseTick(bool isPaused) {
+		public static void SetTickPaused(bool isPaused) {
 			var tsRes = GameWorldMono.MainWorld.GetResource<TickSpeedResource>();
 			if (tsRes.IsPaused != isPaused) {
 				tsRes.IsPaused = isPaused;
 				tsRes.IsDirty = true;
 			}
 		}
-		public static void TogglePauseTick() {
+		public static void TogglePause() {
 			var tsRes = GameWorldMono.MainWorld.GetResource<TickSpeedResource>();
 			tsRes.IsPaused = !tsRes.IsPaused;
 			tsRes.IsDirty = true;

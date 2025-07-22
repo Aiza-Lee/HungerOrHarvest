@@ -36,7 +36,7 @@ namespace GameLogic.Features.SpeedControl {
 			}
 
 			if (inputRes.PauseKeyDown) {
-				TickSpeedAPI.TogglePauseTick();
+				TickSpeedAPI.TogglePause();
 			}
 			
 		}
