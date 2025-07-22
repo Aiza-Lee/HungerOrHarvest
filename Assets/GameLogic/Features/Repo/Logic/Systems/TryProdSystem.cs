@@ -28,6 +28,7 @@ namespace GameLogic.Features.Repo {
 			var dailyCnter = _world.GetResource<DailyRepoCounterResource>();
 			var repoStat = _world.GetResource<RepoStatResource>();
 
+			// 建筑的产出请求
 			_archTryProdQuery.Build().ForEach(arch => {
 				var tryProd = arch.GetComponent<ArchTryProdRequestComponent>();
 				if (repoStat.Repos_F.BiggerThan(tryProd.Cons)) {
@@ -38,6 +39,7 @@ namespace GameLogic.Features.Repo {
 				}
 			});
 
+			// 村民的产出请求
 			_villTryProdQuery.Build().ForEach(vill => {
 				var tryProd = vill.GetComponent<VillTryProdRequestComponent>();
 				if (repoStat.Repos_F.BiggerThan(tryProd.Cons)) {
@@ -50,6 +52,7 @@ namespace GameLogic.Features.Repo {
 				}
 			});
 
+			// 村民消耗食物，恢复体力的请求
 			_villRecoverQuery.Build().ForEach(vill => {
 				var recover = vill.GetComponent<VillConsFoodRecoverVitRequestComponent>();
 				if (repoStat.Repos_F[RepoType.Food] >= recover.FoodRequest) {

@@ -189,7 +189,6 @@ namespace GameLogic.Features.Elements.Vill {
 				FoodRequest = foodRequest,
 				VitToRecover = vitToRecover
 			});
-
 		}
 
 	}
