@@ -48,7 +48,10 @@ namespace GameLogic.Features.Elements.Vill {
 							.End()
 							.Sequence()
 								.Condition(bb => bb.World.GetResource<TickCounterResource>().IsDayLastTick == true)
-							// 进入夜晚时的逻辑
+								.Sequence()
+									.Condition(bb => bb.BondToArchComp.HomeArchGid == 0)
+									.Action(EnterDie)
+								.End()
 							.End()
 						.End()
 
