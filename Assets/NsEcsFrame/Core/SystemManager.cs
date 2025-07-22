@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace NsEcsFrame.Core {
 	public class SystemManager : ISystemManager {
@@ -109,7 +110,9 @@ namespace NsEcsFrame.Core {
 
 			foreach (var system in _orderedSystems) {
 				if (system.Enabled) {
+					Profiler.BeginSample(system.GetType().Name);
 					system.OnLogicUpdate(deltaTime);
+					Profiler.EndSample();
 				}
 			}
 		}
@@ -122,7 +125,9 @@ namespace NsEcsFrame.Core {
 
 			foreach (var system in _orderedSystems) {
 				if (system.Enabled) {
+					Profiler.BeginSample(system.GetType().Name);
 					system.OnRenderUpdate(deltaTime);
+					Profiler.EndSample();
 				}
 			}
 		}

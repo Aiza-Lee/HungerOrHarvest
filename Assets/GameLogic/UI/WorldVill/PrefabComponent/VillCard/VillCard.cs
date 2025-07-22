@@ -1,4 +1,3 @@
-using System;
 using GameLogic.Features.Elements.Vill;
 using GameLogic.Features.MainCamera;
 using GameLogic.UI.Common.UiComponents.GroupLayout;
@@ -41,8 +40,9 @@ namespace GameLogic.UI.WorldVill {
 
 		public bool Selected { get; private set; }
 
-		[SerializeField] private int _updateInterval = 3;
-		private int _updataCount = 0;
+		[SerializeField] private float _updateIntervalTime;
+		private float _lastUpdateTime = -100f;
+
 		private RectTransform _rectTrans;
 		private void Awake() {
 			_expandMaskSOMin = _expandMask.GetComponent<SmoothOffsetMin>();
@@ -51,15 +51,16 @@ namespace GameLogic.UI.WorldVill {
 			_thisSOMax = GetComponent<SmoothOffsetMax>();
 			_smoothScale = GetComponent<SmoothScale>();
 			_rectTrans = GetComponent<RectTransform>();
+			_updateIntervalTime = Random.Range(0.6f, 0.8f);
 		}
 		private void Start() {
 			_mainPanel = UIMgr.Inst.FindPanel<MainPanel>();
 		}
 
-		void FixedUpdate() {
+		void Update() {
 			if (TargetVill == null) return;
-			if (++_updataCount < _updateInterval) return;
-			_updataCount = 0;
+			if (Time.unscaledTime - _lastUpdateTime <= _updateIntervalTime) return;
+			_lastUpdateTime = Time.unscaledDeltaTime;
 
 			if (!TargetVill.IsValid()) {
 				LogicDestroy();
@@ -110,7 +111,7 @@ namespace GameLogic.UI.WorldVill {
 		/// </summary>
 		/// <param name="target">目标位置</param>
 		/// <param name="callBack">移动完成后的回调</param>
-		public void TransferTo(RectTransform target, Action<VillCard> callBack) {
+		public void TransferTo(RectTransform target, System.Action<VillCard> callBack) {
 			_rectTrans.SetParent(target);
 			_rectTrans.SetAsLastSibling();
 			_thisSOMin
@@ -128,7 +129,7 @@ namespace GameLogic.UI.WorldVill {
 		public RectTransform RectTrans => _rectTrans;
 		public float EleSize => _expandMask.rect.width;
 		public float Height => HEIGHT;
-		public event Action OnDirty;
+		public event System.Action OnDirty;
 		public void SetPos(float x) {
 			_thisSOMax.SetCurVal(new(x + MIN_WIDTH, _rectTrans.offsetMax.y));
 			_thisSOMin.SetCurVal(new(x, _rectTrans.offsetMin.y));

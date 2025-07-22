@@ -29,13 +29,12 @@ namespace GameLogic.UI.WorldRepo {
 			}
 		}
 
-		[SerializeField] private int _updateInterval = 10;
-		private int _updateCounter = 1000;
+		[SerializeField] private float _updateIntervalTime = 0.8f;
+		private float _lastUpdateTime = -100f;
 
-		private void Update() {
-			_updateCounter++;
-			if (_updateCounter < _updateInterval) return;
-			_updateCounter = 0;
+		void Update() {
+			if (Time.unscaledTime - _lastUpdateTime <= _updateIntervalTime) return;
+			_lastUpdateTime = Time.unscaledTime;
 
 			_repoEles.ForEach(pr => pr.Value.SetSumMax(_repoAmounts[pr.Key], _repoMaxAmounts[pr.Key]));
 		}
