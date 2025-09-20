@@ -27,9 +27,11 @@ namespace GameLogic.UI.StartMenu {
 		}
 		public void OnSettingClicked() {}
 		public void OnExitClicked() {
-			#if UNITY_EDITOR
-				UnityEditor.EditorApplication.isPlaying = false;
-			#endif
+#if UNITY_EDITOR
+			UnityEditor.EditorApplication.isPlaying = false;
+#else
+			UnityEngine.Application.Quit();
+#endif
 		}
 		#endregion
 	}

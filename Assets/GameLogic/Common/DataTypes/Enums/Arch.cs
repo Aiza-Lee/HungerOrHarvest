@@ -1,7 +1,7 @@
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace GameLogic.Common.DataTypes {
-	[JsonConverter(typeof(Unity.Plastic.Newtonsoft.Json.Converters.StringEnumConverter))]
+	[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
 	public enum ArchType {
 		Ruins = 0,
 		Cottage = 1,
